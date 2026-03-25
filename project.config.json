@@ -45,7 +45,7 @@
     "disableSWC": true
   },
   "appid": "wx0ae2b5c7f8de7fef",
-  "projectname": "quickstart-wx-cloud",
+  "projectname": "智伴口袋",
   "libVersion": "2.20.1",
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
   "condition": {

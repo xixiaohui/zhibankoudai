@@ -1,14 +1,56 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/example/index"
+    "pages/finance/index",
+    "pages/study/index",
+    "pages/life/index",
+    "pages/ai/index",
+    "pages/mine/index"
   ],
   "window": {
-    "backgroundColor": "#F6F6F6",
+    "backgroundColor": "#F7F8FC",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "云开发 QuickStart",
-    "navigationBarTextStyle": "black"
+    "navigationBarBackgroundColor": "#6C63FF",
+    "navigationBarTitleText": "智伴口袋",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#6C63FF",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tab/home.png",
+        "selectedIconPath": "images/tab/home_active.png"
+      },
+      {
+        "pagePath": "pages/finance/index",
+        "text": "财务",
+        "iconPath": "images/tab/finance.png",
+        "selectedIconPath": "images/tab/finance_active.png"
+      },
+      {
+        "pagePath": "pages/ai/index",
+        "text": "AI助手",
+        "iconPath": "images/tab/ai.png",
+        "selectedIconPath": "images/tab/ai_active.png"
+      },
+      {
+        "pagePath": "pages/life/index",
+        "text": "生活",
+        "iconPath": "images/tab/life.png",
+        "selectedIconPath": "images/tab/life_active.png"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "text": "我的",
+        "iconPath": "images/tab/mine.png",
+        "selectedIconPath": "images/tab/mine_active.png"
+      }
+    ]
   },
   "sitemapLocation": "sitemap.json",
   "style": "v2",

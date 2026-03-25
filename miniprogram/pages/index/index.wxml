@@ -1,29 +1,125 @@
-<!--index.wxml-->
+<!-- pages/index/index.wxml - 首页 -->
 <view class="container">
-  <view class="title">快速了解云开发</view>
-  <view class="top_tip">免鉴权接口调用 免部署后台 高并发</view>
-  <view class="power" wx:key="title" wx:for="{{powerList}}" wx:for-item="power">
-    <view class="power_info" data-index="{{index}}" data-type="{{ power.type }}" bindtap="onClickPowerInfo">
-      <view class="power_info_text">
-        <view class="power_info_text_title">
-          {{power.title}}
-          <view class="power_info_text_tag" wx:if="{{power.tag}}">{{power.tag}}</view>
+
+  <!-- 渐变头部 -->
+  <view class="hero-header">
+    <view class="hero-bg-circle c1"></view>
+    <view class="hero-bg-circle c2"></view>
+    <view class="hero-bg-circle c3"></view>
+    <view class="status-bar-placeholder"></view>
+    <view class="hero-content">
+      <view class="flex-between">
+        <view>
+          <view class="hero-greeting">{{greeting}}</view>
+          <view class="hero-date">📅 {{dateStr}}</view>
         </view>
-        <view class="power_info_text_tip">{{power.tip}}</view>
+        <view class="hero-avatar" bindtap="goMine">
+          <text>🙂</text>
+        </view>
       </view>
-      <image wx:if="{{!power.showItem && power.item.length}}" class="power_info_more" src="../../images/arrow.svg"></image>
-      <image wx:if="{{power.showItem && power.item.length}}" class="power_info_less" src="../../images/arrow.svg"></image>
-      <image wx:if="{{!power.item.length}}" class="power_item_icon" src="../../images/arrow.svg"></image>
-    </view>
-    <view wx:if="{{power.showItem}}">
-      <view wx:key="title" wx:for="{{power.item}}">
-        <view class="line"></view>
-        <view class="power_item" bindtap="jumpPage" data-type="{{ item.type }}" data-page="{{item.page}}">
-          <view class="power_item_title">{{item.title}}</view>
-          <image class="power_item_icon" src="../../images/arrow.svg"></image>
+
+      <!-- 今日财务快看 -->
+      <view class="hero-finance-card">
+        <view class="finance-mini-row">
+          <view class="finance-mini-item">
+            <view class="finance-mini-label">今日收入</view>
+            <view class="finance-mini-val income">+¥{{todayIncome}}</view>
+          </view>
+          <view class="finance-mini-divider"></view>
+          <view class="finance-mini-item">
+            <view class="finance-mini-label">今日支出</view>
+            <view class="finance-mini-val expense">-¥{{todayExpense}}</view>
+          </view>
+          <view class="finance-mini-divider"></view>
+          <view class="finance-mini-item">
+            <view class="finance-mini-label">本月支出</view>
+            <view class="finance-mini-val">¥{{monthExpense}}</view>
+          </view>
+        </view>
+        <!-- 预算进度 -->
+        <view wx:if="{{budget.monthly > 0}}" class="budget-bar-wrap">
+          <view class="flex-between budget-bar-header">
+            <text class="budget-label">月度预算 ¥{{budget.monthly}}</text>
+            <text class="budget-percent {{budgetPercent >= 90 ? 'danger' : ''}}">{{budgetPercent}}%</text>
+          </view>
+          <view class="budget-bar-bg">
+            <view class="budget-bar-fill {{budgetPercent >= 90 ? 'danger' : budgetPercent >= 70 ? 'warning' : ''}}" style="width:{{budgetPercent}}%"></view>
+          </view>
         </view>
       </view>
     </view>
   </view>
-  <cloud-tip-modal showTipProps="{{showTip}}" title="{{title}}" content="{{content}}"></cloud-tip-modal>
+
+  <!-- 快捷功能入口 -->
+  <view class="section-card">
+    <view class="section-title-row">
+      <text class="section-t">⚡ 快捷功能</text>
+    </view>
+    <view class="quick-grid">
+      <view class="quick-item" wx:for="{{quickEntries}}" wx:key="label"
+            bindtap="goTo" data-path="{{item.path}}">
+        <view class="quick-icon-wrap" style="background:{{item.bg}}">
+          <text class="quick-icon">{{item.icon}}</text>
+        </view>
+        <text class="quick-label">{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 待办事项预览 -->
+  <view class="section-card" bindtap="goLife">
+    <view class="section-title-row">
+      <text class="section-t">✅ 今日待办</text>
+      <text class="section-more">查看全部 ›</text>
+    </view>
+    <view wx:if="{{todoList.length > 0}}">
+      <view class="todo-item" wx:for="{{todoList}}" wx:key="id">
+        <view class="todo-dot {{item.priority === 'high' ? 'dot-high' : item.priority === 'mid' ? 'dot-mid' : 'dot-low'}}"></view>
+        <text class="todo-text">{{item.text}}</text>
+      </view>
+    </view>
+    <view wx:else class="empty-hint">
+      <text>暂无待办，去添加一个吧 ✨</text>
+    </view>
+  </view>
+
+  <!-- 学习笔记预览 -->
+  <view class="section-card" bindtap="goStudy">
+    <view class="section-title-row">
+      <text class="section-t">📚 最近学习</text>
+      <text class="section-more">查看全部 ›</text>
+    </view>
+    <view wx:if="{{studyNotes.length > 0}}">
+      <view class="note-preview" wx:for="{{studyNotes}}" wx:key="id">
+        <view class="note-preview-icon">{{item.icon || '📝'}}</view>
+        <view class="flex-1">
+          <view class="note-preview-title">{{item.title}}</view>
+          <view class="note-preview-sub">{{item.category}} · {{item.date}}</view>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="empty-hint">
+      <text>还没有学习记录，开始学习吧 🚀</text>
+    </view>
+  </view>
+
+  <!-- 每日小贴士 -->
+  <view class="tip-banner">
+    <text class="tip-icon">💬</text>
+    <text class="tip-text">{{tips[currentTip]}}</text>
+  </view>
+
+  <!-- AI入口 -->
+  <view class="ai-cta" bindtap="goAI">
+    <view class="ai-cta-left">
+      <text class="ai-cta-icon">🤖</text>
+      <view>
+        <view class="ai-cta-title">AI智伴助手</view>
+        <view class="ai-cta-sub">有问题？问我吧～</view>
+      </view>
+    </view>
+    <view class="ai-cta-arrow">›</view>
+  </view>
+
+  <view style="height:32rpx"></view>
 </view>

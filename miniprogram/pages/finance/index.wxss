@@ -1,0 +1,164 @@
+/* pages/finance/index.wxss */
+
+/* 头部 */
+.finance-header {
+  background: linear-gradient(135deg, #6C63FF, #9B59B6);
+  padding: 40rpx 32rpx 48rpx;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+.fh-bg-circle { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.07); }
+.fhc1 { width: 280rpx; height: 280rpx; top: -80rpx; right: -60rpx; }
+.fhc2 { width: 160rpx; height: 160rpx; bottom: -40rpx; left: 40rpx; }
+
+.fh-title { font-size: 26rpx; color: rgba(255,255,255,0.7); margin-bottom: 12rpx; }
+
+.fh-balance { margin-bottom: 32rpx; }
+.fh-balance-label { font-size: 26rpx; color: rgba(255,255,255,0.75); display: block; margin-bottom: 4rpx; }
+.fh-balance-val { font-size: 64rpx; font-weight: 700; color: #fff; }
+.fh-balance-val.negative { color: #FF8A80; }
+
+.fh-stats-row { display: flex; align-items: center; margin-bottom: 24rpx; }
+.fh-stat { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6rpx; }
+.fh-stat-label { font-size: 22rpx; color: rgba(255,255,255,0.7); }
+.fh-stat-val { font-size: 32rpx; font-weight: 600; color: #fff; }
+.fh-stat-val.income { color: #B2FFD6; }
+.fh-stat-val.expense { color: #FFB3B3; }
+.fh-stat-divider { width: 1rpx; height: 50rpx; background: rgba(255,255,255,0.25); }
+
+/* 预算 */
+.budget-section { margin-top: 8rpx; }
+.budget-info-row { display: flex; justify-content: space-between; font-size: 22rpx; color: rgba(255,255,255,0.7); margin-bottom: 10rpx; }
+.budget-bar-bg { height: 8rpx; background: rgba(255,255,255,0.25); border-radius: 4rpx; overflow: hidden; }
+.budget-bar-fill { height: 100%; background: rgba(255,255,255,0.85); border-radius: 4rpx; transition: width .5s; }
+.budget-bar-fill.warn { background: #FFD580; }
+.budget-bar-fill.danger { background: #FF8A80; }
+
+/* 分类统计 */
+.cat-stats-card {
+  background: #fff;
+  margin: 16rpx 24rpx;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  box-shadow: 0 4rpx 20rpx rgba(108,99,255,0.08);
+}
+.cs-title { font-size: 28rpx; font-weight: 700; color: #1A1A2E; margin-bottom: 20rpx; }
+.cs-list { display: flex; flex-direction: column; gap: 16rpx; }
+.cs-item { display: flex; align-items: center; gap: 16rpx; }
+.cs-icon { width: 60rpx; height: 60rpx; border-radius: 14rpx; display: flex; align-items: center; justify-content: center; font-size: 32rpx; flex-shrink: 0; }
+.cs-item-top { display: flex; justify-content: space-between; margin-bottom: 8rpx; }
+.cs-label { font-size: 26rpx; color: #333; }
+.cs-amount { font-size: 26rpx; font-weight: 600; color: #1A1A2E; }
+.cs-bar-bg { height: 6rpx; background: #F0F0F8; border-radius: 3rpx; overflow: hidden; }
+.cs-bar-fill { height: 100%; border-radius: 3rpx; transition: width .5s; }
+
+/* 筛选栏 */
+.filter-bar {
+  padding: 0 16rpx;
+  margin: 16rpx 0 4rpx;
+}
+.filter-type-scroll, .filter-period-scroll { white-space: nowrap; }
+.filter-type-row, .filter-period-row { display: inline-flex; gap: 12rpx; padding: 8rpx 8rpx; }
+.filter-btn {
+  display: inline-flex; align-items: center; padding: 10rpx 28rpx;
+  border-radius: 100rpx; font-size: 26rpx; color: #666;
+  background: #F0F0F8; border: 2rpx solid transparent;
+}
+.filter-btn.active { background: #EEF0FF; color: #6C63FF; border-color: #6C63FF; }
+.period-btn {
+  display: inline-flex; align-items: center; padding: 8rpx 22rpx;
+  border-radius: 100rpx; font-size: 24rpx; color: #888;
+  background: #F5F5FA;
+}
+.period-btn.active { background: #6C63FF; color: #fff; }
+
+/* 日期分组 */
+.date-group { margin: 0 24rpx 16rpx; }
+.date-header { display: flex; align-items: center; justify-content: space-between; padding: 12rpx 4rpx; }
+.date-label { font-size: 26rpx; color: #888; font-weight: 500; }
+.date-summary { display: flex; gap: 16rpx; }
+.ds-income { font-size: 24rpx; color: #4CAF50; }
+.ds-expense { font-size: 24rpx; color: #FF5252; }
+
+.record-card {
+  background: #fff;
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(108,99,255,0.06);
+}
+.record-item {
+  display: flex; align-items: center; padding: 24rpx 24rpx;
+  border-bottom: 1rpx solid #F5F5FA;
+}
+.record-item:last-child { border-bottom: none; }
+
+.rec-icon-wrap {
+  width: 72rpx; height: 72rpx; border-radius: 18rpx;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36rpx; margin-right: 20rpx; flex-shrink: 0;
+}
+.rec-info { flex: 1; }
+.rec-cat { font-size: 28rpx; color: #1A1A2E; font-weight: 500; }
+.rec-note { font-size: 22rpx; color: #999; margin-top: 4rpx; }
+
+.rec-right { display: flex; align-items: center; gap: 16rpx; }
+.rec-amount { font-size: 30rpx; font-weight: 700; }
+.rec-amount.income { color: #4CAF50; }
+.rec-amount.expense { color: #FF5252; }
+.rec-del { font-size: 36rpx; color: #CCC; padding: 8rpx; }
+
+/* 弹窗 - 类型切换 */
+.type-switch {
+  display: flex; gap: 0; margin-bottom: 28rpx;
+  background: #F5F5FA; border-radius: 100rpx; padding: 6rpx;
+}
+.type-btn {
+  flex: 1; height: 72rpx; border-radius: 100rpx;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28rpx; color: #888; font-weight: 500;
+  transition: all 0.2s;
+}
+.type-btn.active-expense { background: #FF5252; color: #fff; }
+.type-btn.active-income { background: #4CAF50; color: #fff; }
+
+/* 金额输入 */
+.amount-input-wrap {
+  display: flex; align-items: center;
+  background: #F5F5FA; border-radius: 16rpx;
+  padding: 24rpx 28rpx; margin-bottom: 24rpx;
+}
+.currency-symbol { font-size: 40rpx; color: #333; margin-right: 12rpx; font-weight: 700; }
+.amount-input { flex: 1; font-size: 48rpx; font-weight: 700; color: #1A1A2E; }
+
+/* 分类网格 */
+.cat-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 16rpx; margin-bottom: 24rpx;
+}
+.cat-item {
+  display: flex; flex-direction: column; align-items: center; gap: 8rpx;
+}
+.cat-icon-wrap {
+  width: 80rpx; height: 80rpx; border-radius: 20rpx;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36rpx; border: 3rpx solid transparent;
+}
+.cat-name { font-size: 20rpx; color: #666; }
+.cat-item.cat-active .cat-icon-wrap { border-color: #6C63FF; }
+.cat-item.cat-active .cat-name { color: #6C63FF; font-weight: 600; }
+
+/* 日期选择 */
+.date-picker { color: #444; }
+
+/* 保存按钮 */
+.save-btn { margin-top: 16rpx; }
+
+/* FAB */
+.fab {
+  position: fixed; right: 40rpx; bottom: 160rpx;
+  width: 100rpx; height: 100rpx; border-radius: 50rpx;
+  background: #6C63FF; color: #fff; font-size: 56rpx;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8rpx 32rpx rgba(108, 99, 255, 0.45); z-index: 100;
+}

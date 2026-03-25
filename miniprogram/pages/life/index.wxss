@@ -1,0 +1,139 @@
+/* pages/life/index.wxss */
+
+/* 头部 */
+.life-header {
+  background: linear-gradient(135deg, #FFB347, #FF7043);
+  padding: 40rpx 32rpx 40rpx;
+  position: relative; overflow: hidden; color: #fff;
+}
+.lh-bg-circle { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.1); }
+.lhc1 { width: 260rpx; height: 260rpx; top: -60rpx; right: -50rpx; }
+.lhc2 { width: 150rpx; height: 150rpx; bottom: -50rpx; left: 30rpx; background: rgba(255,255,255,0.07); }
+
+.lh-title { font-size: 36rpx; font-weight: 700; color: #fff; margin-bottom: 28rpx; }
+.lh-stats-row { display: flex; align-items: center; }
+.lh-stat { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6rpx; }
+.lh-stat-val { font-size: 44rpx; font-weight: 700; color: #fff; }
+.lh-stat-label { font-size: 22rpx; color: rgba(255,255,255,0.75); }
+
+/* 通用section卡片 */
+.section-card-life {
+  background: #fff; border-radius: 24rpx;
+  padding: 28rpx; margin: 16rpx 24rpx 0;
+  box-shadow: 0 4rpx 20rpx rgba(255,179,71,0.08);
+}
+.section-t-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20rpx; }
+.sec-title { font-size: 30rpx; font-weight: 700; color: #1A1A2E; }
+.sec-add { font-size: 26rpx; color: #FFB347; font-weight: 600; }
+
+/* 工具格 */
+.tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20rpx; }
+.tool-item { display: flex; flex-direction: column; align-items: center; gap: 12rpx; }
+.tool-icon-wrap { width: 96rpx; height: 96rpx; border-radius: 28rpx; display: flex; align-items: center; justify-content: center; }
+.tool-icon { font-size: 48rpx; }
+.tool-label { font-size: 24rpx; color: #444466; font-weight: 500; }
+
+/* 习惯打卡 */
+.habits-row { display: flex; flex-wrap: wrap; gap: 20rpx; }
+.habit-item { display: flex; flex-direction: column; align-items: center; gap: 10rpx; width: 120rpx; }
+.habit-icon-wrap {
+  width: 88rpx; height: 88rpx; border-radius: 44rpx;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; transition: all 0.2s;
+}
+.habit-icon-wrap.checked { opacity: 1; }
+.habit-icon { font-size: 40rpx; }
+.habit-name { font-size: 22rpx; color: #555; text-align: center; }
+.habit-name.checked-text { color: #4CAF50; font-weight: 600; }
+.habit-check {
+  position: absolute; top: -4rpx; right: -4rpx;
+  width: 32rpx; height: 32rpx; border-radius: 16rpx;
+  background: #4CAF50; color: #fff;
+  font-size: 20rpx; display: flex; align-items: center; justify-content: center;
+}
+
+/* 待办筛选 */
+.todo-filter-row { display: flex; gap: 12rpx; margin-bottom: 20rpx; }
+.todo-filter-btn {
+  padding: 10rpx 24rpx; border-radius: 100rpx;
+  font-size: 24rpx; color: #888; background: #F5F5FA;
+}
+.todo-filter-btn.active { background: #FFB347; color: #fff; }
+
+/* 待办行 */
+.todo-row { display: flex; align-items: flex-start; padding: 16rpx 0; border-bottom: 1rpx solid #F5F5FA; gap: 16rpx; }
+.todo-row:last-child { border-bottom: none; }
+
+.todo-check {
+  width: 44rpx; height: 44rpx; border-radius: 22rpx;
+  border: 3rpx solid; display: flex; align-items: center; justify-content: center;
+  font-size: 24rpx; color: #fff; flex-shrink: 0; margin-top: 4rpx;
+}
+.todo-check.undone { border-color: #DDD; background: transparent; }
+.todo-check.done { border-color: #4CAF50; background: #4CAF50; }
+
+.todo-body { flex: 1; }
+.todo-text { font-size: 28rpx; color: #1A1A2E; line-height: 1.5; display: block; }
+.todo-text.done-text { text-decoration: line-through; color: #BBB; }
+.todo-meta { display: flex; align-items: center; gap: 12rpx; margin-top: 8rpx; }
+
+.priority-tag {
+  font-size: 20rpx; padding: 4rpx 14rpx; border-radius: 100rpx; font-weight: 500;
+}
+.p-high { background: #FFEBEE; color: #FF5252; }
+.p-mid { background: #FFF8E1; color: #FFB347; }
+.p-low { background: #E8F5E9; color: #4CAF50; }
+
+.todo-deadline { font-size: 20rpx; color: #AAA; }
+.todo-del { font-size: 36rpx; color: #CCC; padding: 8rpx; margin-top: -4rpx; }
+
+/* 提醒 */
+.reminder-item { display: flex; align-items: flex-start; gap: 20rpx; padding: 16rpx 0; border-bottom: 1rpx solid #F5F5FA; }
+.reminder-item:last-child { border-bottom: none; }
+.reminder-time {
+  font-size: 28rpx; font-weight: 700; color: #FFB347;
+  background: #FFF8E1; padding: 8rpx 16rpx; border-radius: 12rpx;
+  white-space: nowrap; flex-shrink: 0;
+}
+.reminder-info { flex: 1; }
+.reminder-title { font-size: 28rpx; color: #1A1A2E; font-weight: 500; }
+.reminder-note { font-size: 22rpx; color: #999; margin-top: 4rpx; }
+
+/* 优先级选择 */
+.priority-row { display: flex; gap: 16rpx; margin-bottom: 16rpx; }
+.priority-opt {
+  flex: 1; height: 72rpx; border-radius: 12rpx;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26rpx; color: #888; background: #F5F5FA;
+}
+.priority-opt.active-high { background: #FFEBEE; color: #FF5252; font-weight: 700; }
+.priority-opt.active-mid { background: #FFF8E1; color: #FFB347; font-weight: 700; }
+.priority-opt.active-low { background: #E8F5E9; color: #4CAF50; font-weight: 700; }
+
+/* 图标/颜色选择 */
+.label-text { font-size: 26rpx; color: #888; margin: 8rpx 0; }
+.icon-picker-row { display: flex; gap: 16rpx; flex-wrap: wrap; margin-bottom: 16rpx; }
+.icon-opt {
+  width: 72rpx; height: 72rpx; border-radius: 20rpx;
+  background: #F5F5FA; display: flex; align-items: center;
+  justify-content: center; font-size: 36rpx;
+  border: 3rpx solid transparent;
+}
+.icon-opt.active { border-color: #6C63FF; background: #EEF0FF; }
+
+.color-picker-row { display: flex; gap: 20rpx; margin-bottom: 20rpx; }
+.color-opt {
+  width: 52rpx; height: 52rpx; border-radius: 26rpx;
+  display: flex; align-items: center; justify-content: center;
+}
+.color-check { font-size: 28rpx; color: #fff; font-weight: 700; }
+
+/* 日期选择 */
+.date-picker { color: #444; }
+.save-btn { margin-top: 16rpx; }
+
+/* 空提示 */
+.empty-hint {
+  display: flex; align-items: center; justify-content: center;
+  padding: 24rpx 0; color: #BBBBCC; font-size: 26rpx;
+}

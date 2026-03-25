@@ -1,0 +1,130 @@
+<!-- pages/ai/index.wxml - AI智伴助手 -->
+<view class="ai-page">
+
+  <!-- 顶部栏 -->
+  <view class="ai-topbar">
+    <view class="ai-topbar-left">
+      <view class="ai-avatar-dot"></view>
+      <view>
+        <view class="ai-name">智伴 AI</view>
+        <view class="ai-status {{isComposing ? 'typing' : 'online'}}">
+          {{isComposing ? '正在思考...' : '在线'}}
+        </view>
+      </view>
+    </view>
+    <view class="ai-topbar-actions">
+      <view class="topbar-btn" bindtap="clearChat">🗑️</view>
+    </view>
+  </view>
+
+  <!-- 角色切换 -->
+  <scroll-view scroll-x class="role-scroll">
+    <view class="role-row">
+      <view class="role-chip" bindtap="switchRole" data-role="general">🤖 通用</view>
+      <view class="role-chip" bindtap="switchRole" data-role="finance">💰 财务顾问</view>
+      <view class="role-chip" bindtap="switchRole" data-role="study">📚 学习导师</view>
+      <view class="role-chip" bindtap="switchRole" data-role="life">🌱 生活助手</view>
+    </view>
+  </scroll-view>
+
+  <!-- 消息列表 -->
+  <scroll-view
+    class="chat-scroll"
+    scroll-y
+    scroll-with-animation
+    scroll-into-view="{{scrollToMessage}}"
+    enable-back-to-top>
+
+    <!-- 快捷提问（无对话时显示） -->
+    <view wx:if="{{messages.length <= 1}}" class="quick-questions">
+      <view class="qq-title">💡 你可以这样问我</view>
+      <view class="qq-grid">
+        <view class="qq-item" wx:for="{{quickQuestions}}" wx:key="index"
+              bindtap="askQuick" data-q="{{item}}">
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 消息气泡 -->
+    <view id="msg_{{item.id}}" class="msg-wrapper {{item.role === 'user' ? 'user-side' : 'ai-side'}}"
+          wx:for="{{messages}}" wx:key="id">
+
+      <!-- AI消息 -->
+      <block wx:if="{{item.role === 'assistant'}}">
+        <view class="ai-bubble-wrap">
+          <view class="ai-bot-icon">🤖</view>
+          <view class="msg-right">
+            <!-- 思维链 -->
+            <view wx:if="{{item.hasThinking}}" class="think-wrap">
+              <view class="think-header" bindtap="toggleThink" data-id="{{item.id}}">
+                <text class="think-icon">💭</text>
+                <text class="think-label">{{item.thinkDone ? '推理完成' : '正在推理...'}}</text>
+                <text class="think-toggle">{{item.showThinking ? '▲' : '▼'}}</text>
+              </view>
+              <view wx:if="{{item.showThinking}}" class="think-content">{{item.thinking}}</view>
+            </view>
+
+            <!-- 正文 -->
+            <view class="ai-bubble {{item.loading ? 'loading-bubble' : ''}}">
+              <view wx:if="{{item.loading && !item.content}}" class="typing-indicator">
+                <view class="dot d1"></view>
+                <view class="dot d2"></view>
+                <view class="dot d3"></view>
+              </view>
+              <text wx:else class="msg-text ai-text" user-select="true">{{item.content}}</text>
+            </view>
+
+            <!-- 消息操作 -->
+            <view wx:if="{{!item.loading}}" class="msg-actions">
+              <text class="msg-time">{{item.time}}</text>
+              <text class="msg-copy" bindtap="copyMessage" data-content="{{item.content}}">复制</text>
+            </view>
+          </view>
+        </view>
+      </block>
+
+      <!-- 用户消息 -->
+      <block wx:if="{{item.role === 'user'}}">
+        <view class="user-bubble-wrap">
+          <view class="user-bubble">
+            <text class="msg-text user-text">{{item.content}}</text>
+          </view>
+          <view class="user-time">{{item.time}}</view>
+        </view>
+      </block>
+    </view>
+
+    <!-- 底部占位 -->
+    <view style="height:200rpx" id="chat-bottom"></view>
+  </scroll-view>
+
+  <!-- 输入区域 -->
+  <view class="chat-input-area">
+    <view class="chat-input-row">
+      <textarea
+        class="chat-input"
+        placeholder="问我任何问题..."
+        placeholder-class="input-placeholder"
+        value="{{inputText}}"
+        bindinput="onInput"
+        bindfocus="onInputFocus"
+        auto-height
+        maxlength="1000"
+        confirm-type="send"
+        disabled="{{isComposing}}"
+      />
+      <view class="send-btn {{inputText && !isComposing ? 'active' : 'disabled'}}"
+            bindtap="sendMessage">
+        <text wx:if="{{!isComposing}}">↑</text>
+        <view wx:else class="mini-loader">
+          <view class="ml-dot"></view>
+          <view class="ml-dot"></view>
+          <view class="ml-dot"></view>
+        </view>
+      </view>
+    </view>
+    <view class="char-hint" wx:if="{{inputText.length > 800}}">{{inputText.length}}/1000</view>
+  </view>
+
+</view>

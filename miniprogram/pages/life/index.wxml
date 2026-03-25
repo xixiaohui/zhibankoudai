@@ -1,0 +1,199 @@
+<!-- pages/life/index.wxml - 日常生活 -->
+<view class="container">
+
+  <!-- 头部 -->
+  <view class="life-header">
+    <view class="lh-bg-circle lhc1"></view>
+    <view class="lh-bg-circle lhc2"></view>
+    <view class="lh-title">日常生活 🌱</view>
+    <view class="lh-stats-row">
+      <view class="lh-stat">
+        <view class="lh-stat-val">{{pendingTodos}}</view>
+        <view class="lh-stat-label">待完成</view>
+      </view>
+      <view class="lh-stat">
+        <view class="lh-stat-val">{{doneTodos}}</view>
+        <view class="lh-stat-label">已完成</view>
+      </view>
+      <view class="lh-stat">
+        <view class="lh-stat-val">{{habits.length}}</view>
+        <view class="lh-stat-label">个习惯</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 生活工具 -->
+  <view class="section-card-life">
+    <view class="section-t-row">
+      <text class="sec-title">🔧 快捷工具</text>
+    </view>
+    <view class="tools-grid">
+      <view class="tool-item" wx:for="{{lifeTools}}" wx:key="label"
+            bindtap="onToolTap" data-action="{{item.action}}">
+        <view class="tool-icon-wrap" style="background:{{item.bg}}">
+          <text class="tool-icon">{{item.icon}}</text>
+        </view>
+        <text class="tool-label">{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 习惯打卡 -->
+  <view class="section-card-life">
+    <view class="section-t-row">
+      <text class="sec-title">🔁 习惯打卡</text>
+      <text class="sec-add" bindtap="openAddHabit">+ 添加</text>
+    </view>
+
+    <view wx:if="{{habits.length > 0}}" class="habits-row">
+      <view class="habit-item" wx:for="{{habits}}" wx:key="id"
+            bindtap="checkHabit" data-id="{{item.id}}">
+        <view class="habit-icon-wrap {{item.checkedToday ? 'checked' : ''}}"
+              style="background: {{item.checkedToday ? item.color : item.color + '18'}}">
+          <text class="habit-icon">{{item.icon}}</text>
+        </view>
+        <text class="habit-name {{item.checkedToday ? 'checked-text' : ''}}">{{item.name}}</text>
+        <view wx:if="{{item.checkedToday}}" class="habit-check">✓</view>
+      </view>
+    </view>
+
+    <view wx:else class="empty-hint">
+      <text>添加你的每日习惯，每天打卡 ✨</text>
+    </view>
+  </view>
+
+  <!-- 待办事项 -->
+  <view class="section-card-life">
+    <view class="section-t-row">
+      <text class="sec-title">✅ 待办事项</text>
+      <text class="sec-add" bindtap="openAddTodo">+ 添加</text>
+    </view>
+
+    <!-- 筛选 -->
+    <view class="todo-filter-row">
+      <view class="todo-filter-btn {{todoFilter === 'pending' ? 'active' : ''}}"
+            bindtap="setTodoFilter" data-filter="pending">待完成</view>
+      <view class="todo-filter-btn {{todoFilter === 'done' ? 'active' : ''}}"
+            bindtap="setTodoFilter" data-filter="done">已完成</view>
+      <view class="todo-filter-btn {{todoFilter === 'all' ? 'active' : ''}}"
+            bindtap="setTodoFilter" data-filter="all">全部</view>
+    </view>
+
+    <!-- 待办列表 -->
+    <view wx:if="{{todos.length > 0}}">
+      <view class="todo-row" wx:for="{{todos}}" wx:key="id">
+        <view class="todo-check {{item.done ? 'done' : 'undone'}}"
+              bindtap="toggleTodo" data-id="{{item.id}}">
+          <text wx:if="{{item.done}}">✓</text>
+        </view>
+        <view class="todo-body">
+          <text class="todo-text {{item.done ? 'done-text' : ''}}">{{item.text}}</text>
+          <view class="todo-meta">
+            <view class="priority-tag {{item.priority === 'high' ? 'p-high' : item.priority === 'mid' ? 'p-mid' : 'p-low'}}">
+              {{item.priority === 'high' ? '高优先级' : item.priority === 'mid' ? '中' : '低'}}
+            </view>
+            <text wx:if="{{item.deadline}}" class="todo-deadline">📅 {{item.deadline}}</text>
+          </view>
+        </view>
+        <text class="todo-del" bindtap="deleteTodo" data-id="{{item.id}}">×</text>
+      </view>
+    </view>
+
+    <view wx:else class="empty-hint">
+      <text>暂无待办，去规划一下吧 🚀</text>
+    </view>
+  </view>
+
+  <!-- 日程提醒 -->
+  <view class="section-card-life">
+    <view class="section-t-row">
+      <text class="sec-title">⏰ 日程提醒</text>
+      <text class="sec-add" bindtap="openAddReminder">+ 添加</text>
+    </view>
+
+    <view wx:if="{{reminders.length > 0}}">
+      <view class="reminder-item" wx:for="{{reminders}}" wx:key="id">
+        <view class="reminder-time">{{item.time}}</view>
+        <view class="reminder-info">
+          <view class="reminder-title">{{item.title}}</view>
+          <view class="reminder-note" wx:if="{{item.note}}">{{item.note}}</view>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="empty-hint"><text>暂无提醒</text></view>
+  </view>
+
+  <view style="height:40rpx"></view>
+
+  <!-- 新增待办弹窗 -->
+  <view class="modal-mask" wx:if="{{showAddTodo}}" bindtap="closeAddTodo">
+    <view class="modal-box" catchtap="">
+      <view class="modal-title">添加待办</view>
+      <input class="input-item" placeholder="待办内容 *"
+             value="{{todoForm.text}}" bindinput="onTodoInput" focus="{{showAddTodo}}"/>
+
+      <view class="priority-row">
+        <view class="priority-opt {{todoForm.priority === 'high' ? 'active-high' : ''}}"
+              bindtap="setTodoPriority" data-priority="high">🔴 高</view>
+        <view class="priority-opt {{todoForm.priority === 'mid' ? 'active-mid' : ''}}"
+              bindtap="setTodoPriority" data-priority="mid">🟡 中</view>
+        <view class="priority-opt {{todoForm.priority === 'low' ? 'active-low' : ''}}"
+              bindtap="setTodoPriority" data-priority="low">🟢 低</view>
+      </view>
+
+      <picker mode="date" value="{{todoForm.deadline}}" bindchange="onDeadlineChange">
+        <view class="input-item date-picker">
+          <text>📅 截止：{{todoForm.deadline || '选择日期'}}</text>
+        </view>
+      </picker>
+
+      <view class="btn-primary save-btn" bindtap="saveTodo">添加待办</view>
+    </view>
+  </view>
+
+  <!-- 新增提醒弹窗 -->
+  <view class="modal-mask" wx:if="{{showAddReminder}}" bindtap="closeAddReminder">
+    <view class="modal-box" catchtap="">
+      <view class="modal-title">设置提醒</view>
+      <input class="input-item" placeholder="提醒标题 *"
+             value="{{reminderForm.title}}" bindinput="onReminderTitleInput" focus="{{showAddReminder}}"/>
+      <picker mode="time" value="{{reminderForm.time}}" bindchange="onReminderTimeChange">
+        <view class="input-item date-picker">
+          <text>⏰ 时间：{{reminderForm.time}}</text>
+        </view>
+      </picker>
+      <input class="input-item" placeholder="备注（可选）"
+             value="{{reminderForm.note}}" bindinput="onReminderNoteInput"/>
+      <view class="btn-primary save-btn" bindtap="saveReminder">保存提醒</view>
+    </view>
+  </view>
+
+  <!-- 新增习惯弹窗 -->
+  <view class="modal-mask" wx:if="{{showAddHabit}}" bindtap="closeAddHabit">
+    <view class="modal-box" catchtap="">
+      <view class="modal-title">添加习惯</view>
+      <input class="input-item" placeholder="习惯名称 *"
+             value="{{habitForm.name}}" bindinput="onHabitNameInput" focus="{{showAddHabit}}"/>
+
+      <view class="label-text">选择图标</view>
+      <view class="icon-picker-row">
+        <view class="icon-opt {{habitForm.icon === item ? 'active' : ''}}"
+              wx:for="{{habitIcons}}" wx:key="index"
+              bindtap="selectHabitIcon" data-icon="{{item}}">{{item}}</view>
+      </view>
+
+      <view class="label-text">选择颜色</view>
+      <view class="color-picker-row">
+        <view class="color-opt {{habitForm.color === item ? 'active' : ''}}"
+              wx:for="{{habitColors}}" wx:key="index"
+              style="background:{{item}}"
+              bindtap="selectHabitColor" data-color="{{item}}">
+          <view wx:if="{{habitForm.color === item}}" class="color-check">✓</view>
+        </view>
+      </view>
+
+      <view class="btn-primary save-btn" bindtap="saveHabit">添加习惯</view>
+    </view>
+  </view>
+
+</view>

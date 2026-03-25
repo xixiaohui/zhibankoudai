@@ -1,0 +1,84 @@
+<!-- pages/mine/index.wxml - 我的 -->
+<view class="container">
+
+  <!-- 用户信息头部 -->
+  <view class="mine-header">
+    <view class="mh-bg-circle mhc1"></view>
+    <view class="mh-bg-circle mhc2"></view>
+
+    <view wx:if="{{userInfo}}" class="user-info-row">
+      <image class="user-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"/>
+      <view class="user-detail">
+        <view class="user-name">{{userInfo.nickName}}</view>
+        <view class="user-join">加入于 {{joinDate}}</view>
+      </view>
+    </view>
+
+    <view wx:else class="login-btn-wrap" bindtap="getUserInfo">
+      <view class="default-avatar">🙂</view>
+      <view class="login-prompt">
+        <view class="login-title">点击登录</view>
+        <view class="login-sub">登录后享受更多功能</view>
+      </view>
+      <view class="login-arrow">›</view>
+    </view>
+
+    <!-- 使用统计 -->
+    <view class="stats-row">
+      <view class="stat-item">
+        <view class="stat-val">{{stats.records}}</view>
+        <view class="stat-label">账单记录</view>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <view class="stat-val">{{stats.notes}}</view>
+        <view class="stat-label">学习笔记</view>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <view class="stat-val">{{stats.todos}}</view>
+        <view class="stat-label">完成待办</view>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <view class="stat-val">{{stats.habits}}</view>
+        <view class="stat-label">我的习惯</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- AI助手入口 -->
+  <view class="ai-banner" bindtap="() => wx.switchTab({url: '/pages/ai/index'})">
+    <view class="ai-banner-left">
+      <text class="ai-banner-icon">🤖</text>
+      <view>
+        <view class="ai-banner-title">智伴 AI 助手</view>
+        <view class="ai-banner-sub">随时随地，智能问答</view>
+      </view>
+    </view>
+    <view class="ai-banner-arrow">›</view>
+  </view>
+
+  <!-- 菜单列表 -->
+  <view class="menu-card">
+    <view class="menu-item" wx:for="{{menuList}}" wx:key="action"
+          bindtap="onMenuTap" data-action="{{item.action}}">
+      <view class="menu-icon-wrap">
+        <text class="menu-icon">{{item.icon}}</text>
+      </view>
+      <view class="menu-info">
+        <view class="menu-label">{{item.label}}</view>
+        <view class="menu-desc">{{item.desc}}</view>
+      </view>
+      <view class="menu-arrow">›</view>
+    </view>
+  </view>
+
+  <!-- 版本信息 -->
+  <view class="version-info">
+    <text class="version-logo">🎯 智伴口袋</text>
+    <text class="version-text">v{{appVersion}} · 全能生活管理助手</text>
+  </view>
+
+  <view style="height:40rpx"></view>
+</view>

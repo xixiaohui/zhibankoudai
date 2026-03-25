@@ -1,0 +1,195 @@
+<!-- pages/finance/index.wxml - 金融管理 -->
+<view class="container">
+
+  <!-- 头部统计 -->
+  <view class="finance-header">
+    <view class="fh-bg-circle fhc1"></view>
+    <view class="fh-bg-circle fhc2"></view>
+    <view class="fh-title">本月概览</view>
+    <view class="fh-balance">
+      <text class="fh-balance-label">本月结余</text>
+      <text class="fh-balance-val {{monthBalance >= 0 ? '' : 'negative'}}">
+        ¥{{monthBalance >= 0 ? '' : '-'}}{{monthBalance >= 0 ? monthBalance : -monthBalance}}
+      </text>
+    </view>
+    <view class="fh-stats-row">
+      <view class="fh-stat">
+        <text class="fh-stat-label">收入</text>
+        <text class="fh-stat-val income">¥{{monthIncome}}</text>
+      </view>
+      <view class="fh-stat-divider"></view>
+      <view class="fh-stat">
+        <text class="fh-stat-label">支出</text>
+        <text class="fh-stat-val expense">¥{{monthExpense}}</text>
+      </view>
+      <view class="fh-stat-divider"></view>
+      <view class="fh-stat" bindtap="openBudgetModal">
+        <text class="fh-stat-label">预算</text>
+        <text class="fh-stat-val">{{budgetMonthly > 0 ? '¥' + budgetMonthly : '设置'}}</text>
+      </view>
+    </view>
+
+    <!-- 预算进度 -->
+    <view wx:if="{{budgetMonthly > 0}}" class="budget-section">
+      <view class="budget-info-row">
+        <text>预算使用 {{budgetPercent}}%</text>
+        <text>¥{{monthExpense}} / ¥{{budgetMonthly}}</text>
+      </view>
+      <view class="budget-bar-bg">
+        <view class="budget-bar-fill {{budgetPercent >= 90 ? 'danger' : budgetPercent >= 70 ? 'warn' : ''}}"
+              style="width:{{budgetPercent}}%"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 分类消费统计 -->
+  <view wx:if="{{categoryStats.length > 0}}" class="cat-stats-card">
+    <view class="cs-title">本月消费分布</view>
+    <view class="cs-list">
+      <view class="cs-item" wx:for="{{categoryStats}}" wx:key="key">
+        <view class="cs-icon" style="background:{{item.color}}20">{{item.icon}}</view>
+        <view class="flex-1">
+          <view class="cs-item-top">
+            <text class="cs-label">{{item.label}}</text>
+            <text class="cs-amount">¥{{item.total}}</text>
+          </view>
+          <view class="cs-bar-bg">
+            <view class="cs-bar-fill" style="width:{{monthExpense > 0 ? item.total / monthExpense * 100 : 0}}%; background:{{item.color}}"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 筛选栏 -->
+  <view class="filter-bar">
+    <scroll-view scroll-x class="filter-type-scroll">
+      <view class="filter-type-row">
+        <view class="filter-btn {{filterType === 'all' ? 'active' : ''}}"
+              bindtap="setFilterType" data-type="all">全部</view>
+        <view class="filter-btn {{filterType === 'income' ? 'active' : ''}}"
+              bindtap="setFilterType" data-type="income">收入</view>
+        <view class="filter-btn {{filterType === 'expense' ? 'active' : ''}}"
+              bindtap="setFilterType" data-type="expense">支出</view>
+      </view>
+    </scroll-view>
+    <scroll-view scroll-x class="filter-period-scroll">
+      <view class="filter-period-row">
+        <view class="period-btn {{filterPeriod === 'today' ? 'active' : ''}}"
+              bindtap="setFilterPeriod" data-period="today">今日</view>
+        <view class="period-btn {{filterPeriod === 'week' ? 'active' : ''}}"
+              bindtap="setFilterPeriod" data-period="week">本周</view>
+        <view class="period-btn {{filterPeriod === 'month' ? 'active' : ''}}"
+              bindtap="setFilterPeriod" data-period="month">本月</view>
+        <view class="period-btn {{filterPeriod === 'all' ? 'active' : ''}}"
+              bindtap="setFilterPeriod" data-period="all">全部</view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 记录列表 -->
+  <view wx:if="{{groupedRecords.length > 0}}">
+    <view wx:for="{{groupedRecords}}" wx:key="date" class="date-group">
+      <view class="date-header">
+        <text class="date-label">{{item.date}}</text>
+        <view class="date-summary">
+          <text wx:if="{{item.income > 0}}" class="ds-income">+¥{{item.income}}</text>
+          <text wx:if="{{item.expense > 0}}" class="ds-expense">-¥{{item.expense}}</text>
+        </view>
+      </view>
+      <view class="record-card">
+        <view class="record-item" wx:for="{{item.records}}" wx:key="id" wx:for-item="rec">
+          <view class="rec-icon-wrap" style="background:{{rec.catInfo.color}}18">
+            <text class="rec-icon">{{rec.catInfo.icon}}</text>
+          </view>
+          <view class="rec-info">
+            <view class="rec-cat">{{rec.catInfo.label}}</view>
+            <view class="rec-note" wx:if="{{rec.note}}">{{rec.note}}</view>
+          </view>
+          <view class="rec-right">
+            <text class="rec-amount {{rec.type === 'income' ? 'income' : 'expense'}}">
+              {{rec.type === 'income' ? '+' : '-'}}¥{{rec.amount}}
+            </text>
+            <text class="rec-del" bindtap="deleteRecord" data-id="{{rec.id}}">×</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="empty-state">
+    <text class="empty-icon">💰</text>
+    <text>暂无记录，点击下方按钮添加</text>
+  </view>
+
+  <view style="height:160rpx"></view>
+
+  <!-- 浮动添加按钮 -->
+  <view class="fab" bindtap="openAddModal">+</view>
+
+  <!-- 新增记录弹窗 -->
+  <view class="modal-mask" wx:if="{{showAddModal}}" bindtap="closeAddModal">
+    <view class="modal-box" catchtap="">
+      <view class="modal-title">记一笔</view>
+
+      <!-- 收入/支出切换 -->
+      <view class="type-switch">
+        <view class="type-btn {{form.type === 'expense' ? 'active-expense' : ''}}"
+              bindtap="setFormType" data-type="expense">支出</view>
+        <view class="type-btn {{form.type === 'income' ? 'active-income' : ''}}"
+              bindtap="setFormType" data-type="income">收入</view>
+      </view>
+
+      <!-- 金额输入 -->
+      <view class="amount-input-wrap">
+        <text class="currency-symbol">¥</text>
+        <input class="amount-input" type="digit" placeholder="0.00"
+               value="{{form.amount}}" bindinput="onAmountInput" focus="{{showAddModal}}"/>
+      </view>
+
+      <!-- 分类选择 -->
+      <view class="cat-grid">
+        <view wx:if="{{form.type === 'expense'}}"
+              class="cat-item {{form.category === item.key ? 'cat-active' : ''}}"
+              wx:for="{{expenseCategories}}" wx:key="key"
+              bindtap="setFormCategory" data-key="{{item.key}}">
+          <view class="cat-icon-wrap" style="background:{{item.color}}20">{{item.icon}}</view>
+          <text class="cat-name">{{item.label}}</text>
+        </view>
+        <view wx:if="{{form.type === 'income'}}"
+              class="cat-item {{form.category === item.key ? 'cat-active' : ''}}"
+              wx:for="{{incomeCategories}}" wx:key="key"
+              bindtap="setFormCategory" data-key="{{item.key}}">
+          <view class="cat-icon-wrap" style="background:{{item.color}}20">{{item.icon}}</view>
+          <text class="cat-name">{{item.label}}</text>
+        </view>
+      </view>
+
+      <!-- 备注 & 日期 -->
+      <input class="input-item" placeholder="备注（可选）"
+             value="{{form.note}}" bindinput="onNoteInput" maxlength="30"/>
+      <picker mode="date" value="{{form.date}}" bindchange="onDateChange">
+        <view class="input-item date-picker">
+          <text>📅 {{form.date}}</text>
+        </view>
+      </picker>
+
+      <!-- 保存 -->
+      <view class="btn-primary save-btn" bindtap="saveRecord">保存记录</view>
+    </view>
+  </view>
+
+  <!-- 预算设置弹窗 -->
+  <view class="modal-mask" wx:if="{{showBudgetModal}}" bindtap="closeBudgetModal">
+    <view class="modal-box" catchtap="">
+      <view class="modal-title">设置月度预算</view>
+      <view class="amount-input-wrap">
+        <text class="currency-symbol">¥</text>
+        <input class="amount-input" type="digit" placeholder="输入预算金额"
+               value="{{budgetInput}}" bindinput="onBudgetInput" focus="{{showBudgetModal}}"/>
+      </view>
+      <view class="btn-primary save-btn" bindtap="saveBudget">确认设置</view>
+    </view>
+  </view>
+
+</view>
