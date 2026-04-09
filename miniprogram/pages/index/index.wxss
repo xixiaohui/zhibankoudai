@@ -1,272 +1,424 @@
-/* pages/index/index.wxss - 首页样式 */
+/* pages/index/index.wxss - 智伴口袋首页样式 */
 
-/* ===== 渐变头部 ===== */
-.hero-header {
-  background: linear-gradient(135deg, #6C63FF 0%, #A594F9 100%);
-  padding: 0 32rpx 60rpx;
-  position: relative;
-  overflow: hidden;
+.page-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #F8F6FF 0%, #F0EDFF 100%);
+  padding: 20rpx 30rpx 100rpx;
 }
 
-.hero-bg-circle {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+/* 问候区域 */
+.greeting-section {
+  padding: 40rpx 0 30rpx;
+  text-align: center;
 }
 
-.hero-bg-circle.c1 {
-  width: 300rpx;
-  height: 300rpx;
-  top: -100rpx;
-  right: -50rpx;
-}
-
-.hero-bg-circle.c2 {
-  width: 200rpx;
-  height: 200rpx;
-  top: 50rpx;
-  left: -80rpx;
-}
-
-.hero-bg-circle.c3 {
-  width: 150rpx;
-  height: 150rpx;
-  bottom: -50rpx;
-  right: 20%;
-}
-
-.status-bar-placeholder {
-  height: env(safe-area-inset-top);
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-}
-
-.hero-greeting {
-  font-size: 40rpx;
+.greeting-text {
+  font-size: 48rpx;
   font-weight: 600;
-  color: #fff;
-  margin-bottom: 8rpx;
+  color: #333333;
+  line-height: 1.4;
+  margin-bottom: 10rpx;
 }
 
-.hero-date {
-  font-size: 26rpx;
-  color: rgba(255, 255, 255, 0.85);
+.time-text {
+  font-size: 28rpx;
+  color: #7C6AFF;
+  opacity: 0.8;
 }
 
-.hero-avatar {
-  width: 80rpx;
-  height: 80rpx;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40rpx;
-}
-
-/* ===== 财务卡片 ===== */
-.hero-finance-card {
-  background: #fff;
-  border-radius: 20rpx;
-  padding: 28rpx;
-  margin-top: 32rpx;
-  box-shadow: 0 8rpx 30rpx rgba(108, 99, 255, 0.2);
-}
-
-.finance-mini-row {
+/* 通用区域标题 */
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  margin: 40rpx 0 20rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.finance-mini-item {
-  flex: 1;
-  text-align: center;
+.consecutive-days {
+  font-size: 24rpx;
+  color: #7C6AFF;
+  font-weight: normal;
 }
 
-.finance-mini-label {
-  font-size: 22rpx;
-  color: #999;
-  margin-bottom: 8rpx;
-}
-
-.finance-mini-val {
-  font-size: 32rpx;
-  font-weight: 600;
-  color: #333;
-}
-
-.finance-mini-val.income {
-  color: #43D9AD;
-}
-
-.finance-mini-val.expense {
-  color: #FF6584;
-}
-
-.finance-mini-divider {
-  width: 1rpx;
-  height: 50rpx;
-  background: #eee;
-}
-
-/* ===== 预算进度条 ===== */
-.budget-bar-wrap {
+/* 主要动作区域 */
+.main-actions-section {
   margin-top: 20rpx;
-  padding-top: 20rpx;
-  border-top: 1rpx solid #f0f0f0;
 }
 
-.budget-bar-header {
-  margin-bottom: 12rpx;
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20rpx;
 }
 
-.budget-label {
-  font-size: 24rpx;
-  color: #666;
-}
-
-.budget-percent {
-  font-size: 24rpx;
-  color: #6C63FF;
-  font-weight: 600;
-}
-
-.budget-percent.danger {
-  color: #FF5252;
-}
-
-.budget-bar-bg {
-  height: 12rpx;
-  background: #F0F0F0;
-  border-radius: 6rpx;
-  overflow: hidden;
-}
-
-.budget-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #6C63FF, #A594F9);
-  border-radius: 6rpx;
-  transition: width 0.3s;
-}
-
-.budget-bar-fill.warning {
-  background: linear-gradient(90deg, #FFB347, #FF9800);
-}
-
-.budget-bar-fill.danger {
-  background: linear-gradient(90deg, #FF6584, #FF5252);
-}
-
-/* ===== 快捷入口 ===== */
-.quick-grid {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -12rpx;
-}
-
-.quick-item {
-  width: 25%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 16rpx 0;
-}
-
-.quick-icon-wrap {
-  width: 96rpx;
-  height: 96rpx;
+.action-item {
+  background: white;
   border-radius: 24rpx;
+  padding: 30rpx 20rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 16rpx rgba(124, 106, 255, 0.08);
+  transition: transform 0.2s;
+}
+
+.action-item:active {
+  transform: scale(0.98);
+}
+
+.action-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  font-size: 40rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 12rpx;
+  margin: 0 auto 20rpx;
+  color: white;
 }
 
-.quick-icon {
-  font-size: 48rpx;
-}
-
-.quick-label {
-  font-size: 24rpx;
-  color: #666;
-}
-
-/* ===== 待办列表 ===== */
-.todo-item {
-  display: flex;
-  align-items: center;
-  padding: 16rpx 0;
-}
-
-.todo-dot {
-  width: 12rpx;
-  height: 12rpx;
-  border-radius: 50%;
-  margin-right: 16rpx;
-}
-
-.dot-high {
-  background: #FF5252;
-}
-
-.dot-mid {
-  background: #FFB347;
-}
-
-.dot-low {
-  background: #43D9AD;
-}
-
-.todo-text {
+.action-name {
   font-size: 28rpx;
-  color: #333;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 8rpx;
+  line-height: 1.3;
 }
 
-/* ===== 学习笔记预览 ===== */
-.note-preview {
-  display: flex;
-  align-items: center;
-  padding: 16rpx 0;
-}
-
-.note-preview-icon {
-  font-size: 40rpx;
-  margin-right: 16rpx;
-}
-
-.note-preview-title {
-  font-size: 28rpx;
-  color: #333;
-  margin-bottom: 4rpx;
-}
-
-.note-preview-sub {
+.action-desc {
   font-size: 22rpx;
-  color: #999;
+  color: #999999;
+  line-height: 1.2;
 }
 
-/* ===== 每日小贴士 ===== */
-.tip-banner {
+/* 每日卡片 */
+.daily-card-section {
+  margin-top: 40rpx;
+}
+
+.card-container {
+  background: white;
+  border-radius: 24rpx;
+  padding: 30rpx;
+  box-shadow: 0 8rpx 32rpx rgba(124, 106, 255, 0.1);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.card-date {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.card-mood {
+  font-size: 24rpx;
+  color: #7C6AFF;
+  font-weight: 500;
+}
+
+.card-content {
+  line-height: 1.6;
+}
+
+.encouragement {
+  font-size: 28rpx;
+  color: #333333;
+  font-weight: 500;
+  margin-bottom: 20rpx;
+}
+
+.review {
+  font-size: 26rpx;
+  color: #666666;
+  margin-bottom: 20rpx;
+}
+
+.suggestion {
+  font-size: 26rpx;
+  color: #7C6AFF;
+  font-weight: 500;
+  margin-bottom: 10rpx;
+}
+
+.pending {
+  font-size: 24rpx;
+  color: #FF9A76;
+  background: rgba(255, 154, 118, 0.1);
+  padding: 12rpx 20rpx;
+  border-radius: 12rpx;
+  margin-top: 15rpx;
+}
+
+/* 快速模式 */
+.quick-modes-section {
+  margin-top: 40rpx;
+}
+
+.modes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+}
+
+.mode-item {
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx 20rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+  transition: all 0.2s;
+}
+
+.mode-item:active {
+  transform: translateY(-4rpx);
+  box-shadow: 0 8rpx 24rpx rgba(124, 106, 255, 0.15);
+}
+
+.mode-icon {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  font-size: 32rpx;
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, #FFF8E1, #FFECB3);
-  margin: 0 24rpx 24rpx;
-  padding: 24rpx 28rpx;
-  border-radius: 16rpx;
+  justify-content: center;
+  margin: 0 auto 15rpx;
+  color: white;
 }
 
-.tip-icon {
-  font-size: 36rpx;
-  margin-right: 16rpx;
+.mode-name {
+  font-size: 26rpx;
+  color: #333333;
+  font-weight: 500;
 }
 
-.tip-text {
+/* 近期状态 */
+.recent-section {
+  margin-top: 40rpx;
+}
+
+.recent-mood {
+  background: white;
+  border-radius: 20rpx;
+  padding: 24rpx 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+}
+
+.mood-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+
+.mood-label {
+  font-size: 26rpx;
+  color: #333333;
+  font-weight: 500;
+}
+
+.mood-time {
+  font-size: 22rpx;
+  color: #999999;
+}
+
+.mood-content {
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+}
+
+.mood-emoji {
+  font-size: 32rpx;
+}
+
+.mood-text {
+  font-size: 28rpx;
+  color: #333333;
+  font-weight: 500;
+}
+
+.mood-note {
+  font-size: 26rpx;
+  color: #666666;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 待完成目标 */
+.pending-goals {
+  background: white;
+  border-radius: 20rpx;
+  padding: 24rpx 30rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+}
+
+.goals-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+  padding-bottom: 15rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.goals-label {
+  font-size: 26rpx;
+  color: #333333;
+  font-weight: 500;
+}
+
+.goals-count {
+  font-size: 24rpx;
+  color: #7C6AFF;
+  font-weight: 500;
+}
+
+.goal-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #F8F8F8;
+}
+
+.goal-item:last-child {
+  border-bottom: none;
+}
+
+.goal-checkbox {
+  width: 40rpx;
+  height: 40rpx;
+  border: 2rpx solid #DDDDDD;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20rpx;
+}
+
+.checkbox-icon {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.goal-content {
   flex: 1;
   font-size: 26rpx;
-  color: #8D6E63;
+  color: #333333;
+  line-height: 1.4;
+}
+
+.goal-deadline {
+  font-size: 22rpx;
+  color: #FF9A76;
+  margin-left: 20rpx;
+}
+
+.add-goal-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx;
+  color: #7C6AFF;
+  font-size: 26rpx;
+  font-weight: 500;
+  margin-top: 15rpx;
+  border-radius: 12rpx;
+  border: 1rpx dashed #7C6AFF;
+  background: rgba(124, 106, 255, 0.05);
+}
+
+.plus-icon {
+  font-size: 30rpx;
+  margin-right: 10rpx;
+}
+
+/* 昵称设置弹窗 */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.nickname-modal {
+  background: white;
+  border-radius: 32rpx;
+  width: 600rpx;
+  max-width: 90vw;
+  padding: 40rpx;
+  box-shadow: 0 16rpx 64rpx rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333333;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.modal-content {
+  margin-bottom: 40rpx;
+}
+
+.modal-text {
+  font-size: 28rpx;
+  color: #666666;
+  text-align: center;
+  margin-bottom: 30rpx;
   line-height: 1.5;
+}
+
+.nickname-input {
+  border: 2rpx solid #7C6AFF;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  font-size: 28rpx;
+  color: #333333;
+  text-align: center;
+  margin-bottom: 20rpx;
+}
+
+.modal-tip {
+  font-size: 24rpx;
+  color: #999999;
+  text-align: center;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-save {
+  background: #7C6AFF;
+  color: white;
+  border-radius: 16rpx;
+  padding: 20rpx 60rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  border: none;
+}
+
+.btn-save:active {
+  opacity: 0.9;
 }

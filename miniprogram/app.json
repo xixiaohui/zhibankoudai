@@ -1,40 +1,41 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/expert/index",
-    "pages/ai/index",
+    "pages/chat/index",
+    "pages/mood/index",
+    "pages/memory/index",
     "pages/mine/index"
   ],
   "window": {
-    "backgroundColor": "#F7F8FC",
+    "backgroundColor": "#F8F6FF",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#6C63FF",
+    "navigationBarBackgroundColor": "#7C6AFF",
     "navigationBarTitleText": "智伴口袋",
     "navigationBarTextStyle": "white"
   },
   "tabBar": {
-    "color": "#999999",
-    "selectedColor": "#6C63FF",
+    "color": "#A0A0B0",
+    "selectedColor": "#7C6AFF",
     "backgroundColor": "#FFFFFF",
     "borderStyle": "white",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页",
+        "text": "陪伴",
         "iconPath": "images/tab/home.png",
         "selectedIconPath": "images/tab/home_active.png"
       },
       {
-        "pagePath": "pages/expert/index",
-        "text": "专家库",
-        "iconPath": "images/tab/expert.png",
-        "selectedIconPath": "images/tab/expert_active.png"
+        "pagePath": "pages/mood/index",
+        "text": "心情",
+        "iconPath": "images/tab/mood.png",
+        "selectedIconPath": "images/tab/mood_active.png"
       },
       {
-        "pagePath": "pages/ai/index",
-        "text": "AI助手",
-        "iconPath": "images/tab/ai.png",
-        "selectedIconPath": "images/tab/ai_active.png"
+        "pagePath": "pages/memory/index",
+        "text": "记忆",
+        "iconPath": "images/tab/memory.png",
+        "selectedIconPath": "images/tab/memory_active.png"
       },
       {
         "pagePath": "pages/mine/index",

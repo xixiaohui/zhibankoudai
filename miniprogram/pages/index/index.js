@@ -1,119 +1,233 @@
-// pages/index/index.js - 首页
-const { formatDate, formatMoney, getDateRange } = require('../../utils/util');
+// pages/index/index.js - 智伴口袋首页
+const app = getApp()
+const util = require('../../utils/util.js')
 
 Page({
   data: {
+    // 用户信息
+    nickname: '',
     greeting: '',
-    dateStr: '',
-    todayIncome: 0,
-    todayExpense: 0,
-    monthExpense: 0,
-    budget: { monthly: 0, used: 0 },
-    budgetPercent: 0,
-    todoList: [],
-    studyNotes: [],
-    quickEntries: [
-      { icon: '📊', label: '财务', path: '/pages/finance/index', color: '#6C63FF', bg: '#EEF0FF' },
-      { icon: '🎯', label: '专家库', path: '/pages/expert/index', color: '#43D9AD', bg: '#E8FBF5' },
-      { icon: '📚', label: '学习', path: '/pages/study/index', color: '#FFB347', bg: '#FFF8E1' },
-      { icon: '🤖', label: 'AI助手', path: '/pages/ai/index', color: '#FF6584', bg: '#FFF0F3' },
+    timeOfDay: '',
+    
+    // 首页核心动作
+    mainActions: [
+      { id: 'chat', name: '今天想聊点什么', desc: '随时倾诉，我在这里', icon: '💬', color: '#7C6AFF' },
+      { id: 'mood', name: '记录一下现在的心情', desc: '标记此刻的感受', icon: '📝', color: '#FF9A76' },
+      { id: 'start', name: '开始今日陪伴', desc: '开启一段陪伴对话', icon: '🌟', color: '#6BCB77' },
     ],
-    tips: [
-      '每天记账5分钟，财务清晰一整年 💡',
-      '学习是最好的投资，坚持每天进步一点 📈',
-      '规律作息，身体是革命的本钱 🌱',
-      '有问题问AI，让学习更高效 🚀',
-      '记录今天的收支，掌控明天的生活 💼',
-    ],
-    currentTip: 0,
+    
+    // 陪伴模式快捷入口
+    quickModes: util.getChatModes(),
+    
+    // 每日卡片
+    dailyCard: null,
+    
+    // 近期状态
+    recentMood: null,
+    pendingGoals: [],
+    consecutiveDays: 0,
+    
+    // UI状态
+    showNicknameModal: false,
+    nicknameInput: '',
+  },
+
+  onLoad() {
+    // 检查昵称设置
+    this.checkNickname()
   },
 
   onShow() {
-    this.initPage();
+    // 每次显示时加载数据
+    this.loadData()
   },
 
-  initPage() {
-    const now = new Date();
-    const hours = now.getHours();
-    let greeting = '';
-    if (hours < 6) greeting = '深夜了，注意休息 🌙';
-    else if (hours < 9) greeting = '早上好，新的一天开始了 🌅';
-    else if (hours < 12) greeting = '上午好，元气满满 ☀️';
-    else if (hours < 14) greeting = '中午好，记得休息哦 🌞';
-    else if (hours < 18) greeting = '下午好，保持专注 💪';
-    else if (hours < 21) greeting = '晚上好，充实的一天 🌆';
-    else greeting = '晚上好，放松一下吧 🌃';
-
-    const dateStr = `${now.getMonth() + 1}月${now.getDate()}日 ${['日', '一', '二', '三', '四', '五', '六'][now.getDay()]}`;
-
-    this.setData({ greeting, dateStr });
-    this.loadFinanceData();
-    this.loadTodoData();
-    this.loadStudyData();
-    this.startTipRotation();
+  onPullDownRefresh() {
+    this.loadData()
+    wx.stopPullDownRefresh()
   },
 
-  loadFinanceData() {
-    const records = wx.getStorageSync('financeRecords') || [];
-    const budget = wx.getStorageSync('budget') || { monthly: 0, used: 0 };
-    const todayRange = getDateRange('today');
-    const monthRange = getDateRange('month');
+  // 检查昵称
+  checkNickname() {
+    const profile = wx.getStorageSync('userProfile')
+    if (!profile || !profile.nickname) {
+      this.setData({ showNicknameModal: true })
+    }
+  },
 
-    let todayIncome = 0, todayExpense = 0, monthExpense = 0;
+  // 工具函数绑定
+  getMoodEmoji(mood) {
+    return util.getMoodEmoji(mood)
+  },
 
-    records.forEach(r => {
-      if (r.timestamp >= todayRange.start && r.timestamp <= todayRange.end) {
-        if (r.type === 'income') todayIncome += r.amount;
-        else todayExpense += r.amount;
-      }
-      if (r.timestamp >= monthRange.start && r.timestamp <= monthRange.end) {
-        if (r.type === 'expense') monthExpense += r.amount;
-      }
-    });
+  formatRelativeTime(timeStr) {
+    return util.formatRelativeTime(timeStr)
+  },
 
-    const budgetPercent = budget.monthly > 0
-      ? Math.min(Math.round(monthExpense / budget.monthly * 100), 100)
-      : 0;
+  formatDateDisplay(dateStr) {
+    return util.formatDateDisplay(dateStr)
+  },
 
+  // 加载首页数据
+  loadData() {
+    // 获取问候语
+    const greetingData = app.getGreeting()
     this.setData({
-      todayIncome,
-      todayExpense,
-      monthExpense,
-      budget: { ...budget, used: monthExpense },
-      budgetPercent,
-    });
+      greeting: greetingData.text,
+      timeOfDay: greetingData.time,
+    })
+
+    // 获取用户昵称
+    const profile = wx.getStorageSync('userProfile')
+    if (profile && profile.nickname) {
+      this.setData({ nickname: profile.nickname })
+    }
+
+    // 获取/生成今日卡片
+    let dailyCard = app.generateDailyCard()
+    app.saveDailyCard(dailyCard)
+    this.setData({ dailyCard })
+
+    // 获取统计数据
+    const stats = wx.getStorageSync('stats') || { consecutiveDays: 0 }
+    this.setData({ consecutiveDays: stats.consecutiveDays || 0 })
+
+    // 获取最近情绪
+    const moodRecords = wx.getStorageSync('moodRecords') || []
+    if (moodRecords.length > 0) {
+      this.setData({ recentMood: moodRecords[0] })
+    }
+
+    // 获取待完成目标
+    const shortTerm = wx.getStorageSync('shortTermMemory') || { currentGoals: [] }
+    const pendingGoals = (shortTerm.currentGoals || [])
+      .filter(g => !g.completed)
+      .slice(0, 3)
+    this.setData({ pendingGoals })
   },
 
-  loadTodoData() {
-    const todos = wx.getStorageSync('todoList') || [];
-    const pending = todos.filter(t => !t.done).slice(0, 3);
-    this.setData({ todoList: pending });
+  // ========== 用户交互处理 ==========
+  
+  // 处理主要动作点击
+  onMainAction(e) {
+    const actionId = e.currentTarget.dataset.id
+    
+    switch(actionId) {
+      case 'chat':
+        // 跳转到聊天页，显示模式选择
+        wx.navigateTo({
+          url: '/pages/chat/index',
+        })
+        break
+      case 'mood':
+        // 跳转到心情记录页
+        wx.switchTab({ url: '/pages/mood/index' })
+        break
+      case 'start':
+        // 开始随机陪伴对话
+        const modes = util.getChatModes()
+        const randomMode = modes[Math.floor(Math.random() * modes.length)]
+        wx.navigateTo({
+          url: `/pages/chat/index?mode=${randomMode.id}&title=${randomMode.name}`,
+        })
+        break
+    }
   },
 
-  loadStudyData() {
-    const notes = wx.getStorageSync('studyNotes') || [];
-    this.setData({ studyNotes: notes.slice(0, 2) });
+  // 快速模式点击
+  onQuickMode(e) {
+    const mode = e.currentTarget.dataset.mode
+    wx.navigateTo({
+      url: `/pages/chat/index?mode=${mode.id}&title=${mode.name}`,
+    })
   },
 
-  startTipRotation() {
-    if (this._tipTimer) clearInterval(this._tipTimer);
-    this._tipTimer = setInterval(() => {
-      const next = (this.data.currentTip + 1) % this.data.tips.length;
-      this.setData({ currentTip: next });
-    }, 4000);
+  // 查看每日卡片详情
+  onViewCard() {
+    if (this.data.dailyCard) {
+      wx.showModal({
+        title: '今日陪伴卡片',
+        content: `${this.data.dailyCard.encouragement}\n\n${this.data.dailyCard.weekReview}\n\n${this.data.dailyCard.suggestion}`,
+        showCancel: false,
+        confirmText: '好的',
+      })
+    }
   },
 
-  onUnload() {
-    if (this._tipTimer) clearInterval(this._tipTimer);
+  // 查看记忆
+  onViewMemory() {
+    wx.switchTab({ url: '/pages/memory/index' })
   },
 
-  // 快捷入口跳转
-  goTo(e) {
-    const path = e.currentTarget.dataset.path;
-    wx.switchTab({ url: path });
+  // 添加新目标
+  onAddGoal() {
+    wx.showModal({
+      title: '添加小目标',
+      editable: true,
+      placeholderText: '比如：看完这本书、完成工作报告',
+      success: (res) => {
+        if (res.confirm && res.content) {
+          app.addGoal(res.content)
+          this.loadData()
+          wx.showToast({ title: '目标已添加', icon: 'success' })
+        }
+      }
+    })
   },
 
-  goMine() {
-    wx.switchTab({ url: '/pages/mine/index' });
+  // 完成目标
+  onCompleteGoal(e) {
+    const goalId = e.currentTarget.dataset.id
+    app.completeGoal(goalId)
+    this.loadData()
+    wx.showToast({ title: '太棒了！🎉', icon: 'success' })
   },
-});
+
+  // ========== 昵称设置 ==========
+  
+  // 输入昵称
+  onNicknameInput(e) {
+    this.setData({ nicknameInput: e.detail.value })
+  },
+
+  // 保存昵称
+  saveNickname() {
+    const nickname = this.data.nicknameInput.trim()
+    if (!nickname) {
+      wx.showToast({ title: '请输入你的称呼', icon: 'none' })
+      return
+    }
+    if (nickname.length > 10) {
+      wx.showToast({ title: '称呼太长了', icon: 'none' })
+      return
+    }
+
+    const profile = wx.getStorageSync('userProfile') || {}
+    profile.nickname = nickname
+    if (!profile.joinDate) {
+      profile.joinDate = util.formatDate(new Date())
+    }
+    wx.setStorageSync('userProfile', profile)
+
+    this.setData({ 
+      showNicknameModal: false,
+      nickname: nickname
+    })
+    
+    // 更新问候语
+    const greetingData = app.getGreeting()
+    this.setData({ greeting: greetingData.text })
+    
+    wx.showToast({ title: '设置成功', icon: 'success' })
+  },
+
+  // 关闭昵称弹窗
+  closeNicknameModal() {
+    const profile = wx.getStorageSync('userProfile')
+    if (profile && profile.nickname) {
+      this.setData({ showNicknameModal: false })
+    } else {
+      wx.showToast({ title: '请设置你的称呼', icon: 'none' })
+    }
+  },
+})

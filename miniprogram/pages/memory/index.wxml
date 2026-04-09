@@ -1,0 +1,277 @@
+<!-- pages/memory/index.wxml - 口袋记忆页面 -->
+<view class="page-container">
+  <!-- 顶部标题 -->
+  <view class="header">
+    <view class="title">口袋记忆</view>
+    <view class="subtitle">你的专属记忆仓库</view>
+  </view>
+
+  <!-- 统计概览 -->
+  <view class="stats-overview">
+    <view class="stats-grid">
+      <view class="stat-item">
+        <view class="stat-value">{{stats.consecutiveDays || 0}}</view>
+        <view class="stat-label">连续陪伴</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">{{stats.totalChats || 0}}</view>
+        <view class="stat-label">累计对话</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">{{stats.totalMoodRecords || 0}}</view>
+        <view class="stat-label">情绪记录</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">{{ongoingGoalsCount}}</view>
+        <view class="stat-label">进行中目标</view>
+      </view>
+    </view>
+    <view class="view-detail" bindtap="onViewStatsDetail">查看详情 ↗</view>
+  </view>
+
+  <!-- 标签页导航 -->
+  <view class="tabs-container">
+    <block wx:for="{{tabs}}" wx:key="id">
+      <view 
+        class="tab-item {{activeTab === item.id ? 'active' : ''}}" 
+        data-tab="{{item.id}}"
+        bindtap="onTabChange"
+      >
+        <text class="tab-icon">{{item.icon}}</text>
+        <text class="tab-name">{{item.name}}</text>
+      </view>
+    </block>
+  </view>
+
+  <!-- 个人资料标签页 -->
+  <view wx:if="{{activeTab === 'profile'}}" class="tab-content">
+    <view class="profile-card">
+      <view class="card-header">
+        <view class="card-title">个人资料</view>
+        <view class="card-actions">
+          <view wx:if="{{!isEditingProfile}}" class="action-btn" bindtap="onEditProfile">编辑</view>
+        </view>
+      </view>
+      
+      <view wx:if="{{!isEditingProfile}}">
+        <view class="profile-field">
+          <view class="field-label">昵称</view>
+          <view class="field-value">{{profile.nickname || '未设置'}}</view>
+        </view>
+        <view class="profile-field">
+          <view class="field-label">称呼偏好</view>
+          <view class="field-value">{{profile.preferGreeting || '你好'}}</view>
+        </view>
+        <view class="profile-field">
+          <view class="field-label">语气偏好</view>
+          <view class="field-value">{{profile.preferTone || '温暖'}}</view>
+        </view>
+        <view class="profile-field">
+          <view class="field-label">加入日期</view>
+          <view class="field-value">{{profile.joinDate || '未知'}}</view>
+        </view>
+      </view>
+      
+      <!-- 编辑模式 -->
+      <view wx:if="{{isEditingProfile}}" class="edit-form">
+        <view class="form-field">
+          <view class="field-label">昵称 *</view>
+          <input 
+            class="form-input" 
+            value="{{editProfileData.nickname}}" 
+            placeholder="2-10个字符"
+            data-field="nickname"
+            bindinput="onProfileInput"
+            maxlength="10"
+          />
+        </view>
+        
+        <view class="form-field">
+          <view class="field-label">称呼偏好</view>
+          <input 
+            class="form-input" 
+            value="{{editProfileData.preferGreeting}}" 
+            placeholder="比如：你好、嘿"
+            data-field="preferGreeting"
+            bindinput="onProfileInput"
+          />
+        </view>
+        
+        <view class="form-field">
+          <view class="field-label">语气偏好</view>
+          <view class="tone-selector">
+            <view 
+              class="tone-option {{editProfileData.preferTone === '温暖' ? 'selected' : ''}}" 
+              data-tone="温暖"
+              bindtap="onSelectTone"
+            >
+              温暖
+            </view>
+            <view 
+              class="tone-option {{editProfileData.preferTone === '轻松' ? 'selected' : ''}}" 
+              data-tone="轻松"
+              bindtap="onSelectTone"
+            >
+              轻松
+            </view>
+            <view 
+              class="tone-option {{editProfileData.preferTone === '专业' ? 'selected' : ''}}" 
+              data-tone="专业"
+              bindtap="onSelectTone"
+            >
+              专业
+            </view>
+          </view>
+        </view>
+        
+        <view class="form-actions">
+          <button class="btn-cancel" bindtap="onCancelEdit">取消</button>
+          <button class="btn-save" bindtap="onSaveProfile">保存</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 近期状态标签页 -->
+  <view wx:if="{{activeTab === 'recent'}}" class="tab-content">
+    <view class="recent-card">
+      <view class="card-header">
+        <view class="card-title">近期状态</view>
+        <view class="card-actions">
+          <view class="action-btn" bindtap="onAddEvent">+ 记录事件</view>
+        </view>
+      </view>
+      
+      <!-- 最近情绪 -->
+      <view wx:if="{{shortTerm.recentMood.length > 0}}" class="section">
+        <view class="section-title">最近情绪</view>
+        <view class="mood-timeline">
+          <block wx:for="{{shortTerm.recentMood.slice(0, 7)}}" wx:key="date">
+            <view class="mood-day">
+              <view class="mood-date">{{formatDateDisplay(item.date)}}</view>
+              <view class="mood-emoji">{{getMoodEmoji(item.mood)}}</view>
+              <view class="mood-text">{{item.mood}}</view>
+            </view>
+          </block>
+        </view>
+      </view>
+      
+      <!-- 最近事件 -->
+      <view wx:if="{{shortTerm.recentEvents.length > 0}}" class="section">
+        <view class="section-title">最近事件</view>
+        <view class="events-list">
+          <block wx:for="{{shortTerm.recentEvents.slice(0, 5)}}" wx:key="id">
+            <view class="event-item">
+              <view class="event-content">{{item.content}}</view>
+              <view class="event-footer">
+                <view class="event-date">{{formatDateDisplay(item.date)}}</view>
+                <view wx:if="{{item.mood}}" class="event-mood">{{item.mood}} {{getMoodEmoji(item.mood)}}</view>
+                <view class="event-actions">
+                  <view class="delete-btn" data-id="{{item.id}}" bindtap="onDeleteEvent">删除</view>
+                </view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+      
+      <view wx:if="{{shortTerm.recentMood.length === 0 && shortTerm.recentEvents.length === 0}}" class="empty-state">
+        <view class="empty-icon">📝</view>
+        <view class="empty-text">还没有近期状态记录</view>
+        <view class="empty-desc">记录你的情绪和事件，我会更了解你</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 目标追踪标签页 -->
+  <view wx:if="{{activeTab === 'goals'}}" class="tab-content">
+    <view class="goals-card">
+      <view class="card-header">
+        <view class="card-title">目标追踪</view>
+        <view class="card-actions">
+          <view class="action-btn" bindtap="onAddGoal">+ 添加目标</view>
+        </view>
+      </view>
+      
+      <!-- 进行中目标 -->
+      <view class="section">
+        <view class="section-title">进行中 ({{ongoingGoalsCount}})</view>
+        <view wx:if="{{ongoingGoalsCount > 0}}" class="goals-list">
+          <block wx:for="{{shortTerm.currentGoals}}" wx:key="id">
+            <view wx:if="{{!item.completed}}" class="goal-item">
+              <view class="goal-checkbox" data-id="{{item.id}}" bindtap="onCompleteGoal">□</view>
+              <view class="goal-content">
+                <view class="goal-text">{{item.content}}</view>
+                <view class="goal-meta">
+                  <view class="goal-created">创建于 {{item.createdAt}}</view>
+                  <view wx:if="{{item.deadline}}" class="goal-deadline">截止：{{item.deadline}}</view>
+                </view>
+              </view>
+              <view class="goal-actions">
+                <view class="delete-btn" data-id="{{item.id}}" bindtap="onDeleteGoal">删除</view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+      
+      <!-- 已完成目标 -->
+      <view class="section">
+        <view class="section-title">已完成 ({{completedGoalsCount}})</view>
+        <view wx:if="{{completedGoalsCount > 0}}" class="completed-goals">
+          <block wx:for="{{shortTerm.currentGoals}}" wx:key="id">
+            <view wx:if="{{item.completed}}" class="completed-goal">
+              <view class="completed-checkbox">✓</view>
+              <view class="completed-content">{{item.content}}</view>
+              <view class="completed-date">完成于 {{item.completedAt}}</view>
+            </view>
+          </block>
+        </view>
+      </view>
+      
+      <view wx:if="{{shortTerm.currentGoals.length === 0}}" class="empty-state">
+        <view class="empty-icon">🎯</view>
+        <view class="empty-text">还没有设定目标</view>
+        <view class="empty-desc">添加你的第一个目标，我会陪你一起完成</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 里程碑标签页 -->
+  <view wx:if="{{activeTab === 'milestones'}}" class="tab-content">
+    <view class="milestones-card">
+      <view class="card-header">
+        <view class="card-title">里程碑</view>
+      </view>
+      
+      <view wx:if="{{longTerm.milestones.length > 0}}" class="milestones-list">
+        <block wx:for="{{longTerm.milestones}}" wx:key="index">
+          <view class="milestone-item">
+            <view class="milestone-icon">
+              <text wx:if="{{item.type === 'goal'}}">🏆</text>
+              <text wx:if="{{item.type === 'event'}}">🌟</text>
+              <text wx:if="{{!item.type}}">✨</text>
+            </view>
+            <view class="milestone-content">
+              <view class="milestone-text">{{item.content}}</view>
+              <view class="milestone-date">{{formatDateDisplay(item.date)}}</view>
+            </view>
+          </view>
+        </block>
+      </view>
+      
+      <view wx:if="{{longTerm.milestones.length === 0}}" class="empty-state">
+        <view class="empty-icon">🏆</view>
+        <view class="empty-text">还没有里程碑</view>
+        <view class="empty-desc">完成目标或记录重要事件，这里会留下你的成长足迹</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 危险操作区域 -->
+  <view class="danger-zone">
+    <view class="danger-title">危险操作</view>
+    <view class="danger-desc">这些操作会清除你的个人数据，请谨慎使用</view>
+    <button class="btn-danger" bindtap="onClearMemory">清空所有记忆</button>
+  </view>
+</view>

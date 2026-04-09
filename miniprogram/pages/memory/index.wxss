@@ -1,0 +1,512 @@
+/* pages/memory/index.wxss - 口袋记忆页面样式 */
+
+.page-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #F5F7FF 0%, #F0F2FF 100%);
+  padding: 30rpx 30rpx 100rpx;
+}
+
+/* 头部 */
+.header {
+  padding: 40rpx 0 30rpx;
+  text-align: center;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 10rpx;
+}
+
+.subtitle {
+  font-size: 26rpx;
+  color: #7C6AFF;
+  opacity: 0.8;
+}
+
+/* 统计概览 */
+.stats-overview {
+  background: white;
+  border-radius: 32rpx;
+  padding: 40rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 8rpx 32rpx rgba(124, 106, 255, 0.1);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 42rpx;
+  font-weight: 600;
+  color: #7C6AFF;
+  margin-bottom: 5rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.view-detail {
+  text-align: center;
+  color: #7C6AFF;
+  font-size: 26rpx;
+  font-weight: 500;
+  padding: 15rpx;
+  border-radius: 16rpx;
+  background: rgba(124, 106, 255, 0.05);
+  border: 1rpx solid rgba(124, 106, 255, 0.2);
+}
+
+/* 标签页导航 */
+.tabs-container {
+  display: flex;
+  background: white;
+  border-radius: 24rpx;
+  padding: 10rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx 10rpx;
+  border-radius: 20rpx;
+  transition: all 0.2s;
+}
+
+.tab-item.active {
+  background: rgba(124, 106, 255, 0.1);
+}
+
+.tab-icon {
+  font-size: 32rpx;
+  margin-bottom: 8rpx;
+}
+
+.tab-name {
+  font-size: 24rpx;
+  color: #666666;
+}
+
+.tab-item.active .tab-name {
+  color: #7C6AFF;
+  font-weight: 500;
+}
+
+/* 标签页内容 */
+.tab-content {
+  margin-bottom: 40rpx;
+}
+
+/* 卡片通用样式 */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.card-actions .action-btn {
+  color: #7C6AFF;
+  font-size: 26rpx;
+  font-weight: 500;
+  padding: 10rpx 20rpx;
+  border-radius: 16rpx;
+  background: rgba(124, 106, 255, 0.1);
+}
+
+/* 个人资料卡片 */
+.profile-card,
+.recent-card,
+.goals-card,
+.milestones-card {
+  background: white;
+  border-radius: 32rpx;
+  padding: 40rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.05);
+}
+
+.profile-field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25rpx 0;
+  border-bottom: 1rpx solid #F8F8F8;
+}
+
+.profile-field:last-child {
+  border-bottom: none;
+}
+
+.field-label {
+  font-size: 28rpx;
+  color: #666666;
+  font-weight: 500;
+}
+
+.field-value {
+  font-size: 28rpx;
+  color: #333333;
+}
+
+/* 编辑表单 */
+.edit-form {
+  margin-top: 20rpx;
+}
+
+.form-field {
+  margin-bottom: 30rpx;
+}
+
+.form-input {
+  background: #F8F8F8;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  font-size: 28rpx;
+  color: #333333;
+  margin-top: 10rpx;
+}
+
+.tone-selector {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 10rpx;
+}
+
+.tone-option {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx;
+  background: #F8F8F8;
+  border-radius: 16rpx;
+  font-size: 26rpx;
+  color: #666666;
+  border: 2rpx solid transparent;
+}
+
+.tone-option.selected {
+  background: rgba(124, 106, 255, 0.1);
+  color: #7C6AFF;
+  border-color: #7C6AFF;
+  font-weight: 500;
+}
+
+.form-actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 40rpx;
+}
+
+.btn-cancel,
+.btn-save {
+  flex: 1;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  border: none;
+}
+
+.btn-cancel {
+  background: #F8F8F8;
+  color: #666666;
+}
+
+.btn-save {
+  background: #7C6AFF;
+  color: white;
+}
+
+/* 近期状态 */
+.section {
+  margin-bottom: 40rpx;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 20rpx;
+}
+
+.mood-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.mood-day {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background: #F8F8F8;
+  border-radius: 20rpx;
+}
+
+.mood-date {
+  flex: 1;
+  font-size: 26rpx;
+  color: #666666;
+}
+
+.mood-emoji {
+  font-size: 32rpx;
+  margin: 0 20rpx;
+}
+
+.mood-text {
+  font-size: 28rpx;
+  color: #333333;
+  font-weight: 500;
+}
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.event-item {
+  background: #F8F8F8;
+  border-radius: 20rpx;
+  padding: 30rpx;
+}
+
+.event-content {
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 1.5;
+  margin-bottom: 15rpx;
+}
+
+.event-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.event-date {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.event-mood {
+  font-size: 24rpx;
+  color: #7C6AFF;
+}
+
+.delete-btn {
+  color: #FF6B6B;
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+/* 目标追踪 */
+.goals-list,
+.completed-goals {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.goal-item,
+.completed-goal {
+  display: flex;
+  align-items: flex-start;
+  padding: 25rpx;
+  background: #F8F8F8;
+  border-radius: 20rpx;
+}
+
+.goal-checkbox {
+  width: 40rpx;
+  height: 40rpx;
+  border: 2rpx solid #DDDDDD;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  color: #999999;
+  margin-right: 20rpx;
+  margin-top: 5rpx;
+}
+
+.completed-checkbox {
+  width: 40rpx;
+  height: 40rpx;
+  border: 2rpx solid #6BCB77;
+  border-radius: 50%;
+  background: #6BCB77;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  margin-right: 20rpx;
+  margin-top: 5rpx;
+}
+
+.goal-content {
+  flex: 1;
+}
+
+.goal-text {
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 1.4;
+  margin-bottom: 10rpx;
+}
+
+.goal-meta {
+  display: flex;
+  gap: 20rpx;
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.goal-created {
+  color: #999999;
+}
+
+.goal-deadline {
+  color: #FF9A76;
+}
+
+.goal-actions {
+  display: flex;
+  align-items: center;
+}
+
+.completed-content {
+  flex: 1;
+  font-size: 28rpx;
+  color: #666666;
+  text-decoration: line-through;
+  margin-bottom: 10rpx;
+}
+
+.completed-date {
+  font-size: 24rpx;
+  color: #6BCB77;
+}
+
+/* 里程碑 */
+.milestones-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.milestone-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 25rpx;
+  background: #F8F8F8;
+  border-radius: 20rpx;
+}
+
+.milestone-icon {
+  font-size: 40rpx;
+  margin-right: 20rpx;
+  margin-top: 5rpx;
+}
+
+.milestone-content {
+  flex: 1;
+}
+
+.milestone-text {
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 1.4;
+  margin-bottom: 8rpx;
+}
+
+.milestone-date {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 60rpx 0;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  color: #999999;
+  margin-bottom: 10rpx;
+}
+
+.empty-desc {
+  font-size: 26rpx;
+  color: #CCCCCC;
+}
+
+/* 危险操作区域 */
+.danger-zone {
+  background: white;
+  border-radius: 32rpx;
+  padding: 40rpx;
+  margin-top: 40rpx;
+  border: 2rpx solid #FFE5E5;
+}
+
+.danger-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #FF6B6B;
+  margin-bottom: 10rpx;
+}
+
+.danger-desc {
+  font-size: 26rpx;
+  color: #999999;
+  line-height: 1.4;
+  margin-bottom: 30rpx;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #FF6B6B, #FF8B8B);
+  color: white;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  border: none;
+}
+
+.btn-danger:active {
+  opacity: 0.9;
+}

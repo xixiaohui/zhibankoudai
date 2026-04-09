@@ -1,188 +1,159 @@
-/* app.wxss - 智伴口袋全局样式 */
+/**app.wxss**/
+/* 全局样式 */
 
-/* ===== 主题色变量 ===== */
 page {
-  --primary: #6C63FF;
-  --secondary: #FF6584;
-  --accent: #43D9AD;
-  --warning: #FFB347;
-  --bg: #F7F8FC;
+  background: #F8F6FF;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* 主题色变量 */
+page {
+  --theme-color: #7C6AFF;
+  --theme-gradient: linear-gradient(135deg, #7C6AFF 0%, #A594F9 100%);
   --text-primary: #333333;
   --text-secondary: #666666;
-  --text-hint: #999999;
-  --border: #EEEEEE;
-  --white: #FFFFFF;
+  --text-placeholder: #999999;
+  --bg-primary: #F8F6FF;
+  --bg-white: #FFFFFF;
+  --border-color: #F0EEFF;
+  --shadow-light: 0 4rpx 20rpx rgba(124, 106, 255, 0.08);
+  --shadow-medium: 0 8rpx 30rpx rgba(124, 106, 255, 0.12);
 }
 
-/* ===== 全局通用样式 ===== */
-.container {
-  min-height: 100vh;
-  background: var(--bg);
-}
-
-.flex-between {
+/* 通用按钮样式 */
+.btn-primary {
+  background: var(--theme-gradient);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  height: 88rpx;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-}
-
-.flex-center {
-  display: flex;
   justify-content: center;
-  align-items: center;
 }
 
-.flex-1 {
-  flex: 1;
+.btn-primary::after {
+  border: none;
 }
 
-/* ===== 卡片通用样式 ===== */
-.section-card {
-  background: var(--white);
-  border-radius: 20rpx;
-  padding: 28rpx;
-  margin: 0 24rpx 24rpx;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+.btn-primary:active {
+  opacity: 0.9;
 }
 
-.section-title-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20rpx;
+/* 通用卡片样式 */
+.card {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 30rpx;
+  box-shadow: var(--shadow-light);
 }
 
-.section-t {
+/* 通用区块标题 */
+.section-title {
   font-size: 30rpx;
   font-weight: 600;
   color: var(--text-primary);
+  margin-bottom: 24rpx;
 }
 
-.section-more {
-  font-size: 24rpx;
-  color: var(--text-hint);
+/* 通用分隔线 */
+.divider {
+  height: 1rpx;
+  background: #F0F0F0;
+  margin: 20rpx 0;
 }
 
-/* ===== 按钮通用样式 ===== */
-.btn-primary {
-  background: var(--primary);
-  color: var(--white);
-  border-radius: 12rpx;
-  font-size: 28rpx;
-  padding: 24rpx 0;
-  text-align: center;
-}
-
-.btn-secondary {
-  background: var(--bg);
-  color: var(--text-secondary);
-  border-radius: 12rpx;
-  font-size: 28rpx;
-  padding: 24rpx 0;
-  text-align: center;
-}
-
-/* ===== 列表通用样式 ===== */
-.list-item {
+/* 通用空状态 */
+.empty-state {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: 24rpx 0;
-  border-bottom: 1rpx solid var(--border);
+  justify-content: center;
+  padding: 80rpx 40rpx;
 }
 
-.list-item:last-child {
-  border-bottom: none;
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
 }
 
-/* ===== 空状态通用样式 ===== */
-.empty-hint {
-  text-align: center;
-  padding: 48rpx 24rpx;
-  color: var(--text-hint);
-  font-size: 26rpx;
-}
-
-/* ===== 输入框通用样式 ===== */
-.input-group {
-  margin-bottom: 32rpx;
-}
-
-.input-label {
-  font-size: 26rpx;
-  color: var(--text-secondary);
-  margin-bottom: 12rpx;
-  display: block;
-}
-
-.input-field {
-  background: var(--bg);
-  border-radius: 12rpx;
-  padding: 20rpx 24rpx;
+.empty-text {
   font-size: 28rpx;
-  width: 100%;
-  box-sizing: border-box;
+  color: var(--text-placeholder);
 }
 
-/* ===== 模态框通用样式 ===== */
-.modal-mask {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+/* Toast 样式增强 */
+.wx-toast {
+  background: rgba(0, 0, 0, 0.8) !important;
+  color: #FFFFFF !important;
 }
 
-.modal-content {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--white);
-  border-radius: 32rpx 32rpx 0 0;
-  z-index: 1000;
-  max-height: 85vh;
+/* Modal 样式 */
+.weui-modal {
+  border-radius: 24rpx !important;
+  overflow: hidden;
 }
 
-/* ===== 标签通用样式 ===== */
-.tag {
-  display: inline-block;
-  padding: 8rpx 16rpx;
-  border-radius: 20rpx;
-  font-size: 22rpx;
+.weui-modal__bd {
+  padding: 40rpx 30rpx !important;
+  font-size: 28rpx !important;
+  line-height: 1.6 !important;
 }
 
-.tag-primary {
-  background: rgba(108, 99, 255, 0.1);
-  color: var(--primary);
+.weui-modal__ft {
+  padding: 20rpx 30rpx 30rpx !important;
 }
 
-.tag-success {
-  background: rgba(67, 217, 173, 0.1);
-  color: var(--accent);
+.weui-dialog__btn_primary {
+  color: var(--theme-color) !important;
 }
 
-.tag-warning {
-  background: rgba(255, 179, 71, 0.1);
-  color: var(--warning);
+/* 安全区域适配 */
+.safe-area-bottom {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 20rpx);
 }
 
-/* ===== 动画通用样式 ===== */
+.safe-area-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+/* 动画 */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { transform: translateY(20rpx); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .fade-in {
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.3s ease-out;
 }
 
-.slide-up {
-  animation: slideUp 0.3s ease;
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+/* 隐藏滚动条 */
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }

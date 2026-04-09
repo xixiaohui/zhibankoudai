@@ -1,111 +1,116 @@
-<!-- pages/index/index.wxml - 首页 -->
-<view class="container">
+<!-- pages/index/index.wxml - 智伴口袋首页 -->
+<view class="page-container">
+  <!-- 顶部问候区域 -->
+  <view class="greeting-section">
+    <view class="greeting-text">{{greeting}}</view>
+    <view class="time-text">{{timeOfDay}}好</view>
+  </view>
 
-  <!-- 渐变头部 -->
-  <view class="hero-header">
-    <view class="hero-bg-circle c1"></view>
-    <view class="hero-bg-circle c2"></view>
-    <view class="hero-bg-circle c3"></view>
-    <view class="status-bar-placeholder"></view>
-    <view class="hero-content">
-      <view class="flex-between">
-        <view>
-          <view class="hero-greeting">{{greeting}}</view>
-          <view class="hero-date">📅 {{dateStr}}</view>
+  <!-- 主要动作区域 -->
+  <view class="main-actions-section">
+    <view class="section-title">今天想做什么？</view>
+    <view class="actions-grid">
+      <block wx:for="{{mainActions}}" wx:key="id">
+        <view class="action-item" data-id="{{item.id}}" bindtap="onMainAction">
+          <view class="action-icon" style="background-color: {{item.color}}">{{item.icon}}</view>
+          <view class="action-name">{{item.name}}</view>
+          <view class="action-desc">{{item.desc}}</view>
         </view>
-        <view class="hero-avatar" bindtap="goMine">
-          <text>👤</text>
-        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 每日陪伴卡片 -->
+  <view wx:if="{{dailyCard}}" class="daily-card-section">
+    <view class="section-title">
+      今日陪伴卡片
+      <text class="consecutive-days">已连续陪伴 {{consecutiveDays}} 天</text>
+    </view>
+    <view class="card-container" bindtap="onViewCard">
+      <view class="card-header">
+        <text class="card-date">{{dailyCard.date}}</text>
+        <text class="card-mood">{{dailyCard.topMood}} {{getMoodEmoji(dailyCard.topMood)}}</text>
       </view>
-
-      <!-- 今日财务快看 -->
-      <view class="hero-finance-card">
-        <view class="finance-mini-row">
-          <view class="finance-mini-item">
-            <view class="finance-mini-label">今日收入</view>
-            <view class="finance-mini-val income">+¥{{todayIncome}}</view>
-          </view>
-          <view class="finance-mini-divider"></view>
-          <view class="finance-mini-item">
-            <view class="finance-mini-label">今日支出</view>
-            <view class="finance-mini-val expense">-¥{{todayExpense}}</view>
-          </view>
-          <view class="finance-mini-divider"></view>
-          <view class="finance-mini-item">
-            <view class="finance-mini-label">本月支出</view>
-            <view class="finance-mini-val">¥{{monthExpense}}</view>
-          </view>
-        </view>
-        <!-- 预算进度 -->
-        <view wx:if="{{budget.monthly > 0}}" class="budget-bar-wrap">
-          <view class="flex-between budget-bar-header">
-            <text class="budget-label">月度预算 ¥{{budget.monthly}}</text>
-            <text class="budget-percent {{budgetPercent >= 90 ? 'danger' : ''}}">{{budgetPercent}}%</text>
-          </view>
-          <view class="budget-bar-bg">
-            <view class="budget-bar-fill {{budgetPercent >= 90 ? 'danger' : budgetPercent >= 70 ? 'warning' : ''}}" style="width:{{budgetPercent}}%"></view>
-          </view>
-        </view>
+      <view class="card-content">
+        <view class="encouragement">{{dailyCard.encouragement}}</view>
+        <view class="review">{{dailyCard.weekReview}}</view>
+        <view class="suggestion">📌 {{dailyCard.suggestion}}</view>
+        <view wx:if="{{dailyCard.pendingText}}" class="pending">{{dailyCard.pendingText}}</view>
       </view>
     </view>
   </view>
 
-  <!-- 快捷功能入口 -->
-  <view class="section-card">
-    <view class="section-title-row">
-      <text class="section-t">⚡ 快捷功能</text>
-    </view>
-    <view class="quick-grid">
-      <view class="quick-item" wx:for="{{quickEntries}}" wx:key="label"
-            bindtap="goTo" data-path="{{item.path}}">
-        <view class="quick-icon-wrap" style="background:{{item.bg}}">
-          <text class="quick-icon">{{item.icon}}</text>
+  <!-- 快速陪伴入口 -->
+  <view class="quick-modes-section">
+    <view class="section-title">快速陪伴模式</view>
+    <view class="modes-grid">
+      <block wx:for="{{quickModes}}" wx:key="id">
+        <view class="mode-item" data-mode="{{item}}" bindtap="onQuickMode">
+          <view class="mode-icon" style="background-color: {{item.color}}">{{item.icon}}</view>
+          <view class="mode-name">{{item.name}}</view>
         </view>
-        <text class="quick-label">{{item.label}}</text>
-      </view>
+      </block>
     </view>
   </view>
 
-  <!-- 待办事项预览 -->
-  <view class="section-card">
-    <view class="section-title-row">
-      <text class="section-t">✅ 今日待办</text>
-    </view>
-    <view wx:if="{{todoList.length > 0}}">
-      <view class="todo-item" wx:for="{{todoList}}" wx:key="id">
-        <view class="todo-dot {{item.priority === 'high' ? 'dot-high' : item.priority === 'mid' ? 'dot-mid' : 'dot-low'}}"></view>
-        <text class="todo-text">{{item.text}}</text>
+  <!-- 近期状态 -->
+  <view wx:if="{{pendingGoals.length > 0 || recentMood}}" class="recent-section">
+    <view class="section-title">近期状态</view>
+    
+    <!-- 最近心情 -->
+    <view wx:if="{{recentMood}}" class="recent-mood" bindtap="onViewMemory">
+      <view class="mood-header">
+        <text class="mood-label">最近心情</text>
+        <text class="mood-time">{{formatRelativeTime(recentMood.date + ' ' + recentMood.time)}}</text>
+      </view>
+      <view class="mood-content">
+        <text class="mood-emoji">{{getMoodEmoji(recentMood.mood)}}</text>
+        <text class="mood-text">{{recentMood.mood}}</text>
+        <text wx:if="{{recentMood.note}}" class="mood-note">· {{recentMood.note}}</text>
       </view>
     </view>
-    <view wx:else class="empty-hint">
-      <text>暂无待办，去添加一个吧 ✨</text>
-    </view>
-  </view>
 
-  <!-- 学习笔记预览 -->
-  <view class="section-card">
-    <view class="section-title-row">
-      <text class="section-t">📚 最近学习</text>
-    </view>
-    <view wx:if="{{studyNotes.length > 0}}">
-      <view class="note-preview" wx:for="{{studyNotes}}" wx:key="id">
-        <view class="note-preview-icon">{{item.icon || '📝'}}</view>
-        <view class="flex-1">
-          <view class="note-preview-title">{{item.title}}</view>
-          <view class="note-preview-sub">{{item.category}} · {{item.date}}</view>
+    <!-- 待完成目标 -->
+    <view wx:if="{{pendingGoals.length > 0}}" class="pending-goals">
+      <view class="goals-header">
+        <text class="goals-label">待完成目标</text>
+        <text class="goals-count">{{pendingGoals.length}}个</text>
+      </view>
+      <block wx:for="{{pendingGoals}}" wx:key="id">
+        <view class="goal-item" data-id="{{item.id}}" bindtap="onCompleteGoal">
+          <view class="goal-checkbox">
+            <text class="checkbox-icon">□</text>
+          </view>
+          <view class="goal-content">{{item.content}}</view>
+          <view wx:if="{{item.deadline}}" class="goal-deadline">{{item.deadline}}</view>
         </view>
+      </block>
+      <view class="add-goal-btn" bindtap="onAddGoal">
+        <text class="plus-icon">+</text>
+        <text>添加新目标</text>
       </view>
     </view>
-    <view wx:else class="empty-hint">
-      <text>还没有学习记录，开始学习吧 🚀</text>
+  </view>
+
+  <!-- 昵称设置弹窗 -->
+  <view wx:if="{{showNicknameModal}}" class="modal-mask" catchtap="closeNicknameModal">
+    <view class="nickname-modal" catchtap="noop">
+      <view class="modal-header">欢迎来到智伴口袋 👋</view>
+      <view class="modal-content">
+        <view class="modal-text">我是你的随身AI陪伴助手，怎么称呼你呢？</view>
+        <input 
+          class="nickname-input" 
+          placeholder="请输入昵称（2-10字）" 
+          maxlength="10"
+          value="{{nicknameInput}}"
+          bindinput="onNicknameInput"
+          placeholder-style="color: #CCCCCC"
+        />
+        <view class="modal-tip">我会记住你的称呼，提供更贴心的陪伴</view>
+      </view>
+      <view class="modal-actions">
+        <button class="btn-save" bindtap="saveNickname">开始陪伴</button>
+      </view>
     </view>
   </view>
-
-  <!-- 每日小贴士 -->
-  <view class="tip-banner">
-    <text class="tip-icon">💬</text>
-    <text class="tip-text">{{tips[currentTip]}}</text>
-  </view>
-
-  <view style="height:32rpx"></view>
 </view>

@@ -1,4 +1,7 @@
 {
-  "usingComponents": {},
-  "navigationBarTitleText": "首页"
+  "navigationBarTitleText": "智伴口袋",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#F8F6FF",
+  "backgroundTextStyle": "dark",
+  "navigationStyle": "custom"
 }

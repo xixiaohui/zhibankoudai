@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "口袋记忆",
+  "backgroundColor": "#F5F7FF",
+  "backgroundTextStyle": "dark",
+  "enablePullDownRefresh": true
+}

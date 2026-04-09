@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "心情记录",
+  "backgroundColor": "#FFF9F5",
+  "backgroundTextStyle": "dark",
+  "enablePullDownRefresh": true
+}

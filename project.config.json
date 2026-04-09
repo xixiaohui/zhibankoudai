@@ -37,7 +37,7 @@
     }
   },
   "appid": "wx0ae2b5c7f8de7fef",
-  "projecttype": "cloudProject",
+  "projecttype": "miniprogram",
   "condition": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",

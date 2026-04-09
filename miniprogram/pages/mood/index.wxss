@@ -1,0 +1,354 @@
+/* pages/mood/index.wxss - 情绪记录页面样式 */
+
+.page-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #FFF9F5 0%, #FFF5F0 100%);
+  padding: 30rpx 30rpx 100rpx;
+}
+
+/* 头部 */
+.header {
+  padding: 40rpx 0 30rpx;
+  text-align: center;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 10rpx;
+}
+
+.subtitle {
+  font-size: 26rpx;
+  color: #7C6AFF;
+  opacity: 0.8;
+}
+
+/* 通用区域标题 */
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  margin: 40rpx 0 20rpx;
+}
+
+/* 情绪选择网格 */
+.moods-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20rpx;
+}
+
+.mood-item {
+  background: #F8F8F8;
+  border: 3rpx solid;
+  border-radius: 24rpx;
+  padding: 40rpx 20rpx;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.mood-item.selected {
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.15);
+}
+
+.mood-emoji {
+  font-size: 60rpx;
+  margin-bottom: 15rpx;
+  display: block;
+}
+
+.mood-name {
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+/* 备注输入区域 */
+.note-section {
+  background: white;
+  border-radius: 32rpx;
+  padding: 40rpx;
+  margin-top: 40rpx;
+  box-shadow: 0 8rpx 32rpx rgba(255, 154, 118, 0.1);
+}
+
+.selected-mood-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15rpx;
+  margin-bottom: 30rpx;
+  padding: 20rpx;
+  background: #F8F8F8;
+  border-radius: 20rpx;
+}
+
+.selected-emoji {
+  font-size: 40rpx;
+}
+
+.selected-text {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.note-input {
+  width: 100%;
+  min-height: 200rpx;
+  background: #F8F8F8;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 1.5;
+  margin-bottom: 15rpx;
+}
+
+.input-tip {
+  font-size: 24rpx;
+  color: #999999;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #7C6AFF, #9D8FFF);
+  color: white;
+  border-radius: 20rpx;
+  padding: 28rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  border: none;
+  margin-bottom: 20rpx;
+}
+
+.submit-btn:active {
+  opacity: 0.9;
+}
+
+.quick-chat-tip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  color: #7C6AFF;
+  font-size: 26rpx;
+  padding: 20rpx;
+  border-radius: 16rpx;
+  border: 1rpx dashed #7C6AFF;
+  background: rgba(124, 106, 255, 0.05);
+}
+
+.tip-icon {
+  font-size: 28rpx;
+}
+
+/* 快捷记录 */
+.quick-section {
+  margin-top: 40rpx;
+}
+
+.quick-tip {
+  font-size: 26rpx;
+  color: #666666;
+  margin-bottom: 20rpx;
+  text-align: center;
+}
+
+.quick-moods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15rpx;
+  justify-content: center;
+}
+
+.quick-mood-item {
+  padding: 20rpx 30rpx;
+  border-radius: 40rpx;
+  color: white;
+  font-size: 26rpx;
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  transition: transform 0.2s;
+}
+
+.quick-mood-item:active {
+  transform: scale(0.95);
+}
+
+.quick-emoji {
+  font-size: 28rpx;
+}
+
+/* 统计区域 */
+.stats-section {
+  background: white;
+  border-radius: 32rpx;
+  padding: 40rpx;
+  margin-top: 40rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.05);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.view-trend {
+  font-size: 26rpx;
+  color: #7C6AFF;
+  font-weight: 500;
+}
+
+.stats-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 25rpx;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.stat-header {
+  width: 120rpx;
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.stat-emoji {
+  font-size: 32rpx;
+}
+
+.stat-name {
+  font-size: 26rpx;
+  color: #333333;
+  font-weight: 500;
+}
+
+.stat-bar-container {
+  flex: 1;
+  height: 20rpx;
+  background: #F0F0F0;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+
+.stat-bar {
+  height: 100%;
+  border-radius: 10rpx;
+  transition: width 0.5s ease;
+}
+
+.stat-count {
+  width: 80rpx;
+  text-align: right;
+  font-size: 24rpx;
+  color: #999999;
+  font-weight: 500;
+}
+
+/* 历史记录 */
+.history-section {
+  margin-top: 40rpx;
+}
+
+.records-list {
+  background: white;
+  border-radius: 32rpx;
+  overflow: hidden;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.05);
+}
+
+.record-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.record-item:last-child {
+  border-bottom: none;
+}
+
+.record-left {
+  flex: 1;
+}
+
+.record-mood {
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+  margin-bottom: 10rpx;
+}
+
+.record-emoji {
+  font-size: 36rpx;
+}
+
+.record-mood-text {
+  font-size: 28rpx;
+  color: #333333;
+  font-weight: 500;
+}
+
+.record-note {
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.record-right {
+  text-align: right;
+  margin-left: 20rpx;
+}
+
+.record-time {
+  font-size: 26rpx;
+  color: #999999;
+  margin-bottom: 5rpx;
+}
+
+.record-date {
+  font-size: 24rpx;
+  color: #CCCCCC;
+}
+
+/* 空状态 */
+.empty-section {
+  text-align: center;
+  padding: 100rpx 0;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 30rpx;
+  opacity: 0.5;
+}
+
+.empty-title {
+  font-size: 36rpx;
+  color: #999999;
+  margin-bottom: 15rpx;
+}
+
+.empty-desc {
+  font-size: 28rpx;
+  color: #CCCCCC;
+}
