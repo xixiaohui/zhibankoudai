@@ -1,179 +1,189 @@
 /* pages/index/index.wxss - 首页样式 */
 
-/* 英雄头部 */
+/* ===== 渐变头部 ===== */
 .hero-header {
-  background: linear-gradient(135deg, #6C63FF 0%, #9B59B6 100%);
-  padding-bottom: 40rpx;
+  background: linear-gradient(135deg, #6C63FF 0%, #A594F9 100%);
+  padding: 0 32rpx 60rpx;
   position: relative;
   overflow: hidden;
-}
-
-.status-bar-placeholder {
-  height: 88rpx;
 }
 
 .hero-bg-circle {
   position: absolute;
   border-radius: 50%;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.1);
 }
-.c1 { width: 300rpx; height: 300rpx; top: -80rpx; right: -60rpx; }
-.c2 { width: 180rpx; height: 180rpx; bottom: 20rpx; left: -40rpx; }
-.c3 { width: 120rpx; height: 120rpx; top: 100rpx; right: 120rpx; background: rgba(255,255,255,0.05); }
+
+.hero-bg-circle.c1 {
+  width: 300rpx;
+  height: 300rpx;
+  top: -100rpx;
+  right: -50rpx;
+}
+
+.hero-bg-circle.c2 {
+  width: 200rpx;
+  height: 200rpx;
+  top: 50rpx;
+  left: -80rpx;
+}
+
+.hero-bg-circle.c3 {
+  width: 150rpx;
+  height: 150rpx;
+  bottom: -50rpx;
+  right: 20%;
+}
+
+.status-bar-placeholder {
+  height: env(safe-area-inset-top);
+}
 
 .hero-content {
-  padding: 0 32rpx;
   position: relative;
   z-index: 1;
 }
 
 .hero-greeting {
-  font-size: 38rpx;
-  font-weight: 700;
+  font-size: 40rpx;
+  font-weight: 600;
   color: #fff;
   margin-bottom: 8rpx;
 }
 
 .hero-date {
-  font-size: 24rpx;
-  color: rgba(255,255,255,0.75);
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .hero-avatar {
   width: 80rpx;
   height: 80rpx;
-  border-radius: 40rpx;
-  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 44rpx;
+  font-size: 40rpx;
 }
 
-/* 财务快看卡片 */
+/* ===== 财务卡片 ===== */
 .hero-finance-card {
-  background: rgba(255,255,255,0.15);
-  border-radius: 24rpx;
-  padding: 28rpx 24rpx;
-  margin-top: 28rpx;
-  backdrop-filter: blur(10px);
-  border: 1rpx solid rgba(255,255,255,0.2);
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 28rpx;
+  margin-top: 32rpx;
+  box-shadow: 0 8rpx 30rpx rgba(108, 99, 255, 0.2);
 }
 
 .finance-mini-row {
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
 .finance-mini-item {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
 }
 
 .finance-mini-label {
   font-size: 22rpx;
-  color: rgba(255,255,255,0.7);
+  color: #999;
   margin-bottom: 8rpx;
 }
 
 .finance-mini-val {
-  font-size: 30rpx;
-  font-weight: 700;
-  color: #fff;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
 }
-.finance-mini-val.income { color: #B2FFD6; }
-.finance-mini-val.expense { color: #FFB3B3; }
+
+.finance-mini-val.income {
+  color: #43D9AD;
+}
+
+.finance-mini-val.expense {
+  color: #FF6584;
+}
 
 .finance-mini-divider {
   width: 1rpx;
-  height: 48rpx;
-  background: rgba(255,255,255,0.25);
-  margin: 0 8rpx;
+  height: 50rpx;
+  background: #eee;
 }
 
-/* 预算进度条 */
+/* ===== 预算进度条 ===== */
 .budget-bar-wrap {
   margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #f0f0f0;
 }
+
 .budget-bar-header {
-  margin-bottom: 10rpx;
+  margin-bottom: 12rpx;
 }
+
 .budget-label {
-  font-size: 22rpx;
-  color: rgba(255,255,255,0.7);
+  font-size: 24rpx;
+  color: #666;
 }
+
 .budget-percent {
-  font-size: 22rpx;
-  color: rgba(255,255,255,0.85);
-  font-weight: 600;
-}
-.budget-percent.danger { color: #FF8A80; }
-
-.budget-bar-bg {
-  height: 8rpx;
-  background: rgba(255,255,255,0.25);
-  border-radius: 4rpx;
-  overflow: hidden;
-}
-.budget-bar-fill {
-  height: 100%;
-  background: rgba(255,255,255,0.85);
-  border-radius: 4rpx;
-  transition: width 0.5s ease;
-}
-.budget-bar-fill.warning { background: #FFD580; }
-.budget-bar-fill.danger { background: #FF8A80; }
-
-/* Section卡片 */
-.section-card {
-  background: #fff;
-  border-radius: 24rpx;
-  padding: 28rpx 28rpx;
-  margin: 16rpx 24rpx 0;
-  box-shadow: 0 4rpx 20rpx rgba(108,99,255,0.08);
-}
-
-.section-title-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20rpx;
-}
-
-.section-t {
-  font-size: 30rpx;
-  font-weight: 700;
-  color: #1A1A2E;
-}
-
-.section-more {
   font-size: 24rpx;
   color: #6C63FF;
+  font-weight: 600;
 }
 
-/* 快捷功能网格 */
+.budget-percent.danger {
+  color: #FF5252;
+}
+
+.budget-bar-bg {
+  height: 12rpx;
+  background: #F0F0F0;
+  border-radius: 6rpx;
+  overflow: hidden;
+}
+
+.budget-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6C63FF, #A594F9);
+  border-radius: 6rpx;
+  transition: width 0.3s;
+}
+
+.budget-bar-fill.warning {
+  background: linear-gradient(90deg, #FFB347, #FF9800);
+}
+
+.budget-bar-fill.danger {
+  background: linear-gradient(90deg, #FF6584, #FF5252);
+}
+
+/* ===== 快捷入口 ===== */
 .quick-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16rpx;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -12rpx;
 }
 
 .quick-item {
+  width: 25%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12rpx;
+  padding: 16rpx 0;
 }
 
 .quick-icon-wrap {
   width: 96rpx;
   height: 96rpx;
-  border-radius: 28rpx;
+  border-radius: 24rpx;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 12rpx;
 }
 
 .quick-icon {
@@ -182,131 +192,81 @@
 
 .quick-label {
   font-size: 24rpx;
-  color: #444466;
-  font-weight: 500;
+  color: #666;
 }
 
-/* 待办 */
+/* ===== 待办列表 ===== */
 .todo-item {
   display: flex;
   align-items: center;
-  padding: 12rpx 0;
-  border-bottom: 1rpx solid #F5F5FA;
+  padding: 16rpx 0;
 }
-.todo-item:last-child { border-bottom: none; }
 
 .todo-dot {
-  width: 14rpx;
-  height: 14rpx;
-  border-radius: 7rpx;
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
   margin-right: 16rpx;
-  flex-shrink: 0;
 }
-.dot-high { background: #FF5252; }
-.dot-mid { background: #FFB347; }
-.dot-low { background: #43D9AD; }
+
+.dot-high {
+  background: #FF5252;
+}
+
+.dot-mid {
+  background: #FFB347;
+}
+
+.dot-low {
+  background: #43D9AD;
+}
 
 .todo-text {
   font-size: 28rpx;
-  color: #333355;
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  color: #333;
 }
 
-/* 笔记预览 */
+/* ===== 学习笔记预览 ===== */
 .note-preview {
   display: flex;
   align-items: center;
-  gap: 20rpx;
-  padding: 14rpx 0;
-  border-bottom: 1rpx solid #F5F5FA;
+  padding: 16rpx 0;
 }
-.note-preview:last-child { border-bottom: none; }
 
 .note-preview-icon {
-  font-size: 44rpx;
-  width: 72rpx;
-  height: 72rpx;
-  border-radius: 16rpx;
-  background: #F0F0FA;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 40rpx;
+  margin-right: 16rpx;
 }
 
 .note-preview-title {
   font-size: 28rpx;
-  color: #1A1A2E;
-  font-weight: 500;
-  margin-bottom: 6rpx;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  color: #333;
+  margin-bottom: 4rpx;
 }
 
 .note-preview-sub {
   font-size: 22rpx;
-  color: #999BB8;
+  color: #999;
 }
 
-/* 每日贴士 */
+/* ===== 每日小贴士 ===== */
 .tip-banner {
   display: flex;
   align-items: center;
-  gap: 16rpx;
-  background: #EEF0FF;
-  border-radius: 20rpx;
+  background: linear-gradient(135deg, #FFF8E1, #FFECB3);
+  margin: 0 24rpx 24rpx;
   padding: 24rpx 28rpx;
-  margin: 16rpx 24rpx 0;
+  border-radius: 16rpx;
 }
 
-.tip-icon { font-size: 36rpx; flex-shrink: 0; }
-.tip-text { font-size: 26rpx; color: #6C63FF; line-height: 1.6; flex: 1; }
-
-/* AI CTA */
-.ai-cta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: linear-gradient(135deg, #1A1A2E, #2D2D5E);
-  border-radius: 24rpx;
-  padding: 28rpx 32rpx;
-  margin: 16rpx 24rpx 0;
+.tip-icon {
+  font-size: 36rpx;
+  margin-right: 16rpx;
 }
 
-.ai-cta-left {
-  display: flex;
-  align-items: center;
-  gap: 24rpx;
-}
-
-.ai-cta-icon { font-size: 56rpx; }
-
-.ai-cta-title {
-  font-size: 30rpx;
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 6rpx;
-}
-
-.ai-cta-sub {
-  font-size: 24rpx;
-  color: rgba(255,255,255,0.6);
-}
-
-.ai-cta-arrow {
-  font-size: 48rpx;
-  color: rgba(255,255,255,0.4);
-}
-
-/* 空提示 */
-.empty-hint {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24rpx 0;
-  color: #BBBBCC;
+.tip-text {
+  flex: 1;
   font-size: 26rpx;
+  color: #8D6E63;
+  line-height: 1.5;
 }

@@ -1,6 +1,4 @@
 {
-  "navigationBarTitleText": "AI 智伴助手",
-  "navigationBarBackgroundColor": "#1A1A2E",
-  "navigationBarTextStyle": "white",
-  "usingComponents": {}
+  "usingComponents": {},
+  "navigationBarTitleText": "AI助手"
 }

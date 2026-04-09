@@ -1,0 +1,542 @@
+<!-- pages/expert/index.wxml - 个人专家资料库 -->
+<view class="container">
+
+  <!-- Tab导航 -->
+  <view class="tab-nav">
+    <view
+      class="tab-item {{activeTab === tab.key ? 'active' : ''}}"
+      wx:for="{{tabs}}"
+      wx:key="key"
+      bindtap="switchTab"
+      data-tab="{{tab.key}}">
+      <text class="tab-icon">{{tab.icon}}</text>
+      <text class="tab-label">{{tab.label}}</text>
+    </view>
+  </view>
+
+  <!-- 个人名片 Tab -->
+  <view wx:if="{{activeTab === 'profile'}}" class="tab-content">
+    <!-- 名片预览 -->
+    <view class="card-preview">
+      <view class="profile-card">
+        <view class="card-header">
+          <view class="avatar-wrap" bindtap="chooseAvatar">
+            <image
+              wx:if="{{expertProfile.avatar}}"
+              src="{{expertProfile.avatar}}"
+              class="avatar-img"
+              mode="aspectFill"/>
+            <view wx:else class="avatar-placeholder">
+              <text>{{expertProfile.name ? expertProfile.name[0] : '👤'}}</text>
+            </view>
+            <view class="avatar-edit-hint" wx:if="{{viewMode === 'edit'}}">点击更换</view>
+          </view>
+          <view class="profile-info">
+            <view class="profile-name">
+              {{expertProfile.name || '未设置姓名'}}
+              <text class="level-badge level-{{expertProfile.level}}">
+                {{expertProfile.level === 'junior' ? '初级' : expertProfile.level === 'mid' ? '中级' : expertProfile.level === 'senior' ? '高级' : '专家'}}
+              </text>
+            </view>
+            <view class="profile-title">{{expertProfile.title || '设置你的职业title'}}</view>
+          </view>
+        </view>
+
+        <view class="profile-bio">{{expertProfile.bio || '添加个人简介，让大家更了解你'}}</view>
+
+        <!-- 技能标签 -->
+        <view class="skill-tags" wx:if="{{skills.length > 0}}">
+          <view class="skill-tag" wx:for="{{skills}}" wx:key="id">
+            {{item.icon}} {{item.name}}
+          </view>
+        </view>
+
+        <!-- 联系方式 -->
+        <view class="contact-row">
+          <view class="contact-item" wx:if="{{expertProfile.email}}" bindtap="copyInfo" data-text="{{expertProfile.email}}">
+            <text>📧 {{expertProfile.email}}</text>
+          </view>
+          <view class="contact-item" wx:if="{{expertProfile.github}}" bindtap="copyInfo" data-text="{{expertProfile.github}}">
+            <text>🐙 GitHub</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 编辑模式下的表单 -->
+      <view wx:if="{{viewMode === 'edit'}}" class="profile-form">
+        <view class="form-title">📝 编辑个人资料</view>
+
+        <view class="form-item">
+          <text class="form-label">姓名</text>
+          <input
+            class="form-input"
+            placeholder="输入你的姓名"
+            value="{{expertProfile.name}}"
+            bindinput="onProfileInput"
+            data-field="name"/>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">职业Title</text>
+          <input
+            class="form-input"
+            placeholder="如：全栈开发工程师"
+            value="{{expertProfile.title}}"
+            bindinput="onProfileInput"
+            data-field="title"/>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">个人简介</text>
+          <textarea
+            class="form-textarea"
+            placeholder="简单介绍一下自己吧"
+            value="{{expertProfile.bio}}"
+            bindinput="onProfileInput"
+            data-field="bio"/>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">邮箱</text>
+          <input
+            class="form-input"
+            placeholder="your@email.com"
+            value="{{expertProfile.email}}"
+            bindinput="onProfileInput"
+            data-field="email"/>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">GitHub</text>
+          <input
+            class="form-input"
+            placeholder="github.com/username"
+            value="{{expertProfile.github}}"
+            bindinput="onProfileInput"
+            data-field="github"/>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">等级</text>
+          <view class="level-selector">
+            <view
+              class="level-option {{expertProfile.level === 'junior' ? 'selected' : ''}}"
+              bindtap="onProfileInput"
+              data-value="junior">初级</view>
+            <view
+              class="level-option {{expertProfile.level === 'mid' ? 'selected' : ''}}"
+              bindtap="onProfileInput"
+              data-value="mid">中级</view>
+            <view
+              class="level-option {{expertProfile.level === 'senior' ? 'selected' : ''}}"
+              bindtap="onProfileInput"
+              data-value="senior">高级</view>
+            <view
+              class="level-option {{expertProfile.level === 'expert' ? 'selected' : ''}}"
+              bindtap="onProfileInput"
+              data-value="expert">专家</view>
+          </view>
+        </view>
+
+        <button class="save-btn" bindtap="saveProfile">保存资料</button>
+
+        <view class="action-btns">
+          <button class="action-btn preview-btn" bindtap="previewCard">预览名片</button>
+          <button class="action-btn share-btn" bindtap="shareCard">分享名片</button>
+        </view>
+      </view>
+
+      <!-- 预览模式下的按钮 -->
+      <view wx:if="{{viewMode === 'preview'}}" class="preview-actions">
+        <button class="action-btn edit-btn" bindtap="editCard">编辑资料</button>
+        <button class="action-btn share-btn" bindtap="shareCard">分享名片</button>
+      </view>
+    </view>
+
+    <!-- 统计数据 -->
+    <view class="stats-row">
+      <view class="stat-item">
+        <text class="stat-num">{{stats.totalSkills}}</text>
+        <text class="stat-label">技能</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-num">{{stats.totalProjects}}</text>
+        <text class="stat-label">项目</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-num">{{stats.totalKnowledge}}</text>
+        <text class="stat-label">知识</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 技能管理 Tab -->
+  <view wx:if="{{activeTab === 'skills'}}" class="tab-content">
+    <view class="section-header">
+      <text class="section-title">🎯 我的技能</text>
+      <view class="add-btn" bindtap="openAddSkill">+ 添加技能</view>
+    </view>
+
+    <!-- 技能分类统计 -->
+    <view class="category-stats">
+      <view class="cat-stat" wx:for="{{skillCategories}}" wx:key="key">
+        <text class="cat-icon">{{item.icon}}</text>
+        <text class="cat-name">{{item.label}}</text>
+        <text class="cat-count">{{stats.skillStats[item.key] || 0}}</text>
+      </view>
+    </view>
+
+    <!-- 技能列表 -->
+    <view class="skills-list" wx:if="{{skills.length > 0}}">
+      <view class="skill-card" wx:for="{{skills}}" wx:key="id">
+        <view class="skill-info">
+          <text class="skill-icon">{{item.icon}}</text>
+          <view class="skill-detail">
+            <view class="skill-name">{{item.name}}</view>
+            <view class="skill-desc" wx:if="{{item.desc}}">{{item.desc}}</view>
+            <view class="skill-level">
+              <text class="stars-text">★ ★ ★ ★ ★</text>
+              <text class="stars-active" style="width: {{item.level * 20}}%">★ ★ ★ ★ ★</text>
+            </view>
+          </view>
+        </view>
+        <view class="skill-level-tag">Lv.{{item.level}}</view>
+        <view class="delete-btn" bindtap="deleteSkill" data-id="{{item.id}}">🗑️</view>
+      </view>
+    </view>
+
+    <view wx:else class="empty-state">
+      <text class="empty-icon">🎯</text>
+      <text class="empty-text">还没有添加技能</text>
+      <text class="empty-hint">点击上方"添加技能"开始记录</text>
+    </view>
+  </view>
+
+  <!-- 项目经验 Tab -->
+  <view wx:if="{{activeTab === 'projects'}}" class="tab-content">
+    <view class="section-header">
+      <text class="section-title">📁 项目经验</text>
+      <view class="add-btn" bindtap="openAddProject">+ 添加项目</view>
+    </view>
+
+    <!-- 项目列表 -->
+    <view class="projects-list" wx:if="{{projects.length > 0}}">
+      <view class="project-card" wx:for="{{projects}}" wx:key="id">
+        <view class="project-header">
+          <view class="project-title-row">
+            <text class="project-icon">{{item.categoryIcon}}</text>
+            <text class="project-name">{{item.name}}</text>
+          </view>
+          <view class="project-status status-{{item.status}}">
+            {{item.status === 'planning' ? '规划中' : item.status === 'progress' ? '进行中' : item.status === 'completed' ? '已完成' : '已暂停'}}
+          </view>
+        </view>
+
+        <view class="project-role" wx:if="{{item.role}}">
+          <text>角色：{{item.role}}</text>
+        </view>
+
+        <view class="project-desc">{{item.desc}}</view>
+
+        <view class="project-tech" wx:if="{{item.techStack}}">
+          <text class="tech-label">技术栈：</text>
+          <text class="tech-list">{{item.techStack}}</text>
+        </view>
+
+        <view class="project-highlights" wx:if="{{item.highlights}}">
+          <text class="highlights-label">亮点：</text>
+          <text class="highlights-content">{{item.highlights}}</text>
+        </view>
+
+        <view class="project-dates">
+          <text>📅 {{item.startDate}} {{item.endDate ? '至 ' + item.endDate : '至今'}}</text>
+        </view>
+
+        <view class="project-footer">
+          <view class="project-link" wx:if="{{item.link}}" bindtap="copyInfo" data-text="{{item.link}}">
+            🔗 访问链接
+          </view>
+          <view class="delete-btn" bindtap="deleteProject" data-id="{{item.id}}">🗑️ 删除</view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:else class="empty-state">
+      <text class="empty-icon">📁</text>
+      <text class="empty-text">还没有项目经验</text>
+      <text class="empty-hint">添加你的项目，积累经验</text>
+    </view>
+  </view>
+
+  <!-- 知识卡片 Tab -->
+  <view wx:if="{{activeTab === 'knowledge'}}" class="tab-content">
+    <view class="section-header">
+      <text class="section-title">📚 知识卡片</text>
+      <view class="add-btn" bindtap="openAddKnowledge">+ 添加卡片</view>
+    </view>
+
+    <!-- 知识卡片列表 -->
+    <view class="knowledge-list" wx:if="{{knowledgeCards.length > 0}}">
+      <view class="knowledge-card" wx:for="{{knowledgeCards}}" wx:key="id">
+        <view class="knowledge-header">
+          <text class="knowledge-icon">{{item.icon}}</text>
+          <text class="knowledge-title">{{item.title}}</text>
+          <view class="delete-btn" bindtap="deleteKnowledge" data-id="{{item.id}}">🗑️</view>
+        </view>
+        <view class="knowledge-content">{{item.content}}</view>
+        <view class="knowledge-footer">
+          <text class="knowledge-tags" wx:if="{{item.tags}}">标签：{{item.tags}}</text>
+          <text class="knowledge-date">{{item.date}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view wx:else class="empty-state">
+      <text class="empty-icon">📚</text>
+      <text class="empty-text">还没有知识卡片</text>
+      <text class="empty-hint">记录重要的知识点，方便回顾</text>
+    </view>
+  </view>
+
+  <!-- 添加技能弹窗 -->
+  <view class="modal-overlay" wx:if="{{showAddSkill}}" bindtap="closeAddSkill">
+    <view class="modal-content" catchtap="">
+      <view class="modal-header">
+        <text>添加技能</text>
+        <text class="modal-close" bindtap="closeAddSkill">×</text>
+      </view>
+
+      <view class="modal-body">
+        <view class="form-item">
+          <text class="form-label">技能名称 *</text>
+          <input
+            class="form-input"
+            placeholder="如：Vue.js"
+            bindinput="onSkillInput"
+            data-field="name"/>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">分类</text>
+          <view class="category-grid">
+            <view
+              class="cat-option {{skillForm.category === cat.key ? 'selected' : ''}}"
+              wx:for="{{skillCategories}}"
+              wx:key="key"
+              bindtap="setSkillCategory"
+              data-category="{{cat.key}}">
+              <text>{{item.icon}}</text>
+              <text>{{item.label}}</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">熟练度</text>
+          <view class="level-grid">
+            <view
+              class="level-option {{skillForm.level === level.value ? 'selected' : ''}}"
+              wx:for="{{skillLevels}}"
+              wx:key="value"
+              bindtap="setSkillLevel"
+              data-level="{{level.value}}">
+              {{item.label}}
+            </view>
+          </view>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">描述（可选）</text>
+          <textarea
+            class="form-textarea"
+            placeholder="简单描述一下这个技能的掌握情况"
+            bindinput="onSkillInput"
+            data-field="desc"/>
+        </view>
+      </view>
+
+      <view class="modal-footer">
+        <button class="modal-btn cancel" bindtap="closeAddSkill">取消</button>
+        <button class="modal-btn confirm" bindtap="saveSkill">保存</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加项目弹窗 -->
+  <view class="modal-overlay" wx:if="{{showAddProject}}" bindtap="closeAddProject">
+    <view class="modal-content modal-large" catchtap="">
+      <view class="modal-header">
+        <text>添加项目</text>
+        <text class="modal-close" bindtap="closeAddProject">×</text>
+      </view>
+
+      <scroll-view scroll-y class="modal-body modal-scroll">
+        <view class="form-item">
+          <text class="form-label">项目名称 *</text>
+          <input
+            class="form-input"
+            placeholder="项目名称"
+            bindinput="onProjectInput"
+            data-field="name"/>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">项目类型</text>
+          <view class="category-grid">
+            <view
+              class="cat-option {{projectForm.category === cat.key ? 'selected' : ''}}"
+              wx:for="{{projectCategories}}"
+              wx:key="key"
+              bindtap="setProjectCategory"
+              data-category="{{cat.key}}">
+              <text>{{item.icon}}</text>
+              <text>{{item.label}}</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">项目角色</text>
+          <input
+            class="form-input"
+            placeholder="如：负责人、前端开发"
+            bindinput="onProjectInput"
+            data-field="role"/>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">项目描述 *</text>
+          <textarea
+            class="form-textarea"
+            placeholder="简要描述项目功能和技术实现"
+            bindinput="onProjectInput"
+            data-field="desc"/>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">技术栈</text>
+          <input
+            class="form-input"
+            placeholder="如：Vue3 + Node.js + MySQL"
+            bindinput="onProjectInput"
+            data-field="techStack"/>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">项目状态</text>
+          <view class="status-grid">
+            <view
+              class="status-option {{projectForm.status === status.key ? 'selected' : ''}}"
+              wx:for="{{projectStatus}}"
+              wx:key="key"
+              bindtap="setProjectStatus"
+              data-status="{{status.key}}">
+              {{item.label}}
+            </view>
+          </view>
+        </view>
+
+        <view class="form-row">
+          <view class="form-item half">
+            <text class="form-label">开始时间</text>
+            <picker mode="date" bindchange="onProjectDateChange" data-field="startDate">
+              <view class="picker-value">{{projectForm.startDate || '选择日期'}}</view>
+            </picker>
+          </view>
+          <view class="form-item half">
+            <text class="form-label">结束时间</text>
+            <picker mode="date" bindchange="onProjectDateChange" data-field="endDate">
+              <view class="picker-value">{{projectForm.endDate || '至今'}}</view>
+            </picker>
+          </view>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">项目亮点</text>
+          <textarea
+            class="form-textarea"
+            placeholder="项目中的难点、创新点、成果等"
+            bindinput="onProjectInput"
+            data-field="highlights"/>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">项目链接</text>
+          <input
+            class="form-input"
+            placeholder="GitHub地址或在线演示地址"
+            bindinput="onProjectInput"
+            data-field="link"/>
+        </view>
+      </scroll-view>
+
+      <view class="modal-footer">
+        <button class="modal-btn cancel" bindtap="closeAddProject">取消</button>
+        <button class="modal-btn confirm" bindtap="saveProject">保存</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加知识卡片弹窗 -->
+  <view class="modal-overlay" wx:if="{{showAddKnowledge}}" bindtap="closeAddKnowledge">
+    <view class="modal-content" catchtap="">
+      <view class="modal-header">
+        <text>添加知识卡片</text>
+        <text class="modal-close" bindtap="closeAddKnowledge">×</text>
+      </view>
+
+      <view class="modal-body">
+        <view class="form-item">
+          <text class="form-label">标题 *</text>
+          <input
+            class="form-input"
+            placeholder="知识点的标题"
+            bindinput="onKnowledgeInput"
+            data-field="title"/>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">内容 *</text>
+          <textarea
+            class="form-textarea"
+            placeholder="详细记录这个知识点..."
+            bindinput="onKnowledgeInput"
+            data-field="content"/>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">分类</text>
+          <view class="category-grid">
+            <view
+              class="cat-option {{knowledgeForm.category === cat.key ? 'selected' : ''}}"
+              wx:for="{{knowledgeCategories}}"
+              wx:key="key"
+              bindtap="setKnowledgeCategory"
+              data-category="{{cat.key}}">
+              <text>{{item.icon}}</text>
+              <text>{{item.label}}</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">标签（可选）</text>
+          <input
+            class="form-input"
+            placeholder="多个标签用逗号分隔"
+            bindinput="onKnowledgeInput"
+            data-field="tags"/>
+        </view>
+      </view>
+
+      <view class="modal-footer">
+        <button class="modal-btn cancel" bindtap="closeAddKnowledge">取消</button>
+        <button class="modal-btn confirm" bindtap="saveKnowledge">保存</button>
+      </view>
+    </view>
+  </view>
+
+  <view style="height: 120rpx"></view>
+</view>

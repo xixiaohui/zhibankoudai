@@ -13,9 +13,9 @@ Page({
     todoList: [],
     studyNotes: [],
     quickEntries: [
-      { icon: '💰', label: '记账', path: '/pages/finance/index', color: '#6C63FF', bg: '#EEF0FF' },
-      { icon: '📚', label: '学习', path: '/pages/study/index', color: '#43D9AD', bg: '#E8FBF5' },
-      { icon: '✅', label: '待办', path: '/pages/life/index', color: '#FFB347', bg: '#FFF8E1' },
+      { icon: '📊', label: '财务', path: '/pages/finance/index', color: '#6C63FF', bg: '#EEF0FF' },
+      { icon: '🎯', label: '专家库', path: '/pages/expert/index', color: '#43D9AD', bg: '#E8FBF5' },
+      { icon: '📚', label: '学习', path: '/pages/study/index', color: '#FFB347', bg: '#FFF8E1' },
       { icon: '🤖', label: 'AI助手', path: '/pages/ai/index', color: '#FF6584', bg: '#FFF0F3' },
     ],
     tips: [
@@ -26,7 +26,6 @@ Page({
       '记录今天的收支，掌控明天的生活 💼',
     ],
     currentTip: 0,
-    weatherIcon: '☀️',
   },
 
   onShow() {
@@ -114,9 +113,7 @@ Page({
     wx.switchTab({ url: path });
   },
 
-  // 跳转到记账
-  goFinance() { wx.switchTab({ url: '/pages/finance/index' }); },
-  goStudy() { wx.switchTab({ url: '/pages/study/index' }); },
-  goLife() { wx.switchTab({ url: '/pages/life/index' }); },
-  goAI() { wx.switchTab({ url: '/pages/ai/index' }); },
+  goMine() {
+    wx.switchTab({ url: '/pages/mine/index' });
+  },
 });

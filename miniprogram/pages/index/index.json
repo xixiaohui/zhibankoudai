@@ -1,7 +1,4 @@
 {
-  "navigationBarTitleText": "智伴口袋",
-  "navigationBarBackgroundColor": "#6C63FF",
-  "navigationBarTextStyle": "white",
-  "navigationStyle": "custom",
-  "usingComponents": {}
+  "usingComponents": {},
+  "navigationBarTitleText": "首页"
 }

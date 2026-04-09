@@ -1,9 +1,7 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/finance/index",
-    "pages/study/index",
-    "pages/life/index",
+    "pages/expert/index",
     "pages/ai/index",
     "pages/mine/index"
   ],
@@ -27,22 +25,16 @@
         "selectedIconPath": "images/tab/home_active.png"
       },
       {
-        "pagePath": "pages/finance/index",
-        "text": "财务",
-        "iconPath": "images/tab/finance.png",
-        "selectedIconPath": "images/tab/finance_active.png"
+        "pagePath": "pages/expert/index",
+        "text": "专家库",
+        "iconPath": "images/tab/expert.png",
+        "selectedIconPath": "images/tab/expert_active.png"
       },
       {
         "pagePath": "pages/ai/index",
         "text": "AI助手",
         "iconPath": "images/tab/ai.png",
         "selectedIconPath": "images/tab/ai_active.png"
-      },
-      {
-        "pagePath": "pages/life/index",
-        "text": "生活",
-        "iconPath": "images/tab/life.png",
-        "selectedIconPath": "images/tab/life_active.png"
       },
       {
         "pagePath": "pages/mine/index",

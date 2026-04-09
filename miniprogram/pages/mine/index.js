@@ -8,20 +8,20 @@ Page({
       records: 0,
       notes: 0,
       todos: 0,
-      habits: 0,
+      skills: 0,
+      projects: 0,
     },
     menuList: [
+      { icon: '🎯', label: '专家资料', desc: '管理个人名片', action: 'expert' },
       { icon: '💰', label: '财务统计', desc: '查看收支分析', action: 'finance' },
       { icon: '📊', label: '学习报告', desc: '学习进度概览', action: 'study' },
-      { icon: '🎯', label: '目标管理', desc: '设置人生目标', action: 'goals' },
-      { icon: '⚙️', label: '偏好设置', desc: '个性化配置', action: 'settings' },
+      { icon: '🌱', label: '生活管理', desc: '待办、习惯打卡', action: 'life' },
       { icon: '🔔', label: '消息通知', desc: '通知权限管理', action: 'notify' },
       { icon: '🗂️', label: '数据备份', desc: '备份与恢复', action: 'backup' },
+      { icon: '⚙️', label: '偏好设置', desc: '个性化配置', action: 'settings' },
       { icon: '❓', label: '使用帮助', desc: '功能指引', action: 'help' },
-      { icon: '⭐', label: '给个好评', desc: '支持我们', action: 'rate' },
     ],
     appVersion: '1.0.0',
-    joinDate: formatDate(new Date()),
   },
 
   onShow() {
@@ -33,20 +33,23 @@ Page({
     const records = wx.getStorageSync('financeRecords') || [];
     const notes = wx.getStorageSync('studyNotes') || [];
     const todos = wx.getStorageSync('todoList') || [];
-    const habits = wx.getStorageSync('habits') || [];
+    const skills = wx.getStorageSync('expertSkills') || [];
+    const projects = wx.getStorageSync('expertProjects') || [];
+
     this.setData({
       stats: {
         records: records.length,
         notes: notes.length,
         todos: todos.filter(t => t.done).length,
-        habits: habits.length,
+        skills: skills.length,
+        projects: projects.length,
       }
     });
   },
 
   loadUserInfo() {
-    const savedUser = wx.getStorageSync('userInfo');
-    if (savedUser) {
+    const savedUser = wx.getStorageSync('expertProfile');
+    if (savedUser && savedUser.name) {
       this.setData({ userInfo: savedUser });
     }
   },
@@ -70,24 +73,24 @@ Page({
   onMenuTap(e) {
     const action = e.currentTarget.dataset.action;
     const actionMap = {
-      finance: () => wx.switchTab({ url: '/pages/finance/index' }),
-      study: () => wx.switchTab({ url: '/pages/study/index' }),
-      goals: () => wx.showToast({ title: '目标管理开发中', icon: 'none' }),
-      settings: () => this.openSettings(),
+      expert: () => wx.switchTab({ url: '/pages/expert/index' }),
+      finance: () => wx.showToast({ title: '财务功能开发中', icon: 'none' }),
+      study: () => wx.showToast({ title: '学习功能开发中', icon: 'none' }),
+      life: () => wx.showToast({ title: '生活功能开发中', icon: 'none' }),
       notify: () => wx.openSetting(),
       backup: () => this.doBackup(),
+      settings: () => this.openSettings(),
       help: () => this.showHelp(),
-      rate: () => wx.showToast({ title: '感谢您的支持！', icon: 'success' }),
     };
     if (actionMap[action]) actionMap[action]();
   },
 
   openSettings() {
     wx.showActionSheet({
-      itemList: ['切换深色/浅色模式', '清除缓存', '重置所有数据'],
+      itemList: ['清除缓存', '重置所有数据'],
       success: (res) => {
-        if (res.tapIndex === 1) this.clearCache();
-        if (res.tapIndex === 2) this.resetData();
+        if (res.tapIndex === 0) this.clearCache();
+        if (res.tapIndex === 1) this.resetData();
       }
     });
   },
@@ -118,6 +121,10 @@ Page({
 
   doBackup() {
     const data = {
+      expertProfile: wx.getStorageSync('expertProfile') || {},
+      expertSkills: wx.getStorageSync('expertSkills') || [],
+      expertProjects: wx.getStorageSync('expertProjects') || [],
+      expertKnowledge: wx.getStorageSync('expertKnowledge') || [],
       financeRecords: wx.getStorageSync('financeRecords') || [],
       studyNotes: wx.getStorageSync('studyNotes') || [],
       todoList: wx.getStorageSync('todoList') || [],
@@ -125,7 +132,7 @@ Page({
       budget: wx.getStorageSync('budget') || {},
       exportTime: new Date().toISOString(),
     };
-    const json = JSON.stringify(data);
+    const json = JSON.stringify(data, null, 2);
     wx.setClipboardData({
       data: json,
       success: () => wx.showModal({
@@ -139,7 +146,7 @@ Page({
   showHelp() {
     wx.showModal({
       title: '使用帮助',
-      content: '📍 首页：总览所有模块\n💰 财务：记录收支，设置预算\n📚 学习：记笔记，专注计时\n🌱 生活：待办、习惯打卡\n🤖 AI：智能问答助手\n\n如有问题欢迎反馈！',
+      content: '📍 首页：总览所有模块\n🎯 专家库：管理个人名片、技能、项目\n🤖 AI助手：智能问答助手\n\n💡 提示：定期备份数据防止丢失\n\n如有问题欢迎反馈！',
       showCancel: false
     });
   },

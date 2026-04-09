@@ -1,84 +1,82 @@
 <!-- pages/mine/index.wxml - 我的 -->
 <view class="container">
 
-  <!-- 用户信息头部 -->
-  <view class="mine-header">
-    <view class="mh-bg-circle mhc1"></view>
-    <view class="mh-bg-circle mhc2"></view>
-
-    <view wx:if="{{userInfo}}" class="user-info-row">
-      <image class="user-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"/>
-      <view class="user-detail">
-        <view class="user-name">{{userInfo.nickName}}</view>
-        <view class="user-join">加入于 {{joinDate}}</view>
+  <!-- 用户信息卡片 -->
+  <view class="profile-card">
+    <view class="profile-bg">
+      <view class="profile-avatar" bindtap="getUserInfo">
+        <image wx:if="{{userInfo && userInfo.avatar}}" src="{{userInfo.avatar}}" mode="aspectFill"/>
+        <text wx:else>{{userInfo && userInfo.name ? userInfo.name[0] : '👤'}}</text>
+      </view>
+      <view class="profile-info" bindtap="getUserInfo">
+        <view class="profile-name">
+          {{userInfo && userInfo.name ? userInfo.name : '点击登录'}}
+        </view>
+        <view class="profile-title" wx:if="{{userInfo && userInfo.title}}">
+          {{userInfo.title}}
+        </view>
+        <view class="profile-title" wx:else>
+          设置您的专家资料
+        </view>
+      </view>
+      <view class="profile-level level-{{userInfo && userInfo.level || 'junior'}}">
+        {{userInfo && userInfo.level === 'expert' ? '专家' : userInfo && userInfo.level === 'senior' ? '高级' : userInfo && userInfo.level === 'mid' ? '中级' : '初级'}}
       </view>
     </view>
 
-    <view wx:else class="login-btn-wrap" bindtap="getUserInfo">
-      <view class="default-avatar">🙂</view>
-      <view class="login-prompt">
-        <view class="login-title">点击登录</view>
-        <view class="login-sub">登录后享受更多功能</view>
-      </view>
-      <view class="login-arrow">›</view>
-    </view>
-
-    <!-- 使用统计 -->
-    <view class="stats-row">
+    <!-- 数据统计 -->
+    <view class="stats-bar">
       <view class="stat-item">
-        <view class="stat-val">{{stats.records}}</view>
-        <view class="stat-label">账单记录</view>
+        <text class="stat-num">{{stats.records}}</text>
+        <text class="stat-label">记账</text>
       </view>
       <view class="stat-divider"></view>
       <view class="stat-item">
-        <view class="stat-val">{{stats.notes}}</view>
-        <view class="stat-label">学习笔记</view>
+        <text class="stat-num">{{stats.notes}}</text>
+        <text class="stat-label">笔记</text>
       </view>
       <view class="stat-divider"></view>
       <view class="stat-item">
-        <view class="stat-val">{{stats.todos}}</view>
-        <view class="stat-label">完成待办</view>
+        <text class="stat-num">{{stats.skills}}</text>
+        <text class="stat-label">技能</text>
       </view>
       <view class="stat-divider"></view>
       <view class="stat-item">
-        <view class="stat-val">{{stats.habits}}</view>
-        <view class="stat-label">我的习惯</view>
+        <text class="stat-num">{{stats.projects}}</text>
+        <text class="stat-label">项目</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-num">{{stats.todos}}</text>
+        <text class="stat-label">已完成</text>
       </view>
     </view>
   </view>
 
-  <!-- AI助手入口 -->
-  <view class="ai-banner" bindtap="() => wx.switchTab({url: '/pages/ai/index'})">
-    <view class="ai-banner-left">
-      <text class="ai-banner-icon">🤖</text>
-      <view>
-        <view class="ai-banner-title">智伴 AI 助手</view>
-        <view class="ai-banner-sub">随时随地，智能问答</view>
-      </view>
-    </view>
-    <view class="ai-banner-arrow">›</view>
-  </view>
-
-  <!-- 菜单列表 -->
-  <view class="menu-card">
-    <view class="menu-item" wx:for="{{menuList}}" wx:key="action"
-          bindtap="onMenuTap" data-action="{{item.action}}">
-      <view class="menu-icon-wrap">
+  <!-- 功能菜单 -->
+  <view class="menu-section">
+    <view 
+      class="menu-item"
+      wx:for="{{menuList}}"
+      wx:key="action"
+      bindtap="onMenuTap"
+      data-action="{{item.action}}">
+      <view class="menu-left">
         <text class="menu-icon">{{item.icon}}</text>
+        <view class="menu-text">
+          <text class="menu-label">{{item.label}}</text>
+          <text class="menu-desc">{{item.desc}}</text>
+        </view>
       </view>
-      <view class="menu-info">
-        <view class="menu-label">{{item.label}}</view>
-        <view class="menu-desc">{{item.desc}}</view>
-      </view>
-      <view class="menu-arrow">›</view>
+      <text class="menu-arrow">›</text>
     </view>
   </view>
 
-  <!-- 版本信息 -->
-  <view class="version-info">
-    <text class="version-logo">🎯 智伴口袋</text>
-    <text class="version-text">v{{appVersion}} · 全能生活管理助手</text>
+  <!-- 底部信息 -->
+  <view class="footer-info">
+    <text class="app-name">智伴口袋</text>
+    <text class="app-version">v{{appVersion}}</text>
+    <text class="app-desc">您的个人专家资料库</text>
   </view>
 
-  <view style="height:40rpx"></view>
 </view>

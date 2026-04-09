@@ -2,7 +2,7 @@
 App({
   onLaunch: function () {
     this.globalData = {
-      env: "", // 填入你的云开发环境ID
+      env: "",
       userInfo: null,
       theme: {
         primary: '#6C63FF',
@@ -42,6 +42,37 @@ App({
     }
     if (!wx.getStorageSync('budget')) {
       wx.setStorageSync('budget', { monthly: 0, used: 0 });
+    }
+    if (!wx.getStorageSync('expertProfile')) {
+      wx.setStorageSync('expertProfile', {
+        name: '',
+        title: '',
+        avatar: '',
+        bio: '',
+        email: '',
+        phone: '',
+        github: '',
+        website: '',
+        level: 'junior',
+      });
+    }
+    if (!wx.getStorageSync('expertSkills')) {
+      wx.setStorageSync('expertSkills', []);
+    }
+    if (!wx.getStorageSync('expertProjects')) {
+      wx.setStorageSync('expertProjects', []);
+    }
+    if (!wx.getStorageSync('expertKnowledge')) {
+      wx.setStorageSync('expertKnowledge', []);
+    }
+    if (!wx.getStorageSync('habits')) {
+      wx.setStorageSync('habits', []);
+    }
+    if (!wx.getStorageSync('reminders')) {
+      wx.setStorageSync('reminders', []);
+    }
+    if (!wx.getStorageSync('studyLog')) {
+      wx.setStorageSync('studyLog', {});
     }
   },
 

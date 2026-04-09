@@ -14,7 +14,7 @@
           <view class="hero-date">📅 {{dateStr}}</view>
         </view>
         <view class="hero-avatar" bindtap="goMine">
-          <text>🙂</text>
+          <text>👤</text>
         </view>
       </view>
 
@@ -67,10 +67,9 @@
   </view>
 
   <!-- 待办事项预览 -->
-  <view class="section-card" bindtap="goLife">
+  <view class="section-card">
     <view class="section-title-row">
       <text class="section-t">✅ 今日待办</text>
-      <text class="section-more">查看全部 ›</text>
     </view>
     <view wx:if="{{todoList.length > 0}}">
       <view class="todo-item" wx:for="{{todoList}}" wx:key="id">
@@ -84,10 +83,9 @@
   </view>
 
   <!-- 学习笔记预览 -->
-  <view class="section-card" bindtap="goStudy">
+  <view class="section-card">
     <view class="section-title-row">
       <text class="section-t">📚 最近学习</text>
-      <text class="section-more">查看全部 ›</text>
     </view>
     <view wx:if="{{studyNotes.length > 0}}">
       <view class="note-preview" wx:for="{{studyNotes}}" wx:key="id">
@@ -107,18 +105,6 @@
   <view class="tip-banner">
     <text class="tip-icon">💬</text>
     <text class="tip-text">{{tips[currentTip]}}</text>
-  </view>
-
-  <!-- AI入口 -->
-  <view class="ai-cta" bindtap="goAI">
-    <view class="ai-cta-left">
-      <text class="ai-cta-icon">🤖</text>
-      <view>
-        <view class="ai-cta-title">AI智伴助手</view>
-        <view class="ai-cta-sub">有问题？问我吧～</view>
-      </view>
-    </view>
-    <view class="ai-cta-arrow">›</view>
   </view>
 
   <view style="height:32rpx"></view>
