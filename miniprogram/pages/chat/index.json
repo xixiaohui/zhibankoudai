@@ -1,7 +1,4 @@
 {
-  "navigationBarTitleText": "陪伴对话",
-  "backgroundColor": "#F5F7FA",
-  "backgroundTextStyle": "dark",
-  "disableScroll": false,
-  "onReachBottomDistance": 50
+  "usingComponents": {},
+  "navigationStyle": "custom"
 }

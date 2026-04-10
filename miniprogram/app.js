@@ -38,6 +38,17 @@ App({
   },
 
   onLaunch() {
+    // 初始化云开发
+    if (!wx.cloud) {
+      console.warn('请使用 2.2.3 或以上的基础库以使用云能力')
+    } else {
+      wx.cloud.init({
+        env: "zhiban-4g34epre1ce6ce1c", // 使用当前云环境
+        traceUser: true,
+      })
+      console.log('【App】云开发初始化成功')
+    }
+    
     // 初始化本地存储
     this.initStorage()
     // 加载口袋记忆

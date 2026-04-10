@@ -230,4 +230,9 @@ Page({
       wx.showToast({ title: '请设置你的称呼', icon: 'none' })
     }
   },
+
+  // 空操作（用于阻止事件穿透）
+  noop() {
+    // do nothing
+  },
 })

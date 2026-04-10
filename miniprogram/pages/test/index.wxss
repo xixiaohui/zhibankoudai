@@ -1,0 +1,209 @@
+/* pages/test/index.wxss - 功能测试页面样式 */
+
+.page-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #F5F7FF 0%, #F0F2FF 100%);
+  padding: 30rpx 30rpx 100rpx;
+}
+
+/* 头部 */
+.header {
+  padding: 40rpx 0 30rpx;
+  text-align: center;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 10rpx;
+}
+
+.subtitle {
+  font-size: 26rpx;
+  color: #7C6AFF;
+  opacity: 0.8;
+}
+
+/* 测试区域 */
+.test-section {
+  margin-bottom: 40rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 20rpx;
+}
+
+.test-card {
+  background: white;
+  border-radius: 24rpx;
+  padding: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(124, 106, 255, 0.08);
+}
+
+.test-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 16rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.test-item:last-child {
+  border-bottom: none;
+}
+
+.test-info {
+  flex: 1;
+}
+
+.test-name {
+  font-size: 28rpx;
+  color: #333333;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 6rpx;
+}
+
+.test-desc {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.test-btn {
+  padding: 16rpx 32rpx;
+  background: linear-gradient(135deg, #7C6AFF, #9D8FFF);
+  color: white;
+  border-radius: 16rpx;
+  font-size: 26rpx;
+  border: none;
+  min-width: 120rpx;
+}
+
+.test-btn.secondary {
+  background: #F0F0F0;
+  color: #666666;
+}
+
+.test-btn::after {
+  border: none;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 12rpx;
+  background: #F0F0F0;
+  border-radius: 6rpx;
+  overflow: hidden;
+  margin-top: 10rpx;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7C6AFF, #9D8FFF);
+  border-radius: 6rpx;
+  transition: width 0.3s;
+}
+
+/* 导航网格 */
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx 20rpx;
+  background: white;
+  border-radius: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+}
+
+.nav-item:active {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+.nav-icon {
+  font-size: 60rpx;
+  margin-bottom: 16rpx;
+}
+
+.nav-text {
+  font-size: 28rpx;
+  color: #333333;
+  font-weight: 500;
+}
+
+/* 日志容器 */
+.log-container {
+  background: #1a1a1a;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  max-height: 400rpx;
+  overflow-y: auto;
+}
+
+.log-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 12rpx;
+  font-family: 'Courier New', monospace;
+  font-size: 22rpx;
+  line-height: 1.4;
+}
+
+.log-item.success {
+  color: #34D399;
+}
+
+.log-item.error {
+  color: #FF6B6B;
+}
+
+.log-item.info {
+  color: #60A5FA;
+}
+
+.log-item.warning {
+  color: #FFCA28;
+}
+
+.log-time {
+  color: #666666;
+  margin-right: 12rpx;
+  flex-shrink: 0;
+}
+
+.log-msg {
+  flex: 1;
+  word-break: break-all;
+}
+
+.log-empty {
+  text-align: center;
+  color: #666666;
+  padding: 40rpx;
+  font-size: 26rpx;
+}
+
+.clear-log-btn {
+  margin-top: 20rpx;
+  padding: 16rpx;
+  background: transparent;
+  color: #999999;
+  border: 1rpx solid #E0E0E0;
+  border-radius: 12rpx;
+  font-size: 26rpx;
+}
+
+.clear-log-btn::after {
+  border: none;
+}

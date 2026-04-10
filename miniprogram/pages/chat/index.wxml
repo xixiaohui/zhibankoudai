@@ -1,99 +1,126 @@
 <!-- pages/chat/index.wxml - 陪伴对话页面 -->
-<view class="page-container">
-  <!-- 顶部导航 -->
-  <view class="chat-header">
-    <view class="header-left">
-      <view class="mode-indicator" style="background-color: {{modeColor}}">
-        <text class="mode-icon">{{modeIcon}}</text>
-        <text class="mode-name">{{modeName}}</text>
+<view class="chat-page">
+
+  <!-- 顶部导航栏 -->
+  <view class="nav-bar" style="padding-top: {{navBarHeight}}px">
+    <view class="nav-content">
+      <view class="nav-left" bindtap="goToHome">
+        <text class="back-icon">‹</text>
+        <text class="back-text">返回</text>
       </view>
-    </view>
-    <view class="header-right">
-      <view class="action-btn" bindtap="onSwitchMode">
-        <text class="action-icon">🔄</text>
-        <text class="action-text">切换</text>
+      <view class="nav-center">
+        <view class="nav-avatar">
+          <text>🤖</text>
+        </view>
+        <view class="nav-info">
+          <text class="nav-title">智伴AI</text>
+          <text class="nav-status">{{modeIcon}} {{modeName}}</text>
+        </view>
       </view>
-      <view class="action-btn" bindtap="onClearChat">
-        <text class="action-icon">🗑️</text>
-        <text class="action-text">清空</text>
+      <view class="nav-right" bindtap="onClearChat">
+        <text class="clear-icon">🗑</text>
       </view>
     </view>
   </view>
 
-  <!-- 对话区域 -->
-  <scroll-view class="messages-container" scroll-y scroll-with-animation scroll-top="{{scrollTop}}">
-    <block wx:for="{{messages}}" wx:key="id">
-      <!-- AI消息 -->
-      <view wx:if="{{item.type === 'ai'}}" class="message ai-message">
-        <view class="avatar ai-avatar">🤖</view>
-        <view class="message-content">
-          <view class="message-text">{{item.content}}</view>
-          <view class="message-time">{{formatTimeDisplay(item.time)}}</view>
-        </view>
+  <!-- 对话区域（居中显示） -->
+  <scroll-view 
+    class="messages-wrapper" 
+    scroll-y
+    scroll-top="{{scrollTop}}"
+    scroll-into-view="{{scrollIntoView}}"
+    scroll-with-animation
+  >
+    <!-- 消息容器（固定最大宽度，居中） -->
+    <view class="messages-container">
+      <!-- 日期分隔线 -->
+      <view class="date-divider" wx:if="{{showDateDivider}}">
+        <text>{{currentDate}}</text>
       </view>
-      
-      <!-- 用户消息 -->
-      <view wx:if="{{item.type === 'user'}}" class="message user-message">
-        <view class="message-content">
-          <view class="message-text">{{item.content}}</view>
-          <view class="message-time">{{formatTimeDisplay(item.time)}}</view>
-        </view>
-        <view class="avatar user-avatar">👤</view>
+
+      <!-- 欢迎提示 -->
+      <view class="welcome-tip" wx:if="{{messages.length === 0 && !isLoading}}">
+        <text class="welcome-icon">👋</text>
+        <text class="welcome-text">{{modeIcon}} {{modeName}}</text>
+        <text class="welcome-desc">随时陪你聊聊</text>
       </view>
-    </block>
-    
-    <!-- AI思考中 -->
-    <view wx:if="{{isAIThinking}}" class="message ai-message">
-      <view class="avatar ai-avatar">🤖</view>
-      <view class="message-content">
-        <view class="thinking-indicator">
-          <text class="dot">.</text>
-          <text class="dot">.</text>
-          <text class="dot">.</text>
+
+      <!-- 消息列表 -->
+      <block wx:for="{{messages}}" wx:key="uniqueId">
+        <!-- AI消息（头像在左边） -->
+        <view wx:if="{{item.type === 'ai'}}" class="message-row ai-row" id="msg-{{item.uniqueId}}">
+          <view class="avatar ai-avatar">
+            <text>🤖</text>
+          </view>
+          <view class="message-content">
+            <view class="bubble ai-bubble {{item.isStreaming ? 'streaming' : ''}}">
+              <text class="bubble-text">{{item.content}}</text>
+              <text class="typing-dot" wx:if="{{item.isStreaming}}">...</text>
+            </view>
+            <text class="time-label">{{formatTimeDisplay(item.time)}}</text>
+          </view>
         </view>
-      </view>
+        
+        <!-- 用户消息（头像在右边） -->
+        <view wx:if="{{item.type === 'user'}}" class="message-row user-row" id="msg-{{item.uniqueId}}">
+          <view class="message-content">
+            <view class="bubble user-bubble">
+              <text class="bubble-text">{{item.content}}</text>
+            </view>
+            <text class="time-label">{{formatTimeDisplay(item.time)}}</text>
+          </view>
+          <view class="avatar user-avatar">
+            <text>😀</text>
+          </view>
+        </view>
+      </block>
     </view>
   </scroll-view>
 
-  <!-- 输入区域 -->
+  <!-- 底部输入区域 -->
   <view class="input-container">
-    <input 
-      class="chat-input" 
-      placeholder="说点什么..." 
-      value="{{inputValue}}"
-      bindinput="onInput"
-      bindconfirm="onSend"
-      placeholder-style="color: #999999"
-      confirm-type="send"
-    />
-    <button class="send-btn" bindtap="onSend" disabled="{{!inputValue.trim()}}">
-      <text class="send-icon">📤</text>
-    </button>
-  </view>
+    <!-- 模式标签 -->
+    <scroll-view class="mode-tabs" scroll-x enable-flex>
+      <block wx:for="{{chatModes}}" wx:key="id">
+        <view 
+          class="mode-tab {{item.id === mode ? 'active' : ''}}" 
+          data-mode="{{item.id}}" 
+          bindtap="onSelectMode"
+        >
+          <text class="tab-icon">{{item.icon}}</text>
+          <text class="tab-text">{{item.name}}</text>
+        </view>
+      </block>
+    </scroll-view>
 
-  <!-- 模式选择弹窗 -->
-  <view wx:if="{{showModeSelect}}" class="modal-mask" catchtap="onCloseModeSelect">
-    <view class="mode-select-modal" catchtap="noop">
-      <view class="modal-header">选择陪伴模式</view>
-      <view class="modes-list">
-        <block wx:for="{{getChatModes()}}" wx:key="id">
-          <view 
-            class="mode-item {{item.id === mode ? 'selected' : ''}}" 
-            data-mode="{{item.id}}" 
-            bindtap="onSelectMode"
-          >
-            <view class="mode-item-icon" style="background-color: {{item.color}}">{{item.icon}}</view>
-            <view class="mode-item-info">
-              <view class="mode-item-name">{{item.name}}</view>
-              <view class="mode-item-desc">{{item.prompt}}</view>
-            </view>
-            <view wx:if="{{item.id === mode}}" class="selected-mark">✓</view>
-          </view>
-        </block>
+    <!-- 输入框 -->
+    <view class="input-row">
+      <view class="input-wrapper">
+        <textarea
+          class="text-input"
+          placeholder="说点什么..."
+          placeholder-class="placeholder"
+          value="{{inputValue}}"
+          bindinput="onInput"
+          bindconfirm="onSend"
+          maxlength="500"
+          cursor-spacing="10"
+          auto-height
+          show-confirm-bar="{{false}}"
+          adjust-position="{{false}}"
+        />
       </view>
-      <view class="modal-footer">
-        <button class="btn-cancel" bindtap="onCloseModeSelect">取消</button>
+      <view 
+        class="send-btn {{inputValue.length > 0 ? 'active' : ''}}" 
+        bindtap="onSend"
+        hover-class="send-btn-hover"
+      >
+        <text class="send-text">发送</text>
       </view>
     </view>
+    
+    <!-- 安全区域 -->
+    <view class="safe-area"></view>
   </view>
+
 </view>

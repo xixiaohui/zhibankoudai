@@ -4,7 +4,8 @@
     "pages/chat/index",
     "pages/mood/index",
     "pages/memory/index",
-    "pages/mine/index"
+    "pages/mine/index",
+    "pages/test/index"
   ],
   "window": {
     "backgroundColor": "#F8F6FF",
