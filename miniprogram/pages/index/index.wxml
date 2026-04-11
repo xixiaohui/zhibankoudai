@@ -46,6 +46,54 @@
     </view>
   </view>
 
+  <!-- 今日名言 -->
+  <daily-card moduleType="quote" />
+
+  <!-- 今日段子 -->
+  <daily-card moduleType="joke" />
+
+  <!-- 每日心理学 -->
+  <daily-card moduleType="psychology" />
+
+  <!-- 每日金融 -->
+  <daily-card moduleType="finance" />
+
+  <!-- 每日情话 -->
+  <daily-card moduleType="love" />
+
+  <!-- 每日电影 -->
+  <daily-card moduleType="movie" />
+
+  <!-- 每日音乐 -->
+  <daily-card moduleType="music" />
+
+  <!-- 每日科技 -->
+  <daily-card moduleType="tech" />
+
+  <!-- 每日中医 -->
+  <daily-card moduleType="tcm" />
+
+  <!-- 每日旅游 -->
+  <daily-card moduleType="travel" />
+
+  <!-- 每日一卦 -->
+  <daily-card moduleType="fortune" />
+
+  <!-- 每日文学 -->
+  <daily-card moduleType="literature" />
+
+  <!-- 外贸助手 -->
+  <daily-card moduleType="foreignTrade" />
+
+  <!-- 电商运营助手 -->
+  <daily-card moduleType="ecommerce" />
+
+  <!-- 中学数学助手 -->
+  <daily-card moduleType="math" />
+
+  <!-- 中学英语助手 -->
+  <daily-card moduleType="english" />
+
   <!-- 快速陪伴入口 -->
   <view class="quick-modes-section">
     <view class="section-title">快速陪伴模式</view>

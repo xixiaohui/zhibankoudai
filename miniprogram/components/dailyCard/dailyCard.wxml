@@ -1,0 +1,310 @@
+<!-- components/dailyCard/dailyCard.wxml - 每日内容卡片组件 -->
+<view class="daily-card-wrapper">
+  <view class="section-title-row">
+    <view class="section-title">
+      <text class="title-icon">{{config.icon}}</text>
+      <text class="title-text">{{config.name}}</text>
+    </view>
+    <view class="action-btns-row">
+      <!-- 分享按钮 -->
+      <view 
+        class="share-btn" 
+        style="background: linear-gradient(135deg, {{config.colors.primary}} 0%, {{config.colors.accent}} 100%);"
+        bindtap="onShare" 
+        hover-class="btn-active"
+      >
+        <text class="share-icon">↗</text>
+      </view>
+      <!-- 刷新按钮 -->
+      <view 
+        class="refresh-btn" 
+        style="background: linear-gradient(135deg, {{config.colors.primary}} 0%, {{config.colors.accent}} 100%);"
+        bindtap="onRefresh" 
+        hover-class="btn-active"
+      >
+        <text class="refresh-icon">↻</text>
+        <text class="refresh-text">{{isLoading ? '生成中...' : config.refreshText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 内容卡片 -->
+  <view 
+    class="content-card" 
+    wx:if="{{content && !isLoading}}"
+    style="background: linear-gradient(135deg, {{config.colors.gradientStart}} 0%, {{config.colors.gradientEnd}} 100%); box-shadow: 0 8rpx 32rpx {{config.colors.shadow}}; border: 1rpx solid {{config.colors.bg}};"
+  >
+    <!-- 标签区域 -->
+    <view class="card-tags" wx:if="{{tags.length > 0}}">
+      <block wx:for="{{tags}}" wx:key="index">
+        <view 
+          class="tag-item" 
+          wx:if="{{item.type === 'field'}}"
+          style="background: {{config.colors.bg}};"
+        >
+          <text class="tag-icon">{{item.icon}}</text>
+          <text class="tag-text" style="color: {{config.colors.accent}};">{{item.text}}</text>
+        </view>
+        <view 
+          class="tag-item ai-tag" 
+          wx:elif="{{item.type === 'ai'}}"
+          style="background: {{config.colors.bg}}; color: {{config.colors.primary}};"
+        >
+          <text class="tag-text">{{item.text}}</text>
+        </view>
+        <view 
+          class="tag-item meta-tag" 
+          wx:elif="{{item.type === 'meta'}}"
+          style="background: {{config.colors.bg}}; color: {{config.colors.accent}};"
+        >
+          <text>{{item.text}}</text>
+        </view>
+      </block>
+    </view>
+
+    <!-- 内容区域 - 根据类型渲染 -->
+    <block wx:if="{{moduleType === 'quote'}}">
+      <view class="quote-content" style="color: {{config.colors.text}};">"{{content.text}}"</view>
+      <view class="quote-author" style="color: {{config.colors.textSecondary}};">—— {{content.author}}</view>
+      <view class="quote-meta" wx:if="{{content.era || content.region}}">
+        <text class="era-tag" wx:if="{{content.era === 'ancient'}}" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">古训</text>
+        <text class="era-tag modern" wx:if="{{content.era === 'modern'}}" style="background: rgba(255, 154, 118, 0.1); color: #FF9A76;">今言</text>
+        <text class="region-tag">{{content.region === 'china' ? '🇨🇳' : '🌍'}}</text>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'joke'}}">
+      <view class="joke-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="joke-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+      </view>
+      <view class="joke-content" style="color: {{config.colors.textSecondary}};">{{content.content}}</view>
+      <view class="joke-footer" wx:if="{{content.source}}">
+        <text class="joke-source">📌 出处：{{content.source}}</text>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'psychology' || moduleType === 'finance'}}">
+      <view class="knowledge-title" style="color: {{config.colors.text}};">{{content.title}}</view>
+      <view class="knowledge-content" style="color: {{config.colors.textSecondary}};">{{content.content}}</view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'love'}}">
+      <view class="love-content" style="color: {{config.colors.text}};">"{{content.content}}"</view>
+      <view class="love-author" wx:if="{{content.author}}" style="color: {{config.colors.textSecondary}}; border-top: 1rpx solid {{config.colors.bg}};">
+        <text class="author-prefix">——</text>
+        <text class="author-name" style="color: {{config.colors.accent}};">{{content.author}}</text>
+        <text class="author-source" wx:if="{{content.source}}">「{{content.source}}」</text>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'movie'}}">
+      <view class="movie-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="movie-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <view class="movie-rating" style="background: {{config.colors.bg}};">
+          <text style="color: {{config.colors.accent}};">⭐ {{content.rating}}</text>
+        </view>
+      </view>
+      <view class="movie-meta">
+        <text class="movie-director" style="color: {{config.colors.textSecondary}};">导演：{{content.director}}</text>
+        <text class="movie-year" style="color: {{config.colors.accent}};">{{content.year}}年</text>
+      </view>
+      <view class="movie-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="movie-quote" wx:if="{{content.quote}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>"{{content.quote}}"</text>
+      </view>
+      <view class="movie-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="movie-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'music'}}">
+      <view class="music-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="music-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <view class="music-mood" wx:if="{{content.mood}}" style="background: {{config.colors.bg}};">
+          <text style="color: {{config.colors.accent}};">{{content.moodIcon || '🎵'}} {{content.mood}}</text>
+        </view>
+      </view>
+      <view class="music-meta">
+        <text class="music-artist" style="color: {{config.colors.textSecondary}};">{{content.artist}}</text>
+        <text class="music-year" style="color: {{config.colors.accent}};">{{content.year}}</text>
+      </view>
+      <view class="music-album" wx:if="{{content.album}}" style="color: {{config.colors.textSecondary}};">
+        <text class="album-label">专辑：</text><text>{{content.album}}</text>
+        <text wx:if="{{content.duration}}" class="music-duration"> · {{content.duration}}</text>
+      </view>
+      <view class="music-description" style="color: {{config.colors.textSecondary}};">{{content.description}}</view>
+      <view class="music-lyric" wx:if="{{content.lyric}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>"{{content.lyric}}"</text>
+      </view>
+      <view class="music-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="music-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'tech'}}">
+      <view class="tech-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="tech-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+      </view>
+      <view class="tech-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="tech-impact" wx:if="{{content.impact}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>💡 {{content.impact}}</text>
+      </view>
+      <view class="tech-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="tech-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'tcm'}}">
+      <view class="tcm-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="tcm-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+      </view>
+      <view class="tcm-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="tcm-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>📝 {{content.tips}}</text>
+      </view>
+      <view class="tcm-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="tcm-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'travel'}}">
+      <view class="travel-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="travel-region" style="color: {{config.colors.accent}};">{{content.regionIcon || '🌍'}} {{content.region}}</text>
+      </view>
+      <view class="travel-title" style="color: {{config.colors.primary}};">{{content.title}}</view>
+      <view class="travel-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="travel-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>✈️ {{content.tips}}</text>
+      </view>
+      <view class="travel-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="travel-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'fortune'}}">
+      <view class="fortune-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="fortune-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '🔮'}} {{content.category}}</text>
+      </view>
+      <view class="fortune-title" style="color: {{config.colors.primary}};">{{content.title}}</view>
+      <view class="fortune-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="fortune-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="fortune-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'literature'}}">
+      <view class="lit-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="lit-author" style="color: {{config.colors.primary}};">{{content.author}}</text>
+        <text class="lit-era" style="color: {{config.colors.accent}};">{{content.era}} · {{content.region}}</text>
+      </view>
+      <view class="lit-works" wx:if="{{content.works && content.works.length > 0}}" style="color: {{config.colors.textSecondary}};">
+        <text class="works-label">代表作：</text>
+        <block wx:for="{{content.works}}" wx:key="index">
+          <text class="work-item">{{item}}{{index < content.works.length - 1 ? ' · ' : ''}}</text>
+        </block>
+      </view>
+      <view class="lit-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="lit-quote" wx:if="{{content.quote}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>"{{content.quote}}"</text>
+      </view>
+      <view class="lit-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="lit-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'foreignTrade'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '💼'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>💡 {{content.tips}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'ecommerce'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '🛒'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>💡 {{content.tips}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'math'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '📐'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>💡 {{content.tips}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'english'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '📚'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>💡 {{content.tips}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-state" wx:if="{{isLoading}}">
+    <view class="loading-dots">
+      <text class="dot" style="color: {{config.colors.primary}}; animation: dotPulse 1.4s infinite ease-in-out;">·</text>
+      <text class="dot" style="color: {{config.colors.primary}}; animation: dotPulse 1.4s infinite ease-in-out; animation-delay: 0.2s;">·</text>
+      <text class="dot" style="color: {{config.colors.primary}}; animation: dotPulse 1.4s infinite ease-in-out; animation-delay: 0.4s;">·</text>
+    </view>
+    <text class="loading-text" style="color: {{config.colors.primary}};">{{config.loadingText}}</text>
+  </view>
+
+  <!-- 占位状态 -->
+  <view class="placeholder-state" wx:if="{{!content && !isLoading}}">
+    <text class="placeholder-text">{{config.placeholderText}}</text>
+  </view>
+</view>
+
+

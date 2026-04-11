@@ -5,9 +5,13 @@
  * 1. 聊天消息云端同步
  * 2. 用户记忆云端备份
  * 3. 跨设备数据同步
+ * 4. 每日内容管理（客户端AI生成）
  * 
  * 使用云开发数据库进行数据持久化
  */
+
+// 引入客户端AI内容生成模块
+const { DailyContent } = require('./dailyContent.js')
 
 // 云数据库集合名称
 const COLLECTIONS = {
@@ -15,6 +19,11 @@ const COLLECTIONS = {
   USER_PROFILE: 'userProfile',       // 用户画像
   USER_MEMORY: 'userMemory',        // 用户记忆
   SETTINGS: 'userSettings',          // 用户设置
+  DAILY_QUOTE: 'dailyQuotes',        // 每日名言
+  DAILY_JOKE: 'dailyJokes',          // 每日段子
+  DAILY_PSYCHOLOGY: 'dailyPsychology', // 每日心理学
+  DAILY_FINANCE: 'dailyFinance',     // 每日金融
+  DAILY_LOVE: 'dailyLoves',          // 每日情话
 }
 
 // 云数据库实例
@@ -390,6 +399,181 @@ class CloudDb {
       // 超时或其他错误时返回匿名ID
       return 'anonymous'
     }
+  }
+
+  /**
+   * 获取或生成每日名言（客户端AI调用）
+   * @param {Object} options - 配置选项
+   * @param {boolean} options.refresh - 是否强制刷新（忽略缓存）
+   */
+  async getDailyQuote(options = {}) {
+    const { refresh = false } = options
+    
+    // 如果不强制刷新，优先使用缓存
+    if (!refresh) {
+      const cached = wx.getStorageSync('dailyQuote')
+      if (cached) {
+        const today = new Date().toISOString().split('T')[0]
+        if (cached.date === today) {
+          console.log('【CloudDb】使用今日缓存名言')
+          return cached
+        }
+      }
+    }
+    
+    try {
+      console.log('【CloudDb】客户端AI生成名言...')
+      const quote = await DailyContent.generateQuote()
+      
+      if (quote) {
+        wx.setStorageSync('dailyQuote', quote)
+        console.log('【CloudDb】名言生成成功:', quote.content?.substring(0, 20), 'AI生成:', quote.isAIGenerated)
+        return quote
+      }
+    } catch (e) {
+      console.error('【CloudDb】生成每日名言失败:', e)
+    }
+    return null
+  }
+
+  /**
+   * 获取或生成每日搞笑段子（客户端AI调用）
+   * @param {Object} options - 配置选项
+   * @param {boolean} options.refresh - 是否强制刷新（忽略缓存）
+   */
+  async getDailyJoke(options = {}) {
+    const { refresh = false } = options
+    
+    // 如果不强制刷新，优先使用缓存
+    if (!refresh) {
+      const cached = wx.getStorageSync('dailyJoke')
+      if (cached) {
+        const today = new Date().toISOString().split('T')[0]
+        if (cached.date === today) {
+          console.log('【CloudDb】使用今日缓存段子')
+          return cached
+        }
+      }
+    }
+    
+    try {
+      console.log('【CloudDb】客户端AI生成段子...')
+      const joke = await DailyContent.generateJoke()
+      
+      if (joke) {
+        wx.setStorageSync('dailyJoke', joke)
+        console.log('【CloudDb】段子生成成功:', joke.title, 'AI生成:', joke.isAIGenerated)
+        return joke
+      }
+    } catch (e) {
+      console.error('【CloudDb】生成每日段子失败:', e)
+    }
+    return null
+  }
+
+  /**
+   * 获取或生成每日心理学知识（客户端AI调用）
+   * @param {Object} options - 配置选项
+   * @param {boolean} options.refresh - 是否强制刷新（忽略缓存）
+   */
+  async getDailyPsychology(options = {}) {
+    const { refresh = false } = options
+    
+    // 如果不强制刷新，优先使用缓存
+    if (!refresh) {
+      const cached = wx.getStorageSync('dailyPsychology')
+      if (cached) {
+        const today = new Date().toISOString().split('T')[0]
+        if (cached.date === today) {
+          console.log('【CloudDb】使用今日缓存心理学知识')
+          return cached
+        }
+      }
+    }
+    
+    try {
+      console.log('【CloudDb】客户端AI生成心理学知识...')
+      const psychology = await DailyContent.generatePsychology()
+      
+      if (psychology) {
+        wx.setStorageSync('dailyPsychology', psychology)
+        console.log('【CloudDb】心理学知识生成成功:', psychology.title, 'AI生成:', psychology.isAIGenerated)
+        return psychology
+      }
+    } catch (e) {
+      console.error('【CloudDb】生成每日心理学知识失败:', e)
+    }
+    return null
+  }
+
+  /**
+   * 获取或生成每日金融知识（客户端AI调用）
+   * @param {Object} options - 配置选项
+   * @param {boolean} options.refresh - 是否强制刷新（忽略缓存）
+   */
+  async getDailyFinance(options = {}) {
+    const { refresh = false } = options
+    
+    // 如果不强制刷新，优先使用缓存
+    if (!refresh) {
+      const cached = wx.getStorageSync('dailyFinance')
+      if (cached) {
+        const today = new Date().toISOString().split('T')[0]
+        if (cached.date === today) {
+          console.log('【CloudDb】使用今日缓存金融知识')
+          return cached
+        }
+      }
+    }
+    
+    try {
+      console.log('【CloudDb】客户端AI生成金融知识...')
+      const finance = await DailyContent.generateFinance()
+      
+      if (finance) {
+        wx.setStorageSync('dailyFinance', finance)
+        console.log('【CloudDb】金融知识生成成功:', finance.title, 'AI生成:', finance.isAIGenerated)
+        return finance
+      }
+    } catch (e) {
+      console.error('【CloudDb】生成每日金融知识失败:', e)
+    }
+    return null
+  }
+
+  /**
+   * 获取或生成每日情话（客户端AI调用）
+   * @param {Object} options - 配置选项
+   * @param {boolean} options.refresh - 是否强制刷新（忽略缓存）
+   */
+  async getDailyLove(options = {}) {
+    const { refresh = false } = options
+    
+    // 如果不强制刷新，优先使用缓存
+    if (!refresh) {
+      const cached = wx.getStorageSync('dailyLove')
+      if (cached) {
+        const today = new Date().toISOString().split('T')[0]
+        if (cached.date === today) {
+          console.log('【CloudDb】使用今日缓存情话')
+          return cached
+        }
+      }
+    }
+    
+    try {
+      console.log('【CloudDb】客户端AI生成情话...')
+      const love = await DailyContent.generateLove()
+      
+      if (love) {
+        wx.setStorageSync('dailyLove', love)
+        console.log('【CloudDb】情话生成成功:', love.content?.substring(0, 20), 'AI生成:', love.isAIGenerated)
+        return love
+      }
+    } catch (e) {
+      console.error('【CloudDb】生成每日情话失败:', e)
+    }
+    return null
   }
 }
 

@@ -104,6 +104,8 @@ Page({
       .filter(g => !g.completed)
       .slice(0, 3)
     this.setData({ pendingGoals })
+    
+    // 每日内容模块（名言、段子、心理学、金融、情话、电影）由 daily-card 组件自动加载
   },
 
   // ========== 用户交互处理 ==========

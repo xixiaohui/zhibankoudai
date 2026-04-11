@@ -1,0 +1,24 @@
+/* pages/dailyTest/dailyTest.wxss - 测试页面样式 */
+
+.page-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #F8F6FF 0%, #F0EDFF 100%);
+  padding: 20rpx 30rpx 100rpx;
+}
+
+.page-header {
+  text-align: center;
+  padding: 40rpx 0 20rpx;
+}
+
+.header-title {
+  font-size: 40rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 10rpx;
+}
+
+.header-desc {
+  font-size: 26rpx;
+  color: #999999;
+}

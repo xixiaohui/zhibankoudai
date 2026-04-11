@@ -1,53 +1,159 @@
 // pages/poster/index.js - 分享海报页面
 const app = getApp()
 
+// 海报配置
+const POSTER_CONFIGS = {
+  quote: {
+    icon: '📜',
+    appName: '智伴AI',
+    typeName: '今日名言',
+    slogan: '读名言 · 品人生',
+    bgGradientStart: '#F8F6FF',
+    bgGradientEnd: '#E8E4FF',
+    accentColor: '#7C6AFF'
+  },
+  joke: {
+    icon: '😂',
+    appName: '智伴AI',
+    typeName: '今日段子',
+    slogan: '每天一笑 · 心情更好',
+    bgGradientStart: '#FFF8F0',
+    bgGradientEnd: '#FFE4D6',
+    accentColor: '#FF9A76'
+  },
+  psychology: {
+    icon: '🧠',
+    appName: '智伴AI',
+    typeName: '每日心理',
+    slogan: '懂心理学 · 更懂自己',
+    bgGradientStart: '#F0FFF4',
+    bgGradientEnd: '#D4EDDA',
+    accentColor: '#6BCB77'
+  },
+  finance: {
+    icon: '💰',
+    appName: '智伴AI',
+    typeName: '每日金融',
+    slogan: '学金融 · 懂生活',
+    bgGradientStart: '#F0F7FF',
+    bgGradientEnd: '#D6E9FF',
+    accentColor: '#2196F3'
+  },
+  love: {
+    icon: '💕',
+    appName: '智伴AI',
+    typeName: '每日情话',
+    slogan: '甜言蜜语 · 暖心相伴',
+    bgGradientStart: '#FFF0F5',
+    bgGradientEnd: '#FFE4EC',
+    accentColor: '#FF6B9D'
+  },
+  foreignTrade: {
+    icon: '💼',
+    appName: '智伴AI',
+    typeName: '外贸助手',
+    slogan: '外贸干货 · 业务赋能',
+    bgGradientStart: '#E3F2FD',
+    bgGradientEnd: '#BBDEFB',
+    accentColor: '#1565C0'
+  },
+  ecommerce: {
+    icon: '🛒',
+    appName: '智伴AI',
+    typeName: '电商运营助手',
+    slogan: '电商干货 · 运营赋能',
+    bgGradientStart: '#FFF3E0',
+    bgGradientEnd: '#FFE0B2',
+    accentColor: '#FF6B00'
+  },
+  math: {
+    icon: '📐',
+    appName: '智伴AI',
+    typeName: '中学数学助手',
+    slogan: '数学知识 · 学习助手',
+    bgGradientStart: '#F3E5F5',
+    bgGradientEnd: '#E1BEE7',
+    accentColor: '#6A1B9A'
+  },
+  english: {
+    icon: '📚',
+    appName: '智伴AI',
+    typeName: '中学英语助手',
+    slogan: '英语知识 · 学习助手',
+    bgGradientStart: '#FFEBEE',
+    bgGradientEnd: '#FFCDD2',
+    accentColor: '#D32F2F'
+  },
+  home: {
+    icon: '💝',
+    appName: '智伴AI',
+    typeName: '温暖陪伴',
+    slogan: '随时随地 · 温暖陪伴',
+    bgGradientStart: '#F8F6FF',
+    bgGradientEnd: '#E8E4FF',
+    accentColor: '#7C6AFF'
+  }
+}
+
 Page({
   data: {
     // 分享内容
     shareTitle: '智伴AI - 智能陪伴助手',
     shareSubtitle: '随时随地，温暖陪伴',
+    shareAuthor: '',
+    shareContent: '',
+    shareSubtitle: '',
     modeIcon: '🤖',
     modeName: '陪伴模式',
     quote: '',
+    
+    // 海报类型
+    posterType: 'home',
+    posterConfig: POSTER_CONFIGS.home,
+    
+    // 当前日期
+    currentDate: '',
     
     // 海报生成相关
     posterImagePath: '',
   },
 
   onLoad(options) {
-    // 根据来源设置分享内容
-    if (options.type === 'chat') {
-      const chatHistory = wx.getStorageSync('chatHistory') || []
-      const lastMessages = chatHistory.slice(-4)
-      
-      // 获取最近的消息作为引用
-      if (lastMessages.length > 0) {
-        const lastAiMsg = lastMessages.filter(m => m.type === 'ai').pop()
-        if (lastAiMsg && lastAiMsg.content.length <= 50) {
-          this.setData({ quote: lastAiMsg.content })
-        } else if (lastAiMsg) {
-          this.setData({ quote: lastAiMsg.content.substring(0, 50) + '...' })
-        }
-      }
-      
-      // 获取当前模式
-      const userProfile = wx.getStorageSync('userProfile') || {}
-      this.setData({
-        shareTitle: '智伴AI - 智能陪伴助手',
-        shareSubtitle: '随时随地，温暖陪伴',
-        modeIcon: '☕',
-        modeName: '闲聊模式'
-      })
-    } else if (options.type === 'home') {
-      this.setData({
-        shareTitle: '发现智伴AI - 你的智能陪伴助手',
-        shareSubtitle: '多种陪伴模式，温暖你的每一天',
-        modeIcon: '💝',
-        modeName: '温暖陪伴'
-      })
-    }
+    // 设置当前日期
+    const now = new Date()
+    const month = now.getMonth() + 1
+    const day = now.getDate()
+    const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+    const weekday = weekdays[now.getDay()]
+    this.setData({
+      currentDate: `${month}月${day}日 ${weekday}`
+    })
     
-    console.log('【Poster】海报页面加载', options)
+    // 解码参数
+    const type = options.type || 'home'
+    const title = decodeURIComponent(options.title || '')
+    const author = decodeURIComponent(options.author || '')
+    const content = decodeURIComponent(options.content || '')
+    const subtitle = decodeURIComponent(options.subtitle || '')
+    
+    // 根据类型设置海报配置和内容
+    const config = POSTER_CONFIGS[type] || POSTER_CONFIGS.home
+    
+    this.setData({
+      posterType: type,
+      posterConfig: config,
+      shareTitle: title,
+      shareAuthor: author,
+      shareContent: content,
+      shareSubtitle: subtitle
+    })
+    
+    // 设置页面标题
+    wx.setNavigationBarTitle({
+      title: config.typeName + '海报'
+    })
+    
+    console.log('【Poster】海报页面加载', { type, title, author, content, subtitle })
   },
 
   onShow() {
@@ -94,8 +200,10 @@ Page({
 
   // 分享到朋友圈
   onShareTimeline() {
+    const config = this.data.posterConfig
+    const title = this.data.shareTitle || config.typeName
     return {
-      title: this.data.shareTitle,
+      title: `${config.icon} ${title} - 智伴AI分享`,
       imageUrl: '/images/share-cover.png',
       query: 'from=poster'
     }
@@ -103,8 +211,10 @@ Page({
 
   // 页面分享配置
   onShareAppMessage(res) {
+    const config = this.data.posterConfig
+    const title = this.data.shareTitle || config.typeName
     return {
-      title: this.data.shareTitle,
+      title: `${config.icon} ${title} - 智伴AI分享`,
       path: '/pages/index/index',
       imageUrl: '/images/share-cover.png'
     }

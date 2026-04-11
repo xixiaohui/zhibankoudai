@@ -1,11 +1,12 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/test/index",
+    "pages/dailyTest/dailyTest",
     "pages/chat/index",
     "pages/mood/index",
     "pages/memory/index",
     "pages/mine/index",
-    "pages/test/index",
     "pages/poster/index"
   ],
   "window": {
