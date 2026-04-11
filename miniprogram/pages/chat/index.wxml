@@ -92,11 +92,12 @@
           value="{{inputValue}}"
           bindinput="onInput"
           bindconfirm="onSend"
+          bindfocus="onTextareaFocus"
+          bindblur="onTextareaBlur"
           maxlength="500"
-          cursor-spacing="10"
-          auto-height
+          cursor-spacing="30"
           show-confirm-bar="{{false}}"
-          adjust-position="{{false}}"
+          adjust-position="{{true}}"
         />
       </view>
       <view 

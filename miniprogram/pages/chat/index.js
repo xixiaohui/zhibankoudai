@@ -139,6 +139,21 @@ Page({
     this.saveMessagesToStorage(messages)
   },
 
+  onUnload() {
+    // 页面卸载时隐藏键盘
+    wx.hideKeyboard()
+  },
+
+  // 文本框获取焦点 - 滚动到底部
+  onTextareaFocus() {
+    setTimeout(() => this.scrollToBottom(true), 100)
+  },
+
+  // 文本框失去焦点
+  onTextareaBlur() {
+    // nothing to do
+  },
+
   // 获取模式信息
   getModeById(modeId) {
     const mode = this.data.chatModes.find(m => m.id === modeId)
