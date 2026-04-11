@@ -362,14 +362,32 @@ class CloudDb {
   }
 
   /**
-   * 获取 OpenId
+   * 获取 OpenId（带本地缓存）
    */
   async getOpenId() {
+    // 先检查本地缓存
+    const cachedOpenid = wx.getStorageSync('userOpenid')
+    if (cachedOpenid) {
+      return cachedOpenid
+    }
+    
     try {
-      const res = await wx.cloud.callFunction({ name: 'login' })
-      return res.result.openid
+      // 设置超时控制
+      const res = await wx.cloud.callFunction({ 
+        name: 'login',
+        timeout: 5000  // 5秒超时
+      })
+      const openid = res.result.openid || 'anonymous'
+      
+      // 缓存到本地
+      if (openid !== 'anonymous') {
+        wx.setStorageSync('userOpenid', openid)
+      }
+      
+      return openid
     } catch (e) {
       console.error('【CloudDb】获取OpenId失败:', e)
+      // 超时或其他错误时返回匿名ID
       return 'anonymous'
     }
   }

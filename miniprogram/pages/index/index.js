@@ -231,8 +231,35 @@ Page({
     }
   },
 
+  // 分享卡片
+  onShareCard() {
+    wx.navigateTo({ url: '/pages/poster/index?type=home' })
+  },
+
   // 空操作（用于阻止事件穿透）
   noop() {
     // do nothing
   },
+
+  // 分享到朋友圈
+  onShareTimeline() {
+    const profile = wx.getStorageSync('userProfile') || {}
+    const nickname = profile.nickname || '朋友'
+    return {
+      title: `${nickname} 的智伴AI - 智能陪伴助手`,
+      imageUrl: '/images/share-cover.png',
+      query: 'from=timeline'
+    }
+  },
+
+  // 页面分享配置
+  onShareAppMessage(res) {
+    const profile = wx.getStorageSync('userProfile') || {}
+    const nickname = profile.nickname || '朋友'
+    return {
+      title: `${nickname} 邀请你体验智伴AI - 智能陪伴助手`,
+      path: '/pages/index/index',
+      imageUrl: '/images/share-cover.png'
+    }
+  }
 })

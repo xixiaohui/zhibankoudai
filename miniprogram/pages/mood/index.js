@@ -263,4 +263,22 @@ Page({
     
     return summary
   },
+
+  // 分享到朋友圈
+  onShareTimeline() {
+    return {
+      title: '记录我的心情 - 智伴AI',
+      imageUrl: '/images/share-cover.png',
+      query: 'from=mood'
+    }
+  },
+
+  // 页面分享配置
+  onShareAppMessage(res) {
+    return {
+      title: '记录心情，智伴AI陪你',
+      path: '/pages/mood/index',
+      imageUrl: '/images/share-cover.png'
+    }
+  },
 })

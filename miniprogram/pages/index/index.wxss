@@ -35,12 +35,48 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex: 1;
+}
+
+.section-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 40rpx 0 20rpx;
 }
 
 .consecutive-days {
   font-size: 24rpx;
   color: #7C6AFF;
   font-weight: normal;
+}
+
+/* 分享卡片按钮 */
+.share-card-btn {
+  display: flex;
+  align-items: center;
+  padding: 8rpx 20rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(102,126,234,0.3);
+  transition: all 0.2s ease;
+}
+
+.share-card-btn:active {
+  transform: scale(0.95);
+  opacity: 0.9;
+}
+
+.share-btn-icon {
+  font-size: 24rpx;
+  color: #FFFFFF;
+  margin-right: 6rpx;
+}
+
+.share-btn-text {
+  font-size: 24rpx;
+  color: #FFFFFF;
+  font-weight: 500;
 }
 
 /* 主要动作区域 */

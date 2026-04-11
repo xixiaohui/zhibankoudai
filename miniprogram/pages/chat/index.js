@@ -38,8 +38,12 @@ Page({
     
     // UI状态
     scrollTop: 0,
+    scrollIntoView: '',
     showDateDivider: false,
     currentDate: '',
+    
+    // 菜单状态
+    showMenu: false,
     
     // 模式列表
     chatModes: [
@@ -64,11 +68,6 @@ Page({
     
     // 初始化智能记忆管理器
     memoryManager = new PocketMemory()
-    
-    // 获取导航栏高度
-    const systemInfo = wx.getSystemInfoSync()
-    const navBarHeight = systemInfo.statusBarHeight || 20
-    this.setData({ navBarHeight })
     
     // 从参数获取模式
     if (options.mode) {
@@ -146,6 +145,28 @@ Page({
     return mode || this.data.chatModes[3]
   },
 
+  // 切换菜单显示
+  toggleMenu() {
+    this.setData({ showMenu: !this.data.showMenu })
+  },
+
+  // 查看记忆
+  onViewMemory() {
+    this.setData({ showMenu: false })
+    wx.navigateTo({ url: '/pages/memory/index' })
+  },
+
+  // 关于
+  onAbout() {
+    this.setData({ showMenu: false })
+    wx.showModal({
+      title: '关于智伴AI',
+      content: '智伴AI - 您的智能陪伴助手\n\n版本: 1.0.0\n\n随时随地，陪伴左右',
+      showCancel: false,
+      confirmText: '知道了'
+    })
+  },
+
   // 加载对话历史
   loadChatHistory() {
     let history = wx.getStorageSync('chatHistory') || []
@@ -180,6 +201,9 @@ Page({
     // 如果是新对话，发送欢迎消息
     if (recentHistory.length === 0) {
       setTimeout(() => this.sendWelcomeMessage(), 300)
+    } else {
+      // 有历史记录，滚动到最新消息
+      setTimeout(() => this.scrollToBottom(true), 100)
     }
   },
 
@@ -507,7 +531,8 @@ Page({
         messages[index].content = newText
       }
       this.setData({ messages })
-      this.scrollToBottom()
+      // 流式输出时使用立即滚动，确保跟上输入速度
+      this.scrollToBottom(true)
     }
   },
 
@@ -537,6 +562,9 @@ Page({
         isAIThinking: false,
         isStreaming: false,
       })
+      
+      // 完成后也滚动一次确保可见
+      this.scrollToBottom(true)
       
       streamingMessageId = null
       
@@ -644,13 +672,17 @@ Page({
     })
   },
 
-  scrollToBottom() {
-    const query = wx.createSelectorQuery()
-    query.select('#msg-bottom').boundingClientRect((rect) => {
-      if (rect) {
-        this.setData({ scrollTop: rect.top + Math.random() })
-      }
-    }).exec()
+  scrollToBottom(immediate = false) {
+    if (immediate) {
+      // 立即滚动：使用 scroll-top 设置一个很大的值
+      this.setData({ scrollTop: 99999 })
+    } else {
+      // 使用 scroll-into-view 更平滑地滚动
+      this.setData({ scrollIntoView: 'msg-bottom' })
+      setTimeout(() => {
+        this.setData({ scrollIntoView: '' })
+      }, 400)
+    }
   },
 
   // 滚动到顶部
@@ -671,6 +703,37 @@ Page({
   // 返回主页（TabBar页面）
   goToHome() {
     wx.switchTab({ url: '/pages/index/index' })
+  },
+
+  // 清空对话
+  onClearChat() {
+    this.setData({ showMenu: false })
+    wx.showModal({
+      title: '清空对话',
+      content: '确定要清空当前对话吗？',
+      confirmColor: '#6192D6',
+      success: (res) => {
+        if (res.confirm) {
+          this.setData({ messages: [], showDateDivider: false })
+          wx.removeStorageSync('chatHistory')
+          setTimeout(() => this.sendWelcomeMessage(), 300)
+        }
+      }
+    })
+  },
+
+  // 分享给好友
+  onShareApp() {
+    this.setData({ showMenu: false })
+    wx.showShareMenu({
+      withShareTicket: true
+    })
+  },
+
+  // 分享海报
+  onShareToTimeline() {
+    this.setData({ showMenu: false })
+    wx.navigateTo({ url: '/pages/poster/index?type=chat' })
   },
 
   formatTimeDisplay(timeStr) {

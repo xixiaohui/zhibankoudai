@@ -1,37 +1,16 @@
-<!-- pages/chat/index.wxml - 陪伴对话页面 -->
+<!-- pages/chat/index.wxml - 微信风格聊天页面 -->
 <view class="chat-page">
 
-  <!-- 顶部导航栏 -->
-  <view class="nav-bar" style="padding-top: {{navBarHeight}}px">
-    <view class="nav-content">
-      <view class="nav-left" bindtap="goToHome">
-        <text class="back-icon">‹</text>
-        <text class="back-text">返回</text>
-      </view>
-      <view class="nav-center">
-        <view class="nav-avatar">
-          <text>🤖</text>
-        </view>
-        <view class="nav-info">
-          <text class="nav-title">智伴AI</text>
-          <text class="nav-status">{{modeIcon}} {{modeName}}</text>
-        </view>
-      </view>
-      <view class="nav-right" bindtap="onClearChat">
-        <text class="clear-icon">🗑</text>
-      </view>
-    </view>
-  </view>
-
-  <!-- 对话区域（居中显示） -->
+  <!-- 对话区域 -->
   <scroll-view 
     class="messages-wrapper" 
     scroll-y
     scroll-top="{{scrollTop}}"
     scroll-into-view="{{scrollIntoView}}"
     scroll-with-animation
+    enhanced
+    bounces="{{false}}"
   >
-    <!-- 消息容器（固定最大宽度，居中） -->
     <view class="messages-container">
       <!-- 日期分隔线 -->
       <view class="date-divider" wx:if="{{showDateDivider}}">
@@ -47,10 +26,11 @@
 
       <!-- 消息列表 -->
       <block wx:for="{{messages}}" wx:key="uniqueId">
+        
         <!-- AI消息（头像在左边） -->
         <view wx:if="{{item.type === 'ai'}}" class="message-row ai-row" id="msg-{{item.uniqueId}}">
-          <view class="avatar ai-avatar">
-            <text>🤖</text>
+          <view class="avatar avatar-left">
+            <text class="avatar-icon">🤖</text>
           </view>
           <view class="message-content">
             <view class="bubble ai-bubble {{item.isStreaming ? 'streaming' : ''}}">
@@ -69,17 +49,21 @@
             </view>
             <text class="time-label">{{formatTimeDisplay(item.time)}}</text>
           </view>
-          <view class="avatar user-avatar">
-            <text>😀</text>
+          <view class="avatar avatar-right">
+            <text class="avatar-icon">😀</text>
           </view>
         </view>
+        
       </block>
+
+      <!-- 滚动到底部标记 -->
+      <view id="msg-bottom"></view>
     </view>
   </scroll-view>
 
   <!-- 底部输入区域 -->
   <view class="input-container">
-    <!-- 模式标签 -->
+    <!-- 模式标签 + 更多工具 -->
     <scroll-view class="mode-tabs" scroll-x enable-flex>
       <block wx:for="{{chatModes}}" wx:key="id">
         <view 
@@ -91,6 +75,11 @@
           <text class="tab-text">{{item.name}}</text>
         </view>
       </block>
+      <!-- 更多工具按钮 -->
+      <view class="mode-tab more-tab {{showMenu ? 'active' : ''}}" bindtap="toggleMenu">
+        <text class="tab-icon">⋯</text>
+        <text class="tab-text">更多</text>
+      </view>
     </scroll-view>
 
     <!-- 输入框 -->
@@ -121,6 +110,41 @@
     
     <!-- 安全区域 -->
     <view class="safe-area"></view>
+  </view>
+
+  <!-- 下拉菜单遮罩层 -->
+  <view class="menu-overlay {{showMenu ? 'show' : ''}}" bindtap="toggleMenu"></view>
+
+  <!-- 下拉菜单 -->
+  <view class="dropdown-menu {{showMenu ? 'show' : ''}}">
+    <view class="menu-header">
+      <text class="menu-title">更多工具</text>
+    </view>
+    <view class="menu-list">
+      <view class="menu-item" bindtap="onClearChat">
+        <text class="menu-item-icon">🗑</text>
+        <text class="menu-item-text">清空对话</text>
+      </view>
+      <view class="menu-item" bindtap="onShareToTimeline">
+        <text class="menu-item-icon">🖼</text>
+        <text class="menu-item-text">分享海报</text>
+      </view>
+      <view class="menu-item" bindtap="onShareApp">
+        <text class="menu-item-icon">↗</text>
+        <text class="menu-item-text">分享给好友</text>
+      </view>
+      <view class="menu-item" bindtap="onViewMemory">
+        <text class="menu-item-icon">🧠</text>
+        <text class="menu-item-text">查看记忆</text>
+      </view>
+      <view class="menu-item" bindtap="onAbout">
+        <text class="menu-item-icon">ℹ</text>
+        <text class="menu-item-text">关于智伴</text>
+      </view>
+    </view>
+    <view class="menu-footer">
+      <text class="mode-hint">{{modeIcon}} 当前模式：{{modeName}}</text>
+    </view>
   </view>
 
 </view>

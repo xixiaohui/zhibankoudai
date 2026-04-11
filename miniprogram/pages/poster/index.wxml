@@ -1,0 +1,67 @@
+<!-- pages/poster/index.wxml - 分享海报页面 -->
+<view class="poster-page">
+  <!-- 海报预览区域 -->
+  <view class="poster-preview">
+    <view class="poster-container">
+      <!-- 海报背景 -->
+      <view class="poster-bg">
+        <!-- 顶部装饰 -->
+        <view class="poster-top">
+          <view class="poster-logo">
+            <text class="logo-icon">🤖</text>
+            <text class="logo-text">智伴AI</text>
+          </view>
+          <text class="poster-slogan">你的智能陪伴助手</text>
+        </view>
+        
+        <!-- 主标题区域 -->
+        <view class="poster-main">
+          <text class="poster-title">{{shareTitle}}</text>
+          <text class="poster-subtitle">{{shareSubtitle}}</text>
+        </view>
+        
+        <!-- 模式展示 -->
+        <view class="poster-mode">
+          <text class="mode-icon">{{modeIcon}}</text>
+          <text class="mode-name">{{modeName}}</text>
+        </view>
+        
+        <!-- 引用区域 -->
+        <view class="poster-quote" wx:if="{{quote}}">
+          <text class="quote-text">"{{quote}}"</text>
+        </view>
+        
+        <!-- 小程序码区域 -->
+        <view class="poster-qrcode">
+          <view class="qrcode-placeholder">
+            <text class="qrcode-hint">小程序码</text>
+          </view>
+          <text class="qrcode-tip">长按识别小程序码</text>
+        </view>
+        
+        <!-- 底部信息 -->
+        <view class="poster-footer">
+          <text class="footer-text">随时随地 陪伴左右</text>
+          <text class="footer-line"></text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-bar">
+    <view class="action-btn save-btn" bindtap="onSavePoster">
+      <text class="action-icon">📥</text>
+      <text class="action-text">保存图片</text>
+    </view>
+    <view class="action-btn share-btn" bindtap="onShareToFriend">
+      <text class="action-icon">↗</text>
+      <text class="action-text">分享好友</text>
+    </view>
+  </view>
+  
+  <!-- 提示信息 -->
+  <view class="tip-bar">
+    <text class="tip-text">可将海报保存到相册后分享到朋友圈</text>
+  </view>
+</view>

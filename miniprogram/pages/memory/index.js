@@ -360,4 +360,22 @@ Page({
       }
     })
   },
+
+  // 分享到朋友圈
+  onShareTimeline() {
+    return {
+      title: '我的智伴记忆 - 智能陪伴助手',
+      imageUrl: '/images/share-cover.png',
+      query: 'from=memory'
+    }
+  },
+
+  // 页面分享配置
+  onShareAppMessage(res) {
+    return {
+      title: '查看我的陪伴记忆 - 智伴AI',
+      path: '/pages/memory/index',
+      imageUrl: '/images/share-cover.png'
+    }
+  },
 })
