@@ -84,6 +84,15 @@ const POSTER_CONFIGS = {
     bgGradientEnd: '#FFCDD2',
     accentColor: '#D32F2F'
   },
+  programming: {
+    icon: '💻',
+    appName: '智伴AI',
+    typeName: '计算机编程助手',
+    slogan: '编程知识 · 开发赋能',
+    bgGradientStart: '#E3F2FD',
+    bgGradientEnd: '#BBDEFB',
+    accentColor: '#1565C0'
+  },
   home: {
     icon: '💝',
     appName: '智伴AI',

@@ -192,6 +192,9 @@ Component({
           case MODULE_TYPES.ENGLISH:
             content = await this._getDailyEnglish(refresh)
             break
+          case MODULE_TYPES.PROGRAMMING:
+            content = await this._getDailyProgramming(refresh)
+            break
           default:
             throw new Error('未知的模块类型')
         }
@@ -441,6 +444,20 @@ Component({
       return content
     },
 
+    // 获取计算机编程助手
+    async _getDailyProgramming(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyProgramming')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+
+      const content = await DailyContent.generateProgramming()
+      return content
+    },
+
     // 保存到云数据库
     async _saveToCloud(content) {
       const { moduleType } = this.data
@@ -464,6 +481,7 @@ Component({
           [MODULE_TYPES.ECOMMERCE]: 'dailyECommerces',
           [MODULE_TYPES.MATH]: 'dailyMaths',
           [MODULE_TYPES.ENGLISH]: 'dailyEnglishes',
+          [MODULE_TYPES.PROGRAMMING]: 'dailyProgrammings',
         }
 
         const collection = collectionMap[moduleType]
@@ -556,6 +574,10 @@ Component({
         case 'english':
           url = `/pages/poster/index`
           params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '📚') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '📚')}`
+          break
+        case 'programming':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💻') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💻')}`
           break
       }
 

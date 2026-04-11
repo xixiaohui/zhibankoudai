@@ -34,6 +34,7 @@ const { FALLBACK_FOREIGN_TRADES, FOREIGN_TRADE_CATEGORIES } = require('./foreign
 const { FALLBACK_ECOMMERCE, ECOMMERCE_CATEGORIES } = require('./eCommerceData.js')
 const { FALLBACK_MATH, MATH_CATEGORIES } = require('./mathData.js')
 const { FALLBACK_ENGLISH, ENGLISH_CATEGORIES } = require('./englishData.js')
+const { FALLBACK_PROGRAMMING, PROGRAMMING_CATEGORIES } = require('./programmingData.js')
 
 // ─── AI 调用核心 ─────────────────────────────────────────────────
 
@@ -2603,6 +2604,220 @@ async function generateEnglish() {
   return result
 }
 
+// ─── 计算机编程助手 ─────────────────────────────────────────────────
+
+/**
+ * 保存编程知识到云数据库
+ */
+async function saveProgrammingToCloud(programming) {
+  try {
+    const db = wx.cloud.database()
+    await db.collection('dailyProgrammings').add({
+      data: {
+        title: programming.title,
+        category: programming.category,
+        categoryIcon: programming.categoryIcon || '💻',
+        summary: programming.summary || '',
+        tips: programming.tips || '',
+        tags: programming.tags || [],
+        source: programming.source || 'AI分享',
+        date: new Date().toISOString().split('T')[0],
+        createdAt: db.serverDate()
+      }
+    })
+    console.log('[DailyContent] 编程知识已保存到云数据库')
+    return true
+  } catch (e) {
+    console.error('[DailyContent] 保存编程知识到云数据库失败:', e)
+    return false
+  }
+}
+
+/**
+ * 从编程知识库随机获取一条（每次调用都随机，保证刷新变化）
+ */
+function getRandomProgrammingFromLibrary() {
+  // 每次都随机选择，充分利用知识的多样性
+  const index = Math.floor(Math.random() * FALLBACK_PROGRAMMING.length)
+  return { ...FALLBACK_PROGRAMMING[index] }
+}
+
+/**
+ * 生成每日编程知识
+ */
+async function generateProgramming() {
+  // 随机选择知识类型
+  const category = PROGRAMMING_CATEGORIES[Math.floor(Math.random() * PROGRAMMING_CATEGORIES.length)]
+
+  // 随机选择提示词类型
+  const promptTypes = ['default', 'frontend', 'backend', 'database', 'devops', 'algorithm']
+  const promptType = promptTypes[Math.floor(Math.random() * promptTypes.length)]
+
+  let prompt
+  if (promptType === 'frontend') {
+    prompt = `你是一位前端技术专家，请分享一个前端开发的核心知识点或技巧。
+
+要求：
+1. 选择一个前端主题：React/Vue组件设计、CSS Flexbox/Grid、性能优化、TypeScript类型系统、前端工程化等
+2. 内容要点：
+   - 核心概念或原理
+   - 实际应用示例
+   - 最佳实践建议
+3. 语言简洁专业，有代码示例
+4. 长度控制在150-200字
+
+格式要求：
+用|分隔各部分，结构如下：
+分类名称|知识标题|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'backend') {
+    prompt = `你是一位后端架构师，请分享一个后端开发的核心知识点或架构技巧。
+
+要求：
+1. 选择一个后端主题：RESTful API设计、微服务架构、缓存策略、认证授权、数据库优化、消息队列等
+2. 内容要点：
+   - 核心原理或架构思想
+   - 实际应用场景
+   - 性能优化建议
+3. 语言逻辑清晰，有架构思维
+4. 长度控制在150-200字
+
+格式要求：
+用|分隔各部分，结构如下：
+分类名称|知识标题|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'database') {
+    prompt = `你是一位数据库专家，请分享一个数据库相关的核心知识点或优化技巧。
+
+要求：
+1. 选择一个数据库主题：索引原理、事务隔离、SQL优化、NoSQL应用、缓存策略、数据建模等
+2. 内容要点：
+   - 核心原理讲解
+   - 实际案例分析
+   - 优化建议
+3. 语言专业严谨
+4. 长度控制在150-200字
+
+格式要求：
+用|分隔各部分，结构如下：
+分类名称|知识标题|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'devops') {
+    prompt = `你是一位DevOps工程师，请分享一个DevOps领域的核心知识点或工具使用技巧。
+
+要求：
+1. 选择一个DevOps主题：Docker容器化、K8s编排、Git工作流、CI/CD流水线、监控告警、云原生等
+2. 内容要点：
+   - 核心概念或工具用法
+   - 实战技巧
+   - 避坑指南
+3. 语言实用性强
+4. 长度控制在150-200字
+
+格式要求：
+用|分隔各部分，结构如下：
+分类名称|知识标题|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'algorithm') {
+    prompt = `你是一位算法竞赛教练，请分享一个算法或数据结构的核心知识点或解题技巧。
+
+要求：
+1. 选择一个算法主题：排序算法、查找算法、树和图算法、动态规划、贪心算法等
+2. 内容要点：
+   - 算法原理或数据结构特点
+   - 适用场景
+   - 实现要点或优化技巧
+3. 语言逻辑清晰，有思辨性
+4. 长度控制在150-200字
+
+格式要求：
+用|分隔各部分，结构如下：
+分类名称|知识标题|正文内容
+
+直接输出，不要任何前缀：`
+  } else {
+    prompt = `你是一位资深全栈工程师，请分享一个计算机编程领域的核心知识点、开发技巧或最佳实践。
+
+要求：
+1. 技术领域随机选择：
+   - 前端开发：React/Vue框架、CSS布局、性能优化、TypeScript
+   - 后端开发：Node.js/Java/Python、API设计、微服务、缓存
+   - 数据库：MySQL/Redis/MongoDB、索引优化、事务
+   - DevOps：Docker、Git、CI/CD、云原生
+   - 设计模式：单例、工厂、观察者、策略等
+   - 算法数据结构：排序、查找、树、图、动态规划
+2. 内容要点：
+   - 核心概念或技巧的专业讲解
+   - 实际应用场景或代码示例
+   - 常见问题或注意事项
+3. 语言要简洁准确，有代码感
+4. 长度控制在150-200字
+5. 内容要实用、有深度、接地气
+
+格式要求：
+用|分隔各部分，结构如下：
+分类名称|知识标题|正文内容
+
+直接输出，不要任何前缀：`
+  }
+
+  const messages = [{ role: 'user', content: prompt }]
+
+  try {
+    const result = await callAI(messages, { temperature: 0.8, maxTokens: 500 })
+
+    if (result && result.length > 20) {
+      const parts = result.split('|').map(p => p.trim()).filter(p => p)
+
+      if (parts.length >= 3) {
+        const programming = {
+          category: parts[0] || category.name,
+          categoryIcon: category.icon,
+          title: parts[1].trim(),
+          summary: parts.slice(2).join('|').trim(),
+          source: 'AI分享',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        // 保存到云数据库
+        saveProgrammingToCloud(programming).catch(() => {})
+        return programming
+      } else if (parts.length === 2) {
+        const programming = {
+          category: category.name,
+          categoryIcon: category.icon,
+          title: parts[0].trim(),
+          summary: parts[1].trim(),
+          source: 'AI分享',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        // 保存到云数据库
+        saveProgrammingToCloud(programming).catch(() => {})
+        return programming
+      }
+    }
+  } catch (e) {
+    console.error('[DailyContent] 生成编程知识失败:', e)
+  }
+
+  // 使用备用编程知识库
+  const fallback = getRandomProgrammingFromLibrary()
+  const result = {
+    ...fallback,
+    source: '编程知识库',
+    isAIGenerated: false,
+    date: new Date().toISOString().split('T')[0]
+  }
+  // 保存到云数据库
+  saveProgrammingToCloud(result).catch(() => {})
+  return result
+}
+
 // ─── 导出 ─────────────────────────────────────────────────
 
 module.exports = {
@@ -2623,6 +2838,7 @@ module.exports = {
     generateECommerce,
     generateMath,
     generateEnglish,
+    generateProgramming,
   },
   // 重新导出数据，方便外部访问
   PSYCHOLOGY_FIELDS,
@@ -2656,4 +2872,6 @@ module.exports = {
   FALLBACK_MATH,
   ENGLISH_CATEGORIES,
   FALLBACK_ENGLISH,
+  PROGRAMMING_CATEGORIES,
+  FALLBACK_PROGRAMMING,
 }

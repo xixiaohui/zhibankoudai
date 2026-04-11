@@ -94,6 +94,9 @@
   <!-- 中学英语助手 -->
   <daily-card moduleType="english" />
 
+  <!-- 计算机编程助手 -->
+  <daily-card moduleType="programming" />
+
   <!-- 快速陪伴入口 -->
   <view class="quick-modes-section">
     <view class="section-title">快速陪伴模式</view>

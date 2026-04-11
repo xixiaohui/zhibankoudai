@@ -53,4 +53,7 @@
   <!-- 中学英语助手组件 -->
   <daily-card moduleType="english" />
 
+  <!-- 计算机编程助手组件 -->
+  <daily-card moduleType="programming" />
+
 </view>

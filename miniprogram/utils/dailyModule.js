@@ -25,6 +25,7 @@ const { FALLBACK_FOREIGN_TRADES } = require('./foreignTradeData.js')
 const { FALLBACK_ECOMMERCE } = require('./eCommerceData.js')
 const { FALLBACK_MATH } = require('./mathData.js')
 const { FALLBACK_ENGLISH } = require('./englishData.js')
+const { FALLBACK_PROGRAMMING } = require('./programmingData.js')
 
 // ─── 板块类型定义 ─────────────────────────────────────────────────
 const MODULE_TYPES = {
@@ -44,6 +45,7 @@ const MODULE_TYPES = {
   ECOMMERCE: 'ecommerce', // 电商运营助手
   MATH: 'math', // 中学数学助手
   ENGLISH: 'english', // 中学英语助手
+  PROGRAMMING: 'programming', // 计算机编程助手
 }
 
 // ─── 板块配置 ─────────────────────────────────────────────────────
@@ -506,6 +508,34 @@ const MODULE_CONFIGS = {
     placeholderText: '点击「换一条」获取英语知识',
     posterType: 'english',
   },
+
+  [MODULE_TYPES.PROGRAMMING]: {
+    id: MODULE_TYPES.PROGRAMMING,
+    name: '计算机编程助手',
+    icon: '💻',
+    storageKey: 'dailyProgramming',
+    collection: 'dailyProgrammings',
+    cacheEnabled: true,
+    colors: {
+      primary: '#1565C0',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#E3F2FD',
+      accent: '#1976D2',
+      text: '#0D47A1',
+      textSecondary: '#42A5F5',
+      bg: 'rgba(21, 101, 192, 0.1)',
+      shadow: 'rgba(21, 101, 192, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: 'AI分享',
+    },
+    aiTags: ['编程', '开发'],
+    refreshText: '换一条',
+    loadingText: '编程知识正在加载...',
+    placeholderText: '点击「换一条」获取编程知识',
+    posterType: 'programming',
+  },
 }
 
 // ─── 兜底数据映射 ─────────────────────────────────────────────────
@@ -526,6 +556,7 @@ const FALLBACK_DATA = {
   [MODULE_TYPES.ECOMMERCE]: FALLBACK_ECOMMERCE,
   [MODULE_TYPES.MATH]: FALLBACK_MATH,
   [MODULE_TYPES.ENGLISH]: FALLBACK_ENGLISH,
+  [MODULE_TYPES.PROGRAMMING]: FALLBACK_PROGRAMMING,
 }
 
 // ─── AI生成提示词 ─────────────────────────────────────────────────
@@ -1411,6 +1442,114 @@ AI人工智能|科技标题|正文内容
 直接输出，不要任何前缀：`,
 
     field: '英语',
+  },
+
+  [MODULE_TYPES.PROGRAMMING]: {
+    default: `你是一位资深全栈工程师，请分享一个计算机编程领域的核心知识点、开发技巧或最佳实践。
+
+要求：
+1. 技术领域随机选择：
+   - 前端开发：React/Vue框架、CSS布局、性能优化、TypeScript
+   - 后端开发：Node.js/Java/Python、API设计、微服务、缓存
+   - 数据库：MySQL/Redis/MongoDB、索引优化、事务
+   - DevOps：Docker、Git、CI/CD、云原生
+   - 设计模式：单例、工厂、观察者、策略等
+   - 算法数据结构：排序、查找、树、图、动态规划
+2. 内容要点：
+   - 核心概念或技巧的专业讲解
+   - 实际应用场景或代码示例
+   - 常见问题或注意事项
+3. 语言要简洁准确，有代码感
+4. 长度控制在150-200字
+5. 内容要实用、有深度、接地气
+
+格式要求：
+用|分隔各部分，结构如下：
+分类名称|知识标题|正文内容
+
+直接输出，不要任何前缀：`,
+
+    frontend: `你是一位前端技术专家，请分享一个前端开发的核心知识点或技巧。
+
+要求：
+1. 选择一个前端主题：React/Vue组件设计、CSS Flexbox/Grid、性能优化、TypeScript类型系统、前端工程化等
+2. 内容要点：
+   - 核心概念或原理
+   - 实际应用示例
+   - 最佳实践建议
+3. 语言简洁专业，有代码示例
+4. 长度150-200字
+
+格式：
+前端开发|主题名称|正文内容
+
+直接输出，不要任何前缀：`,
+
+    backend: `你是一位后端架构师，请分享一个后端开发的核心知识点或架构技巧。
+
+要求：
+1. 选择一个后端主题：RESTful API设计、微服务架构、缓存策略、认证授权、数据库优化、消息队列等
+2. 内容要点：
+   - 核心原理或架构思想
+   - 实际应用场景
+   - 性能优化建议
+3. 语言逻辑清晰，有架构思维
+4. 长度150-200字
+
+格式：
+后端开发|主题名称|正文内容
+
+直接输出，不要任何前缀：`,
+
+    database: `你是一位数据库专家，请分享一个数据库相关的核心知识点或优化技巧。
+
+要求：
+1. 选择一个数据库主题：索引原理、事务隔离、SQL优化、NoSQL应用、缓存策略、数据建模等
+2. 内容要点：
+   - 核心原理讲解
+   - 实际案例分析
+   - 优化建议
+3. 语言专业严谨
+4. 长度150-200字
+
+格式：
+数据库|主题名称|正文内容
+
+直接输出，不要任何前缀：`,
+
+    devops: `你是一位DevOps工程师，请分享一个DevOps领域的核心知识点或工具使用技巧。
+
+要求：
+1. 选择一个DevOps主题：Docker容器化、K8s编排、Git工作流、CI/CD流水线、监控告警、云原生等
+2. 内容要点：
+   - 核心概念或工具用法
+   - 实战技巧
+   - 避坑指南
+3. 语言实用性强
+4. 长度150-200字
+
+格式：
+DevOps|主题名称|正文内容
+
+直接输出，不要任何前缀：`,
+
+    algorithm: `你是一位算法竞赛教练，请分享一个算法或数据结构的核心知识点或解题技巧。
+
+要求：
+1. 选择一个算法主题：排序算法、查找算法、树和图算法、动态规划、贪心算法等
+2. 内容要点：
+   - 算法原理或数据结构特点
+   - 适用场景
+   - 实现要点或优化技巧
+3. 语言逻辑清晰，有思辨性
+4. 长度150-200字
+
+格式：
+算法与数据结构|主题名称|正文内容
+
+直接输出，不要任何前缀：`,
+
+    field: '编程',
   },
 }
 

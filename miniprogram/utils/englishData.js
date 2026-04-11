@@ -93,7 +93,7 @@ const FALLBACK_ENGLISH = [
     title: '英语写作常用连接词',
     category: '写作技巧',
     categoryIcon: '✍️',
-    summary: '高分作文离不开恰当的连接词。常用连接词分类：1）表顺序：first/second/third/lastly；2）表增补：what\'s more/besides/moreover/in addition；3）表转折：however/but/although/nevertheless；4）表原因：because of/due to/owing to；5）表结果：as a result/therefore/consequently；6）表举例：for example/for instance/such as；7）表结论：in conclusion/to sum up/in short。',
+    summary: "高分作文离不开恰当的连接词。常用连接词分类：1）表顺序：first/second/third/lastly；2）表增补：what's more/besides/moreover/in addition；3）表转折：however/but/although/nevertheless；4）表原因：because of/due to/owing to；5）表结果：as a result/therefore/consequently；6）表举例：for example/for instance/such as；7）表结论：in conclusion/to sum up/in short。",
     tips: '技巧：不要每句都用连接词，保持自然过渡。变换使用不同连接词，避免重复。建议每段开头或结尾用1-2个，体现逻辑层次。',
     tags: ['写作', '连接词', '高级表达']
   },
@@ -173,8 +173,8 @@ const FALLBACK_ENGLISH = [
     title: '情态动词用法辨析',
     category: '语法基础',
     categoryIcon: '📝',
-    summary: '主要情态动词用法：1）can/could：能力、许可、可能性（could更委婉）；2）may/might：许可、可能性、祝愿（might更不确定）；3）must/have to：必须（must主观，have to客观）；4）should：建议、义务；5）will/would：将来、意愿、请求（would更客气）；6）need：需要（实义动词或情态动词）。否定回答：mustn\'t（不许），needn\'t（不必）。',
-    tips: '易混点：must not = mustn\'t（禁止），must提问否定回答用needn\'t（不必）。如：Must I finish today? No, you needn\'t.',
+    summary: "主要情态动词用法：1）can/could：能力、许可、可能性（could更委婉）；2）may/might：许可、可能性、祝愿（might更不确定）；3）must/have to：必须（must主观，have to客观）；4）should：建议、义务；5）will/would：将来、意愿、请求（would更客气）；6）need：需要（实义动词或情态动词）。否定回答：mustn't（不许），needn't（不必）。",
+    tips: "易混点：must not = mustn't（禁止），must提问否定回答用needn't（不必）。如：Must I finish today? No, you needn't.",
     tags: ['情态动词', '语法', '易混']
   },
   {
@@ -189,7 +189,7 @@ const FALLBACK_ENGLISH = [
     title: '口语情景对话高频句型',
     category: '口语表达',
     categoryIcon: '🗣️',
-    summary: '日常口语必备句型：1）问候：How are you doing?/What\'s up?/Long time no see! 2）介绍：Let me introduce myself./This is my friend... 3）感谢：I really appreciate it./Thanks a million! 4）道歉：I\'m so sorry about that./I apologize for... 5）邀请：Would you like to.../How about...? 6）建议：Why not...?/You should try... 7）同意/反对：I agree./I\'m afraid I can\'t.',
+    summary: "日常口语必备句型：1）问候：How are you doing?/What's up?/Long time no see! 2）介绍：Let me introduce myself./This is my friend... 3）感谢：I really appreciate it./Thanks a million! 4）道歉：I'm so sorry about that./I apologize for... 5）邀请：Would you like to.../How about...? 6）建议：Why not...?/You should try... 7）同意/反对：I agree./I'm afraid I can't.",
     tips: '技巧：多说多练，不要怕出错。可跟读模仿原声，注意语调。准备一些万能过渡句，如：Well, you know, I mean...',
     tags: ['口语', '句型', '情景对话']
   },
@@ -285,7 +285,7 @@ const FALLBACK_ENGLISH = [
     title: '感叹句与祈使句',
     category: '语法基础',
     categoryIcon: '📝',
-    summary: '感叹句两种结构：1）What + (a/an) + 形容词 + 名词 + 主语 + 谓语！如：What a beautiful girl she is! 2）How + 形容词/副词 + 主语 + 谓语！如：How beautiful she is!/How fast he runs! 祈使句结构：1）动词原形开头：Sit down, please. 2）Don't + 动词原形：Don\'t be late. 3）Let\'s do...：Let\'s go shopping. 4）Please do...：Please close the door.',
+    summary: "感叹句两种结构：1）What + (a/an) + 形容词 + 名词 + 主语 + 谓语！如：What a beautiful girl she is! 2）How + 形容词/副词 + 主语 + 谓语！如：How beautiful she is!/How fast he runs! 祈使句结构：1）动词原形开头：Sit down, please. 2）Don't + 动词原形：Don't be late. 3）Let's do...：Let's go shopping. 4）Please do...：Please close the door.",
     tips: '技巧：感叹句记忆口诀：what和how互换，剩下部分顺序放，去掉主谓是核心，感叹句式即完成。',
     tags: ['感叹句', '祈使句', '句型']
   },
