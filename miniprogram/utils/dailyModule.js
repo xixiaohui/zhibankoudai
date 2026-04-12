@@ -39,6 +39,11 @@ const { FALLBACK_FIBER } = require('./glassFiberData.js')
 const { FALLBACK_RESIN } = require('./resinData.js')
 const { FALLBACK_TAX } = require('./taxData.js')
 const { FALLBACK_LAW } = require('./lawData.js')
+const { FALLBACK_OFFICIAL } = require('./officialData.js')
+const { FALLBACK_HANDLING } = require('./handlingData.js')
+const { FALLBACK_FLORAL } = require('./floralData.js')
+const { FALLBACK_HISTORY } = require('./historyData.js')
+const { FALLBACK_MILITARY } = require('./militaryData.js')
 
 // ─── 板块类型定义 ─────────────────────────────────────────────────
 const MODULE_TYPES = {
@@ -72,6 +77,11 @@ const MODULE_TYPES = {
   RESIN: 'resin', // 树脂达人
   TAX: 'tax', // 财税助手
   LAW: 'law', // 法律顾问
+  OFFICIAL: 'official', // 官场达人
+  HANDLING: 'handling', // 处事达人
+  FLORAL: 'floral', // 花艺达人
+  HISTORY: 'history', // 历史典故达人
+  MILITARY: 'military', // 军事达人
 }
 
 // ─── 板块配置 ─────────────────────────────────────────────────────
@@ -917,6 +927,141 @@ const MODULE_CONFIGS = {
     placeholderText: '点击「换一条」学习法律知识',
     posterType: 'law',
   },
+  [MODULE_TYPES.OFFICIAL]: {
+    id: MODULE_TYPES.OFFICIAL,
+    name: '官场达人',
+    icon: '🎩',
+    storageKey: 'dailyOfficial',
+    collection: 'dailyOfficials',
+    cacheEnabled: true,
+    colors: {
+      primary: '#795548',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#EFEBE9',
+      accent: '#5D4037',
+      text: '#3E2723',
+      textSecondary: '#4E342E',
+      bg: 'rgba(121, 85, 72, 0.1)',
+      shadow: 'rgba(121, 85, 72, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: 'AI导师',
+    },
+    aiTags: ['职场', '情商'],
+    refreshText: '换一条',
+    loadingText: '官场高手正在为你指点迷津...',
+    placeholderText: '点击「换一条」学习处世智慧',
+    posterType: 'official',
+  },
+  [MODULE_TYPES.HANDLING]: {
+    id: MODULE_TYPES.HANDLING,
+    name: '处事达人',
+    icon: '💎',
+    storageKey: 'dailyHandling',
+    collection: 'dailyHandlings',
+    cacheEnabled: true,
+    colors: {
+      primary: '#607D8B',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#ECEFF1',
+      accent: '#455A64',
+      text: '#263238',
+      textSecondary: '#37474F',
+      bg: 'rgba(96, 125, 139, 0.1)',
+      shadow: 'rgba(96, 125, 139, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: 'AI导师',
+    },
+    aiTags: ['情商', '社交'],
+    refreshText: '换一条',
+    loadingText: '处事高手正在为你出谋划策...',
+    placeholderText: '点击「换一条」学习处事技巧',
+    posterType: 'handling',
+  },
+  [MODULE_TYPES.FLORAL]: {
+    id: MODULE_TYPES.FLORAL,
+    name: '花艺达人',
+    icon: '💐',
+    storageKey: 'dailyFloral',
+    collection: 'dailyFlorals',
+    cacheEnabled: true,
+    colors: {
+      primary: '#E91E63',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#FCE4EC',
+      accent: '#C2185B',
+      text: '#880E4F',
+      textSecondary: '#AD1457',
+      bg: 'rgba(233, 30, 99, 0.1)',
+      shadow: 'rgba(233, 30, 99, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: 'AI导师',
+    },
+    aiTags: ['花艺', '美学'],
+    refreshText: '换一条',
+    loadingText: '花艺师正在为你讲解...',
+    placeholderText: '点击「换一条」学习花艺知识',
+    posterType: 'floral',
+  },
+  [MODULE_TYPES.HISTORY]: {
+    id: MODULE_TYPES.HISTORY,
+    name: '历史典故',
+    icon: '📚',
+    storageKey: 'dailyHistory',
+    collection: 'dailyHistorys',
+    cacheEnabled: true,
+    colors: {
+      primary: '#FF5722',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#FBE9E7',
+      accent: '#D84315',
+      text: '#BF360C',
+      textSecondary: '#E64A19',
+      bg: 'rgba(255, 87, 34, 0.1)',
+      shadow: 'rgba(255, 87, 34, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: 'AI导师',
+    },
+    aiTags: ['历史', '典故'],
+    refreshText: '换一条',
+    loadingText: '历史学者正在为你讲述...',
+    placeholderText: '点击「换一条」学习历史典故',
+    posterType: 'history',
+  },
+  [MODULE_TYPES.MILITARY]: {
+    id: MODULE_TYPES.MILITARY,
+    name: '军事达人',
+    icon: '🎖️',
+    storageKey: 'dailyMilitary',
+    collection: 'dailyMilitarys',
+    cacheEnabled: true,
+    colors: {
+      primary: '#424242',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#F5F5F5',
+      accent: '#212121',
+      text: '#000000',
+      textSecondary: '#424242',
+      bg: 'rgba(66, 66, 66, 0.1)',
+      shadow: 'rgba(66, 66, 66, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: 'AI导师',
+    },
+    aiTags: ['军事', '战略'],
+    refreshText: '换一条',
+    loadingText: '军事专家正在为你分析...',
+    placeholderText: '点击「换一条」学习军事知识',
+    posterType: 'military',
+  },
 }
 
 // ─── 兜底数据映射 ─────────────────────────────────────────────────
@@ -951,6 +1096,11 @@ const FALLBACK_DATA = {
   [MODULE_TYPES.RESIN]: FALLBACK_RESIN,
   [MODULE_TYPES.TAX]: FALLBACK_TAX,
   [MODULE_TYPES.LAW]: FALLBACK_LAW,
+  [MODULE_TYPES.OFFICIAL]: FALLBACK_OFFICIAL,
+  [MODULE_TYPES.HANDLING]: FALLBACK_HANDLING,
+  [MODULE_TYPES.FLORAL]: FALLBACK_FLORAL,
+  [MODULE_TYPES.HISTORY]: FALLBACK_HISTORY,
+  [MODULE_TYPES.MILITARY]: FALLBACK_MILITARY,
 }
 
 // ─── AI提示词（从 dailyPrompts.js 引入）────────────────────────────

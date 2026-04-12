@@ -168,8 +168,30 @@ function _friendlyError(e) {
   return 'AI 服务繁忙，请稍后重试'
 }
 
+// ─── 简化调用（非流式，返回完整结果） ─────────────────────────
+/**
+ * 简化 AI 调用，直接返回完整结果
+ * @param {string}   type      业务类型（限流 key）
+ * @param {Array}    messages  [{role, content}]
+ * @param {Object}   opts      { temperature, maxTokens }
+ * @returns {Promise<string>}  AI 生成的完整文本
+ */
+async function callAI(type, messages, opts = {}) {
+  return new Promise((resolve, reject) => {
+    callAIStream(
+      type,
+      messages,
+      null, // onChunk
+      (fullText) => resolve(fullText), // onDone
+      (err) => reject(err), // onError
+      opts
+    )
+  })
+}
+
 // ─── 导出 ───────────────────────────────────────────────────
 module.exports = {
   callAIStream,
+  callAI,
   CFG,
 }

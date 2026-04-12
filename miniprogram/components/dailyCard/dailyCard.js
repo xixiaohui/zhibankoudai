@@ -234,6 +234,21 @@ Component({
         case MODULE_TYPES.LAW:
           content = await this._getDailyLaw(refresh)
           break
+        case MODULE_TYPES.OFFICIAL:
+          content = await this._getDailyOfficial(refresh)
+          break
+        case MODULE_TYPES.HANDLING:
+          content = await this._getDailyHandling(refresh)
+          break
+        case MODULE_TYPES.FLORAL:
+          content = await this._getDailyFloral(refresh)
+          break
+        case MODULE_TYPES.HISTORY:
+          content = await this._getDailyHistory(refresh)
+          break
+        case MODULE_TYPES.MILITARY:
+          content = await this._getDailyMilitary(refresh)
+          break
         default:
             throw new Error('未知的模块类型')
         }
@@ -679,6 +694,76 @@ Component({
       return content
     },
 
+    // 获取官场达人
+    async _getDailyOfficial(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyOfficial')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+
+      const content = await DailyContent.generateOfficial()
+      return content
+    },
+
+    // 获取处事达人
+    async _getDailyHandling(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyHandling')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+
+      const content = await DailyContent.generateHandling()
+      return content
+    },
+
+    // 获取花艺达人
+    async _getDailyFloral(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyFloral')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+
+      const content = await DailyContent.generateFloral()
+      return content
+    },
+
+    // 获取历史典故达人
+    async _getDailyHistory(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyHistory')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+
+      const content = await DailyContent.generateHistory()
+      return content
+    },
+
+    // 获取军事达人
+    async _getDailyMilitary(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyMilitary')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+
+      const content = await DailyContent.generateMilitary()
+      return content
+    },
+
     // 保存到云数据库
     async _saveToCloud(content) {
       const { moduleType } = this.data
@@ -716,6 +801,11 @@ Component({
           [MODULE_TYPES.RESIN]: 'dailyResins',
           [MODULE_TYPES.TAX]: 'dailyTaxs',
           [MODULE_TYPES.LAW]: 'dailyLaws',
+          [MODULE_TYPES.OFFICIAL]: 'dailyOfficials',
+          [MODULE_TYPES.HANDLING]: 'dailyHandlings',
+          [MODULE_TYPES.FLORAL]: 'dailyFlorals',
+          [MODULE_TYPES.HISTORY]: 'dailyHistorys',
+          [MODULE_TYPES.MILITARY]: 'dailyMilitarys',
         }
 
         const collection = collectionMap[moduleType]
@@ -864,6 +954,26 @@ Component({
         case 'law':
           url = `/pages/poster/index`
           params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '⚖️') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '⚖️')}`
+          break
+        case 'official':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🎩') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🎩')}`
+          break
+        case 'handling':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💎') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💎')}`
+          break
+        case 'floral':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💐') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💐')}`
+          break
+        case 'history':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '📚') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '📚')}`
+          break
+        case 'military':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🎖️') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🎖️')}`
           break
       }
 

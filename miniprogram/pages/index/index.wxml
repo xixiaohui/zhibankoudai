@@ -136,6 +136,21 @@
   <!-- 法律顾问 -->
   <daily-card moduleType="law" />
 
+  <!-- 官场达人 -->
+  <daily-card moduleType="official" />
+
+  <!-- 处事达人 -->
+  <daily-card moduleType="handling" />
+
+  <!-- 花艺达人 -->
+  <daily-card moduleType="floral" />
+
+  <!-- 历史典故达人 -->
+  <daily-card moduleType="history" />
+
+  <!-- 军事达人 -->
+  <daily-card moduleType="military" />
+
   <!-- 快速陪伴入口 -->
   <view class="quick-modes-section">
     <view class="section-title">快速陪伴模式</view>
