@@ -1,0 +1,79 @@
+<!-- pages/detail/index.wxml - 内容详情页 -->
+<view class="detail-page">
+  <!-- 主内容区域 -->
+  <view class="content-area">
+    <!-- 标题 -->
+    <view class="content-title">
+      <text>{{displayTitle}}</text>
+    </view>
+
+    <!-- 副标题/来源 -->
+    <view class="content-subtitle" wx:if="{{displaySubtitle}}">
+      <text>{{displaySubtitle}}</text>
+    </view>
+
+    <!-- 分割线 -->
+    <view 
+      class="divider" 
+      wx:if="{{displayContent}}"
+      style="background-color: {{currentModule.colors.primary}};"
+    ></view>
+
+    <!-- 主内容 -->
+    <view class="content-body" wx:if="{{displayContent}}">
+      <text class="content-text">{{displayContent}}</text>
+    </view>
+
+    <!-- 标签列表 -->
+    <view class="content-tags" wx:if="{{displayTags.length > 0}}">
+      <block wx:for="{{displayTags}}" wx:key="index">
+        <view 
+          class="tag-item {{item.isHighlight ? 'tag-highlight' : ''}}"
+          style="{{item.isHighlight ? 'background-color:' + currentModule.colors.bg + ';color:' + currentModule.colors.primary + ';' : ''}}"
+        >
+          <text>{{item.text}}</text>
+        </view>
+      </block>
+    </view>
+
+    <!-- 附加信息 -->
+    <view class="content-extra" wx:if="{{displayExtra}}">
+      <text>{{displayExtra}}</text>
+    </view>
+
+    <!-- 引用装饰（名言） -->
+    <view class="quote-decor" wx:if="{{currentModule.id === 'quote'}}">
+      <text class="quote-mark" style="color: {{currentModule.colors.primary}};">"</text>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="action-bar">
+    <button 
+      class="btn-poster" 
+      style="background-color: {{currentModule.colors.primary}};"
+      bindtap="onGeneratePoster"
+    >
+      <text class="btn-icon">📤</text>
+      <text class="btn-text">生成海报</text>
+    </button>
+    <button 
+      class="btn-copy" 
+      style="border-color: {{currentModule.colors.primary}};color: {{currentModule.colors.primary}};"
+      bindtap="onCopyContent"
+    >
+      <text class="btn-icon">📋</text>
+      <text class="btn-text">复制内容</text>
+    </button>
+  </view>
+
+  <!-- 海报弹窗组件 -->
+  <posterCanvas
+    id="posterCanvas"
+    posterType="{{posterType}}"
+    content="{{content}}"
+    visible="{{showPoster}}"
+    bind:close="onClosePoster"
+    bind:save="onPosterSave"
+  />
+</view>

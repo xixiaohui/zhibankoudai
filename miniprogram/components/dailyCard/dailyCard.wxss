@@ -37,6 +37,33 @@
   gap: 12rpx;
 }
 
+/* 更多按钮 */
+.more-btn {
+  display: flex;
+  align-items: center;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  transition: all 0.2s ease;
+}
+
+.more-btn:active {
+  opacity: 0.7;
+  transform: scale(0.95);
+}
+
+.more-icon {
+  font-size: 28rpx;
+  color: #FFFFFF;
+  margin-right: 4rpx;
+  font-weight: bold;
+}
+
+.more-text {
+  font-size: 22rpx;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
 /* 分享按钮 */
 .share-btn {
   width: 56rpx;

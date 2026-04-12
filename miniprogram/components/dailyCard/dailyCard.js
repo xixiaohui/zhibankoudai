@@ -979,5 +979,13 @@ Component({
 
       wx.navigateTo({ url: `${url}?${params}` })
     },
+
+    // 查看更多（跳转列表页）
+    onViewMore() {
+      const { moduleType, config } = this.data
+      wx.navigateTo({
+        url: `/pages/list/index?type=${moduleType}`
+      })
+    },
   },
 })

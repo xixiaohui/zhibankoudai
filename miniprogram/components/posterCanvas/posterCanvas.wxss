@@ -1,0 +1,144 @@
+/* components/posterCanvas/posterCanvas.wxss */
+.poster-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.poster-modal {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  background: #fff;
+  border-radius: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.3);
+}
+
+/* 关闭按钮 */
+.close-btn {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  width: 56rpx;
+  height: 56rpx;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  color: #666;
+  z-index: 10;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.15);
+}
+
+/* 海报预览区 */
+.poster-preview {
+  padding: 40rpx 30rpx 30rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 600rpx;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.poster-image {
+  width: 100%;
+  height: auto;
+  border-radius: 16rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.15);
+}
+
+.poster-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.poster-loading text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 操作按钮区 */
+.action-row {
+  display: flex;
+  gap: 24rpx;
+  padding: 30rpx 40rpx 40rpx;
+  background: #fff;
+}
+
+.action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  height: 88rpx;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.action-btn::after {
+  border: none;
+}
+
+.btn-icon {
+  font-size: 36rpx;
+}
+
+.btn-text {
+  color: inherit;
+}
+
+/* 保存按钮 - 渐变紫色 */
+.save-btn {
+  background: linear-gradient(135deg, #7C6AFF 0%, #9B8AFF 100%);
+  color: #fff;
+  box-shadow: 0 8rpx 24rpx rgba(124, 106, 255, 0.35);
+}
+
+.save-btn:active {
+  transform: scale(0.96);
+  box-shadow: 0 4rpx 12rpx rgba(124, 106, 255, 0.25);
+}
+
+/* 转发按钮 - 渐变橙色 */
+.share-btn {
+  background: linear-gradient(135deg, #FF9A76 0%, #FFB599 100%);
+  color: #fff;
+  box-shadow: 0 8rpx 24rpx rgba(255, 154, 118, 0.35);
+}
+
+.share-btn:active {
+  transform: scale(0.96);
+  box-shadow: 0 4rpx 12rpx rgba(255, 154, 118, 0.25);
+}
+
+/* 隐藏的 Canvas */
+.hidden-canvas {
+  position: fixed;
+  left: -9999px;
+  top: -9999px;
+}

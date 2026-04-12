@@ -1,0 +1,154 @@
+<!-- pages/list/index.wxml - 内容列表页 -->
+<view class="list-page">
+  <!-- 横向导航栏 -->
+  <scroll-view 
+    id="moduleNav"
+    class="module-nav" 
+    scroll-x 
+    enable-flex 
+    scroll-with-animation
+    show-scrollbar="{{false}}"
+    scroll-left="{{scrollLeft}}"
+  >
+    <view class="nav-inner">
+      <block wx:for="{{modules}}" wx:key="id">
+        <view 
+          class="nav-item {{currentModule.id === item.id ? 'active' : ''}}"
+          style="{{currentModule.id === item.id ? 'background: linear-gradient(135deg, ' + item.colors.primary + ' 0%, ' + item.colors.accent + ' 100%); border-color: ' + item.colors.primary : ''}}"
+          bindtap="onModuleChange" 
+          data-index="{{index}}"
+        >
+          <text class="nav-icon">{{item.icon}}</text>
+          <text class="nav-text {{currentModule.id === item.id ? 'active-text' : ''}}" style="{{currentModule.id !== item.id ? 'color: ' + item.colors.primary : ''}}">{{item.name}}</text>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+
+  <!-- 内容区域 -->
+  <view class="content-area">
+    <!-- 加载状态 -->
+    <view class="loading-state" wx:if="{{isLoading}}">
+      <view class="loading-spinner" style="border-top-color: {{currentModule.colors.primary}}"></view>
+      <text class="loading-text" style="color: {{currentModule.colors.primary}}">加载中...</text>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:elif="{{isEmpty}}">
+      <text class="empty-icon">{{currentModule.icon}}</text>
+      <text class="empty-title">暂无内容</text>
+      <text class="empty-desc">该模块暂无历史记录</text>
+    </view>
+
+    <!-- 内容列表 -->
+    <view class="content-list" wx:else>
+      <block wx:for="{{contentList}}" wx:key="_id">
+        <view 
+          class="content-card"
+          style="background: linear-gradient(135deg, {{currentModule.colors.gradientStart}} 0%, {{currentModule.colors.gradientEnd}} 100%); border: 1rpx solid {{currentModule.colors.bg}}; box-shadow: 0 4rpx 16rpx {{currentModule.colors.shadow}};"
+          bindtap="onCardTap"
+          data-content="{{item}}"
+          data-index="{{index}}"
+        >
+          <!-- 卡片头部 -->
+          <view class="card-header">
+            <view class="card-tags" wx:if="{{item.category || item.field || item.scene || item.genre}}">
+              <text 
+                class="tag-item"
+                style="background: {{currentModule.colors.bg}}; color: {{currentModule.colors.accent}};"
+              >
+                {{item.categoryIcon || item.fieldIcon || item.sceneIcon || item.genreIcon || ''}} {{item.category || item.field || item.scene || item.genre}}
+              </text>
+              <text 
+                class="tag-ai"
+                wx:if="{{item.isAIGenerated}}"
+                style="background: {{currentModule.colors.primary}}; color: #fff;"
+              >
+                AI
+              </text>
+            </view>
+            <view class="card-actions">
+              <view 
+                class="action-btn share-btn"
+                style="background: {{currentModule.colors.bg}}; color: {{currentModule.colors.accent}};"
+                catchtap="onShare"
+                data-content="{{item}}"
+              >
+                <text>↗</text>
+              </view>
+            </view>
+          </view>
+
+          <!-- 卡片内容 -->
+          <view class="card-body">
+            <!-- 名言/情话类型 -->
+            <block wx:if="{{currentModule.id === 'quote' || currentModule.id === 'love'}}">
+              <view class="quote-content" style="color: {{currentModule.colors.text}};">"{{item.text || item.content}}"</view>
+              <view class="quote-author" style="color: {{currentModule.colors.textSecondary}};">—— {{item.author}}</view>
+            </block>
+
+            <!-- 电影类型 -->
+            <block wx:elif="{{currentModule.id === 'movie'}}">
+              <view class="movie-header">
+                <text class="movie-title" style="color: {{currentModule.colors.primary}};">{{item.title}}</text>
+                <text class="movie-rating" style="background: {{currentModule.colors.bg}}; color: {{currentModule.colors.accent}};">⭐ {{item.rating}}</text>
+              </view>
+              <view class="movie-meta" style="color: {{currentModule.colors.textSecondary}};">{{item.director}} · {{item.year}}年</view>
+              <view class="movie-summary" style="color: {{currentModule.colors.textSecondary}};">{{item.summary}}</view>
+              <view class="movie-quote" wx:if="{{item.quote}}" style="background: {{currentModule.colors.bg}}; color: {{currentModule.colors.accent}};">"{{item.quote}}"</view>
+            </block>
+
+            <!-- 音乐类型 -->
+            <block wx:elif="{{currentModule.id === 'music'}}">
+              <view class="music-header">
+                <text class="music-title" style="color: {{currentModule.colors.primary}};">{{item.title}}</text>
+                <text class="music-mood" wx:if="{{item.mood}}" style="background: {{currentModule.colors.bg}}; color: {{currentModule.colors.accent}};">{{item.moodIcon || '🎵'}} {{item.mood}}</text>
+              </view>
+              <view class="music-meta" style="color: {{currentModule.colors.textSecondary}};">{{item.artist}} · {{item.year}}</view>
+              <view class="music-description" style="color: {{currentModule.colors.textSecondary}};">{{item.description}}</view>
+              <view class="music-lyric" wx:if="{{item.lyric}}" style="background: {{currentModule.colors.bg}}; color: {{currentModule.colors.accent}};">"{{item.lyric}}"</view>
+            </block>
+
+            <!-- 文学类型 -->
+            <block wx:elif="{{currentModule.id === 'literature'}}">
+              <view class="lit-header">
+                <text class="lit-author" style="color: {{currentModule.colors.primary}};">{{item.author}}</text>
+                <text class="lit-era" style="color: {{currentModule.colors.accent}};">{{item.era}} · {{item.region}}</text>
+              </view>
+              <view class="lit-works" wx:if="{{item.works && item.works.length > 0}}" style="color: {{currentModule.colors.textSecondary}};">代表作：{{item.works.join(' · ')}}</view>
+              <view class="lit-summary" style="color: {{currentModule.colors.textSecondary}};">{{item.summary}}</view>
+              <view class="lit-quote" wx:if="{{item.quote}}" style="background: {{currentModule.colors.bg}}; color: {{currentModule.colors.accent}};">"{{item.quote}}"</view>
+            </block>
+
+            <!-- 通用类型 -->
+            <block wx:else>
+              <view class="card-title" style="color: {{currentModule.colors.primary}};">{{item.title}}</view>
+              <view class="card-summary" style="color: {{currentModule.colors.textSecondary}};">{{item.summary || item.content || item.text}}</view>
+              <view class="card-tips" wx:if="{{item.tips}}" style="background: {{currentModule.colors.bg}}; color: {{currentModule.colors.accent}};">{{item.tips}}</view>
+            </block>
+          </view>
+
+          <!-- 卡片底部 -->
+          <view class="card-footer">
+            <text class="card-date" style="color: {{currentModule.colors.textSecondary}};">{{item.createdAt ? item.createdAt.substring(0, 10) : ''}}</text>
+          </view>
+        </view>
+      </block>
+
+      <!-- 加载更多 -->
+      <view class="load-more" wx:if="{{!isLoading && contentList.length > 0}}">
+        <view wx:if="{{hasMore}}" class="load-more-btn" bindtap="_loadMore">
+          <text wx:if="{{!isLoadingMore}}" style="color: {{currentModule.colors.primary}};">加载更多</text>
+          <view wx:else class="loading-dots">
+            <text class="dot" style="color: {{currentModule.colors.primary}}">·</text>
+            <text class="dot" style="color: {{currentModule.colors.primary}}">·</text>
+            <text class="dot" style="color: {{currentModule.colors.primary}}">·</text>
+          </view>
+        </view>
+        <view wx:else class="no-more">
+          <text style="color: {{currentModule.colors.textSecondary}};">没有更多了</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

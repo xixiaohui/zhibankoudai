@@ -6,6 +6,16 @@
       <text class="title-text">{{config.name}}</text>
     </view>
     <view class="action-btns-row">
+      <!-- 了解更多按钮 -->
+      <view 
+        class="more-btn"
+        style="background: linear-gradient(135deg, {{config.colors.primary}} 0%, {{config.colors.accent}} 100%);"
+        bindtap="onViewMore" 
+        hover-class="btn-active"
+      >
+        <text class="more-icon">›</text>
+        <text class="more-text">更多</text>
+      </view>
       <!-- 分享按钮 -->
       <view 
         class="share-btn" 

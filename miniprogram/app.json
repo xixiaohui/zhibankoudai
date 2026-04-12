@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/list/index",
+    "pages/detail/index",
     "pages/test/index",
     "pages/dailyTest/dailyTest",
     "pages/chat/index",
@@ -9,6 +11,9 @@
     "pages/mine/index",
     "pages/poster/index"
   ],
+  "usingComponents": {
+    "posterCanvas": "components/posterCanvas/posterCanvas"
+  },
   "window": {
     "backgroundColor": "#F8F6FF",
     "backgroundTextStyle": "light",
