@@ -305,6 +305,214 @@
         </block>
       </view>
     </block>
+
+    <block wx:elif="{{moduleType === 'photography'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '📷'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>📸 {{content.tips}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'beauty'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '💄'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>💄 {{content.tips}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'investment'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '💰'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>💰 {{content.tips}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'fishing'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '🎣'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>🎣 {{content.tips}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'fitness'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '💪'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>💪 {{content.tips}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'pet'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '🐾'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>🐾 {{content.tips}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'fashion'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '✨'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>✨ {{content.tips}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'outfit'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '👕'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>👕 {{content.tips}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'decoration'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '🏠'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>🏠 {{content.tips}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'glassFiber'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '🧵'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>🧵 {{content.tips}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'resin'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '🧪'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>🧪 {{content.tips}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'tax'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '📋'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>📋 {{content.tips}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <block wx:elif="{{moduleType === 'law'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '⚖️'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>⚖️ {{content.tips}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
   </view>
 
   <!-- 加载状态 -->

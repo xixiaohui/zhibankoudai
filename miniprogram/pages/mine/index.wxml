@@ -62,6 +62,8 @@
       <view class="app-name">智伴口袋</view>
       <view class="app-desc">你的随身AI陪伴助手</view>
       <view class="version">版本 {{version}}</view>
+      <view class="version">皖ICP备2024039490号-3X</view>
+      
     </view>
     <view class="copyright">
       © 2024 智伴口袋 · 温暖陪伴，触手可及

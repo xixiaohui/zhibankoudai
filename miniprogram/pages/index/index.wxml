@@ -1,5 +1,5 @@
 <!-- pages/index/index.wxml - 智伴口袋首页 -->
-<view class="page-container">
+<view class="page-container" id="pageTop">
   <!-- 顶部问候区域 -->
   <view class="greeting-section">
     <view class="greeting-text">{{greeting}}</view>
@@ -97,6 +97,45 @@
   <!-- 计算机编程助手 -->
   <daily-card moduleType="programming" />
 
+  <!-- 摄影达人 -->
+  <daily-card moduleType="photography" />
+
+  <!-- 美妆达人 -->
+  <daily-card moduleType="beauty" />
+
+  <!-- 投资理财达人 -->
+  <daily-card moduleType="investment" />
+
+  <!-- 钓鱼达人 -->
+  <daily-card moduleType="fishing" />
+
+  <!-- 健身达人 -->
+  <daily-card moduleType="fitness" />
+
+  <!-- 宠物达人 -->
+  <daily-card moduleType="pet" />
+
+  <!-- 时尚达人 -->
+  <daily-card moduleType="fashion" />
+
+  <!-- 穿搭达人 -->
+  <daily-card moduleType="outfit" />
+
+  <!-- 装修达人 -->
+  <daily-card moduleType="decoration" />
+
+  <!-- 玻纤达人 -->
+  <daily-card moduleType="glassFiber" />
+
+  <!-- 树脂达人 -->
+  <daily-card moduleType="resin" />
+
+  <!-- 财税助手 -->
+  <daily-card moduleType="tax" />
+
+  <!-- 法律顾问 -->
+  <daily-card moduleType="law" />
+
   <!-- 快速陪伴入口 -->
   <view class="quick-modes-section">
     <view class="section-title">快速陪伴模式</view>
@@ -147,6 +186,16 @@
         <text>添加新目标</text>
       </view>
     </view>
+  </view>
+
+  <!-- 回到顶部按钮 -->
+  <view 
+    wx:if="{{showBackTop}}" 
+    class="back-top-btn" 
+    bindtap="scrollToTop"
+    hover-class="back-top-btn-active"
+  >
+    <text class="back-top-icon">↑</text>
   </view>
 
   <!-- 昵称设置弹窗 -->

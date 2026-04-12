@@ -8,6 +8,10 @@
  * - psychologyData.js: 心理学数据
  * - financeData.js: 金融数据
  * - loveData.js: 情话数据
+ * - photographyData.js: 摄影数据
+ * - beautyData.js: 美妆数据
+ * - investmentData.js: 投资理财数据
+ * - fishingData.js: 钓鱼数据
  */
 
 const { QUOTE_FIELDS, FAMOUS_QUOTES } = require('./quoteData.js')
@@ -15,6 +19,11 @@ const { JOKE_SCENES, FALLBACK_JOKES } = require('./jokeData.js')
 const { PSYCHOLOGY_FIELDS, FALLBACK_PSYCHOLOGY } = require('./psychologyData.js')
 const { FINANCE_FIELDS, FALLBACK_FINANCE } = require('./financeData.js')
 const { LOVE_FIELDS, FALLBACK_LOVE } = require('./loveData.js')
+const { PHOTOGRAPHY_FIELDS, FALLBACK_PHOTOGRAPHY } = require('./photographyData.js')
+const { BEAUTY_FIELDS, FALLBACK_BEAUTY } = require('./beautyData.js')
+const { INVESTMENT_FIELDS, FALLBACK_INVESTMENT } = require('./investmentData.js')
+const { FISHING_FIELDS, FALLBACK_FISHING } = require('./fishingData.js')
+const { FITNESS_FIELDS, FALLBACK_FITNESS } = require('./fitnessData.js')
 
 module.exports = {
   // 名言板块
@@ -32,4 +41,19 @@ module.exports = {
   // 情话板块
   LOVE_FIELDS,
   FALLBACK_LOVE,
+  // 摄影板块
+  PHOTOGRAPHY_FIELDS,
+  FALLBACK_PHOTOGRAPHY,
+  // 美妆板块
+  BEAUTY_FIELDS,
+  FALLBACK_BEAUTY,
+  // 投资理财板块
+  INVESTMENT_FIELDS,
+  FALLBACK_INVESTMENT,
+  // 钓鱼板块
+  FISHING_FIELDS,
+  FALLBACK_FISHING,
+  // 健身板块
+  FITNESS_FIELDS,
+  FALLBACK_FITNESS,
 }

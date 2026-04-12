@@ -35,6 +35,19 @@ const { FALLBACK_ECOMMERCE, ECOMMERCE_CATEGORIES } = require('./eCommerceData.js
 const { FALLBACK_MATH, MATH_CATEGORIES } = require('./mathData.js')
 const { FALLBACK_ENGLISH, ENGLISH_CATEGORIES } = require('./englishData.js')
 const { FALLBACK_PROGRAMMING, PROGRAMMING_CATEGORIES } = require('./programmingData.js')
+const { PHOTOGRAPHY_FIELDS, FALLBACK_PHOTOGRAPHY } = require('./photographyData.js')
+const { BEAUTY_FIELDS, FALLBACK_BEAUTY } = require('./beautyData.js')
+const { INVESTMENT_FIELDS, FALLBACK_INVESTMENT } = require('./investmentData.js')
+const { FISHING_FIELDS, FALLBACK_FISHING } = require('./fishingData.js')
+const { FITNESS_FIELDS, FALLBACK_FITNESS } = require('./fitnessData.js')
+const { PET_FIELDS, FALLBACK_PET } = require('./petData.js')
+const { FASHION_FIELDS, FALLBACK_FASHION } = require('./fashionData.js')
+const { OUTFIT_FIELDS, FALLBACK_OUTFIT } = require('./outfitData.js')
+const { DECORATION_FIELDS, FALLBACK_DECORATION } = require('./decorationData.js')
+const { FIBER_FIELDS, FALLBACK_FIBER } = require('./glassFiberData.js')
+const { RESIN_FIELDS, FALLBACK_RESIN } = require('./resinData.js')
+const { TAX_FIELDS, FALLBACK_TAX } = require('./taxData.js')
+const { LAW_FIELDS, FALLBACK_LAW } = require('./lawData.js')
 
 // ─── AI 调用核心 ─────────────────────────────────────────────────
 
@@ -2818,6 +2831,2629 @@ async function generateProgramming() {
   return result
 }
 
+// ─── 摄影达人 ─────────────────────────────────────────────────
+
+/**
+ * 保存摄影知识到云数据库
+ */
+async function savePhotographyToCloud(photography) {
+  try {
+    const db = wx.cloud.database()
+    await db.collection('dailyPhotographies').add({
+      data: {
+        title: photography.title,
+        category: photography.category,
+        categoryIcon: photography.categoryIcon || '📷',
+        summary: photography.summary || '',
+        tips: photography.tips || [],
+        example: photography.example || '',
+        source: photography.source || 'AI导师',
+        date: new Date().toISOString().split('T')[0],
+        createdAt: db.serverDate()
+      }
+    })
+    console.log('[DailyContent] 摄影知识已保存到云数据库')
+    return true
+  } catch (e) {
+    console.error('[DailyContent] 保存摄影知识到云数据库失败:', e)
+    return false
+  }
+}
+
+/**
+ * 从摄影库随机获取一条（使用日期种子保证每天一致）
+ */
+function getRandomPhotographyFromLibrary() {
+  const today = new Date()
+  const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate()
+  const index = seed % FALLBACK_PHOTOGRAPHY.length
+  return { ...FALLBACK_PHOTOGRAPHY[index] }
+}
+
+/**
+ * 生成每日摄影知识
+ */
+async function generatePhotography() {
+  const field = PHOTOGRAPHY_FIELDS[Math.floor(Math.random() * PHOTOGRAPHY_FIELDS.length)]
+
+  // 随机选择提示词类型
+  const promptTypes = ['default', 'basics', 'composition', 'light', 'portrait', 'landscape', 'mobile']
+  const promptType = promptTypes[Math.floor(Math.random() * promptTypes.length)]
+
+  let prompt
+  if (promptType === 'basics') {
+    prompt = `你是一位摄影培训师，请分享一个摄影基础知识或概念。
+
+要求：
+1. 选择一个基础主题：光圈、快门、感光度、对焦、测光，白平衡、RAW格式、安全快门、镜头焦段等
+2. 内容要点：
+   - 基础概念的专业讲解
+   - 实际应用示例
+   - 操作技巧和注意事项
+3. 语言通俗易懂，适合入门学习
+4. 长度150-200字
+
+格式：
+摄影基础|知识名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'composition') {
+    prompt = `你是一位构图专家，请分享一个构图技巧或方法。
+
+要求：
+1. 选择一个构图主题：三分法、引导线、框架构图、对称构图、留白艺术、前景运用、对角线构图等
+2. 内容要点：
+   - 构图原理和效果
+   - 实际应用场景
+   - 拍摄技巧
+3. 语言生动有趣，有启发性
+4. 长度150-200字
+
+格式：
+构图技巧|技巧名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'light') {
+    prompt = `你是一位用光大师，请分享一个用光技巧或光线知识。
+
+要求：
+1. 选择一个用光主题：黄金时刻、蓝色时刻，逆光、侧光、散射光、柔光、硬光、人造光等
+2. 内容要点：
+   - 光线特点和效果
+   - 拍摄技巧和参数
+   - 适用场景
+3. 语言富有画面感
+4. 长度150-200字
+
+格式：
+用光艺术|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'portrait') {
+    prompt = `你是一位人像摄影大师，请分享一个人像摄影技巧。
+
+要求：
+1. 选择一个人像主题：焦段选择、对焦技巧、背景处理、摆姿引导，光线运用、后期处理等
+2. 内容要点：
+   - 专业技巧的要点
+   - 实际拍摄案例
+   - 常见问题和解决方案
+3. 语言专业生动
+4. 长度150-200字
+
+格式：
+人像摄影|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'landscape') {
+    prompt = `你是一位风光摄影大师，请分享一个风光摄影技巧。
+
+要求：
+1. 选择一个风光主题：光线等待、前景运用、景深控制、慢门摄影、堆栈技术、天气预测等
+2. 内容要点：
+   - 拍摄要领和技巧
+   - 时机和参数设置
+   - 设备建议
+3. 语言大气有格局
+4. 长度150-200字
+
+格式：
+风光摄影|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'mobile') {
+    prompt = `你是一位手机摄影达人，请分享一个手机摄影技巧。
+
+要求：
+1. 选择一个手机摄影主题：触摸对焦、HDR模式、夜景模式、人像模式、超广角、后期修图等
+2. 内容要点：
+   - 手机功能的正确使用
+   - 拍摄技巧和参数
+   - 创意玩法
+3. 语言简洁实用
+4. 长度150-200字
+
+格式：
+手机摄影|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else {
+    prompt = `你是一位资深摄影导师，请分享一个实用的摄影技巧或拍摄知识。
+
+要求：
+1. 摄影领域随机选择：
+   - 摄影基础：曝光三要素、对焦模式，白平衡、测光、ISO感光度
+   - 构图技巧：三分法、引导线、框架构图、对称与平衡、留白
+   - 用光艺术：黄金时刻、蓝色时刻，逆光摄影、散射光
+   - 人像摄影：焦段选择、眼神对焦、背景选择、摆姿引导
+   - 风光摄影：光线等待、前景运用、景深控制、慢门摄影
+   - 手机摄影：触摸对焦、HDR模式、夜景模式、人像模式
+2. 内容要点：
+   - 核心知识点或技巧的专业讲解
+   - 实际应用场景或示例（2-3个具体例子）
+   - 实用建议或操作步骤
+3. 语言要生动有趣，适合摄影爱好者学习
+4. 长度控制在150-200字
+
+格式要求：
+用|分隔各部分，结构如下：
+分类名称|知识标题|正文内容
+
+直接输出，不要任何前缀：`
+  }
+
+  const messages = [{ role: 'user', content: prompt }]
+
+  try {
+    const result = await callAI(messages, { temperature: 0.8, maxTokens: 500 })
+
+    if (result && result.length > 20) {
+      const parts = result.split('|').map(p => p.trim()).filter(p => p)
+
+      if (parts.length >= 3) {
+        const photography = {
+          category: parts[0] || field.name,
+          categoryIcon: field.icon,
+          title: parts[1].trim(),
+          summary: parts.slice(2).join('|').trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        // 保存到云数据库
+        savePhotographyToCloud(photography).catch(() => {})
+        return photography
+      } else if (parts.length === 2) {
+        const photography = {
+          category: field.name,
+          categoryIcon: field.icon,
+          title: parts[0].trim(),
+          summary: parts[1].trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        // 保存到云数据库
+        savePhotographyToCloud(photography).catch(() => {})
+        return photography
+      }
+    }
+  } catch (e) {
+    console.error('[DailyContent] 生成摄影知识失败:', e)
+  }
+
+  // 使用备用摄影库
+  const fallback = getRandomPhotographyFromLibrary()
+  const result = {
+    ...fallback,
+    source: '摄影知识库',
+    isAIGenerated: false,
+    date: new Date().toISOString().split('T')[0]
+  }
+  // 保存到云数据库
+  savePhotographyToCloud(result).catch(() => {})
+  return result
+}
+
+// ─── 美妆达人 ─────────────────────────────────────────────────
+
+/**
+ * 保存美妆知识到云数据库
+ */
+async function saveBeautyToCloud(beauty) {
+  try {
+    const db = wx.cloud.database()
+    await db.collection('dailyBeauties').add({
+      data: {
+        title: beauty.title,
+        category: beauty.category,
+        categoryIcon: beauty.categoryIcon || '💄',
+        summary: beauty.summary || '',
+        tips: beauty.tips || [],
+        example: beauty.example || '',
+        source: beauty.source || 'AI导师',
+        date: new Date().toISOString().split('T')[0],
+        createdAt: db.serverDate()
+      }
+    })
+    console.log('[DailyContent] 美妆知识已保存到云数据库')
+    return true
+  } catch (e) {
+    console.error('[DailyContent] 保存美妆知识到云数据库失败:', e)
+    return false
+  }
+}
+
+/**
+ * 从美妆库随机获取一条（每次调用都随机，保证刷新变化）
+ */
+function getRandomBeautyFromLibrary() {
+  // 每次都随机选择，充分利用50条知识的多样性
+  const index = Math.floor(Math.random() * FALLBACK_BEAUTY.length)
+  return { ...FALLBACK_BEAUTY[index] }
+}
+
+/**
+ * 生成每日美妆知识
+ */
+async function generateBeauty() {
+  // 随机选择美妆类型
+  const field = BEAUTY_FIELDS[Math.floor(Math.random() * BEAUTY_FIELDS.length)]
+
+  // 随机选择提示词类型
+  const promptTypes = ['default', 'skincare', 'makeup', 'haircare', 'nailcare', 'bodycare', 'tips']
+  const promptType = promptTypes[Math.floor(Math.random() * promptTypes.length)]
+
+  let prompt
+  if (promptType === 'skincare') {
+    prompt = `你是一位专业护肤顾问，请分享一个护肤知识点或技巧。
+
+要求：
+1. 选择一个护肤主题：清洁、保湿、防晒、美白、抗衰老、敏感肌护理、痘痘护理、毛孔护理等
+2. 内容要点：
+   - 专业知识的科学原理
+   - 正确的护肤步骤和手法
+   - 常见误区和注意事项
+3. 语言通俗易懂，适合护肤小白学习
+4. 长度150-200字
+
+格式：
+护肤心得|知识名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'makeup') {
+    prompt = `你是一位美妆大师，请分享一个化妆技巧。
+
+要求：
+1. 选择一个化妆主题：底妆、眼妆、眉妆、腮红、口红、定妆、遮瑕、高光修容等
+2. 内容要点：
+   - 技巧要点和操作方法
+   - 产品选择建议
+   - 常见问题和解决方案
+3. 语言生动有趣
+4. 长度150-200字
+
+格式：
+化妆技巧|技巧名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'haircare') {
+    prompt = `你是一位发型专家，请分享一个护发养发技巧。
+
+要求：
+1. 选择一个护发主题：洗发方法、护发素使用、吹发技巧、造型方法、染发护理、烫发护理等
+2. 内容要点：
+   - 专业技巧的操作方法
+   - 产品选择建议
+   - 让头发更健康的建议
+3. 语言实用接地气
+4. 长度150-200字
+
+格式：
+护发养发|技巧名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'nailcare') {
+    prompt = `你是一位美甲师，请分享一个美甲护理技巧。
+
+要求：
+1. 选择一个美甲主题：指甲修剪、甲油涂抹、卸甲方法、指甲营养、指甲健康等
+2. 内容要点：
+   - 专业技巧的操作步骤
+   - 注意事项和建议
+   - 让指甲更健康的建议
+3. 语言简洁实用
+4. 长度150-200字
+
+格式：
+美甲护理|技巧名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'bodycare') {
+    prompt = `你是一位身体护理专家，请分享一个身体护理技巧。
+
+要求：
+1. 选择一个身体护理主题：去角质、身体乳涂抹、手部护理、足部护理、颈部护理、背部护理等
+2. 内容要点：
+   - 专业护理的操作方法
+   - 护理产品的选择
+   - 让皮肤更健康的建议
+3. 语言温馨实用
+4. 长度150-200字
+
+格式：
+身体护理|技巧名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'tips') {
+    prompt = `你是一位美妆达人，请分享一个美妆小贴士或生活小技巧。
+
+要求：
+1. 选择一个小贴士主题：妆容持久、工具清洁、色号选择、场合妆容、问题解决等
+2. 内容要点：
+   - 实操性强的小技巧
+   - 具体的产品推荐或方法
+   - 使用场景和效果
+3. 语言生动有趣
+4. 长度150-200字
+
+格式：
+美妆小贴士|贴士名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else {
+    prompt = `你是一位资深美妆导师，请分享一个实用的美妆技巧或护肤知识。
+
+要求：
+1. 美妆领域随机选择：
+   - 护肤心得：清洁、保湿、防晒、抗衰老、敏感肌护理
+   - 化妆技巧：底妆、眼妆、眉妆、腮红、口红、定妆
+   - 护发养发：洗发、护发、造型、染发护理
+   - 美甲护理：指甲修剪、甲油涂抹、卸甲方法
+   - 身体护理：去角质、身体乳、手部护理、足部护理
+   - 美妆小贴士：妆容持久、工具清洁、色号选择
+2. 内容要点：
+   - 核心知识点或技巧的专业讲解
+   - 实际应用场景或示例（2-3个具体例子）
+   - 实用建议或操作步骤
+3. 语言要生动有趣，适合美妆爱好者学习
+4. 长度控制在150-200字
+
+格式要求：
+用|分隔各部分，结构如下：
+分类名称|知识标题|正文内容
+
+直接输出，不要任何前缀：`
+  }
+
+  const messages = [{ role: 'user', content: prompt }]
+
+  try {
+    const result = await callAI(messages, { temperature: 0.8, maxTokens: 500 })
+
+    if (result && result.length > 20) {
+      const parts = result.split('|').map(p => p.trim()).filter(p => p)
+
+      if (parts.length >= 3) {
+        const beauty = {
+          category: parts[0] || field.name,
+          categoryIcon: field.icon,
+          title: parts[1].trim(),
+          summary: parts.slice(2).join('|').trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        // 保存到云数据库
+        saveBeautyToCloud(beauty).catch(() => {})
+        return beauty
+      } else if (parts.length === 2) {
+        const beauty = {
+          category: field.name,
+          categoryIcon: field.icon,
+          title: parts[0].trim(),
+          summary: parts[1].trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        // 保存到云数据库
+        saveBeautyToCloud(beauty).catch(() => {})
+        return beauty
+      }
+    }
+  } catch (e) {
+    console.error('[DailyContent] 生成美妆知识失败:', e)
+  }
+
+  // 使用备用美妆库
+  const fallback = getRandomBeautyFromLibrary()
+  const result = {
+    ...fallback,
+    source: '美妆知识库',
+    isAIGenerated: false,
+    date: new Date().toISOString().split('T')[0]
+  }
+  // 保存到云数据库
+  saveBeautyToCloud(result).catch(() => {})
+  return result
+}
+
+// ─── 投资理财达人 ─────────────────────────────────────────────────
+
+/**
+ * 保存投资理财知识到云数据库
+ */
+async function saveInvestmentToCloud(investment) {
+  try {
+    const db = wx.cloud.database()
+    await db.collection('dailyInvestments').add({
+      data: {
+        title: investment.title,
+        category: investment.category,
+        categoryIcon: investment.categoryIcon || '💰',
+        summary: investment.summary || '',
+        tips: investment.tips || [],
+        example: investment.example || '',
+        source: investment.source || 'AI导师',
+        date: new Date().toISOString().split('T')[0],
+        createdAt: db.serverDate()
+      }
+    })
+    console.log('[DailyContent] 投资理财知识已保存到云数据库')
+    return true
+  } catch (e) {
+    console.error('[DailyContent] 保存投资理财知识到云数据库失败:', e)
+    return false
+  }
+}
+
+/**
+ * 从投资理财库随机获取一条（每次调用都随机，保证刷新变化）
+ */
+function getRandomInvestmentFromLibrary() {
+  // 每次都随机选择，充分利用多条知识的多样性
+  const index = Math.floor(Math.random() * FALLBACK_INVESTMENT.length)
+  return { ...FALLBACK_INVESTMENT[index] }
+}
+
+/**
+ * 生成每日投资理财知识
+ */
+async function generateInvestment() {
+  // 随机选择投资理财类型
+  const field = INVESTMENT_FIELDS[Math.floor(Math.random() * INVESTMENT_FIELDS.length)]
+
+  // 随机选择提示词类型
+  const promptTypes = ['default', 'fund', 'index', 'value', 'global', 'strategy', 'risk']
+  const promptType = promptTypes[Math.floor(Math.random() * promptTypes.length)]
+
+  let prompt
+  if (promptType === 'fund') {
+    prompt = `你是一位基金投资专家，请分享一个基金投资知识点或技巧。
+
+要求：
+1. 选择一个基金主题：基金定投、净值估算、申购赎回、分红方式、基金费率、基金转换等
+2. 内容要点：
+   - 基金知识的科学原理
+   - 正确的投资步骤和方法
+   - 常见误区和注意事项
+3. 语言通俗易懂，适合投资新手学习
+4. 长度150-200字
+
+格式：
+基金知识|知识名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'index') {
+    prompt = `你是一位指数基金专家，请分享一个指数基金投资知识点。
+
+要求：
+1. 选择一个指数基金主题：宽基指数、窄基指数、PE/PB估值、红利指数、行业指数、全球指数等
+2. 内容要点：
+   - 指数基金的专业知识
+   - 选基方法和配置建议
+   - 估值判断技巧
+3. 语言专业但易懂
+4. 长度150-200字
+
+格式：
+指数基金|知识名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'value') {
+    prompt = `你是一位价值投资大师，请分享一个价值投资理念或投资大师的思想。
+
+要求：
+1. 选择一个价值投资主题：巴菲特理念、护城河理论、ROE分析、自由现金流、彼得·林奇心法等
+2. 内容要点：
+   - 投资大师的核心思想
+   - 实际应用案例
+   - 对普通投资者的启示
+3. 语言富有哲理
+4. 长度150-200字
+
+格式：
+价值投资|理念名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'global') {
+    prompt = `你是一位全球资产配置专家，请分享一个海外投资或全球配置的理念。
+
+要求：
+1. 选择一个全球投资主题：耶鲁基金配置、达利欧全天候、全球分散投资、QDII基金、海外REITs等
+2. 内容要点：
+   - 全球投资的专业知识
+   - 配置思路和方法
+   - 风险与收益分析
+3. 语言开阔视野
+4. 长度150-200字
+
+格式：
+全球投资|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'strategy') {
+    prompt = `你是一位投资策略专家，请分享一个投资策略或资产配置方法。
+
+要求：
+1. 选择一个投资策略主题：核心卫星策略、再平衡艺术、目标日期基金、股债轮动、金字塔买入等
+2. 内容要点：
+   - 策略的核心逻辑
+   - 具体操作方法
+   - 适用人群和场景
+3. 语言条理清晰
+4. 长度150-200字
+
+格式：
+投资策略|策略名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'risk') {
+    prompt = `你是一位风险管理专家，请分享一个投资风险控制知识或技巧。
+
+要求：
+1. 选择一个风险管理主题：分散投资、止损技巧、流动性管理、杠杆风险、黑天鹅应对等
+2. 内容要点：
+   - 风险识别和防控方法
+   - 实际案例和教训
+   - 投资心态建议
+3. 语言警醒但建设性
+4. 长度150-200字
+
+格式：
+风险控制|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else {
+    prompt = `你是一位资深投资理财顾问，请分享一个实用的投资理财知识或基金投资理念。
+
+要求：
+1. 投资理财领域随机选择：
+   - 基金知识：定投、净值、分红、费率、指数
+   - 指数基金：宽基、窄基、估值、smart beta
+   - 价值投资：巴菲特理念、护城河、ROE、自由现金流
+   - 全球投资：耶鲁基金、达利欧、全球配置、QDII
+   - 投资策略：核心卫星、再平衡、股债轮动
+   - 风险控制：分散投资、止损、远离杠杆
+2. 内容要点：
+   - 核心投资知识或理念的专业讲解
+   - 实际应用场景或投资案例（2-3个具体例子）
+   - 实用建议或操作步骤
+3. 语言要专业易懂，适合理财小白学习
+4. 长度控制在150-200字
+
+格式要求：
+用|分隔各部分，结构如下：
+分类名称|知识标题|正文内容
+
+直接输出，不要任何前缀：`
+  }
+
+  const messages = [{ role: 'user', content: prompt }]
+
+  try {
+    const result = await callAI(messages, { temperature: 0.8, maxTokens: 500 })
+
+    if (result && result.length > 20) {
+      const parts = result.split('|').map(p => p.trim()).filter(p => p)
+
+      if (parts.length >= 3) {
+        const investment = {
+          category: parts[0] || field.name,
+          categoryIcon: field.icon,
+          title: parts[1].trim(),
+          summary: parts.slice(2).join('|').trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        // 保存到云数据库
+        saveInvestmentToCloud(investment).catch(() => {})
+        return investment
+      } else if (parts.length === 2) {
+        const investment = {
+          category: field.name,
+          categoryIcon: field.icon,
+          title: parts[0].trim(),
+          summary: parts[1].trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        // 保存到云数据库
+        saveInvestmentToCloud(investment).catch(() => {})
+        return investment
+      }
+    }
+  } catch (e) {
+    console.error('[DailyContent] 生成投资理财知识失败:', e)
+  }
+
+  // 使用备用投资理财库
+  const fallback = getRandomInvestmentFromLibrary()
+  const result = {
+    ...fallback,
+    source: '投资理财知识库',
+    isAIGenerated: false,
+    date: new Date().toISOString().split('T')[0]
+  }
+  // 保存到云数据库
+  saveInvestmentToCloud(result).catch(() => {})
+  return result
+}
+
+// ─── 钓鱼达人 ─────────────────────────────────────────────────
+
+/**
+ * 保存钓鱼知识到云数据库
+ */
+async function saveFishingToCloud(fishing) {
+  try {
+    const db = wx.cloud.database()
+    await db.collection('dailyFishings').add({
+      data: {
+        title: fishing.title,
+        category: fishing.category,
+        categoryIcon: fishing.categoryIcon || '🎣',
+        summary: fishing.summary || '',
+        tips: fishing.tips || [],
+        example: fishing.example || '',
+        source: fishing.source || 'AI导师',
+        date: new Date().toISOString().split('T')[0],
+        createdAt: db.serverDate()
+      }
+    })
+    console.log('[DailyContent] 钓鱼知识已保存到云数据库')
+    return true
+  } catch (e) {
+    console.error('[DailyContent] 保存钓鱼知识到云数据库失败:', e)
+    return false
+  }
+}
+
+/**
+ * 从钓鱼库随机获取一条（每次调用都随机，保证刷新变化）
+ */
+function getRandomFishingFromLibrary() {
+  // 每次都随机选择，充分利用多条知识的多样性
+  const index = Math.floor(Math.random() * FALLBACK_FISHING.length)
+  return { ...FALLBACK_FISHING[index] }
+}
+
+/**
+ * 生成每日钓鱼知识
+ */
+async function generateFishing() {
+  // 随机选择钓鱼类型
+  const field = FISHING_FIELDS[Math.floor(Math.random() * FISHING_FIELDS.length)]
+
+  // 随机选择提示词类型
+  const promptTypes = ['default', 'technique', 'gear', 'bait', 'location', 'species', 'season']
+  const promptType = promptTypes[Math.floor(Math.random() * promptTypes.length)]
+
+  let prompt
+  if (promptType === 'technique') {
+    prompt = `你是一位钓鱼高手，请分享一个钓鱼技巧或实战经验。
+
+要求：
+1. 选择一个钓鱼技巧主题：调漂、抛竿、抓口时机、遛鱼手法、飞铅钓法、搓饵拉饵切换等
+2. 内容要点：
+   - 技巧的要点和操作方法
+   - 实际应用场景
+   - 常见问题和解决方案
+3. 语言专业生动
+4. 长度150-200字
+
+格式：
+钓鱼技巧|技巧名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'gear') {
+    prompt = `你是一位钓鱼装备专家，请分享一个装备选择或使用的知识。
+
+要求：
+1. 选择一个装备主题：鱼竿调性、主线子线搭配、浮漂选择、鱼钩型号、钓箱钓椅选择等
+2. 内容要点：
+   - 装备的专业知识
+   - 选择方法和注意事项
+   - 使用技巧
+3. 语言实用易懂
+4. 长度150-200字
+
+格式：
+装备选择|装备名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'bait') {
+    prompt = `你是一位饵料配制大师，请分享一个饵料配方或饵料使用技巧。
+
+要求：
+1. 选择一个饵料主题：商品饵搭配思路、活饵使用技巧、窝料制作、小药使用原则等
+2. 内容要点：
+   - 饵料配制的核心知识
+   - 具体配方和比例
+   - 注意事项
+3. 语言通俗实用
+4. 长度150-200字
+
+格式：
+饵料配方|配方名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'location') {
+    prompt = `你是一位钓鱼老手，请分享一个钓点选择或作钓策略的经验。
+
+要求：
+1. 选择一个选位主题：水库作钓、江河作钓、黑坑技巧、夜钓选位、季节性选位规律等
+2. 内容要点：
+   - 选位的关键因素
+   - 具体位置判断方法
+   - 实战经验
+3. 语言经验性强
+4. 长度150-200字
+
+格式：
+钓点选择|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'species') {
+    prompt = `你是一位鱼类学专家，请分享一个目标鱼类的习性和钓法。
+
+要求：
+1. 选择一个鱼种：鲫鱼、鲤鱼、草鱼、青鱼、鲢鳙、黄辣丁、鳊鱼、白条等
+2. 内容要点：
+   - 鱼类的习性特点
+   - 觅食习惯
+   - 漂相识别和钓法技巧
+3. 语言生动有趣
+4. 长度150-200字
+
+格式：
+鱼类习性|鱼种名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'season') {
+    prompt = `你是一位四季钓鱼达人，请分享一个季节性作钓的知识或技巧。
+
+要求：
+1. 选择一个季节主题：春季钓鱼黄金期、夏季注意事项、秋季钓鱼要点、冬季冰钓技巧等
+2. 内容要点：
+   - 季节对钓鱼的影响
+   - 时段选择和饵料调整
+   - 作钓策略变化
+3. 语言条理清晰
+4. 长度150-200字
+
+格式：
+季节作钓|季节名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else {
+    prompt = `你是一位资深钓鱼大师，请分享一个实用的钓鱼技巧或钓鱼知识。
+
+要求：
+1. 钓鱼领域随机选择：
+   - 钓鱼技巧：调漂、抛竿、抓口、遛鱼、走钓守钓
+   - 装备选择：鱼竿、鱼线、鱼钩、浮漂选择
+   - 饵料配方：商品饵搭配、活饵使用、窝料制作
+   - 钓点选择：水库、江河、黑坑、夜钓选位
+   - 鱼类习性：鲫鱼、鲤鱼、草鱼、青鱼习性
+   - 季节作钓：春夏秋冬四季钓鱼要点
+2. 内容要点：
+   - 核心钓鱼知识或技巧的专业讲解
+   - 实际应用场景或钓鱼案例（2-3个具体例子）
+   - 实用建议或操作步骤
+3. 语言要生动有趣，适合钓鱼爱好者学习
+4. 长度控制在150-200字
+
+格式要求：
+用|分隔各部分，结构如下：
+分类名称|知识标题|正文内容
+
+直接输出，不要任何前缀：`
+  }
+
+  const messages = [{ role: 'user', content: prompt }]
+
+  try {
+    const result = await callAI(messages, { temperature: 0.8, maxTokens: 500 })
+
+    if (result && result.length > 20) {
+      const parts = result.split('|').map(p => p.trim()).filter(p => p)
+
+      if (parts.length >= 3) {
+        const fishing = {
+          category: parts[0] || field.name,
+          categoryIcon: field.icon,
+          title: parts[1].trim(),
+          summary: parts.slice(2).join('|').trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        // 保存到云数据库
+        saveFishingToCloud(fishing).catch(() => {})
+        return fishing
+      } else if (parts.length === 2) {
+        const fishing = {
+          category: field.name,
+          categoryIcon: field.icon,
+          title: parts[0].trim(),
+          summary: parts[1].trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        // 保存到云数据库
+        saveFishingToCloud(fishing).catch(() => {})
+        return fishing
+      }
+    }
+  } catch (e) {
+    console.error('[DailyContent] 生成钓鱼知识失败:', e)
+  }
+
+  // 使用备用钓鱼库
+  const fallback = getRandomFishingFromLibrary()
+  const result = {
+    ...fallback,
+    source: '钓鱼知识库',
+    isAIGenerated: false,
+    date: new Date().toISOString().split('T')[0]
+  }
+  // 保存到云数据库
+  saveFishingToCloud(result).catch(() => {})
+  return result
+}
+
+// ─── 健身达人 ─────────────────────────────────────────────────
+
+/**
+ * 保存健身知识到云数据库
+ */
+async function saveFitnessToCloud(fitness) {
+  try {
+    const db = wx.cloud.database()
+    await db.collection('dailyFitnesses').add({
+      data: {
+        title: fitness.title,
+        category: fitness.category,
+        categoryIcon: fitness.categoryIcon || '💪',
+        summary: fitness.summary || '',
+        tips: fitness.tips || [],
+        example: fitness.example || '',
+        source: fitness.source || 'AI导师',
+        date: new Date().toISOString().split('T')[0],
+        createdAt: db.serverDate()
+      }
+    })
+    console.log('[DailyContent] 健身知识已保存到云数据库')
+    return true
+  } catch (e) {
+    console.error('[DailyContent] 保存健身知识到云数据库失败:', e)
+    return false
+  }
+}
+
+/**
+ * 从健身库随机获取一条（每次调用都随机，保证刷新变化）
+ */
+function getRandomFitnessFromLibrary() {
+  // 每次都随机选择，充分利用多条知识的多样性
+  const index = Math.floor(Math.random() * FALLBACK_FITNESS.length)
+  return { ...FALLBACK_FITNESS[index] }
+}
+
+/**
+ * 生成每日健身知识
+ */
+async function generateFitness() {
+  // 随机选择健身类型
+  const field = FITNESS_FIELDS[Math.floor(Math.random() * FITNESS_FIELDS.length)]
+
+  // 随机选择提示词类型
+  const promptTypes = ['default', 'concept', 'fatLoss', 'hipUp', 'nutrition', 'technique', 'habit']
+  const promptType = promptTypes[Math.floor(Math.random() * promptTypes.length)]
+
+  let prompt
+  if (promptType === 'concept') {
+    prompt = `你是一位健身理念导师，请分享一个健身核心概念或训练原则。
+
+要求：
+1. 选择一个健身理念主题：渐进超负荷、超量恢复、RM与训练次数、肌肉增长原理、复合动作优先、训练频率与分化等
+2. 内容要点：
+   - 理念的核心原理
+   - 实际应用方法
+   - 常见误区和正确做法
+3. 语言专业易懂
+4. 长度150-200字
+
+格式：
+健身理念|理念名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'fatLoss') {
+    prompt = `你是一位减脂专家，请分享一个减脂瘦腹的知识或技巧。
+
+要求：
+1. 选择一个减脂主题：HIIT训练、腹部训练动作、空腹有氧、热量控制、顽固脂肪应对、减脂平台期突破等
+2. 内容要点：
+   - 减脂的科学原理
+   - 具体训练或饮食方法
+   - 注意事项和常见错误
+3. 语言通俗实用
+4. 长度150-200字
+
+格式：
+减脂瘦腹|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'hipUp') {
+    prompt = `你是一位臀部塑形专家，请分享一个丰臀塑形的训练知识或技巧。
+
+要求：
+1. 选择一个丰臀主题：臀部肌肉解剖、深蹲姿势、臀推动作、硬拉发力、臀中肌锻炼、上臀下臀训练等
+2. 内容要点：
+   - 训练原理和要点
+   - 正确动作示范描述
+   - 训练建议和注意事项
+3. 语言专业生动
+4. 长度150-200字
+
+格式：
+丰臀塑形|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'nutrition') {
+    prompt = `你是一位运动营养专家，请分享一个健身营养知识或饮食技巧。
+
+要求：
+1. 选择一个营养主题：蛋白质摄入指南、碳水聪明吃法、健康脂肪作用、训练前后营养、减脂饮食技巧、增肌热量盈余等
+2. 内容要点：
+   - 营养知识的专业讲解
+   - 具体摄入量和食物选择
+   - 饮食安排建议
+3. 语言通俗易懂
+4. 长度150-200字
+
+格式：
+营养饮食|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'technique') {
+    prompt = `你是一位健身动作指导专家，请分享一个训练动作的技巧或细节。
+
+要求：
+1. 选择一个动作技巧主题：卧推发力、深蹲技巧、硬拉姿势、划船动作、肩部训练、有氧正确心率、拉伸方法等
+2. 内容要点：
+   - 动作的步骤和要点
+   - 常见错误和正确做法
+   - 进阶技巧
+3. 语言条理清晰
+4. 长度150-200字
+
+格式：
+动作技巧|动作名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'habit') {
+    prompt = `你是一位健康生活顾问，请分享一个健身相关的生活习惯知识。
+
+要求：
+1. 选择一个生活习惯主题：睡眠与恢复、水分管理、压力与皮质醇、久坐危害、训练记录、增肌减脂同时进行、瓶颈期应对等
+2. 内容要点：
+   - 习惯对健身的影响
+   - 正确做法和建议
+   - 实操技巧
+3. 语言温馨实用
+4. 长度150-200字
+
+格式：
+生活习惯|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else {
+    prompt = `你是一位资深健身教练，请分享一个实用的健身技巧或健康知识。
+
+要求：
+1. 健身领域随机选择：
+   - 健身理念：渐进超负荷、超量恢复、RM训练原则
+   - 减脂瘦腹：HIIT训练、腹部训练、热量控制
+   - 丰臀塑形：臀部训练、深蹲、硬拉、臀推
+   - 营养饮食：蛋白质摄入、碳水聪明吃法、健康脂肪
+   - 动作技巧：卧推、深蹲、硬拉、划船等动作要点
+   - 生活习惯：睡眠管理、压力控制、水分补充
+2. 内容要点：
+   - 核心健身知识或技巧的专业讲解
+   - 实际应用场景或训练案例（2-3个具体例子）
+   - 实用建议或操作步骤
+3. 语言要专业易懂，适合健身爱好者学习
+4. 长度控制在150-200字
+
+格式要求：
+用|分隔各部分，结构如下：
+分类名称|知识标题|正文内容
+
+直接输出，不要任何前缀：`
+  }
+
+  const messages = [{ role: 'user', content: prompt }]
+
+  try {
+    const result = await callAI(messages, { temperature: 0.8, maxTokens: 500 })
+
+    if (result && result.length > 20) {
+      const parts = result.split('|').map(p => p.trim()).filter(p => p)
+
+      if (parts.length >= 3) {
+        const fitness = {
+          category: parts[0] || field.name,
+          categoryIcon: field.icon,
+          title: parts[1].trim(),
+          summary: parts.slice(2).join('|').trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        // 保存到云数据库
+        saveFitnessToCloud(fitness).catch(() => {})
+        return fitness
+      } else if (parts.length === 2) {
+        const fitness = {
+          category: field.name,
+          categoryIcon: field.icon,
+          title: parts[0].trim(),
+          summary: parts[1].trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        // 保存到云数据库
+        saveFitnessToCloud(fitness).catch(() => {})
+        return fitness
+      }
+    }
+  } catch (e) {
+    console.error('[DailyContent] 生成健身知识失败:', e)
+  }
+
+  // 使用备用健身库
+  const fallback = getRandomFitnessFromLibrary()
+  const result = {
+    ...fallback,
+    source: '健身知识库',
+    isAIGenerated: false,
+    date: new Date().toISOString().split('T')[0]
+  }
+  // 保存到云数据库
+  saveFitnessToCloud(result).catch(() => {})
+  return result
+}
+
+// ─── 宠物达人 ─────────────────────────────────────────────────
+
+/**
+ * 保存宠物知识到云数据库
+ */
+async function savePetToCloud(pet) {
+  try {
+    const db = wx.cloud.database()
+    await db.collection('dailyPets').add({
+      data: {
+        title: pet.title,
+        category: pet.category,
+        categoryIcon: pet.categoryIcon || '🐾',
+        summary: pet.summary || '',
+        tips: pet.tips || '',
+        source: pet.source || 'AI导师',
+        date: new Date().toISOString().split('T')[0],
+        createdAt: db.serverDate()
+      }
+    })
+    console.log('[DailyContent] 宠物知识已保存到云数据库')
+    return true
+  } catch (e) {
+    console.error('[DailyContent] 保存宠物知识到云数据库失败:', e)
+    return false
+  }
+}
+
+/**
+ * 从宠物库随机获取一条（每次调用都随机，保证刷新变化）
+ */
+function getRandomPetFromLibrary() {
+  // 每次都随机选择，充分利用多条知识的多样性
+  const index = Math.floor(Math.random() * FALLBACK_PET.length)
+  return { ...FALLBACK_PET[index] }
+}
+
+/**
+ * 生成每日宠物知识
+ */
+async function generatePet() {
+  // 随机选择宠物领域
+  const field = PET_FIELDS[Math.floor(Math.random() * PET_FIELDS.length)]
+
+  // 随机选择提示词类型
+  const promptTypes = ['default', 'concept', 'daily', 'nutrition', 'health', 'behavior', 'interaction']
+  const promptType = promptTypes[Math.floor(Math.random() * promptTypes.length)]
+
+  let prompt
+  if (promptType === 'concept') {
+    prompt = `你是一位养宠理念导师，请分享一个科学养宠的核心概念或相处原则。
+
+要求：
+1. 选择一个养宠理念主题：科学养宠三大原则、宠物与家人相处、解读肢体语言、品种与性格关系、文明养宠责任等
+2. 内容要点：
+   - 理念的核心含义
+   - 实际应用方法
+   - 常见误区和正确做法
+3. 语言温馨易懂
+4. 长度150-200字
+
+格式：
+养宠理念|理念名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'daily') {
+    prompt = `你是一位宠物护理专家，请分享一个日常护理知识或技巧。
+
+要求：
+1. 选择一个护理主题：洗澡频率、猫咪清洁、口腔护理、毛发护理、指甲修剪、耳朵清洁等
+2. 内容要点：
+   - 护理的专业要点
+   - 具体操作方法
+   - 注意事项
+3. 语言实用易懂
+4. 长度150-200字
+
+格式：
+日常护理|护理名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'nutrition') {
+    prompt = `你是一位宠物营养专家，请分享一个科学喂养的知识或技巧。
+
+要求：
+1. 选择一个喂养主题：宠物粮选择指南、猫咪肉食特性、禁忌食物、换粮方法、喂食频率和量等
+2. 内容要点：
+   - 营养知识的专业讲解
+   - 具体选择或操作方法
+   - 注意事项
+3. 语言实用易懂
+4. 长度150-200字
+
+格式：
+科学喂养|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'health') {
+    prompt = `你是一位宠物健康专家，请分享一个健康保健知识或技巧。
+
+要求：
+1. 选择一个健康主题：疫苗接种、驱虫知识、疾病预防、急救基础、如何判断宠物生病等
+2. 内容要点：
+   - 健康知识的专业讲解
+   - 具体预防或处理方法
+   - 注意事项
+3. 语言专业实用
+4. 长度150-200字
+
+格式：
+健康保健|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'behavior') {
+    prompt = `你是一位宠物行为训练师，请分享一个行为训练知识或技巧。
+
+要求：
+1. 选择一个训练主题：基础指令训练、猫咪如厕、纠正不良行为、猫咪抓挠问题、社交化训练等
+2. 内容要点：
+   - 训练原理和要点
+   - 具体训练方法
+   - 常见问题解决
+3. 语言生动实用
+4. 长度150-200字
+
+格式：
+行为训练|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'interaction') {
+    prompt = `你是一位宠物互动专家，请分享一个互动娱乐知识或技巧。
+
+要求：
+1. 选择一个互动主题：适合狗狗的游戏、猫咪捕猎游戏、出行安全指南、宠物拍照技巧、给宠物创造仪式感等
+2. 内容要点：
+   - 互动的方法和要点
+   - 具体游戏或活动介绍
+   - 注意事项
+3. 语言温馨有趣
+4. 长度150-200字
+
+格式：
+互动娱乐|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else {
+    prompt = `你是一位资深宠物专家，请分享一个实用的养宠知识或技巧。
+
+要求：
+1. 养宠领域随机选择：
+   - 养宠理念：科学养宠、宠物与家人相处、肢体语言解读、品种性格、文明养宠
+   - 日常护理：洗澡清洁、口腔护理、毛发护理、指甲修剪、耳朵清洁
+   - 科学喂养：宠物粮选择、肉食特性、食物禁忌、换粮方法、喂食频率
+   - 健康保健：疫苗接种、驱虫知识、疾病预防、急救基础、判断生病
+   - 行为训练：基础指令、如厕训练、不良行为纠正、猫咪抓挠、社交化
+   - 互动娱乐：互动游戏、捕猎游戏、出行安全、宠物拍照、仪式感
+2. 内容要点：
+   - 核心养宠知识或技巧的专业讲解
+   - 实际应用场景（2-3个具体例子）
+   - 实用建议或操作步骤
+3. 语言要温馨易懂，适合宠物主人学习
+4. 长度控制在150-200字
+
+格式要求：
+用|分隔各部分，结构如下：
+分类名称|知识标题|正文内容
+
+直接输出，不要任何前缀：`
+  }
+
+  const messages = [{ role: 'user', content: prompt }]
+
+  try {
+    const result = await callAI(messages, { temperature: 0.8, maxTokens: 500 })
+
+    if (result && result.length > 20) {
+      const parts = result.split('|').map(p => p.trim()).filter(p => p)
+
+      if (parts.length >= 3) {
+        const pet = {
+          category: parts[0] || field.name,
+          categoryIcon: field.icon,
+          title: parts[1].trim(),
+          summary: parts.slice(2).join('|').trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        // 保存到云数据库
+        savePetToCloud(pet).catch(() => {})
+        return pet
+      } else if (parts.length === 2) {
+        const pet = {
+          category: field.name,
+          categoryIcon: field.icon,
+          title: parts[0].trim(),
+          summary: parts[1].trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        // 保存到云数据库
+        savePetToCloud(pet).catch(() => {})
+        return pet
+      }
+    }
+  } catch (e) {
+    console.error('[DailyContent] 生成宠物知识失败:', e)
+  }
+
+  // 使用备用宠物库
+  const fallback = getRandomPetFromLibrary()
+  const result = {
+    ...fallback,
+    source: '宠物知识库',
+    isAIGenerated: false,
+    date: new Date().toISOString().split('T')[0]
+  }
+  // 保存到云数据库
+  savePetToCloud(result).catch(() => {})
+  return result
+}
+
+// ─── 时尚达人 ─────────────────────────────────────────────────
+
+async function saveFashionToCloud(fashion) {
+  try {
+    const db = wx.cloud.database()
+    await db.collection('dailyFashions').add({
+      data: {
+        title: fashion.title,
+        category: fashion.category,
+        categoryIcon: fashion.categoryIcon || '✨',
+        summary: fashion.summary || '',
+        tips: fashion.tips || '',
+        source: fashion.source || 'AI导师',
+        date: new Date().toISOString().split('T')[0],
+        createdAt: db.serverDate()
+      }
+    })
+    console.log('[DailyContent] 时尚知识已保存到云数据库')
+    return true
+  } catch (e) {
+    console.error('[DailyContent] 保存时尚知识到云数据库失败:', e)
+    return false
+  }
+}
+
+function getRandomFashionFromLibrary() {
+  const index = Math.floor(Math.random() * FALLBACK_FASHION.length)
+  return { ...FALLBACK_FASHION[index] }
+}
+
+async function generateFashion() {
+  const field = FASHION_FIELDS[Math.floor(Math.random() * FASHION_FIELDS.length)]
+  const promptTypes = ['default', 'concept', 'trend', 'rule', 'accessory', 'color', 'style']
+  const promptType = promptTypes[Math.floor(Math.random() * promptTypes.length)]
+
+  let prompt
+  if (promptType === 'concept') {
+    prompt = `你是一位时尚理念导师，请分享一个时尚穿搭的核心理念或原则。
+
+要求：
+1. 选择一个理念主题：极简主义、胶囊衣橱、个人风格定位、可持续时尚、投资性穿衣等
+2. 内容要点：理念的核心含义、实际应用方法、常见误区和正确做法
+3. 语言时尚有品味
+4. 长度150-200字
+
+格式：
+时尚理念|理念名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'trend') {
+    prompt = `你是一位流行趋势专家，请分享一个时尚趋势知识。
+
+要求：
+1. 选择一个趋势主题：年度流行色应用、复古风回潮、无性别时尚、老钱风、街头风格等
+2. 内容要点：趋势的核心特征、如何融入日常搭配、实用建议
+3. 语言时髦易懂
+4. 长度150-200字
+
+格式：
+流行趋势|趋势名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'rule') {
+    prompt = `你是一位穿搭法则专家，请分享一个实用的穿搭法则。
+
+要求：
+1. 选择一个法则主题：身形穿搭（梨形/苹果/沙漏）、黄金比例、四季叠穿、场合穿搭等
+2. 内容要点：法则的具体操作方法、适用场景、实际案例
+3. 语言实用易操作
+4. 长度150-200字
+
+格式：
+穿搭法则|法则名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'accessory') {
+    prompt = `你是一位配饰搭配专家，请分享一个配饰搭配技巧。
+
+要求：
+1. 选择一个配饰主题：首饰叠戴、包包选择、丝巾用法、帽子造型、眼镜框修饰等
+2. 内容要点：搭配技巧和注意事项、不同场合的选择建议
+3. 语言精致实用
+4. 长度150-200字
+
+格式：
+配饰搭配|搭配名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'color') {
+    prompt = `你是一位色彩美学专家，请分享一个色彩搭配知识。
+
+要求：
+1. 选择一个色彩主题：肤色诊断与定位、配色实战技巧、经典中性色、同色系搭配、互补色运用等
+2. 内容要点：色彩知识的专业讲解、具体搭配方案、避坑指南
+3. 语言生动易懂
+4. 长度150-200字
+
+格式：
+色彩美学|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'style') {
+    prompt = `你是一位风格塑造专家，请分享一个个人风格打造的知识。
+
+要求：
+1. 选择一个风格主题：法式chic、日系风格、职场形象管理、复古风格、街头潮酷等
+2. 内容要点：风格的核心要素、如何打造该风格、关键单品推荐
+3. 语言优雅有品位
+4. 长度150-200字
+
+格式：
+风格塑造|风格名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else {
+    prompt = `你是一位资深时尚达人，请分享一个时尚潮流知识或穿搭技巧。
+
+要求：
+1. 领域随机选择：
+   - 时尚理念：极简主义、胶囊衣橱、可持续时尚、个人风格定位
+   - 流行趋势：年度流行色、复古回潮、无性别时尚、老钱风
+   - 穿搭法则：身形穿搭、比例调整、叠穿法则、场合穿搭
+   - 配饰搭配：首饰叠戴、包包选择、丝巾妙用、帽子造型
+   - 色彩美学：肤色诊断、配色实战、中性色穿搭
+   - 风格塑造：法式chic、日系风、职场形象、复古风
+2. 内容要点：专业知识讲解 + 实际应用场景(2-3个例子) + 实用建议
+3. 语言时尚有品味
+4. 长度150-200字
+
+格式：
+分类名称|标题|正文内容
+
+直接输出，不要任何前缀：`
+  }
+
+  const messages = [{ role: 'user', content: prompt }]
+
+  try {
+    const result = await callAI(messages, { temperature: 0.8, maxTokens: 500 })
+
+    if (result && result.length > 20) {
+      const parts = result.split('|').map(p => p.trim()).filter(p => p)
+
+      if (parts.length >= 3) {
+        const fashion = {
+          category: parts[0] || field.name,
+          categoryIcon: field.icon,
+          title: parts[1].trim(),
+          summary: parts.slice(2).join('|').trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        saveFashionToCloud(fashion).catch(() => {})
+        return fashion
+      } else if (parts.length === 2) {
+        const fashion = {
+          category: field.name,
+          categoryIcon: field.icon,
+          title: parts[0].trim(),
+          summary: parts[1].trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        saveFashionToCloud(fashion).catch(() => {})
+        return fashion
+      }
+    }
+  } catch (e) {
+    console.error('[DailyContent] 生成时尚知识失败:', e)
+  }
+
+  const fallback = getRandomFashionFromLibrary()
+  const result = {
+    ...fallback,
+    source: '时尚知识库',
+    isAIGenerated: false,
+    date: new Date().toISOString().split('T')[0]
+  }
+  saveFashionToCloud(result).catch(() => {})
+  return result
+}
+
+// ─── 穿搭达人 ─────────────────────────────────────────────────
+
+async function saveOutfitToCloud(outfit) {
+  try {
+    const db = wx.cloud.database()
+    await db.collection('dailyOutfits').add({
+      data: {
+        title: outfit.title,
+        category: outfit.category,
+        categoryIcon: outfit.categoryIcon || '👕',
+        summary: outfit.summary || '',
+        tips: outfit.tips || '',
+        source: outfit.source || 'AI导师',
+        date: new Date().toISOString().split('T')[0],
+        createdAt: db.serverDate()
+      }
+    })
+    console.log('[DailyContent] 穿搭知识已保存到云数据库')
+    return true
+  } catch (e) {
+    console.error('[DailyContent] 保存穿搭知识到云数据库失败:', e)
+    return false
+  }
+}
+
+function getRandomOutfitFromLibrary() {
+  const index = Math.floor(Math.random() * FALLBACK_OUTFIT.length)
+  return { ...FALLBACK_OUTFIT[index] }
+}
+
+async function generateOutfit() {
+  const field = OUTFIT_FIELDS[Math.floor(Math.random() * OUTFIT_FIELDS.length)]
+  const promptTypes = ['default', 'basic', 'seasonal', 'body', 'item', 'scene', 'pitfall']
+  const promptType = promptTypes[Math.floor(Math.random() * promptTypes.length)]
+
+  let prompt
+  if (promptType === 'basic') {
+    prompt = `你是一位基础穿搭专家，请分享一个基础单品的穿搭知识。
+
+要求：
+1. 选择一个单品主题：白T恤、牛仔裤、衬衫、针织衫、西装外套等基础款
+2. 内容要点：选购指南、搭配公式、护理保养技巧
+3. 语言实用接地气
+4. 长度150-200字
+
+格式：
+基础穿搭|单品名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'seasonal') {
+    prompt = `你是一位季节穿搭专家，请分享一个季节性的穿搭技巧。
+
+要求：
+1. 选择季节主题：春季温差应对、夏季清凉穿搭、秋季层次搭配、冬季保暖显瘦等
+2. 内容要点：当季穿搭策略、必备单品推荐、材质选择建议
+3. 语言应季实用
+4. 长度150-200字
+
+格式：
+季节穿搭|季节主题|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'body') {
+    prompt = `你是一位身材修饰专家，请分享一个针对特定身材的穿搭技巧。
+
+要求：
+1. 选择身材主题：小个子显高、苹果型遮肚、沙漏型展示曲线、梨形身材平衡、通用修饰技巧等
+2. 内容要点：该身材的特点分析、穿搭策略、推荐单品和避雷项
+3. language鼓励性强
+4. 长度150-200字
+
+格式：
+身材修饰|身材类型|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'item') {
+    prompt = `你是一位单品解析专家，请深入解析一个经典穿搭单品。
+
+要求：
+1. 选择单品主题：小黑裙LBD、风衣、西装外套、白衬衫、针织衫等经典单品
+2. 内容要点：单品的历史背景、选购要点、多种搭配方式、投资价值
+3. 语言专业有趣
+4. 长度150-200字
+
+格式：
+单品解析|单品名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'scene') {
+    prompt = `你是一位特殊场景穿搭专家，请分享一个特定场合的穿搭攻略。
+
+要求：
+1. 选择场合主题：约会穿搭、面试穿搭、拍照穿搭、旅行穿搭、派对穿搭等
+2. 内容要点：场合着装要点、穿搭方案推荐、需要注意的细节
+3. 语言贴心实用
+4. 长度150-200字
+
+格式：
+特殊场景|场合名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'pitfall') {
+    prompt = `你是一位穿搭避坑专家，请分享一个常见的穿搭误区及纠正方法。
+
+要求：
+1. 选择避坑主题：常见穿搭误区、网购避坑、内衣选择错误、尺码问题、配饰过载等
+2. 内容要点：误区描述、为什么错、正确的做法
+3. 语言幽默实用
+4. 长度150-200字
+
+格式：
+避坑指南|误区名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else {
+    prompt = `你是一位资深穿搭达人，请分享一个实用的日常穿搭知识或技巧。
+
+要求：
+1. 穿搭领域随机选择：
+   - 基础穿搭：白T恤、牛仔裤、衬衫、针织衫等基础单品
+   - 季节穿搭：春夏秋冬各季穿搭策略
+   - 身材修饰：小个子、苹果型、沙漏型、梨形等针对性穿搭
+   - 单品解析：小黑裙、风衣、西装、大衣等经典单品深度解读
+   - 特殊场景：约会、面试、拍照、旅行等场合穿搭
+   - 避坑指南：常见穿搭错误、网购技巧、尺码选择
+2. 内容要点：专业讲解 + 具体案例(2-3个) + 实操建议
+3. 语言亲切实用
+4. 长度150-200字
+
+格式：
+分类名称|标题|正文内容
+
+直接输出，不要任何前缀：`
+  }
+
+  const messages = [{ role: 'user', content: prompt }]
+
+  try {
+    const result = await callAI(messages, { temperature: 0.8, maxTokens: 500 })
+
+    if (result && result.length > 20) {
+      const parts = result.split('|').map(p => p.trim()).filter(p => p)
+
+      if (parts.length >= 3) {
+        const outfit = {
+          category: parts[0] || field.name,
+          categoryIcon: field.icon,
+          title: parts[1].trim(),
+          summary: parts.slice(2).join('|').trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        saveOutfitToCloud(outfit).catch(() => {})
+        return outfit
+      } else if (parts.length === 2) {
+        const outfit = {
+          category: field.name,
+          categoryIcon: field.icon,
+          title: parts[0].trim(),
+          summary: parts[1].trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        saveOutfitToCloud(outfit).catch(() => {})
+        return outfit
+      }
+    }
+  } catch (e) {
+    console.error('[DailyContent] 生成穿搭知识失败:', e)
+  }
+
+  const fallback = getRandomOutfitFromLibrary()
+  const result = {
+    ...fallback,
+    source: '穿搭知识库',
+    isAIGenerated: false,
+    date: new Date().toISOString().split('T')[0]
+  }
+  saveOutfitToCloud(result).catch(() => {})
+  return result
+}
+
+// ─── 装修达人 ─────────────────────────────────────────────────
+
+async function saveDecorationToCloud(decoration) {
+  try {
+    const db = wx.cloud.database()
+    await db.collection('dailyDecorations').add({
+      data: {
+        title: decoration.title,
+        category: decoration.category,
+        categoryIcon: decoration.categoryIcon || '🏠',
+        summary: decoration.summary || '',
+        tips: decoration.tips || '',
+        source: decoration.source || 'AI导师',
+        date: new Date().toISOString().split('T')[0],
+        createdAt: db.serverDate()
+      }
+    })
+    console.log('[DailyContent] 装修知识已保存到云数据库')
+    return true
+  } catch (e) {
+    console.error('[DailyContent] 保存装修知识到云数据库失败:', e)
+    return false
+  }
+}
+
+function getRandomDecorationFromLibrary() {
+  const index = Math.floor(Math.random() * FALLBACK_DECORATION.length)
+  return { ...FALLBACK_DECORATION[index] }
+}
+
+async function generateDecoration() {
+  const field = DECORATION_FIELDS[Math.floor(Math.random() * DECORATION_FIELDS.length)]
+  const promptTypes = ['default', 'concept', 'space', 'style', 'material', 'lighting', 'soft']
+  const promptType = promptTypes[Math.floor(Math.random() * promptTypes.length)]
+
+  let prompt
+  if (promptType === 'concept') {
+    prompt = `你是一位装修理念专家，请分享一个装修核心理念或流程知识。
+
+要求：
+1. 选择一个理念主题：装修顺序、轻装修重装饰、人性化设计、预算控制等
+2. 内容要点：理念的详细解释、执行步骤、注意事项
+3. 语言专业通俗
+4. 长度150-200字
+
+格式：
+装修理念|理念名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'space') {
+    prompt = `你是一位空间规划专家，请分享一个空间规划的知识或技巧。
+
+要求：
+1. 选择空间主题：小户型扩容、客厅规划、厨房动线、卧室布局、收纳规划等
+2. 内容要点：规划原理、尺寸参考、布局建议
+3. 语言实用可操作
+4. 长度150-200字
+
+格式：
+空间规划|空间名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'style') {
+    prompt = `你是一位家居风格专家，请分享一种家居风格的特点和打造方法。
+
+要求：
+1. 选择风格主题：北欧风、日式原木风、现代简约风、新中式、工业风等
+2. 内容要点：风格的核特征、关键元素、配色方案、如何打造
+3.语言优美有画面感
+4. 长度150-200字
+
+格式：
+风格流派|风格名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'material') {
+    prompt = `你是一位装修材料专家，请分享一种材料的选择知识。
+
+要求：
+1. 选择材料主题：地板选择(木地板vs瓷砖)、墙面材料(乳胶漆/壁纸)、橱柜定制避坑等
+2. 内容要点：各种材料的优缺点对比、价格区间、选购要点
+3. 语言客观专业
+4. 长度150-200字
+
+格式：
+材料选择|材料名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'lighting') {
+    prompt = `你是一位照明设计专家，请分享一个家庭照明的知识。
+
+要求：
+1. 选择照明主题：照明设计系统(分层照明)、无主灯设计、色温选择、各空间照明方案等
+2. 内容要点：照明原理、实施方法、参数建议
+3. 语言科学易懂
+4. 长度150-200字
+
+格式：
+照明设计|照明主题|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'soft') {
+    prompt = `你是一位软装配色专家，请分享一个软装搭配的知识。
+
+要求：
+1. 选择软装主题：软装入门、家居配色方案、窗帘地毯选择、绿植搭配、收纳整理等
+2. 内容要点：搭配方法和步骤、具体方案推荐、购物顺序
+3. 语言温馨实用
+4. 长度150-200字
+
+格式：
+软装配色|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else {
+    prompt = `你是一位资深装修达人，请分享一个实用的家居装修知识或技巧。
+
+要求：
+1. 装修领域随机选择：
+   - 装修理念：装修顺序、轻硬装重软装、人性化设计、预算控制
+   - 空间规划：小户型扩容、客厅/厨房/卧室规划、收纳系统
+   - 风格流派：北欧风、日式原木、现代简约、新中式
+   - 材料选择：地板、墙面材料、橱柜定制、防水材料
+   - 照明设计：分层照明、无主灯设计、色温与显指
+   - 软装配色：配色方案、窗帘地毯、绿植、收纳整理
+2. 内容要点：专业讲解 + 具体数据参考(尺寸/价格) + 避坑提醒
+3. 语言专业实用
+4. 长度150-200字
+
+格式：
+分类名称|标题|正文内容
+
+直接输出，不要任何前缀：`
+  }
+
+  const messages = [{ role: 'user', content: prompt }]
+
+  try {
+    const result = await callAI(messages, { temperature: 0.8, maxTokens: 500 })
+
+    if (result && result.length > 20) {
+      const parts = result.split('|').map(p => p.trim()).filter(p => p)
+
+      if (parts.length >= 3) {
+        const decoration = {
+          category: parts[0] || field.name,
+          categoryIcon: field.icon,
+          title: parts[1].trim(),
+          summary: parts.slice(2).join('|').trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        saveDecorationToCloud(decoration).catch(() => {})
+        return decoration
+      } else if (parts.length === 2) {
+        const decoration = {
+          category: field.name,
+          categoryIcon: field.icon,
+          title: parts[0].trim(),
+          summary: parts[1].trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        saveDecorationToCloud(decoration).catch(() => {})
+        return decoration
+      }
+    }
+  } catch (e) {
+    console.error('[DailyContent] 生成装修知识失败:', e)
+  }
+
+  const fallback = getRandomDecorationFromLibrary()
+  const result = {
+    ...fallback,
+    source: '装修知识库',
+    isAIGenerated: false,
+    date: new Date().toISOString().split('T')[0]
+  }
+  saveDecorationToCloud(result).catch(() => {})
+  return result
+}
+
+// ─── 玻纤达人 ─────────────────────────────────────────────────
+
+async function saveFiberToCloud(fiber) {
+  try {
+    const db = wx.cloud.database()
+    await db.collection('dailyGlassFibers').add({
+      data: {
+        title: fiber.title,
+        category: fiber.category,
+        categoryIcon: fiber.categoryIcon || '🧵',
+        summary: fiber.summary || '',
+        tips: fiber.tips || '',
+        source: fiber.source || 'AI导师',
+        date: new Date().toISOString().split('T')[0],
+        createdAt: db.serverDate()
+      }
+    })
+    console.log('[DailyContent] 玻纤知识已保存到云数据库')
+    return true
+  } catch (e) {
+    console.error('[DailyContent] 保存玻纤知识到云数据库失败:', e)
+    return false
+  }
+}
+
+function getRandomFiberFromLibrary() {
+  const index = Math.floor(Math.random() * FALLBACK_FIBER.length)
+  return { ...FALLBACK_FIBER[index] }
+}
+
+async function generateFiber() {
+  const field = FIBER_FIELDS[Math.floor(Math.random() * FIBER_FIELDS.length)]
+  const promptTypes = ['default', 'type', 'process', 'application', 'equipment', 'quality', 'safety']
+  const promptType = promptTypes[Math.floor(Math.random() * promptTypes.length)]
+
+  let prompt
+  if (promptType === 'type') {
+    prompt = `你是一位玻纤材料专家，请分享一个玻璃纤维类型或品种的知识。
+
+要求：
+1. 选择一个主题：E玻纤vsC玻纤区别、短切毡vs连续毡、玻纤布种类与选用、特种玻纤（ECR/AR）、玻纤表面处理等
+2. 内容要点：类型的核心特征、优缺点对比、实际选用建议
+3. 语言专业易懂
+4. 长度150-200字
+
+格式：
+纤维类型|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'process') {
+    prompt = `你是一位玻纤工艺专家，请分享一个工艺技术知识。
+
+要求：
+1. 选择一个工艺主题：手糊工艺关键点、真空导入工艺（VIP）、缠绕工艺、喷射成型、拉挤工艺等
+2. 内容要点：工艺流程和操作要点、参数控制、常见问题解决方案
+3. 语言专业实用
+4. 长度150-200字
+
+格式：
+工艺技术|工艺名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'application') {
+    prompt = `你是一位玻纤应用专家，请分享一个玻纤应用领域的知识。
+
+要求：
+1. 选择一个应用主题：防腐工程、建筑景观、汽车轻量化、船舶、航空、电子电器等
+2. 内容要点：应用的优势特点、典型产品、设计选材要点
+3. 语言专业有深度
+4. 长度150-200字
+
+格式：
+应用领域|应用名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'equipment') {
+    prompt = `你是一位玻纤设备专家，请分享一个设备维护或操作知识。
+
+要求：
+1. 选择一个设备主题：喷射设备维护、固化炉温控、模具制作与保养、设备故障排除等
+2. 内容要点：设备操作规范、日常维护要点、故障判断和解决
+3. 语言实用接地气
+4. 长度150-200字
+
+格式：
+设备维护|设备名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'quality') {
+    prompt = `你是一位玻纤质量专家，请分享一个质量控制知识。
+
+要求：
+1. 选择一个质量主题：常见缺陷分析（气泡/分层/富树脂）、进厂原材料检验、力学性能测试、制品检测方法等
+2. 内容要点：质量问题原因分析、预防措施、检测方法
+3. 语言专业严谨
+4. 长度150-200字
+
+格式：
+质量管理|质量主题|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'safety') {
+    prompt = `你是一位安全生产专家，请分享一个玻纤车间的安全规范知识。
+
+要求：
+1. 选择一个安全主题：职业健康防护（粉尘/苯乙烯）、易燃易爆品管理、MEKP固化剂安全操作、劳动防护用品选用等
+2. 内容要点：安全风险识别、规范操作规程、应急处理措施
+3. 语言严肃但易懂
+4. 长度150-200字
+
+格式：
+安全规范|安全主题|正文内容
+
+直接输出，不要任何前缀：`
+  } else {
+    prompt = `你是一位资深玻纤达人，请分享一个实用的玻纤复合材料知识或技巧。
+
+要求：
+1. 领域随机选择：
+   - 纤维类型：E玻/C玻、短切毡/连续毡、玻纤布选型、特种玻纤
+   - 工艺技术：手糊工艺、真空导入（VIP）、缠绕工艺、喷射成型
+   - 应用领域：防腐工程、建筑景观、汽车轻量化、船舶风电
+   - 设备维护：喷射设备、固化炉、模具制作、故障排除
+   - 质量管理：缺陷分析、原材料检验、性能测试
+   - 安全规范：职业防护、溶剂安全、MEKP安全操作
+2. 内容要点：专业知识讲解 + 实用操作技巧 + 常见问题解决
+3. 语言专业但易懂
+4. 长度150-200字
+
+格式：
+分类名称|标题|正文内容
+
+直接输出，不要任何前缀：`
+  }
+
+  const messages = [{ role: 'user', content: prompt }]
+
+  try {
+    const result = await callAI(messages, { temperature: 0.8, maxTokens: 500 })
+    if (result && result.length > 20) {
+      const parts = result.split('|').map(p => p.trim()).filter(p => p)
+      if (parts.length >= 3) {
+        const fiber = {
+          category: parts[0] || field.name,
+          categoryIcon: field.icon,
+          title: parts[1].trim(),
+          summary: parts.slice(2).join('|').trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        saveFiberToCloud(fiber).catch(() => {})
+        return fiber
+      } else if (parts.length === 2) {
+        const fiber = {
+          category: field.name,
+          categoryIcon: field.icon,
+          title: parts[0].trim(),
+          summary: parts[1].trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        saveFiberToCloud(fiber).catch(() => {})
+        return fiber
+      }
+    }
+  } catch (e) {
+    console.error('[DailyContent] 生成玻纤知识失败:', e)
+  }
+
+  const fallback = getRandomFiberFromLibrary()
+  const result = {
+    ...fallback,
+    source: '玻纤知识库',
+    isAIGenerated: false,
+    date: new Date().toISOString().split('T')[0]
+  }
+  saveFiberToCloud(result).catch(() => {})
+  return result
+}
+
+// ─── 树脂达人 ─────────────────────────────────────────────────
+
+async function saveResinToCloud(resin) {
+  try {
+    const db = wx.cloud.database()
+    await db.collection('dailyResins').add({
+      data: {
+        title: resin.title,
+        category: resin.category,
+        categoryIcon: resin.categoryIcon || '🧪',
+        summary: resin.summary || '',
+        tips: resin.tips || '',
+        source: resin.source || 'AI导师',
+        date: new Date().toISOString().split('T')[0],
+        createdAt: db.serverDate()
+      }
+    })
+    console.log('[DailyContent] 树脂知识已保存到云数据库')
+    return true
+  } catch (e) {
+    console.error('[DailyContent] 保存树脂知识到云数据库失败:', e)
+    return false
+  }
+}
+
+function getRandomResinFromLibrary() {
+  const index = Math.floor(Math.random() * FALLBACK_RESIN.length)
+  return { ...FALLBACK_RESIN[index] }
+}
+
+async function generateResin() {
+  const field = RESIN_FIELDS[Math.floor(Math.random() * RESIN_FIELDS.length)]
+  const promptTypes = ['default', 'type', 'handlayup', 'vacuum', 'mold', 'quality', 'safety']
+  const promptType = promptTypes[Math.floor(Math.random() * promptTypes.length)]
+
+  let prompt
+  if (promptType === 'type') {
+    prompt = `你是一位树脂材料专家，请分享一个树脂类型的知识。
+
+要求：
+1. 选择一个主题：不饱和聚酯树脂分类（邻苯/间苯/双酚A）、乙烯基酯vs环氧树脂对比、触变树脂应用、低粘度树脂选型等
+2. 内容要点：类型性能对比、应用场景、选型建议
+3. 语言专业易懂
+4. 长度150-200字
+
+格式：
+树脂类型|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'handlayup') {
+    prompt = `你是一位树脂工艺专家，请分享一个手糊工艺中树脂使用的知识。
+
+要求：
+1. 选择一个主题：促进剂固化剂配比、胶衣施工技巧、冬季夏季温度调节、树脂浸透操作规范等
+2. 内容要点：操作方法、参数控制、问题预防
+3. 语言实用易懂
+4. 长度150-200字
+
+格式：
+手糊工艺|工艺名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'vacuum') {
+    prompt = `你是一位真空工艺专家，请分享一个真空导入或RTM工艺的树脂知识。
+
+要求：
+1. 选择一个主题：真空导入树脂选择、RTM工艺参数控制、真空度与浸透、流道设计等
+2. 内容要点：工艺原理、参数设定、常见问题
+3. 语言专业有深度
+4. 长度150-200字
+
+格式：
+真空工艺|工艺名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'mold') {
+    prompt = `你是一位模具专家，请分享一个FRP模具制作的知识。
+
+要求：
+1. 选择一个主题：FRP模具制作流程、模具表面处理、快速模具vs量产模具、模具维护保养等
+2. 内容要点：制作步骤、注意事项、维护方法
+3. 语言实用
+4. 长度150-200字
+
+格式：
+模具制作|模具主题|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'quality') {
+    prompt = `你是一位质量专家，请分享一个树脂或FRP制品质量控制的知识。
+
+要求：
+1. 选择一个主题：固化度检测方法、力学性能测试标准、巴氏硬度与固化度关系、质量问题分析等
+2. 内容要点：检测方法、质量标准、问题原因分析
+3. 语言专业严谨
+4. 长度150-200字
+
+格式：
+质量控制|质量主题|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'safety') {
+    prompt = `你是一位安全专家，请分享一个树脂使用中的安全防护知识。
+
+要求：
+1. 选择一个主题：苯乙烯危害与防护、MEKP固化剂危险性、皮肤接触应急处理、车间通风要求等
+2. 内容要点：危险因素、预防措施、应急处理
+3. language严肃易懂
+4. 长度150-200字
+
+格式：
+安全防护|安全主题|正文内容
+
+直接输出，不要任何前缀：`
+  } else {
+    prompt = `你是一位资深树脂达人，请分享一个实用的不饱和聚酯树脂或FRP工艺知识。
+
+要求：
+1. 领域随机选择：
+   - 树脂类型：UPR分类、VE/EP对比、触变性/粘度选择
+   - 手糊工艺：固化剂配比、胶衣施工、温控技巧
+   - 真空工艺：VIP、RTM工艺参数
+   - 模具制作：FRP模具、模具维护
+   - 质量控制：固化度检测、力学测试
+   - 安全防护：苯乙烯、MEKP安全操作
+2. 内容要点：专业知识 + 实用操作 + 问题解决
+3. 语言专业易懂
+4. 长度150-200字
+
+格式：
+分类名称|标题|正文内容
+
+直接输出，不要任何前缀：`
+  }
+
+  const messages = [{ role: 'user', content: prompt }]
+
+  try {
+    const result = await callAI(messages, { temperature: 0.8, maxTokens: 500 })
+    if (result && result.length > 20) {
+      const parts = result.split('|').map(p => p.trim()).filter(p => p)
+      if (parts.length >= 3) {
+        const resin = {
+          category: parts[0] || field.name,
+          categoryIcon: field.icon,
+          title: parts[1].trim(),
+          summary: parts.slice(2).join('|').trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        saveResinToCloud(resin).catch(() => {})
+        return resin
+      } else if (parts.length === 2) {
+        const resin = {
+          category: field.name,
+          categoryIcon: field.icon,
+          title: parts[0].trim(),
+          summary: parts[1].trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        saveResinToCloud(resin).catch(() => {})
+        return resin
+      }
+    }
+  } catch (e) {
+    console.error('[DailyContent] 生成树脂知识失败:', e)
+  }
+
+  const fallback = getRandomResinFromLibrary()
+  const result = {
+    ...fallback,
+    source: '树脂知识库',
+    isAIGenerated: false,
+    date: new Date().toISOString().split('T')[0]
+  }
+  saveResinToCloud(result).catch(() => {})
+  return result
+}
+
+// ─── 财税助手 ─────────────────────────────────────────────────
+
+async function saveTaxToCloud(tax) {
+  try {
+    const db = wx.cloud.database()
+    await db.collection('dailyTaxs').add({
+      data: {
+        title: tax.title,
+        category: tax.category,
+        categoryIcon: tax.categoryIcon || '📋',
+        summary: tax.summary || '',
+        tips: tax.tips || '',
+        source: tax.source || 'AI导师',
+        date: new Date().toISOString().split('T')[0],
+        createdAt: db.serverDate()
+      }
+    })
+    console.log('[DailyContent] 财税知识已保存到云数据库')
+    return true
+  } catch (e) {
+    console.error('[DailyContent] 保存财税知识到云数据库失败:', e)
+    return false
+  }
+}
+
+function getRandomTaxFromLibrary() {
+  const index = Math.floor(Math.random() * FALLBACK_TAX.length)
+  return { ...FALLBACK_TAX[index] }
+}
+
+async function generateTax() {
+  const field = TAX_FIELDS[Math.floor(Math.random() * TAX_FIELDS.length)]
+  const promptTypes = ['default', 'basic', 'planning', 'invoice', 'social', 'report', 'question']
+  const promptType = promptTypes[Math.floor(Math.random() * promptTypes.length)]
+
+  let prompt
+  if (promptType === 'basic') {
+    prompt = `你是一位税务专家，请分享一个增值税或所得税的基础知识。
+
+要求：
+1. 选择一个主题：小规模vs一般纳税人区别、增值税税率体系（13%/9%/6%）、企业所得税基础、小微优惠等
+2. 内容要点：基本概念、计算方法、适用范围
+3. 语言通俗易懂
+4. 长度150-200字
+
+格式：
+税务基础|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'planning') {
+    prompt = `你是一位税务筹划专家，请分享一个合法节税的知识。
+
+要求：
+1. 选择一个主题：税收洼地政策运用、高频业务发票节税策略、老板必知的税费优惠政策、研发费用加计扣除等
+2. 内容要点：筹划方法、合规边界、实操建议
+3. 语言实用
+4. 长度150-200字
+
+格式：
+税务筹划|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'invoice') {
+    prompt = `你是一位发票管理专家，请分享一个发票管理的知识。
+
+要求：
+1. 选择一个主题：专票vs普票差异、发票管理红线、发票合规审核要点、"三流一致"要求等
+2. 内容要点：管理规定、操作规范、风险提示
+3. 语言严谨实用
+4. 长度150-200字
+
+格式：
+发票管理|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'social') {
+    prompt = `你是一位社保公积金专家，请分享一个社保公积金的知识。
+
+要求：
+1. 选择一个主题：2024年社保基数与公积金缴存、灵活用工与社保合规、试用期社保规定、社保入税影响等
+2. 内容要点：缴纳规则、操作规范、合规建议
+3. 语言通俗
+4. 长度150-200字
+
+格式：
+社保公积金|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'report') {
+    prompt = `你是一位财务专家，请分享一个财务报表分析的知识。
+
+要求：
+1. 选择一个主题：资产负债表核心指标与预警、利润表结构与经营质量判断、流动比率/资产负债率解读等
+2. 内容要点：指标含义、分析方法、预警信号
+3. 语言专业易懂
+4. 长度150-200字
+
+格式：
+财务报表|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'question') {
+    prompt = `你是一位财税顾问，请分享一个企业常见的税务风险或财务处理问题。
+
+要求：
+1. 选择一个主题：十大税务风险点、会计账务处理常见错误、汇算清缴要点、金税四期预警等
+2. 内容要点：风险识别、预防措施、正确做法
+3. 语言实用
+4. 长度150-200字
+
+格式：
+常见问题|问题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else {
+    prompt = `你是一位资深财税顾问，请分享一个实用的企业财税管理知识。
+
+要求：
+1. 领域随机选择：
+   - 税务基础：小规模/一般纳税人、增值税税率、企业所得税
+   - 税务筹划：优惠政策、节税策略、合规边界
+   - 发票管理：专票普票、红线合规、审核要点
+   - 社保公积金：基数缴存、灵活就业、合规要求
+   - 财务报表：资产负债表、利润表、指标分析
+   - 常见问题：税务风险、账务处理、金税系统
+2. 内容要点：专业讲解 + 实际案例 + 操作建议
+3. 语言通俗易懂
+4. 长度150-200字
+
+格式：
+分类名称|标题|正文内容
+
+直接输出，不要任何前缀：`
+  }
+
+  const messages = [{ role: 'user', content: prompt }]
+
+  try {
+    const result = await callAI(messages, { temperature: 0.8, maxTokens: 500 })
+    if (result && result.length > 20) {
+      const parts = result.split('|').map(p => p.trim()).filter(p => p)
+      if (parts.length >= 3) {
+        const tax = {
+          category: parts[0] || field.name,
+          categoryIcon: field.icon,
+          title: parts[1].trim(),
+          summary: parts.slice(2).join('|').trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        saveTaxToCloud(tax).catch(() => {})
+        return tax
+      } else if (parts.length === 2) {
+        const tax = {
+          category: field.name,
+          categoryIcon: field.icon,
+          title: parts[0].trim(),
+          summary: parts[1].trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        saveTaxToCloud(tax).catch(() => {})
+        return tax
+      }
+    }
+  } catch (e) {
+    console.error('[DailyContent] 生成财税知识失败:', e)
+  }
+
+  const fallback = getRandomTaxFromLibrary()
+  const result = {
+    ...fallback,
+    source: '财税知识库',
+    isAIGenerated: false,
+    date: new Date().toISOString().split('T')[0]
+  }
+  saveTaxToCloud(result).catch(() => {})
+  return result
+}
+
+// ─── 法律顾问 ─────────────────────────────────────────────────
+
+async function saveLawToCloud(law) {
+  try {
+    const db = wx.cloud.database()
+    await db.collection('dailyLaws').add({
+      data: {
+        title: law.title,
+        category: law.category,
+        categoryIcon: law.categoryIcon || '⚖️',
+        summary: law.summary || '',
+        tips: law.tips || '',
+        source: law.source || 'AI导师',
+        date: new Date().toISOString().split('T')[0],
+        createdAt: db.serverDate()
+      }
+    })
+    console.log('[DailyContent] 法律知识已保存到云数据库')
+    return true
+  } catch (e) {
+    console.error('[DailyContent] 保存法律知识到云数据库失败:', e)
+    return false
+  }
+}
+
+function getRandomLawFromLibrary() {
+  const index = Math.floor(Math.random() * FALLBACK_LAW.length)
+  return { ...FALLBACK_LAW[index] }
+}
+
+async function generateLaw() {
+  const field = LAW_FIELDS[Math.floor(Math.random() * LAW_FIELDS.length)]
+  const promptTypes = ['default', 'contract', 'labor', 'ip', 'company', 'civil', 'risk']
+  const promptType = promptTypes[Math.floor(Math.random() * promptTypes.length)]
+
+  let prompt
+  if (promptType === 'contract') {
+    prompt = `你是一位企业法务专家，请分享一个合同签订或审查的知识。
+
+要求：
+1. 选择一个主题：合同签订致命陷阱、买卖合同核心条款、口头vs书面合同效力、合同管辖约定等
+2. 内容要点：法律风险点、正确做法、实用建议
+3. 语言专业易懂
+4. 长度150-200字
+
+格式：
+合同审查|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'labor') {
+    prompt = `你是一位劳动法律师，请分享一个劳动关系管理的知识。
+
+要求：
+1. 选择一个主题：员工入职到离职合规要点、经济补偿金计算、工伤认定标准、试用期规定等
+2. 内容要点：法律规定、操作规范、风险提示
+3. 语言实用
+4. 长度150-200字
+
+格式：
+劳动法务|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'ip') {
+    prompt = `你是一位知识产权律师，请分享一个知识产权保护的知识。
+
+要求：
+1. 选择一个主题：企业商标保护策略、软件著作权vs商业秘密、专利申请规划、专利vs商业秘密选择等
+2. 内容要点：保护方法、申请流程、策略建议
+3. 语言专业
+4. 长度150-200字
+
+格式：
+知识产权|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'company') {
+    prompt = `你是一位公司法务专家，请分享一个公司治理的法律知识。
+
+要求：
+1. 选择一个主题：股权转让与优先购买权、公司担保的法律风险、对赌协议效力、股东权利义务等
+2. 内容要点：法律规定、风险分析、合规建议
+3. 语言专业严谨
+4. 长度150-200字
+
+格式：
+公司法务|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'civil') {
+    prompt = `你是一位民事法律专家，请分享一个民事纠纷处理的知识。
+
+要求：
+1. 选择一个主题：民间借贷法律要点、诉讼时效的正确理解、证据保全、诉讼管辖等
+2. 内容要点：法律规定、实操技巧、风险提示
+3. 语言实用易懂
+4. 长度150-200字
+
+格式：
+民事纠纷|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else if (promptType === 'risk') {
+    prompt = `你是一位企业合规专家，请分享一个企业法律风险防范的知识。
+
+要求：
+1. 选择一个主题：企业家刑事法律红线、虚开发票风险、职务侵占防范、企业合规体系建立等
+2. 内容要点：法律红线、风险识别、预防措施
+3. 语言严肃有警示性
+4. 长度150-200字
+
+格式：
+风险防范|主题名称|正文内容
+
+直接输出，不要任何前缀：`
+  } else {
+    prompt = `你是一位资深法律顾问，请分享一个实用的企业经营或个人权益法律知识。
+
+要求：
+1. 领域随机选择：
+   - 合同审查：签订陷阱、条款要点、口头效力
+   - 劳动法务：入职离职、补偿金计算、工伤认定
+   - 知识产权：商标保护、著作权、商业秘密、专利
+   - 公司法务：股权转让、担保、对赌协议
+   - 民事纠纷：民间借贷、诉讼时效、证据保全
+   - 风险防范：刑事红线、合规体系、职务侵占
+2. 内容要点：法律规定 + 真实案例 + 实操建议
+3. 语言专业但易懂
+4. 长度150-200字
+
+格式：
+分类名称|标题|正文内容
+
+直接输出，不要任何前缀：`
+  }
+
+  const messages = [{ role: 'user', content: prompt }]
+
+  try {
+    const result = await callAI(messages, { temperature: 0.8, maxTokens: 500 })
+    if (result && result.length > 20) {
+      const parts = result.split('|').map(p => p.trim()).filter(p => p)
+      if (parts.length >= 3) {
+        const law = {
+          category: parts[0] || field.name,
+          categoryIcon: field.icon,
+          title: parts[1].trim(),
+          summary: parts.slice(2).join('|').trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        saveLawToCloud(law).catch(() => {})
+        return law
+      } else if (parts.length === 2) {
+        const law = {
+          category: field.name,
+          categoryIcon: field.icon,
+          title: parts[0].trim(),
+          summary: parts[1].trim(),
+          source: 'AI导师',
+          isAIGenerated: true,
+          date: new Date().toISOString().split('T')[0]
+        }
+        saveLawToCloud(law).catch(() => {})
+        return law
+      }
+    }
+  } catch (e) {
+    console.error('[DailyContent] 生成法律知识失败:', e)
+  }
+
+  const fallback = getRandomLawFromLibrary()
+  const result = {
+    ...fallback,
+    source: '法律知识库',
+    isAIGenerated: false,
+    date: new Date().toISOString().split('T')[0]
+  }
+  saveLawToCloud(result).catch(() => {})
+  return result
+}
+
 // ─── 导出 ─────────────────────────────────────────────────
 
 module.exports = {
@@ -2839,6 +5475,19 @@ module.exports = {
     generateMath,
     generateEnglish,
     generateProgramming,
+    generatePhotography,
+    generateBeauty,
+    generateInvestment,
+    generateFishing,
+    generateFitness,
+    generatePet,
+    generateFashion,
+    generateOutfit,
+    generateDecoration,
+    generateFiber,
+    generateResin,
+    generateTax,
+    generateLaw,
   },
   // 重新导出数据，方便外部访问
   PSYCHOLOGY_FIELDS,
@@ -2874,4 +5523,14 @@ module.exports = {
   FALLBACK_ENGLISH,
   PROGRAMMING_CATEGORIES,
   FALLBACK_PROGRAMMING,
+  PHOTOGRAPHY_FIELDS,
+  FALLBACK_PHOTOGRAPHY,
+  BEAUTY_FIELDS,
+  FALLBACK_BEAUTY,
+  INVESTMENT_FIELDS,
+  FALLBACK_INVESTMENT,
+  FISHING_FIELDS,
+  FALLBACK_FISHING,
+  FITNESS_FIELDS,
+  FALLBACK_FITNESS,
 }

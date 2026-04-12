@@ -30,6 +30,8 @@ Page({
     // UI状态
     showNicknameModal: false,
     nicknameInput: '',
+    showBackTop: false, // 是否显示回到顶部按钮
+    scrollTop: 0, // 滚动距离
   },
 
   onLoad() {
@@ -45,6 +47,23 @@ Page({
   onPullDownRefresh() {
     this.loadData()
     wx.stopPullDownRefresh()
+  },
+
+  // 页面滚动事件
+  onPageScroll(e) {
+    const showBackTop = e.scrollTop > 500
+    if (showBackTop !== this.data.showBackTop) {
+      this.setData({ showBackTop })
+    }
+  },
+
+  // 回到顶部
+  scrollToTop() {
+    wx.pageScrollTo({
+      scrollTop: 0,
+      duration: 300
+    })
+    this.setData({ showBackTop: false })
   },
 
   // 检查昵称

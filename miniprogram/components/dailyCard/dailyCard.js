@@ -192,10 +192,49 @@ Component({
           case MODULE_TYPES.ENGLISH:
             content = await this._getDailyEnglish(refresh)
             break
-          case MODULE_TYPES.PROGRAMMING:
-            content = await this._getDailyProgramming(refresh)
-            break
-          default:
+        case MODULE_TYPES.PROGRAMMING:
+          content = await this._getDailyProgramming(refresh)
+          break
+        case MODULE_TYPES.PHOTOGRAPHY:
+          content = await this._getDailyPhotography(refresh)
+          break
+        case MODULE_TYPES.BEAUTY:
+          content = await this._getDailyBeauty(refresh)
+          break
+        case MODULE_TYPES.INVESTMENT:
+          content = await this._getDailyInvestment(refresh)
+          break
+        case MODULE_TYPES.FISHING:
+          content = await this._getDailyFishing(refresh)
+          break
+        case MODULE_TYPES.FITNESS:
+          content = await this._getDailyFitness(refresh)
+          break
+        case MODULE_TYPES.PET:
+          content = await this._getDailyPet(refresh)
+          break
+        case MODULE_TYPES.FASHION:
+          content = await this._getDailyFashion(refresh)
+          break
+        case MODULE_TYPES.OUTFIT:
+          content = await this._getDailyOutfit(refresh)
+          break
+        case MODULE_TYPES.DECORATION:
+          content = await this._getDailyDecoration(refresh)
+          break
+        case MODULE_TYPES.GLASS_FIBER:
+          content = await this._getDailyGlassFiber(refresh)
+          break
+        case MODULE_TYPES.RESIN:
+          content = await this._getDailyResin(refresh)
+          break
+        case MODULE_TYPES.TAX:
+          content = await this._getDailyTax(refresh)
+          break
+        case MODULE_TYPES.LAW:
+          content = await this._getDailyLaw(refresh)
+          break
+        default:
             throw new Error('未知的模块类型')
         }
 
@@ -458,6 +497,188 @@ Component({
       return content
     },
 
+    // 获取摄影达人
+    async _getDailyPhotography(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyPhotography')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+
+      const content = await DailyContent.generatePhotography()
+      return content
+    },
+
+    // 获取美妆达人
+    async _getDailyBeauty(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyBeauty')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+
+      const content = await DailyContent.generateBeauty()
+      return content
+    },
+
+    // 获取投资理财达人
+    async _getDailyInvestment(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyInvestment')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+
+      const content = await DailyContent.generateInvestment()
+      return content
+    },
+
+    // 获取钓鱼达人
+    async _getDailyFishing(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyFishing')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+
+      const content = await DailyContent.generateFishing()
+      return content
+    },
+
+    // 获取健身达人
+    async _getDailyFitness(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyFitness')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+
+      const content = await DailyContent.generateFitness()
+      return content
+    },
+
+    // 获取宠物达人
+    async _getDailyPet(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyPet')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+
+      const content = await DailyContent.generatePet()
+      return content
+    },
+
+    // 获取时尚达人
+    async _getDailyFashion(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyFashion')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+
+      const content = await DailyContent.generateFashion()
+      return content
+    },
+
+    // 获取穿搭达人
+    async _getDailyOutfit(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyOutfit')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+
+      const content = await DailyContent.generateOutfit()
+      return content
+    },
+
+    // 获取装修达人
+    async _getDailyDecoration(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyDecoration')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+
+      const content = await DailyContent.generateDecoration()
+      return content
+    },
+
+    // 获取玻纤达人
+    async _getDailyGlassFiber(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyGlassFiber')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+
+      const content = await DailyContent.generateFiber()
+      return content
+    },
+
+    // 获取树脂达人
+    async _getDailyResin(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyResin')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+
+      const content = await DailyContent.generateResin()
+      return content
+    },
+
+    // 获取财税助手
+    async _getDailyTax(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyTax')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+
+      const content = await DailyContent.generateTax()
+      return content
+    },
+
+    // 获取法律顾问
+    async _getDailyLaw(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyLaw')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+
+      const content = await DailyContent.generateLaw()
+      return content
+    },
+
     // 保存到云数据库
     async _saveToCloud(content) {
       const { moduleType } = this.data
@@ -482,6 +703,19 @@ Component({
           [MODULE_TYPES.MATH]: 'dailyMaths',
           [MODULE_TYPES.ENGLISH]: 'dailyEnglishes',
           [MODULE_TYPES.PROGRAMMING]: 'dailyProgrammings',
+          [MODULE_TYPES.PHOTOGRAPHY]: 'dailyPhotographies',
+          [MODULE_TYPES.BEAUTY]: 'dailyBeauties',
+          [MODULE_TYPES.INVESTMENT]: 'dailyInvestments',
+          [MODULE_TYPES.FISHING]: 'dailyFishings',
+          [MODULE_TYPES.FITNESS]: 'dailyFitnesses',
+          [MODULE_TYPES.PET]: 'dailyPets',
+          [MODULE_TYPES.FASHION]: 'dailyFashions',
+          [MODULE_TYPES.OUTFIT]: 'dailyOutfits',
+          [MODULE_TYPES.DECORATION]: 'dailyDecorations',
+          [MODULE_TYPES.GLASS_FIBER]: 'dailyGlassFibers',
+          [MODULE_TYPES.RESIN]: 'dailyResins',
+          [MODULE_TYPES.TAX]: 'dailyTaxs',
+          [MODULE_TYPES.LAW]: 'dailyLaws',
         }
 
         const collection = collectionMap[moduleType]
@@ -578,6 +812,58 @@ Component({
         case 'programming':
           url = `/pages/poster/index`
           params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💻') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💻')}`
+          break
+        case 'photography':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '📷') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '📷')}`
+          break
+        case 'beauty':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💄') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💄')}`
+          break
+        case 'investment':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💰') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💰')}`
+          break
+        case 'fishing':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🎣') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🎣')}`
+          break
+        case 'fitness':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💪') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💪')}`
+          break
+        case 'pet':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🐾') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🐾')}`
+          break
+        case 'fashion':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '✨') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '✨')}`
+          break
+        case 'outfit':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '👕') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '👕')}`
+          break
+        case 'decoration':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🏠') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🏠')}`
+          break
+        case 'glassFiber':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🧵') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🧵')}`
+          break
+        case 'resin':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🧪') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🧪')}`
+          break
+        case 'tax':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '📋') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '📋')}`
+          break
+        case 'law':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '⚖️') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '⚖️')}`
           break
       }
 
