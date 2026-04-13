@@ -1,243 +1,80 @@
-<!-- pages/poster/index.wxml - 分享海报页面 -->
 <view class="poster-page">
-  <!-- 海报预览区域 -->
-  <view class="poster-preview">
-    <view class="poster-container" style="background: {{posterConfig.bgGradientStart}}; background: linear-gradient(135deg, {{posterConfig.bgGradientStart}} 0%, {{posterConfig.bgGradientEnd}} 100%);">
-      <!-- 名言类型海报 -->
-      <block wx:if="{{posterType === 'quote'}}">
-        <!-- 顶部装饰 -->
-        <view class="poster-top">
-          <view class="poster-logo">
-            <text class="logo-icon">{{posterConfig.icon}}</text>
-            <text class="logo-text">{{posterConfig.appName}}</text>
-          </view>
-          <text class="poster-date">{{currentDate}}</text>
-        </view>
-        
-        <!-- 类型标签 -->
-        <view class="poster-type-tag">
-          <text class="type-icon">{{posterConfig.icon}}</text>
-          <text class="type-name">{{posterConfig.typeName}}</text>
-        </view>
-        
-        <!-- 主内容区域 -->
-        <view class="poster-main-content">
-          <view class="content-quote-bg"></view>
-          <text class="content-quote-text">"{{shareTitle}}"</text>
-        </view>
-        
-        <!-- 作者信息 -->
-        <view class="poster-author">
-          <text class="author-text">—— {{shareAuthor}}</text>
-        </view>
-        
-        <!-- 底部装饰 -->
-        <view class="poster-footer">
-          <text class="footer-slogan">{{posterConfig.slogan}}</text>
-          <view class="footer-divider"></view>
-        </view>
-        
-        <!-- 二维码区域 -->
-        <view class="poster-qrcode">
-          <view class="qrcode-box">
-            <text class="qrcode-hint">小程序码</text>
-          </view>
-          <text class="qrcode-tip">长按识别查看更多</text>
-        </view>
-      </block>
-
-      <!-- 段子类型海报 -->
-      <block wx:elif="{{posterType === 'joke'}}">
-        <!-- 顶部装饰 -->
-        <view class="poster-top">
-          <view class="poster-logo">
-            <text class="logo-icon">{{posterConfig.icon}}</text>
-            <text class="logo-text">{{posterConfig.appName}}</text>
-          </view>
-          <text class="poster-date">{{currentDate}}</text>
-        </view>
-        
-        <!-- 类型标签 -->
-        <view class="poster-type-tag joke-tag">
-          <text class="type-icon">{{posterConfig.icon}}</text>
-          <text class="type-name">{{posterConfig.typeName}}</text>
-        </view>
-        
-        <!-- 标题 -->
-        <view class="joke-title-box">
-          <text class="joke-title">{{shareTitle}}</text>
-        </view>
-        
-        <!-- 内容区域 -->
-        <view class="poster-main-content joke-content-box">
-          <text class="joke-content">{{shareContent}}</text>
-        </view>
-        
-        <!-- 底部装饰 -->
-        <view class="poster-footer">
-          <text class="footer-slogan">{{posterConfig.slogan}}</text>
-          <view class="footer-divider"></view>
-        </view>
-        
-        <!-- 二维码区域 -->
-        <view class="poster-qrcode">
-          <view class="qrcode-box">
-            <text class="qrcode-hint">小程序码</text>
-          </view>
-          <text class="qrcode-tip">长按识别查看更多</text>
-        </view>
-      </block>
-
-      <!-- 心理学/金融类型海报 -->
-      <block wx:elif="{{posterType === 'psychology' || posterType === 'finance'}}">
-        <!-- 顶部装饰 -->
-        <view class="poster-top">
-          <view class="poster-logo">
-            <text class="logo-icon">{{posterConfig.icon}}</text>
-            <text class="logo-text">{{posterConfig.appName}}</text>
-          </view>
-          <text class="poster-date">{{currentDate}}</text>
-        </view>
-        
-        <!-- 类型标签 -->
-        <view class="poster-type-tag knowledge-tag">
-          <text class="type-icon">{{posterConfig.icon}}</text>
-          <text class="type-name">{{posterConfig.typeName}}</text>
-        </view>
-        
-        <!-- 标题 -->
-        <view class="knowledge-title-box">
-          <text class="knowledge-title">{{shareTitle}}</text>
-        </view>
-        
-        <!-- 内容区域 -->
-        <view class="poster-main-content knowledge-content-box">
-          <text class="knowledge-content">{{shareContent}}</text>
-        </view>
-        
-        <!-- 底部装饰 -->
-        <view class="poster-footer">
-          <text class="footer-slogan">{{posterConfig.slogan}}</text>
-          <view class="footer-divider"></view>
-        </view>
-        
-        <!-- 二维码区域 -->
-        <view class="poster-qrcode">
-          <view class="qrcode-box">
-            <text class="qrcode-hint">小程序码</text>
-          </view>
-          <text class="qrcode-tip">长按识别查看更多</text>
-        </view>
-      </block>
-
-      <!-- 情话类型海报 -->
-      <block wx:elif="{{posterType === 'love'}}">
-        <!-- 顶部装饰 -->
-        <view class="poster-top">
-          <view class="poster-logo love-logo">
-            <text class="logo-icon">{{posterConfig.icon}}</text>
-            <text class="logo-text">{{posterConfig.appName}}</text>
-          </view>
-          <text class="poster-date love-date">{{currentDate}}</text>
-        </view>
-        
-        <!-- 类型标签 -->
-        <view class="poster-type-tag love-tag">
-          <text class="type-icon">{{posterConfig.icon}}</text>
-          <text class="type-name">{{posterConfig.typeName}}</text>
-        </view>
-        
-        <!-- 情话主内容区域 -->
-        <view class="poster-main-content love-content-box">
-          <!-- 爱心装饰 -->
-          <view class="love-heart-decoration">💕</view>
-          <!-- 情话内容 -->
-          <text class="love-content">"{{shareTitle}}"</text>
-          <!-- 作者信息 -->
-          <view class="love-author" wx:if="{{shareAuthor}}">
-            <text class="author-label">——</text>
-            <text class="author-name">{{shareAuthor}}</text>
-          </view>
-          <!-- 出处信息 -->
-          <view class="love-source" wx:if="{{shareSubtitle}}">
-            <text class="source-text">「{{shareSubtitle}}」</text>
-          </view>
-        </view>
-        
-        <!-- 底部装饰 -->
-        <view class="poster-footer">
-          <text class="footer-slogan love-slogan">{{posterConfig.slogan}}</text>
-          <view class="footer-divider love-divider"></view>
-        </view>
-        
-        <!-- 二维码区域 -->
-        <view class="poster-qrcode">
-          <view class="qrcode-box love-qrcode-box">
-            <text class="qrcode-hint">小程序码</text>
-          </view>
-          <text class="qrcode-tip">长按识别查看更多</text>
-        </view>
-      </block>
-
-      <!-- 默认/首页海报 -->
-      <block wx:else>
-        <!-- 顶部装饰 -->
-        <view class="poster-top">
-          <view class="poster-logo">
-            <text class="logo-icon">🤖</text>
-            <text class="logo-text">智伴AI</text>
-          </view>
-          <text class="poster-slogan">你的智能陪伴助手</text>
-        </view>
-        
-        <!-- 主标题区域 -->
-        <view class="poster-main">
-          <text class="poster-title">{{shareTitle}}</text>
-          <text class="poster-subtitle">{{shareSubtitle}}</text>
-        </view>
-        
-        <!-- 模式展示 -->
-        <view class="poster-mode">
-          <text class="mode-icon">{{modeIcon}}</text>
-          <text class="mode-name">{{modeName}}</text>
-        </view>
-        
-        <!-- 引用区域 -->
-        <view class="poster-quote" wx:if="{{quote}}">
-          <text class="quote-text">"{{quote}}"</text>
-        </view>
-        
-        <!-- 小程序码区域 -->
-        <view class="poster-qrcode">
-          <view class="qrcode-placeholder">
-            <text class="qrcode-hint">小程序码</text>
-          </view>
-          <text class="qrcode-tip">长按识别小程序码</text>
-        </view>
-        
-        <!-- 底部信息 -->
-        <view class="poster-footer">
-          <text class="footer-text">随时随地 陪伴左右</text>
-          <text class="footer-line"></text>
-        </view>
-      </block>
-    </view>
+  <view wx:if="{{isLoading}}" class="loading-container">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">正在生成海报...</text>
   </view>
 
-  <!-- 操作按钮 -->
+  <!-- 组件直接显示，不在 wx:else 里 -->
+  <view class="poster-container">
+    <!-- 海报预览图片 -->
+    <image 
+      wx:if="{{posterConfig.posterTempFilePath}}"
+      class="poster-preview-image"
+      src="{{posterConfig.posterTempFilePath}}"
+      mode="widthFix"
+      bindtap="handlePreview"
+      binderror="onImageError"
+    />
+    
+    <!-- 海报 Canvas 组件 -->
+    <!-- template="minimal" "editorial" -->
+    <!-- themePreset="sand" "ink" "forest" "night" -->
+    <!-- accentColor="#4F6B52" -->
+    <posterCanvas
+      id="posterCanvas" 
+      template="editorial"
+      themePreset="forest"
+      title="{{posterConfig.title}}" 
+      content="{{posterConfig.content}}" 
+      subtitle="{{posterConfig.subtitle}}" 
+      icon="{{posterConfig.icon}}" 
+      moduleName="{{posterConfig.moduleName}}"
+      author="{{posterConfig.author}}" 
+      qrCodeUrl="{{posterConfig.qrCodeUrl}}" 
+      footerText="{{posterConfig.footerText}}" 
+      subFooterText="{{posterConfig.subFooterText}}" 
+      backgroundColor="{{posterConfig.backgroundColor}}" 
+      titleColor="{{posterConfig.titleColor}}" 
+      contentColor="{{posterConfig.contentColor}}" 
+      subtitleColor="{{posterConfig.subtitleColor}}" 
+      contentFontSize="{{posterConfig.contentFontSize}}" 
+      contentMaxLines="{{posterConfig.contentMaxLines}}" 
+      qrCodeSize="{{posterConfig.qrCodeSize}}" 
+      radius="{{posterConfig.radius}}" 
+      enableShadow="{{posterConfig.enableShadow}}" 
+      shadowColor="{{posterConfig.shadowColor}}" 
+      shadowBlur="{{posterConfig.shadowBlur}}" 
+      shadowOffsetX="{{posterConfig.shadowOffsetX}}" 
+      shadowOffsetY="{{posterConfig.shadowOffsetY}}" 
+      autoGenerate="{{posterConfig.autoGenerate}}"
+      
+      bind:ready="onPosterReady" 
+      bind:error="onPosterError" 
+    />
+  </view>
+
   <view class="action-bar">
-    <view class="action-btn save-btn" bindtap="onSavePoster">
-      <text class="action-icon">📥</text>
-      <text class="action-text">保存图片</text>
-    </view>
-    <view class="action-btn share-btn" bindtap="onShareToFriend">
-      <text class="action-icon">↗</text>
-      <text class="action-text">分享好友</text>
-    </view>
+    <button 
+      class="action-btn btn-refresh {{isGenerating ? 'disabled' : ''}}" 
+      bindtap="handleGenerate" 
+      hover-class="hover"
+      disabled="{{isGenerating}}"
+    >
+      <text class="btn-icon">🔄</text>
+      <text class="btn-text">{{isGenerating ? '生成中...' : '重新生成'}}</text>
+    </button>
+    
+    <button 
+      class="action-btn btn-save" 
+      bindtap="handleSave" 
+      hover-class="hover"
+    >
+      <text class="btn-icon">💾</text>
+      <text class="btn-text">保存相册</text>
+    </button>
   </view>
-  
-  <!-- 提示信息 -->
-  <view class="tip-bar">
-    <text class="tip-text">可将海报保存到相册后分享到朋友圈</text>
+
+  <view class="share-tip">
+    <text>点击右上角 ··· 分享给好友或发朋友圈</text>
   </view>
 </view>

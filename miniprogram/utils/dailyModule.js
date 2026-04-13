@@ -88,7 +88,7 @@ const MODULE_TYPES = {
 const MODULE_CONFIGS = {
   [MODULE_TYPES.QUOTE]: {
     id: MODULE_TYPES.QUOTE,
-    name: '今日名言',
+    name: '时光絮语',
     icon: '📜',
     storageKey: 'dailyQuote',
     collection: 'dailyQuotes',
@@ -114,11 +114,12 @@ const MODULE_CONFIGS = {
     loadingText: 'AI正在为你创作名言...',
     placeholderText: '点击「换一句」让AI为你创作名言',
     posterType: 'quote',
+    slogan: '让智慧照亮生活',
   },
 
   [MODULE_TYPES.JOKE]: {
     id: MODULE_TYPES.JOKE,
-    name: '今日段子',
+    name: '段子时光',
     icon: '😂',
     storageKey: 'dailyJoke',
     collection: 'dailyJokes',
@@ -143,11 +144,12 @@ const MODULE_CONFIGS = {
     loadingText: 'AI正在创作段子...',
     placeholderText: '点击「换一条」让AI为你创作段子',
     posterType: 'joke',
+    slogan: '笑一笑，十年少',
   },
 
   [MODULE_TYPES.PSYCHOLOGY]: {
     id: MODULE_TYPES.PSYCHOLOGY,
-    name: '每日心理',
+    name: '心灵解语',
     icon: '🧠',
     storageKey: 'dailyPsychology',
     collection: 'dailyPsychology',
@@ -171,11 +173,12 @@ const MODULE_CONFIGS = {
     loadingText: '心理学专家正在为你解读...',
     placeholderText: '点击「换一条」获取心理学小知识',
     posterType: 'psychology',
+    slogan: '了解内心，遇见更好的自己',
   },
 
   [MODULE_TYPES.FINANCE]: {
     id: MODULE_TYPES.FINANCE,
-    name: '每日金融',
+    name: '财富视界',
     icon: '💰',
     storageKey: 'dailyFinance',
     collection: 'dailyFinance',
@@ -199,11 +202,12 @@ const MODULE_CONFIGS = {
     loadingText: '金融顾问正在为你讲解...',
     placeholderText: '点击「换一条」获取金融小知识',
     posterType: 'finance',
+    slogan: '开启财富自由之路',
   },
 
   [MODULE_TYPES.LOVE]: {
     id: MODULE_TYPES.LOVE,
-    name: '每日情话',
+    name: '心动絮语',
     icon: '💕',
     storageKey: 'dailyLove',
     collection: 'dailyLoves',
@@ -227,11 +231,12 @@ const MODULE_CONFIGS = {
     loadingText: '正在为你创作甜蜜情话...',
     placeholderText: '点击「换一条」获取甜蜜情话',
     posterType: 'love',
+    slogan: '用爱点亮每一天',
   },
 
   [MODULE_TYPES.MOVIE]: {
     id: MODULE_TYPES.MOVIE,
-    name: '每日电影',
+    name: '光影流年',
     icon: '🎬',
     storageKey: 'dailyMovie',
     collection: 'dailyMovies',
@@ -258,11 +263,12 @@ const MODULE_CONFIGS = {
     loadingText: 'AI正在为你推荐电影...',
     placeholderText: '点击「换一部」获取电影推荐',
     posterType: 'movie',
+    slogan: '光影之间，遇见故事',
   },
 
   [MODULE_TYPES.MUSIC]: {
     id: MODULE_TYPES.MUSIC,
-    name: '每日音乐',
+    name: '旋律时光',
     icon: '🎵',
     storageKey: 'dailyMusic',
     collection: 'dailyMusics',
@@ -289,11 +295,12 @@ const MODULE_CONFIGS = {
     loadingText: 'AI正在为你推荐音乐...',
     placeholderText: '点击「换一首」获取音乐推荐',
     posterType: 'music',
+    slogan: '用音符治愈心灵',
   },
 
   [MODULE_TYPES.TECH]: {
     id: MODULE_TYPES.TECH,
-    name: '每日科技',
+    name: '科技探趣',
     icon: '🔬',
     storageKey: 'dailyTech',
     collection: 'dailyTechs',
@@ -317,11 +324,12 @@ const MODULE_CONFIGS = {
     loadingText: '科技达人在为你解读...',
     placeholderText: '点击「换一条」获取科技新知',
     posterType: 'tech',
+    slogan: '探索未知，改变世界',
   },
 
   [MODULE_TYPES.TCM]: {
     id: MODULE_TYPES.TCM,
-    name: '每日中医',
+    name: '本草心语',
     icon: '🌿',
     storageKey: 'dailyTcm',
     collection: 'dailyTcms',
@@ -345,11 +353,12 @@ const MODULE_CONFIGS = {
     loadingText: '中医专家正在为你解读...',
     placeholderText: '点击「换一条」获取中医养生知识',
     posterType: 'tcm',
+    slogan: '传承千年，守护健康',
   },
 
   [MODULE_TYPES.TRAVEL]: {
     id: MODULE_TYPES.TRAVEL,
-    name: '每日旅游',
+    name: '行旅日志',
     icon: '🌍',
     storageKey: 'dailyTravel',
     collection: 'dailyTravels',
@@ -374,11 +383,12 @@ const MODULE_CONFIGS = {
     loadingText: 'AI导游正在为你介绍...',
     placeholderText: '点击「换一个」探索世界名胜',
     posterType: 'travel',
+    slogan: '脚步丈量世界，心灵感悟人生',
   },
 
   [MODULE_TYPES.FORTUNE]: {
     id: MODULE_TYPES.FORTUNE,
-    name: '每日一卦',
+    name: '卦象玄机',
     icon: '🔮',
     storageKey: 'dailyFortune',
     collection: 'dailyFortunes',
@@ -402,11 +412,12 @@ const MODULE_CONFIGS = {
     loadingText: '卦象解读中...',
     placeholderText: '点击「换一卦」获取今日卦象',
     posterType: 'fortune',
+    slogan: '知命而行，顺势而为',
   },
 
   [MODULE_TYPES.LITERATURE]: {
     id: MODULE_TYPES.LITERATURE,
-    name: '每日文学',
+    name: '书卷时光',
     icon: '📚',
     storageKey: 'dailyLiterature',
     collection: 'dailyLiteratures',
@@ -431,11 +442,12 @@ const MODULE_CONFIGS = {
     loadingText: '文学大师正在为你介绍...',
     placeholderText: '点击「换一位」了解文学大师',
     posterType: 'literature',
+    slogan: '书香门第，智慧人生',
   },
 
   [MODULE_TYPES.FOREIGN_TRADE]: {
     id: MODULE_TYPES.FOREIGN_TRADE,
-    name: '外贸助手',
+    name: '贸商絮语',
     icon: '💼',
     storageKey: 'dailyForeignTrade',
     collection: 'dailyForeignTrades',
@@ -459,11 +471,12 @@ const MODULE_CONFIGS = {
     loadingText: '外贸干货正在加载...',
     placeholderText: '点击「换一条」获取外贸知识',
     posterType: 'foreignTrade',
+    slogan: '货通全球，贸易无忧',
   },
 
   [MODULE_TYPES.ECOMMERCE]: {
     id: MODULE_TYPES.ECOMMERCE,
-    name: '电商运营助手',
+    name: '电商智囊',
     icon: '🛒',
     storageKey: 'dailyECommerce',
     collection: 'dailyECommerces',
@@ -487,11 +500,12 @@ const MODULE_CONFIGS = {
     loadingText: '电商干货正在加载...',
     placeholderText: '点击「换一条」获取运营知识',
     posterType: 'ecommerce',
+    slogan: '玩转电商，赢在未来',
   },
 
   [MODULE_TYPES.MATH]: {
     id: MODULE_TYPES.MATH,
-    name: '中学数学助手',
+    name: '数理学堂',
     icon: '📐',
     storageKey: 'dailyMath',
     collection: 'dailyMaths',
@@ -515,11 +529,12 @@ const MODULE_CONFIGS = {
     loadingText: '数学知识正在加载...',
     placeholderText: '点击「换一条」获取数学知识',
     posterType: 'math',
+    slogan: '数学之美，思维之力',
   },
 
   [MODULE_TYPES.ENGLISH]: {
     id: MODULE_TYPES.ENGLISH,
-    name: '中学英语助手',
+    name: '英语花园',
     icon: '📚',
     storageKey: 'dailyEnglish',
     collection: 'dailyEnglishes',
@@ -543,11 +558,12 @@ const MODULE_CONFIGS = {
     loadingText: '英语知识正在加载...',
     placeholderText: '点击「换一条」获取英语知识',
     posterType: 'english',
+    slogan: '掌握语言，拥抱世界',
   },
 
   [MODULE_TYPES.PROGRAMMING]: {
     id: MODULE_TYPES.PROGRAMMING,
-    name: '计算机编程助手',
+    name: '代码工坊',
     icon: '💻',
     storageKey: 'dailyProgramming',
     collection: 'dailyProgrammings',
@@ -571,11 +587,12 @@ const MODULE_CONFIGS = {
     loadingText: '编程知识正在加载...',
     placeholderText: '点击「换一条」获取编程知识',
     posterType: 'programming',
+    slogan: '代码改变世界',
   },
 
   [MODULE_TYPES.PHOTOGRAPHY]: {
     id: MODULE_TYPES.PHOTOGRAPHY,
-    name: '摄影达人',
+    name: '光影捕手',
     icon: '📷',
     storageKey: 'dailyPhotography',
     collection: 'dailyPhotographies',
@@ -599,11 +616,12 @@ const MODULE_CONFIGS = {
     loadingText: '摄影导师正在为你讲解...',
     placeholderText: '点击「换一条」学习摄影技巧',
     posterType: 'photography',
+    slogan: '捕捉瞬间，定格永恒',
   },
 
   [MODULE_TYPES.BEAUTY]: {
     id: MODULE_TYPES.BEAUTY,
-    name: '美妆达人',
+    name: '美颜日志',
     icon: '💄',
     storageKey: 'dailyBeauty',
     collection: 'dailyBeauties',
@@ -627,11 +645,12 @@ const MODULE_CONFIGS = {
     loadingText: '美妆导师正在为你讲解...',
     placeholderText: '点击「换一条」学习美妆技巧',
     posterType: 'beauty',
+    slogan: '遇见更美的自己',
   },
 
   [MODULE_TYPES.INVESTMENT]: {
     id: MODULE_TYPES.INVESTMENT,
-    name: '投资理财达人',
+    name: '财富密码',
     icon: '💰',
     storageKey: 'dailyInvestment',
     collection: 'dailyInvestments',
@@ -655,11 +674,12 @@ const MODULE_CONFIGS = {
     loadingText: '理财导师正在为你讲解...',
     placeholderText: '点击「换一条」学习投资理财知识',
     posterType: 'investment',
+    slogan: '让钱为你工作',
   },
 
   [MODULE_TYPES.FISHING]: {
     id: MODULE_TYPES.FISHING,
-    name: '钓鱼达人',
+    name: '垂纶闲趣',
     icon: '🎣',
     storageKey: 'dailyFishing',
     collection: 'dailyFishings',
@@ -683,10 +703,11 @@ const MODULE_CONFIGS = {
     loadingText: '钓鱼大师正在为你讲解...',
     placeholderText: '点击「换一条」学习钓鱼技巧',
     posterType: 'fishing',
+    slogan: '静享垂钓之乐',
   },
   [MODULE_TYPES.FITNESS]: {
     id: MODULE_TYPES.FITNESS,
-    name: '健身达人',
+    name: '活力时光',
     icon: '💪',
     storageKey: 'dailyFitness',
     collection: 'dailyFitnesses',
@@ -710,10 +731,11 @@ const MODULE_CONFIGS = {
     loadingText: '健身教练正在为你讲解...',
     placeholderText: '点击「换一条」学习健身知识',
     posterType: 'fitness',
+    slogan: '自律即自由',
   },
   [MODULE_TYPES.PET]: {
     id: MODULE_TYPES.PET,
-    name: '宠物达人',
+    name: '萌宠日记',
     icon: '🐾',
     storageKey: 'dailyPet',
     collection: 'dailyPets',
@@ -737,10 +759,11 @@ const MODULE_CONFIGS = {
     loadingText: '宠物专家正在为你讲解...',
     placeholderText: '点击「换一条」学习养宠知识',
     posterType: 'pet',
+    slogan: '爱它，就给它最好的',
   },
   [MODULE_TYPES.FASHION]: {
     id: MODULE_TYPES.FASHION,
-    name: '时尚达人',
+    name: '潮流风向',
     icon: '✨',
     storageKey: 'dailyFashion',
     collection: 'dailyFashions',
@@ -764,10 +787,11 @@ const MODULE_CONFIGS = {
     loadingText: '时尚顾问正在为你讲解...',
     placeholderText: '点击「换一条」学习时尚知识',
     posterType: 'fashion',
+    slogan: '引领潮流，定义时尚',
   },
   [MODULE_TYPES.OUTFIT]: {
     id: MODULE_TYPES.OUTFIT,
-    name: '穿搭达人',
+    name: '衣橱絮语',
     icon: '👗',
     storageKey: 'dailyOutfit',
     collection: 'dailyOutfits',
@@ -791,10 +815,11 @@ const MODULE_CONFIGS = {
     loadingText: '穿搭导师正在为你讲解...',
     placeholderText: '点击「换一条」学习穿搭技巧',
     posterType: 'outfit',
+    slogan: '穿出你的风格',
   },
   [MODULE_TYPES.DECORATION]: {
     id: MODULE_TYPES.DECORATION,
-    name: '装修达人',
+    name: '筑家美学',
     icon: '🏠',
     storageKey: 'dailyDecoration',
     collection: 'dailyDecorations',
@@ -818,10 +843,11 @@ const MODULE_CONFIGS = {
     loadingText: '装修设计师正在为你讲解...',
     placeholderText: '点击「换一条」学习装修知识',
     posterType: 'decoration',
+    slogan: '装点生活，美化家园',
   },
   [MODULE_TYPES.GLASS_FIBER]: {
     id: MODULE_TYPES.GLASS_FIBER,
-    name: '玻纤达人',
+    name: '材质探秘',
     icon: '🧵',
     storageKey: 'dailyGlassFiber',
     collection: 'dailyGlassFibers',
@@ -845,10 +871,11 @@ const MODULE_CONFIGS = {
     loadingText: '玻纤专家正在为你讲解...',
     placeholderText: '点击「换一条」学习玻纤知识',
     posterType: 'glassFiber',
+    slogan: '材料创新，品质生活',
   },
   [MODULE_TYPES.RESIN]: {
     id: MODULE_TYPES.RESIN,
-    name: '树脂达人',
+    name: '工艺匠心',
     icon: '🧪',
     storageKey: 'dailyResin',
     collection: 'dailyResins',
@@ -872,10 +899,11 @@ const MODULE_CONFIGS = {
     loadingText: '树脂专家正在为你讲解...',
     placeholderText: '点击「换一条」学习树脂知识',
     posterType: 'resin',
+    slogan: '工艺之美，匠心独运',
   },
   [MODULE_TYPES.TAX]: {
     id: MODULE_TYPES.TAX,
-    name: '财税助手',
+    name: '财税顾问',
     icon: '📋',
     storageKey: 'dailyTax',
     collection: 'dailyTaxs',
@@ -899,10 +927,11 @@ const MODULE_CONFIGS = {
     loadingText: '财税专家正在为你讲解...',
     placeholderText: '点击「换一条」学习财税知识',
     posterType: 'tax',
+    slogan: '合规经营，省心省力',
   },
   [MODULE_TYPES.LAW]: {
     id: MODULE_TYPES.LAW,
-    name: '法律顾问',
+    name: '法务视窗',
     icon: '⚖️',
     storageKey: 'dailyLaw',
     collection: 'dailyLaws',
@@ -926,10 +955,11 @@ const MODULE_CONFIGS = {
     loadingText: '法律顾问正在为你讲解...',
     placeholderText: '点击「换一条」学习法律知识',
     posterType: 'law',
+    slogan: '知法用法，权益保障',
   },
   [MODULE_TYPES.OFFICIAL]: {
     id: MODULE_TYPES.OFFICIAL,
-    name: '官场达人',
+    name: '仕途心语',
     icon: '🎩',
     storageKey: 'dailyOfficial',
     collection: 'dailyOfficials',
@@ -953,10 +983,11 @@ const MODULE_CONFIGS = {
     loadingText: '官场高手正在为你指点迷津...',
     placeholderText: '点击「换一条」学习处世智慧',
     posterType: 'official',
+    slogan: '洞悉人情世故，驾驭职场风云',
   },
   [MODULE_TYPES.HANDLING]: {
     id: MODULE_TYPES.HANDLING,
-    name: '处事达人',
+    name: '处世智慧',
     icon: '💎',
     storageKey: 'dailyHandling',
     collection: 'dailyHandlings',
@@ -980,10 +1011,11 @@ const MODULE_CONFIGS = {
     loadingText: '处事高手正在为你出谋划策...',
     placeholderText: '点击「换一条」学习处事技巧',
     posterType: 'handling',
+    slogan: '高情商，好人缘',
   },
   [MODULE_TYPES.FLORAL]: {
     id: MODULE_TYPES.FLORAL,
-    name: '花艺达人',
+    name: '花语心田',
     icon: '💐',
     storageKey: 'dailyFloral',
     collection: 'dailyFlorals',
@@ -1007,10 +1039,11 @@ const MODULE_CONFIGS = {
     loadingText: '花艺师正在为你讲解...',
     placeholderText: '点击「换一条」学习花艺知识',
     posterType: 'floral',
+    slogan: '花语无声，美好相伴',
   },
   [MODULE_TYPES.HISTORY]: {
     id: MODULE_TYPES.HISTORY,
-    name: '历史典故',
+    name: '史海拾贝',
     icon: '📚',
     storageKey: 'dailyHistory',
     collection: 'dailyHistorys',
@@ -1034,10 +1067,11 @@ const MODULE_CONFIGS = {
     loadingText: '历史学者正在为你讲述...',
     placeholderText: '点击「换一条」学习历史典故',
     posterType: 'history',
+    slogan: '以史为鉴，可以知兴替',
   },
   [MODULE_TYPES.MILITARY]: {
     id: MODULE_TYPES.MILITARY,
-    name: '军事达人',
+    name: '兵法韬略',
     icon: '🎖️',
     storageKey: 'dailyMilitary',
     collection: 'dailyMilitarys',
@@ -1061,6 +1095,12 @@ const MODULE_CONFIGS = {
     loadingText: '军事专家正在为你分析...',
     placeholderText: '点击「换一条」学习军事知识',
     posterType: 'military',
+    slogan: '知己知彼，百战不殆',
+  },
+  
+  // 默认配置（首页/其他）
+  home: {
+    slogan: '每天一点，美好生活',
   },
 }
 

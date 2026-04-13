@@ -2,6 +2,44 @@
 const { MODULE_TYPES, MODULE_CONFIGS, FALLBACK_DATA, AI_PROMPTS } = require('../../utils/dailyModule.js')
 const { DailyContent } = require('../../utils/dailyContent.js')
 
+// 全局请求队列，控制同时发起的 AI 请求数量
+const MAX_CONCURRENT_REQUESTS = 3
+let currentRequestCount = 0
+const pendingRequests = []
+
+/**
+ * 请求队列管理
+ */
+function enqueueRequest(fn) {
+  return new Promise((resolve, reject) => {
+    const execute = async () => {
+      if (currentRequestCount >= MAX_CONCURRENT_REQUESTS) {
+        // 等待后再试
+        setTimeout(() => execute().then(resolve).catch(reject), 500)
+        return
+      }
+      currentRequestCount++
+      try {
+        const result = await fn()
+        resolve(result)
+      } catch (err) {
+        reject(err)
+      } finally {
+        currentRequestCount--
+        // 执行下一个等待中的请求
+        if (pendingRequests.length > 0) {
+          const next = pendingRequests.shift()
+          next()
+        }
+      }
+    }
+    pendingRequests.push(execute)
+    // 随机延迟 0-1.5 秒，避免同时发起大量请求
+    const delay = Math.random() * 1500
+    setTimeout(() => execute(), delay)
+  })
+}
+
 Component({
   properties: {
     // 板块类型：quote/joke/psychology/finance/love/movie
@@ -142,116 +180,85 @@ Component({
       try {
         let content
 
-        // 根据类型获取内容
-        switch (moduleType) {
-          case MODULE_TYPES.QUOTE:
-            content = await this._getDailyQuote(refresh)
-            break
-          case MODULE_TYPES.JOKE:
-            content = await this._getDailyJoke(refresh)
-            break
-          case MODULE_TYPES.PSYCHOLOGY:
-            content = await this._getDailyPsychology(refresh)
-            break
-          case MODULE_TYPES.FINANCE:
-            content = await this._getDailyFinance(refresh)
-            break
-          case MODULE_TYPES.LOVE:
-            content = await this._getDailyLove(refresh)
-            break
-          case MODULE_TYPES.MOVIE:
-            content = await this._getDailyMovie(refresh)
-            break
-          case MODULE_TYPES.MUSIC:
-            content = await this._getDailyMusic(refresh)
-            break
-          case MODULE_TYPES.TECH:
-            content = await this._getDailyTech(refresh)
-            break
-          case MODULE_TYPES.TCM:
-            content = await this._getDailyTcm(refresh)
-            break
-          case MODULE_TYPES.TRAVEL:
-            content = await this._getDailyTravel(refresh)
-            break
-          case MODULE_TYPES.FORTUNE:
-            content = await this._getDailyFortune(refresh)
-            break
-          case MODULE_TYPES.LITERATURE:
-            content = await this._getDailyLiterature(refresh)
-            break
-          case MODULE_TYPES.FOREIGN_TRADE:
-            content = await this._getDailyForeignTrade(refresh)
-            break
-          case MODULE_TYPES.ECOMMERCE:
-            content = await this._getDailyECommerce(refresh)
-            break
-          case MODULE_TYPES.MATH:
-            content = await this._getDailyMath(refresh)
-            break
-          case MODULE_TYPES.ENGLISH:
-            content = await this._getDailyEnglish(refresh)
-            break
-        case MODULE_TYPES.PROGRAMMING:
-          content = await this._getDailyProgramming(refresh)
-          break
-        case MODULE_TYPES.PHOTOGRAPHY:
-          content = await this._getDailyPhotography(refresh)
-          break
-        case MODULE_TYPES.BEAUTY:
-          content = await this._getDailyBeauty(refresh)
-          break
-        case MODULE_TYPES.INVESTMENT:
-          content = await this._getDailyInvestment(refresh)
-          break
-        case MODULE_TYPES.FISHING:
-          content = await this._getDailyFishing(refresh)
-          break
-        case MODULE_TYPES.FITNESS:
-          content = await this._getDailyFitness(refresh)
-          break
-        case MODULE_TYPES.PET:
-          content = await this._getDailyPet(refresh)
-          break
-        case MODULE_TYPES.FASHION:
-          content = await this._getDailyFashion(refresh)
-          break
-        case MODULE_TYPES.OUTFIT:
-          content = await this._getDailyOutfit(refresh)
-          break
-        case MODULE_TYPES.DECORATION:
-          content = await this._getDailyDecoration(refresh)
-          break
-        case MODULE_TYPES.GLASS_FIBER:
-          content = await this._getDailyGlassFiber(refresh)
-          break
-        case MODULE_TYPES.RESIN:
-          content = await this._getDailyResin(refresh)
-          break
-        case MODULE_TYPES.TAX:
-          content = await this._getDailyTax(refresh)
-          break
-        case MODULE_TYPES.LAW:
-          content = await this._getDailyLaw(refresh)
-          break
-        case MODULE_TYPES.OFFICIAL:
-          content = await this._getDailyOfficial(refresh)
-          break
-        case MODULE_TYPES.HANDLING:
-          content = await this._getDailyHandling(refresh)
-          break
-        case MODULE_TYPES.FLORAL:
-          content = await this._getDailyFloral(refresh)
-          break
-        case MODULE_TYPES.HISTORY:
-          content = await this._getDailyHistory(refresh)
-          break
-        case MODULE_TYPES.MILITARY:
-          content = await this._getDailyMilitary(refresh)
-          break
-        default:
-            throw new Error('未知的模块类型')
+        // 根据类型获取内容（使用请求队列控制并发）
+        const getContentFn = async () => {
+          switch (moduleType) {
+            case MODULE_TYPES.QUOTE:
+              return await this._getDailyQuote(refresh)
+            case MODULE_TYPES.JOKE:
+              return await this._getDailyJoke(refresh)
+            case MODULE_TYPES.PSYCHOLOGY:
+              return await this._getDailyPsychology(refresh)
+            case MODULE_TYPES.FINANCE:
+              return await this._getDailyFinance(refresh)
+            case MODULE_TYPES.LOVE:
+              return await this._getDailyLove(refresh)
+            case MODULE_TYPES.MOVIE:
+              return await this._getDailyMovie(refresh)
+            case MODULE_TYPES.MUSIC:
+              return await this._getDailyMusic(refresh)
+            case MODULE_TYPES.TECH:
+              return await this._getDailyTech(refresh)
+            case MODULE_TYPES.TCM:
+              return await this._getDailyTcm(refresh)
+            case MODULE_TYPES.TRAVEL:
+              return await this._getDailyTravel(refresh)
+            case MODULE_TYPES.FORTUNE:
+              return await this._getDailyFortune(refresh)
+            case MODULE_TYPES.LITERATURE:
+              return await this._getDailyLiterature(refresh)
+            case MODULE_TYPES.FOREIGN_TRADE:
+              return await this._getDailyForeignTrade(refresh)
+            case MODULE_TYPES.ECOMMERCE:
+              return await this._getDailyECommerce(refresh)
+            case MODULE_TYPES.MATH:
+              return await this._getDailyMath(refresh)
+            case MODULE_TYPES.ENGLISH:
+              return await this._getDailyEnglish(refresh)
+            case MODULE_TYPES.PROGRAMMING:
+              return await this._getDailyProgramming(refresh)
+            case MODULE_TYPES.PHOTOGRAPHY:
+              return await this._getDailyPhotography(refresh)
+            case MODULE_TYPES.BEAUTY:
+              return await this._getDailyBeauty(refresh)
+            case MODULE_TYPES.INVESTMENT:
+              return await this._getDailyInvestment(refresh)
+            case MODULE_TYPES.FISHING:
+              return await this._getDailyFishing(refresh)
+            case MODULE_TYPES.FITNESS:
+              return await this._getDailyFitness(refresh)
+            case MODULE_TYPES.PET:
+              return await this._getDailyPet(refresh)
+            case MODULE_TYPES.FASHION:
+              return await this._getDailyFashion(refresh)
+            case MODULE_TYPES.OUTFIT:
+              return await this._getDailyOutfit(refresh)
+            case MODULE_TYPES.DECORATION:
+              return await this._getDailyDecoration(refresh)
+            case MODULE_TYPES.GLASS_FIBER:
+              return await this._getDailyGlassFiber(refresh)
+            case MODULE_TYPES.RESIN:
+              return await this._getDailyResin(refresh)
+            case MODULE_TYPES.TAX:
+              return await this._getDailyTax(refresh)
+            case MODULE_TYPES.LAW:
+              return await this._getDailyLaw(refresh)
+            case MODULE_TYPES.OFFICIAL:
+              return await this._getDailyOfficial(refresh)
+            case MODULE_TYPES.HANDLING:
+              return await this._getDailyHandling(refresh)
+            case MODULE_TYPES.FLORAL:
+              return await this._getDailyFloral(refresh)
+            case MODULE_TYPES.HISTORY:
+              return await this._getDailyHistory(refresh)
+            case MODULE_TYPES.MILITARY:
+              return await this._getDailyMilitary(refresh)
+            default:
+              throw new Error('未知的模块类型')
+          }
         }
+
+        content = await enqueueRequest(getContentFn)
 
         if (content) {
           // 缓存到本地
