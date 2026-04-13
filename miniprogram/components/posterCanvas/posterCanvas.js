@@ -1093,6 +1093,197 @@ Component({
           })
         }
       })
+    },
+
+    getThemePresetByType(type) {
+      const map = {
+        quote: 'sand',
+        joke: 'sand',
+        psychology: 'ink',
+        finance: 'ink',
+        love: 'sand',
+        movie: 'night',
+        music: 'night',
+        tech: 'night',
+        tcm: 'forest',
+        travel: 'forest',
+        literature: 'sand',
+        programming: 'night',
+        photography: 'ink',
+        fitness: 'night',
+        pet: 'sand',
+        fashion: 'ink'
+      }
+      return map[type] || 'sand'
+    },
+    getThemeScheme(mode = 'light', preset = 'paper') {
+      const schemes = {
+        // =========================
+        // 浅色模式
+        // =========================
+        light: {
+          // 1. 纸张米白：最通用
+          paper: {
+            backgroundColor: '#F6F2EA',
+            titleColor: '#2B2B2B',
+            contentColor: '#5C5245',
+            subtitleColor: '#8E7C67',
+            accentColor: '#B79C61',
+          },
+    
+          // 2. 鼠尾草绿：疗愈、自然、松弛
+          sage: {
+            backgroundColor: '#EEF3EC',
+            titleColor: '#243127',
+            contentColor: '#4B5D4D',
+            subtitleColor: '#7E9180',
+            accentColor: '#6E8B6B',
+          },
+    
+          // 3. 雾蓝灰：理性、专业、知识感
+          sky: {
+            backgroundColor: '#EEF4F7',
+            titleColor: '#2F4352',
+            contentColor: '#556B79',
+            subtitleColor: '#8A9AA5',
+            accentColor: '#6D8FA5',
+          },
+    
+          // 4. 柔粉杏：温柔、情感、女性向
+          rose: {
+            backgroundColor: '#FDF1F3',
+            titleColor: '#8C455D',
+            contentColor: '#A76679',
+            subtitleColor: '#C39BA7',
+            accentColor: '#D48A9B',
+          },
+    
+          // 5. 商务浅灰：现代、克制、职场
+          business: {
+            backgroundColor: '#F5F5F3',
+            titleColor: '#202020',
+            contentColor: '#4E4A43',
+            subtitleColor: '#8F7E62',
+            accentColor: '#8F7E62',
+          },
+    
+          // 6. 书卷暖黄：文学、历史、传统内容
+          classic: {
+            backgroundColor: '#FBF5E8',
+            titleColor: '#5A4336',
+            contentColor: '#755C4C',
+            subtitleColor: '#A18775',
+            accentColor: '#B89A6A',
+          }
+        },
+    
+        // =========================
+        // 深色模式
+        // =========================
+        dark: {
+          // 1. 石墨黑：最通用的深色
+          graphite: {
+            backgroundColor: '#232427',
+            titleColor: '#F2EEE8',
+            contentColor: '#D2CAC0',
+            subtitleColor: '#9A9288',
+            accentColor: '#B79C61',
+          },
+    
+          // 2. 森林夜：疗愈、自然、哲思
+          forestNight: {
+            backgroundColor: '#1E2822',
+            titleColor: '#E9F0E7',
+            contentColor: '#C4D0C2',
+            subtitleColor: '#89988A',
+            accentColor: '#7C9B76',
+          },
+    
+          // 3. 深海蓝：科技、金融、专业
+          oceanNight: {
+            backgroundColor: '#17212B',
+            titleColor: '#ECF3F9',
+            contentColor: '#C7D8E5',
+            subtitleColor: '#879CAD',
+            accentColor: '#6C98B8',
+          },
+    
+          // 4. 暗紫夜：音乐、情绪、电影感
+          plumNight: {
+            backgroundColor: '#241F2A',
+            titleColor: '#F3EDF7',
+            contentColor: '#D8CEE2',
+            subtitleColor: '#9A8EA8',
+            accentColor: '#9C7FB0',
+          },
+    
+          // 5. 赛博深色：科技、编程、未来感
+          cyberDark: {
+            backgroundColor: '#0F1A22',
+            titleColor: '#B8F3FF',
+            contentColor: '#D8FBFF',
+            subtitleColor: '#68B9C8',
+            accentColor: '#35C7E8',
+          },
+    
+          // 6. 金曜黑：金融、权威、神秘、品牌感
+          obsidian: {
+            backgroundColor: '#1F1F21',
+            titleColor: '#F3E8CC',
+            contentColor: '#DDCBA1',
+            subtitleColor: '#A8956E',
+            accentColor: '#D4B16A',
+          }
+        }
+      }
+    
+      return schemes[mode]?.[preset] || schemes.light.paper
+    },
+
+    getThemePresetByType(type) {
+      const typeMap = {
+        quote: { mode: 'light', preset: 'paper' },
+        joke: { mode: 'light', preset: 'paper' },
+        psychology: { mode: 'light', preset: 'sky' },
+        finance: { mode: 'dark', preset: 'oceanNight' },
+        love: { mode: 'light', preset: 'rose' },
+        movie: { mode: 'dark', preset: 'graphite' },
+        music: { mode: 'dark', preset: 'plumNight' },
+        tech: { mode: 'dark', preset: 'cyberDark' },
+        tcm: { mode: 'light', preset: 'sage' },
+        travel: { mode: 'light', preset: 'sage' },
+        fortune: { mode: 'dark', preset: 'obsidian' },
+        literature: { mode: 'light', preset: 'classic' },
+        foreignTrade: { mode: 'light', preset: 'business' },
+        ecommerce: { mode: 'light', preset: 'rose' },
+        math: { mode: 'light', preset: 'sky' },
+        english: { mode: 'light', preset: 'sky' },
+        programming: { mode: 'dark', preset: 'cyberDark' },
+        photography: { mode: 'dark', preset: 'graphite' },
+        beauty: { mode: 'light', preset: 'rose' },
+        investment: { mode: 'dark', preset: 'oceanNight' },
+        fitness: { mode: 'dark', preset: 'graphite' },
+        pet: { mode: 'light', preset: 'paper' },
+        fashion: { mode: 'light', preset: 'business' },
+        outfit: { mode: 'light', preset: 'business' },
+        decoration: { mode: 'light', preset: 'classic' },
+        glassFiber: { mode: 'light', preset: 'business' },
+        resin: { mode: 'dark', preset: 'plumNight' },
+        tax: { mode: 'light', preset: 'sky' },
+        law: { mode: 'dark', preset: 'graphite' },
+        official: { mode: 'light', preset: 'business' },
+        handling: { mode: 'light', preset: 'sky' },
+        floral: { mode: 'light', preset: 'rose' },
+        history: { mode: 'light', preset: 'classic' },
+        military: { mode: 'dark', preset: 'obsidian' },
+        home: { mode: 'light', preset: 'paper' },
+        business: { mode: 'light', preset: 'business' },
+        bussiness: { mode: 'light', preset: 'business' }
+      }
+    
+      return typeMap[type] || { mode: 'light', preset: 'paper' }
     }
+    
+    
   }
 })

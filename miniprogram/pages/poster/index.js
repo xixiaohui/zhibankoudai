@@ -271,243 +271,297 @@ Page({
     const colorSchemes = {
       // 名言警句 - 文艺复古
       quote: {
-        backgroundColor: '#F8F4EC',
-        titleColor: '#4A3427',
-        contentColor: '#5C4A3D',
-        subtitleColor: '#8B7355',
+        backgroundColor: '#F7F1E8',
+        titleColor: '#4E3B2F',
+        contentColor: '#6A5547',
+        subtitleColor: '#9A8573',
       },
+  
       // 段子笑话 - 活泼轻松
       joke: {
-        backgroundColor: '#FFF8E7',
-        titleColor: '#E67E22',
-        contentColor: '#6B4E31',
-        subtitleColor: '#9B7B5C',
+        backgroundColor: '#FFF8ED',
+        titleColor: '#C96A2B',
+        contentColor: '#7A5A42',
+        subtitleColor: '#B29378',
       },
+  
       // 心理学 - 专业稳重
       psychology: {
-        backgroundColor: '#F0F4F8',
-        titleColor: '#2C3E50',
-        contentColor: '#34495E',
-        subtitleColor: '#7F8C8D',
+        backgroundColor: '#EEF3F6',
+        titleColor: '#314656',
+        contentColor: '#4B6271',
+        subtitleColor: '#7E93A0',
       },
+  
       // 金融理财 - 高端专业
       finance: {
-        backgroundColor: '#F5F7FA',
-        titleColor: '#1A3A5C',
-        contentColor: '#2C5282',
-        subtitleColor: '#4A6FA5',
+        backgroundColor: '#F3F6F8',
+        titleColor: '#1F3B57',
+        contentColor: '#35516C',
+        subtitleColor: '#70879D',
       },
-      // 情话 - 浪漫温馨
+  
+      // 情话 - 浪漫温柔
       love: {
-        backgroundColor: '#FFF0F5',
-        titleColor: '#C2185B',
-        contentColor: '#E91E63',
-        subtitleColor: '#F48FB1',
+        backgroundColor: '#FFF1F5',
+        titleColor: '#B4476B',
+        contentColor: '#C86A88',
+        subtitleColor: '#D9A1B4',
       },
+  
       // 电影 - 文艺深邃
       movie: {
-        backgroundColor: '#1C1C1C',
-        titleColor: '#E0E0E0',
-        contentColor: '#BDBDBD',
-        subtitleColor: '#9E9E9E',
+        backgroundColor: '#202124',
+        titleColor: '#F1ECE4',
+        contentColor: '#D1C7BB',
+        subtitleColor: '#9A9187',
       },
-      // 音乐 - 律动活力
+  
+      // 音乐 - 律动质感
       music: {
-        backgroundColor: '#1A1A2E',
-        titleColor: '#EAEAEA',
-        contentColor: '#C4C4C4',
-        subtitleColor: '#888888',
+        backgroundColor: '#1E2230',
+        titleColor: '#F1F1F1',
+        contentColor: '#C9CFD8',
+        subtitleColor: '#8D97A6',
       },
+  
       // 科技 - 前沿冷峻
       tech: {
-        backgroundColor: '#0D1B2A',
-        titleColor: '#00D4FF',
-        contentColor: '#7FDBFF',
-        subtitleColor: '#39CCCC',
+        backgroundColor: '#0F1C26',
+        titleColor: '#8DEBFF',
+        contentColor: '#C6F7FF',
+        subtitleColor: '#58BDD3',
       },
+  
       // 中医养生 - 传统健康
       tcm: {
-        backgroundColor: '#F5F5DC',
-        titleColor: '#2E7D32',
-        contentColor: '#388E3C',
-        subtitleColor: '#689F38',
+        backgroundColor: '#F4F1E6',
+        titleColor: '#42603B',
+        contentColor: '#5E7B55',
+        subtitleColor: '#92A082',
       },
+  
       // 旅游 - 清新自然
       travel: {
-        backgroundColor: '#E8F5E9',
-        titleColor: '#00695C',
-        contentColor: '#00897B',
-        subtitleColor: '#26A69A',
+        backgroundColor: '#EDF6F2',
+        titleColor: '#23695E',
+        contentColor: '#3D877A',
+        subtitleColor: '#82B4A9',
       },
+  
       // 易经卦象 - 神秘深邃
       fortune: {
-        backgroundColor: '#263238',
-        titleColor: '#FFD700',
-        contentColor: '#FFC107',
-        subtitleColor: '#FFD54F',
+        backgroundColor: '#252B30',
+        titleColor: '#D8B86A',
+        contentColor: '#E6CC92',
+        subtitleColor: '#A99972',
       },
+  
       // 文学 - 典雅书香
       literature: {
-        backgroundColor: '#FFF8E1',
-        titleColor: '#5D4037',
-        contentColor: '#6D4C41',
-        subtitleColor: '#8D6E63',
+        backgroundColor: '#FBF5E8',
+        titleColor: '#5A4336',
+        contentColor: '#755C4C',
+        subtitleColor: '#A18775',
       },
-      // 外贸/电商/职场类 - 专业商务
+  
+      // 外贸 - 专业商务
       foreignTrade: {
-        backgroundColor: '#E3F2FD',
-        titleColor: '#1565C0',
-        contentColor: '#1976D2',
-        subtitleColor: '#42A5F5',
+        backgroundColor: '#EEF4FA',
+        titleColor: '#2A5D91',
+        contentColor: '#4474A5',
+        subtitleColor: '#7EA3C6',
       },
+  
+      // 电商 - 明快但不廉价
       ecommerce: {
-        backgroundColor: '#FCE4EC',
-        titleColor: '#C2185B',
-        contentColor: '#D81B60',
-        subtitleColor: '#EC407A',
+        backgroundColor: '#FFF3F6',
+        titleColor: '#B84B72',
+        contentColor: '#D06A8D',
+        subtitleColor: '#DDA1B5',
       },
-      // 学习类 - 知识清新
+  
+      // 数学 - 理性知识
       math: {
-        backgroundColor: '#E8EAF6',
-        titleColor: '#3949AB',
-        contentColor: '#5C6BC0',
-        subtitleColor: '#7986CB',
+        backgroundColor: '#EEF0FA',
+        titleColor: '#4652A8',
+        contentColor: '#6672C0',
+        subtitleColor: '#98A0D6',
       },
+  
+      // 英语 - 清爽学习
       english: {
-        backgroundColor: '#E3F2FD',
-        titleColor: '#1565C0',
-        contentColor: '#1E88E5',
-        subtitleColor: '#42A5F5',
+        backgroundColor: '#EEF6FC',
+        titleColor: '#2E6EA6',
+        contentColor: '#4C89BE',
+        subtitleColor: '#8CB5D5',
       },
+  
+      // 编程 - 深色极客
       programming: {
-        backgroundColor: '#1E1E1E',
-        titleColor: '#4FC3F7',
-        contentColor: '#81D4FA',
-        subtitleColor: '#4DD0E1',
+        backgroundColor: '#1C1F24',
+        titleColor: '#78D6FF',
+        contentColor: '#BFEFFF',
+        subtitleColor: '#63B6CC',
       },
-      // 达人生活类 - 时尚活力
+  
+      // 摄影 - 高级灰
       photography: {
-        backgroundColor: '#2C2C2C',
-        titleColor: '#FAFAFA',
-        contentColor: '#E0E0E0',
-        subtitleColor: '#BDBDBD',
+        backgroundColor: '#2A2A2A',
+        titleColor: '#F5F3EE',
+        contentColor: '#D8D4CD',
+        subtitleColor: '#A4A09A',
       },
+  
+      // 美妆 - 柔和明亮
       beauty: {
-        backgroundColor: '#FFF3E0',
-        titleColor: '#E65100',
-        contentColor: '#F57C00',
-        subtitleColor: '#FFB74D',
+        backgroundColor: '#FFF5EC',
+        titleColor: '#C2672D',
+        contentColor: '#D8874E',
+        subtitleColor: '#E7B287',
       },
+  
+      // 投资 - 稳定成长
       investment: {
-        backgroundColor: '#E8F5E9',
-        titleColor: '#1B5E20',
-        contentColor: '#2E7D32',
-        subtitleColor: '#43A047',
+        backgroundColor: '#EDF5EE',
+        titleColor: '#295A36',
+        contentColor: '#437750',
+        subtitleColor: '#7DA287',
       },
+  
+      // 健身 - 力量感
       fitness: {
-        backgroundColor: '#1A1A1A',
-        titleColor: '#FF5722',
-        contentColor: '#FF7043',
-        subtitleColor: '#FF8A65',
+        backgroundColor: '#1F1F1F',
+        titleColor: '#FF7B47',
+        contentColor: '#FFAB86',
+        subtitleColor: '#B58A78',
       },
+  
+      // 宠物 - 温暖可爱
       pet: {
-        backgroundColor: '#FFF8E1',
-        titleColor: '#FF8F00',
-        contentColor: '#FFA000',
-        subtitleColor: '#FFB300',
+        backgroundColor: '#FFF8ED',
+        titleColor: '#D1892D',
+        contentColor: '#E2A146',
+        subtitleColor: '#E7C28A',
       },
+  
+      // 时尚 - 极简高级
       fashion: {
-        backgroundColor: '#F5F5F5',
-        titleColor: '#212121',
-        contentColor: '#424242',
-        subtitleColor: '#757575',
+        backgroundColor: '#F6F6F4',
+        titleColor: '#2B2B2B',
+        contentColor: '#555555',
+        subtitleColor: '#8D8D8D',
       },
+  
+      // 穿搭 - 冷调现代
       outfit: {
-        backgroundColor: '#ECEFF1',
-        titleColor: '#455A64',
-        contentColor: '#607D8B',
-        subtitleColor: '#78909C',
+        backgroundColor: '#F0F3F4',
+        titleColor: '#4B5D66',
+        contentColor: '#687C86',
+        subtitleColor: '#95A5AD',
       },
+  
+      // 家装 - 温润家居
       decoration: {
-        backgroundColor: '#EFEBE9',
-        titleColor: '#5D4037',
-        contentColor: '#6D4C41',
-        subtitleColor: '#8D6E63',
+        backgroundColor: '#F2ECE7',
+        titleColor: '#644D40',
+        contentColor: '#7E6658',
+        subtitleColor: '#A18C7F',
       },
-      // 专业材料类
+  
+      // 玻璃纤维 - 工业理性
       glassFiber: {
-        backgroundColor: '#E0E0E0',
-        titleColor: '#424242',
-        contentColor: '#616161',
-        subtitleColor: '#757575',
+        backgroundColor: '#ECECEC',
+        titleColor: '#4A4A4A',
+        contentColor: '#686868',
+        subtitleColor: '#949494',
       },
+  
+      // 树脂 - 材料质感
       resin: {
-        backgroundColor: '#F3E5F5',
-        titleColor: '#7B1FA2',
-        contentColor: '#9C27B0',
-        subtitleColor: '#AB47BC',
+        backgroundColor: '#F6EFF9',
+        titleColor: '#72459B',
+        contentColor: '#8D63B1',
+        subtitleColor: '#B197C9',
       },
+  
+      // 税务 - 稳重权威
       tax: {
-        backgroundColor: '#E8EAF6',
-        titleColor: '#303F9F',
-        contentColor: '#3F51B5',
-        subtitleColor: '#5C6BC0',
+        backgroundColor: '#EEF0F8',
+        titleColor: '#3B4B9A',
+        contentColor: '#5967B2',
+        subtitleColor: '#8C97CC',
       },
+  
+      // 法律 - 冷静克制
       law: {
-        backgroundColor: '#ECEFF1',
-        titleColor: '#263238',
-        contentColor: '#37474F',
-        subtitleColor: '#546E7A',
+        backgroundColor: '#EEF2F3',
+        titleColor: '#2F3B42',
+        contentColor: '#4D5D67',
+        subtitleColor: '#80909A',
       },
+  
+      // 公文/官方 - 稳定规范
       official: {
-        backgroundColor: '#FFECB3',
-        titleColor: '#F57F17',
-        contentColor: '#FF6F00',
-        subtitleColor: '#FF8F00',
+        backgroundColor: '#FFF6D9',
+        titleColor: '#9E6A12',
+        contentColor: '#B57A1D',
+        subtitleColor: '#D19B4B',
       },
+  
+      // 办理/流程类 - 清晰明确
       handling: {
-        backgroundColor: '#F3E5F5',
-        titleColor: '#6A1B9A',
-        contentColor: '#7B1FA2',
-        subtitleColor: '#8E24AA',
+        backgroundColor: '#F6EFF8',
+        titleColor: '#69408D',
+        contentColor: '#8458A7',
+        subtitleColor: '#A98BC0',
       },
+  
+      // 花艺 - 柔美自然
       floral: {
-        backgroundColor: '#FCE4EC',
-        titleColor: '#AD1457',
-        contentColor: '#C2185B',
-        subtitleColor: '#D81B60',
+        backgroundColor: '#FDEEF2',
+        titleColor: '#A84A68',
+        contentColor: '#C06985',
+        subtitleColor: '#DCA1B3',
       },
+  
+      // 历史 - 旧纸卷轴感
       history: {
-        backgroundColor: '#FFF8E1',
-        titleColor: '#795548',
-        contentColor: '#8D6E63',
-        subtitleColor: '#A1887F',
+        backgroundColor: '#FBF4E5',
+        titleColor: '#6F5647',
+        contentColor: '#8A6E5D',
+        subtitleColor: '#B19786',
       },
+  
+      // 军事 - 冷峻克制
       military: {
-        backgroundColor: '#CFD8DC',
-        titleColor: '#263238',
-        contentColor: '#37474F',
-        subtitleColor: '#455A64',
+        backgroundColor: '#DDE3E6',
+        titleColor: '#324047',
+        contentColor: '#4A5B63',
+        subtitleColor: '#73848C',
       },
-      // 默认（首页/其他）
+  
+      // 默认首页/其他
       home: {
         backgroundColor: '#F6F2EA',
         titleColor: '#2B2B2B',
-        contentColor: '#B79C61',
+        contentColor: '#5C5245',
         subtitleColor: '#B79C61',
       },
-      //商务
-      bussiness:{
+  
+      // 商务
+      business: {
         backgroundColor: '#F5F5F3',
         titleColor: '#202020',
-        contentColor: '#8F7E62',
+        contentColor: '#4E4A43',
         subtitleColor: '#8F7E62',
-      }
+      },
+
     }
-    
+  
     return colorSchemes[type] || colorSchemes.home
   },
-
+  
   // ========= 二维码相关 =========
 
   async fetchQrCodeUrl(sharePath, appId) {

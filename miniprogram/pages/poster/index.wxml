@@ -23,7 +23,7 @@
     <posterCanvas
       id="posterCanvas" 
       template="editorial"
-      themePreset="forest"
+      themePreset="ink"
       title="{{posterConfig.title}}" 
       content="{{posterConfig.content}}" 
       subtitle="{{posterConfig.subtitle}}" 
