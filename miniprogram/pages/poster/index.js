@@ -688,12 +688,27 @@ async getCloudQrCode(sharePath) {
    * 对应 posterCanvas 的 error 事件
    */
   onPosterError(e) {
-    console.error('【海报页面】海报生成失败：', e.detail.error)
+    const error = e.detail?.error
+    console.error('【海报页面】海报生成失败：', error)
+    
     this.setData({
       isGenerating: false
     })
+    
+    // 安全地提取错误信息
+    let errorMsg = '海报生成失败'
+    if (error) {
+      if (typeof error === 'string') {
+        errorMsg = error
+      } else if (error.message) {
+        errorMsg = error.message
+      } else if (error.errMsg) {
+        errorMsg = error.errMsg
+      }
+    }
+    
     wx.showToast({
-      title: '海报生成失败',
+      title: errorMsg,
       icon: 'none'
     })
   },

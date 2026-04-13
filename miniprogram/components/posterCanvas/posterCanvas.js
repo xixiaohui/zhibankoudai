@@ -222,8 +222,25 @@ Component({
 
         await this.exportPoster()
       } catch (error) {
-        console.error('【posterCanvas】海报生成失败：', error)
-        this.triggerEvent('error', { error })
+        // 安全地处理错误对象
+        let errorMessage = '海报生成失败'
+        if (error != null) {
+          if (typeof error === 'string') {
+            errorMessage = error
+          } else if (error.message) {
+            errorMessage = error.message
+          } else if (error.errMsg) {
+            errorMessage = error.errMsg
+          } else {
+            try {
+              errorMessage = JSON.stringify(error)
+            } catch (e) {
+              errorMessage = String(error)
+            }
+          }
+        }
+        console.error('【posterCanvas】海报生成失败：', errorMessage)
+        this.triggerEvent('error', { error: errorMessage })
       } finally {
         if (!this._destroyed) {
           this.setData({ isGenerating: false })
@@ -546,7 +563,7 @@ Component({
       ctx.stroke()
       ctx.restore()
 
-      await this.drawQrImage(ctx, qrCodeUrl, qrX, qrY, qrSize, theme)
+      // await this.drawQrImage(ctx, qrCodeUrl, qrX, qrY, qrSize, theme)
     },
 
     // =========================
@@ -747,18 +764,18 @@ Component({
         ctx.shadowOffsetY = shadowOffsetY
       }
       this.roundRectPath(ctx, qrX - 8, qrY - 8, qrSize + 16, qrSize + 16, Math.max(radius - 6, 8))
-      ctx.fillStyle = theme.qrBg
+      ctx.fillStyle = theme.qrBg || '#FFFFFF'
       ctx.fill()
       ctx.restore()
 
       ctx.save()
       this.roundRectPath(ctx, qrX - 8, qrY - 8, qrSize + 16, qrSize + 16, Math.max(radius - 6, 8))
-      ctx.strokeStyle = theme.textLight
+      ctx.strokeStyle = theme.textLight || theme.subtitleColor || '#D4CFC5'
       ctx.lineWidth = 1
       ctx.stroke()
       ctx.restore()
 
-      await this.drawQrImage(ctx, qrCodeUrl, qrX, qrY, qrSize, theme)
+      // await this.drawQrImage(ctx, qrCodeUrl, qrX, qrY, qrSize, theme)
     },
 
     // =========================
@@ -971,7 +988,10 @@ Component({
     // 颜色工具
     // =========================
     isDarkColor(color) {
-      if (!color || !color.startsWith('#')) return false
+      // 安全检查：确保 color 是有效字符串
+      if (!color || typeof color !== 'string' || !color.startsWith('#')) {
+        return false
+      }
       const hex = color.replace('#', '')
       const fullHex = hex.length === 3
         ? hex.split('').map(c => c + c).join('')
@@ -982,13 +1002,20 @@ Component({
       const r = parseInt(fullHex.slice(0, 2), 16)
       const g = parseInt(fullHex.slice(2, 4), 16)
       const b = parseInt(fullHex.slice(4, 6), 16)
+      
+      // 检查 parseInt 结果是否有效
+      if (isNaN(r) || isNaN(g) || isNaN(b)) return false
+      
       const brightness = (r * 299 + g * 587 + b * 114) / 1000
 
       return brightness < 145
     },
 
     toRgba(color, alpha) {
-      if (!color) return `rgba(0,0,0,${alpha})`
+      // 安全检查：确保 color 是有效字符串
+      if (!color || typeof color !== 'string') {
+        return `rgba(128,128,128,${alpha})` // 返回灰色作为默认值
+      }
 
       if (color.startsWith('rgba(')) return color
       if (color.startsWith('rgb(')) {
@@ -997,7 +1024,8 @@ Component({
 
       const hex = color.replace('#', '')
       if (hex.length !== 3 && hex.length !== 6) {
-        return color
+        // 返回默认值而不是无效值
+        return `rgba(128,128,128,${alpha})`
       }
 
       const fullHex = hex.length === 3
@@ -1007,6 +1035,11 @@ Component({
       const r = parseInt(fullHex.slice(0, 2), 16)
       const g = parseInt(fullHex.slice(2, 4), 16)
       const b = parseInt(fullHex.slice(4, 6), 16)
+
+      // 检查 parseInt 结果是否有效
+      if (isNaN(r) || isNaN(g) || isNaN(b)) {
+        return `rgba(128,128,128,${alpha})`
+      }
 
       return `rgba(${r}, ${g}, ${b}, ${alpha})`
     },
