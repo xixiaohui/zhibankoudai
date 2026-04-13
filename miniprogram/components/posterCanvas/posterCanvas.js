@@ -766,33 +766,58 @@ Component({
     // =========================
     async drawQrImage(ctx, qrCodeUrl, x, y, size, theme) {
       if (!qrCodeUrl) {
+        console.log('【posterCanvas】qrCodeUrl 为空，使用占位图')
         this.drawQrPlaceholder(ctx, x, y, size, theme)
         return
       }
 
+      console.log('【posterCanvas】drawQrImage:', qrCodeUrl)
       try {
         const qrPath = await this.getLocalImage(qrCodeUrl)
-        const img = this.canvas.createImage()
+        console.log('【posterCanvas】getLocalImage 返回:', qrPath)
+        
+        if (!qrPath) {
+          console.warn('【posterCanvas】qrPath 为空，使用占位图')
+          this.drawQrPlaceholder(ctx, x, y, size, theme)
+          return
+        }
 
-        await new Promise((resolve, reject) => {
-          img.onload = resolve
-          img.onerror = reject
+        const img = this.canvas.createImage()
+        
+        // 添加超时处理
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('图片加载超时')), 5000)
+        })
+        
+        const loadPromise = new Promise((resolve, reject) => {
+          img.onload = () => {
+            console.log('【posterCanvas】图片加载成功:', img.width, img.height)
+            resolve()
+          }
+          img.onerror = (err) => {
+            console.error('【posterCanvas】图片加载失败:', err, '路径:', qrPath)
+            reject(err)
+          }
           img.src = qrPath
         })
-
+        
+        await Promise.race([loadPromise, timeoutPromise])
+        console.log('【posterCanvas】准备绘制二维码')
         ctx.drawImage(img, x, y, size, size)
+        console.log('【posterCanvas】二维码绘制完成')
       } catch (e) {
-        console.warn('【posterCanvas】二维码加载失败，回退占位图', e)
+        console.warn('【posterCanvas】二维码加载失败，回退占位图', e.message || e)
         this.drawQrPlaceholder(ctx, x, y, size, theme)
       }
     },
 
     drawQrPlaceholder(ctx, x, y, size, theme) {
       ctx.save()
-      ctx.fillStyle = theme.qrBg
+      // 使用现有属性或默认值
+      ctx.fillStyle = theme.accent || '#F5F0E8'
       ctx.fillRect(x, y, size, size)
 
-      ctx.strokeStyle = theme.accentLine
+      ctx.strokeStyle = theme.textLight || theme.subtitleColor || '#D4CFC5'
       ctx.lineWidth = 1
       ctx.strokeRect(x, y, size, size)
 
