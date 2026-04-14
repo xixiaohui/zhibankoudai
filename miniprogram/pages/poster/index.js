@@ -567,7 +567,7 @@ Page({
   async fetchQrCodeUrl(sharePath, appId) {
     try {
       // 优先使用本地二维码图片
-      const localQrCode = '../../images/qrcode.jpg'
+      const localQrCode = '/images/qrcode.jpg'
       
       this.setData({
         'posterConfig.qrCodeUrl': localQrCode,

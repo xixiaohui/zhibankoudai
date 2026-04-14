@@ -27,12 +27,12 @@
       </view>
       <!-- 刷新按钮 -->
       <view 
-        class="refresh-btn" 
+        class="refresh-btn {{isLoading ? 'loading' : ''}}" 
         style="background: linear-gradient(135deg, {{config.colors.primary}} 0%, {{config.colors.accent}} 100%);"
         bindtap="onRefresh" 
         hover-class="btn-active"
       >
-        <text class="refresh-icon">↻</text>
+        <text class="refresh-icon {{isLoading ? 'spin' : ''}}">↻</text>
         <text class="refresh-text">{{isLoading ? '生成中...' : config.refreshText}}</text>
       </view>
     </view>

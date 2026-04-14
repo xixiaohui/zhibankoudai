@@ -1,5 +1,5 @@
 // components/dailyCard/dailyCard.js - 每日内容卡片组件
-const { MODULE_TYPES, MODULE_CONFIGS, FALLBACK_DATA, AI_PROMPTS } = require('../../utils/dailyModule.js')
+const { MODULE_TYPES, MODULE_CONFIGS, FALLBACK_DATA } = require('../../utils/dailyModule.js')
 const { DailyContent } = require('../../utils/dailyContent.js')
 
 // 全局请求队列，控制同时发起的 AI 请求数量
@@ -40,6 +40,33 @@ function enqueueRequest(fn) {
   })
 }
 
+/**
+ * 获取兜底数据（使用日期作为种子，保证每天固定）
+ */
+function getFallbackContent(moduleType, config) {
+  const fallbackList = FALLBACK_DATA[moduleType]
+  if (!fallbackList || fallbackList.length === 0) {
+    return null
+  }
+  
+  // 使用日期种子，保证每天看到相同内容
+  const today = new Date()
+  const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate()
+  const index = seed % fallbackList.length
+  
+  const fallback = { ...fallbackList[index] }
+  fallback.date = today.toISOString().split('T')[0]
+  fallback.isAIGenerated = false
+  fallback.isFallback = true
+  
+  // 添加来源标记
+  if (!fallback.source) {
+    fallback.source = config.name || '每日推荐'
+  }
+  
+  return fallback
+}
+
 Component({
   properties: {
     // 板块类型：quote/joke/psychology/finance/love/movie
@@ -54,6 +81,8 @@ Component({
     content: null,
     isLoading: false,
     tags: [],
+    isAILoading: false, // AI生成中（用于显示加载动画）
+    hasAIRefreshed: false, // 是否已经过AI刷新过
   },
 
   lifetimes: {
@@ -81,15 +110,24 @@ Component({
       }
       this.setData({ config })
 
-      // 加载缓存
+      // 1. 先检查缓存（今天的数据直接使用）
       const cached = wx.getStorageSync(config.storageKey)
       if (cached) {
         const today = new Date().toISOString().split('T')[0]
         if (cached.date === today) {
-          this.setData({ content: cached })
+          this.setData({ content: cached, hasAIRefreshed: cached.isAIGenerated || false })
           this._buildTags(cached)
+          return
         }
       }
+
+      // 2. 无缓存时，立即显示兜底数据（不调用AI）
+      const fallback = getFallbackContent(this.properties.moduleType, config)
+      if (fallback) {
+        this.setData({ content: fallback })
+        this._buildTags(fallback)
+      }
+      // 初始化时不调用AI，仅用户点击"换一条"时才触发
     },
 
     // 构建标签
@@ -144,8 +182,8 @@ Component({
       this.setData({ tags })
     },
 
-    // 加载内容
-    async loadContent() {
+    // 加载内容（仅从缓存/兜底加载，不调AI）
+    loadContent() {
       const { config } = this.data
       if (!config) return
 
@@ -154,17 +192,21 @@ Component({
       if (cached) {
         const today = new Date().toISOString().split('T')[0]
         if (cached.date === today) {
-          this.setData({ content: cached })
+          this.setData({ content: cached, hasAIRefreshed: cached.isAIGenerated || false })
           this._buildTags(cached)
           return
         }
       }
 
-      // 触发加载
-      await this._fetchContent(false)
+      // 无缓存，显示兜底（不调用AI）
+      const fallback = getFallbackContent(this.properties.moduleType, config)
+      if (fallback) {
+        this.setData({ content: fallback })
+        this._buildTags(fallback)
+      }
     },
 
-    // 刷新内容
+    // 刷新内容（用户点击"换一条"，强制调用AI）
     async onRefresh() {
       if (this.data.isLoading) return
       await this._fetchContent(true)
@@ -175,7 +217,7 @@ Component({
       const { config, moduleType } = this.data
       if (!config || this.data.isLoading) return
 
-      this.setData({ isLoading: true })
+      this.setData({ isLoading: true, isAILoading: true })
 
       try {
         let content
@@ -266,16 +308,22 @@ Component({
           // 保存到云数据库
           await this._saveToCloud(content)
           // 更新UI
-          this.setData({ content })
+          this.setData({ 
+            content,
+            hasAIRefreshed: true
+          })
           this._buildTags(content)
           // 触发事件
           this.triggerEvent('contentchange', { content, moduleType })
         }
       } catch (e) {
-        console.error(`[DailyCard] 获取内容失败 (${moduleType}):`, e)
-        wx.showToast({ title: '获取失败，请重试', icon: 'none' })
+        console.error(`[DailyCard] AI生成失败 (${moduleType}):`, e?.message || e)
+        // AI生成失败时，如果有兜底数据就保持，没有则提示（用户主动刷新时）
+        if (refresh && !this.data.content) {
+          wx.showToast({ title: '获取失败，请重试', icon: 'none' })
+        }
       } finally {
-        this.setData({ isLoading: false })
+        this.setData({ isLoading: false, isAILoading: false })
       }
     },
 

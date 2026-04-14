@@ -714,3 +714,27 @@
   border-radius: 16rpx;
   font-size: 22rpx;
 }
+
+/* 刷新按钮加载状态 */
+.refresh-btn.loading {
+  opacity: 0.7;
+}
+
+.refresh-btn.loading:active {
+  transform: none;
+}
+
+/* 旋转动画 */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
