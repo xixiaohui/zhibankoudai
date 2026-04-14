@@ -186,9 +186,69 @@ Page({
     }
   },
 
-  // 打开海报弹窗
+  // 跳转到海报页面
   onGeneratePoster() {
-    this.setData({ showPoster: true })
+    const { currentModule, content } = this.data
+    if (!currentModule || !content) {
+      wx.showToast({ title: '数据加载中', icon: 'none' })
+      return
+    }
+
+    // 构建海报页面参数
+    const params = {
+      type: currentModule.id,
+      title: encodeURIComponent(content.text || content.title || content.content || ''),
+      content: encodeURIComponent(content.summary || content.content || ''),
+      subtitle: encodeURIComponent(this._buildSubtitle(currentModule.id, content)),
+      icon: encodeURIComponent(currentModule.icon || ''),
+      author: encodeURIComponent(content.author || ''),
+      category: currentModule.id,
+      bgColor: encodeURIComponent(currentModule.colors?.bg || '#F6F2EA'),
+      titleColor: encodeURIComponent(currentModule.colors?.primary || '#2B2B2B'),
+      contentColor: encodeURIComponent(currentModule.colors?.text || '#5C5245'),
+    }
+
+    // 构建 URL 参数
+    const queryString = Object.entries(params)
+      .filter(([_, v]) => v && v !== 'undefined' && v !== 'null')
+      .map(([k, v]) => `${k}=${v}`)
+      .join('&')
+
+    wx.navigateTo({
+      url: `/pages/poster/index?${queryString}`
+    })
+  },
+
+  // 构建副标题
+  _buildSubtitle(moduleId, content) {
+    switch (moduleId) {
+      case MODULE_TYPES.QUOTE:
+        return content.author || content.domainName || ''
+      case MODULE_TYPES.JOKE:
+        return content.scene ? `${content.sceneIcon || ''} ${content.scene}` : ''
+      case MODULE_TYPES.PSYCHOLOGY:
+        return content.field ? `${content.fieldIcon || ''} ${content.field}` : ''
+      case MODULE_TYPES.FINANCE:
+        return content.category ? `${content.categoryIcon || ''} ${content.category}` : ''
+      case MODULE_TYPES.LOVE:
+        return content.author || ''
+      case MODULE_TYPES.MOVIE:
+        return [content.director, content.year && `${content.year}年`, content.rating && `⭐${content.rating}`].filter(Boolean).join(' | ')
+      case MODULE_TYPES.MUSIC:
+        return [content.artist, content.album, content.year].filter(Boolean).join(' | ')
+      case MODULE_TYPES.TECH:
+        return content.category ? `${content.categoryIcon || ''} ${content.category}` : ''
+      case MODULE_TYPES.TCM:
+        return content.category ? `${content.categoryIcon || ''} ${content.category}` : ''
+      case MODULE_TYPES.TRAVEL:
+        return content.region ? `${content.regionIcon || ''} ${content.region}` : ''
+      case MODULE_TYPES.FORTUNE:
+        return content.category ? `${content.categoryIcon || ''} ${content.category}` : ''
+      case MODULE_TYPES.LITERATURE:
+        return [content.era, content.region].filter(Boolean).join(' · ')
+      default:
+        return content.subtitle || ''
+    }
   },
 
   // 关闭海报弹窗

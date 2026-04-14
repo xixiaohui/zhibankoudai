@@ -41,6 +41,166 @@
       <text>{{displayExtra}}</text>
     </view>
 
+    <!-- ========== 详细内容展示区域 ========== -->
+    
+    <!-- 关键要点 (keyPoints) -->
+    <block wx:if="{{content.keyPoints && content.keyPoints.length > 0}}">
+      <view class="section-title">
+        <text style="color: {{currentModule.colors.primary}};">📌 核心要点</text>
+      </view>
+      <view class="key-points-list">
+        <block wx:for="{{content.keyPoints}}" wx:key="index">
+          <view class="key-point-item">
+            <text class="point-num">{{index + 1}}.</text>
+            <text class="point-text">{{item}}</text>
+          </view>
+        </block>
+      </view>
+    </block>
+
+    <!-- 分析说明 (analysis) -->
+    <block wx:if="{{content.analysis}}">
+      <view class="section-title">
+        <text style="color: {{currentModule.colors.primary}};">📊 深度分析</text>
+      </view>
+      <view class="section-content">
+        <text class="content-text">{{content.analysis}}</text>
+      </view>
+    </block>
+
+    <!-- 实用建议 (tips) -->
+    <block wx:if="{{content.tips}}">
+      <view class="section-title">
+        <text style="color: {{currentModule.colors.primary}};">💡 实用建议</text>
+      </view>
+      <view class="section-content">
+        <text class="content-text">{{content.tips}}</text>
+      </view>
+    </block>
+
+    <!-- 投资要点 / 使用方法 (usage) -->
+    <block wx:if="{{content.usage}}">
+      <view class="section-title">
+        <text style="color: {{currentModule.colors.primary}};">📋 使用方法</text>
+      </view>
+      <view class="section-content">
+        <text class="content-text">{{content.usage}}</text>
+      </view>
+    </block>
+
+    <!-- 警告提示 (warning) -->
+    <block wx:if="{{content.warning}}">
+      <view class="section-title warning">
+        <text style="color: #E64340;">⚠️ 风险提示</text>
+      </view>
+      <view class="section-content warning-content">
+        <text class="content-text">{{content.warning}}</text>
+      </view>
+    </block>
+
+    <!-- 最佳时间 (bestTime) -->
+    <block wx:if="{{content.bestTime}}">
+      <view class="section-title">
+        <text style="color: {{currentModule.colors.primary}};">🗓️ 最佳时间</text>
+      </view>
+      <view class="section-content">
+        <text class="content-text">{{content.bestTime}}</text>
+      </view>
+    </block>
+
+    <!-- 评分信息 (rating) -->
+    <block wx:if="{{content.rating}}">
+      <view class="section-title">
+        <text style="color: {{currentModule.colors.primary}};">⭐ 评分</text>
+      </view>
+      <view class="section-content">
+        <text class="content-text">{{content.rating}} 分</text>
+      </view>
+    </block>
+
+    <!-- 引用语 (quote) -->
+    <block wx:if="{{content.quote}}">
+      <view class="section-title">
+        <text style="color: {{currentModule.colors.primary}};">❝ 经典台词</text>
+      </view>
+      <view class="section-content quote-content">
+        <text class="content-text">"{{content.quote}}"</text>
+      </view>
+    </block>
+
+    <!-- 歌词 (lyric) -->
+    <block wx:if="{{content.lyric}}">
+      <view class="section-title">
+        <text style="color: {{currentModule.colors.primary}};">🎵 精选歌词</text>
+      </view>
+      <view class="section-content lyric-content">
+        <text class="content-text">{{content.lyric}}</text>
+      </view>
+    </block>
+
+    <!-- 影响力 (impact) -->
+    <block wx:if="{{content.impact}}">
+      <view class="section-title">
+        <text style="color: {{currentModule.colors.primary}};">🌟 影响力</text>
+      </view>
+      <view class="section-content">
+        <text class="content-text">{{content.impact}}</text>
+      </view>
+    </block>
+
+    <!-- 来源出处 (source) -->
+    <block wx:if="{{content.source}}">
+      <view class="section-title">
+        <text style="color: {{currentModule.colors.primary}};">📖 来源</text>
+      </view>
+      <view class="section-content">
+        <text class="content-text">{{content.source}}</text>
+      </view>
+    </block>
+
+    <!-- 风格 (style) -->
+    <block wx:if="{{content.style}}">
+      <view class="section-title">
+        <text style="color: {{currentModule.colors.primary}};">🎨 风格</text>
+      </view>
+      <view class="section-content">
+        <text class="content-text">{{content.style}}</text>
+      </view>
+    </block>
+
+    <!-- ========== 幸运信息展示 (fortune模块) ========== -->
+    <block wx:if="{{currentModule.id === 'fortune'}}">
+      <!-- 幸运方位 -->
+      <block wx:if="{{content.luckyDir}}">
+        <view class="section-title">
+          <text style="color: {{currentModule.colors.primary}};">🧭 幸运方位</text>
+        </view>
+        <view class="section-content">
+          <text class="content-text">{{content.luckyDir}}</text>
+        </view>
+      </block>
+      
+      <!-- 幸运颜色 -->
+      <block wx:if="{{content.luckyColor}}">
+        <view class="section-title">
+          <text style="color: {{currentModule.colors.primary}};">🎨 幸运色</text>
+        </view>
+        <view class="section-content">
+          <text class="content-text">{{content.luckyColor}}</text>
+        </view>
+      </block>
+      
+      <!-- 幸运数字 -->
+      <block wx:if="{{content.luckyNum}}">
+        <view class="section-title">
+          <text style="color: {{currentModule.colors.primary}};">🔢 幸运数字</text>
+        </view>
+        <view class="section-content">
+          <text class="content-text">{{content.luckyNum}}</text>
+        </view>
+      </block>
+    </block>
+
     <!-- 引用装饰（名言） -->
     <view class="quote-decor" wx:if="{{currentModule.id === 'quote'}}">
       <text class="quote-mark" style="color: {{currentModule.colors.primary}};">"</text>
@@ -66,14 +226,4 @@
       <text class="btn-text">复制内容</text>
     </button>
   </view>
-
-  <!-- 海报弹窗组件 -->
-  <posterCanvas
-    id="posterCanvas"
-    posterType="{{posterType}}"
-    content="{{content}}"
-    visible="{{showPoster}}"
-    bind:close="onClosePoster"
-    bind:save="onPosterSave"
-  />
 </view>

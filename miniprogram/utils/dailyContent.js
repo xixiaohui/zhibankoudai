@@ -117,12 +117,47 @@ async function callAI(messages, opts = {}) {
   return text || result
 }
 
+// ─── 云数据库去重检查函数 ─────────────────────────────────────────────────
+
+/**
+ * 检查内容是否已存在于云数据库
+ * @param {string} collectionName - 集合名称
+ * @param {string} checkField - 检查字段名
+ * @param {string} checkValue - 检查字段值
+ * @returns {Promise<boolean>} - 存在返回 true，不存在返回 false
+ */
+async function checkContentExists(collectionName, checkField, checkValue) {
+  if (!checkValue) return false
+  
+  try {
+    const db = wx.cloud.database()
+    const res = await db.collection(collectionName)
+      .where({
+        [checkField]: checkValue
+      })
+      .limit(1)
+      .get()
+    
+    return res.data && res.data.length > 0
+  } catch (e) {
+    console.error(`[DailyContent] 检查${collectionName}内容是否存在失败:`, e.message)
+    return false  // 检查失败时默认不阻止保存
+  }
+}
+
 // ─── 云数据库保存函数 ─────────────────────────────────────────────────
 
 /**
  * 保存名言到云数据库
  */
 async function saveQuoteToCloud(quote) {
+  // 去重检查：以内容作为唯一标识
+  const isExists = await checkContentExists('dailyQuotes', 'content', quote.content)
+  if (isExists) {
+    console.log('[DailyContent] 名言已存在，跳过保存:', quote.content.substring(0, 20) + '...')
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyQuotes').add({
@@ -151,6 +186,13 @@ async function saveQuoteToCloud(quote) {
  * 保存段子到云数据库
  */
 async function saveJokeToCloud(joke) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyJokes', 'title', joke.title)
+  if (isExists) {
+    console.log('[DailyContent] 段子已存在，跳过保存:', joke.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyJokes').add({
@@ -176,6 +218,13 @@ async function saveJokeToCloud(joke) {
  * 保存心理学知识到云数据库
  */
 async function savePsychologyToCloud(psychology) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyPsychology', 'title', psychology.title)
+  if (isExists) {
+    console.log('[DailyContent] 心理学知识已存在，跳过保存:', psychology.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyPsychology').add({
@@ -201,6 +250,13 @@ async function savePsychologyToCloud(psychology) {
  * 保存金融知识到云数据库
  */
 async function saveFinanceToCloud(finance) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyFinance', 'title', finance.title)
+  if (isExists) {
+    console.log('[DailyContent] 金融知识已存在，跳过保存:', finance.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyFinance').add({
@@ -523,6 +579,13 @@ async function generateFinance() {
  * 保存情话到云数据库
  */
 async function saveLoveToCloud(love) {
+  // 去重检查：以内容作为唯一标识
+  const isExists = await checkContentExists('dailyLoves', 'content', love.content)
+  if (isExists) {
+    console.log('[DailyContent] 情话已存在，跳过保存:', love.content.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyLoves').add({
@@ -532,8 +595,10 @@ async function saveLoveToCloud(love) {
       }
     })
     console.log('[DailyContent] 情话已保存到云数据库')
+    return true
   } catch (e) {
     console.error('[DailyContent] 保存情话到云数据库失败:', e)
+    return false
   }
 }
 
@@ -615,6 +680,13 @@ async function generateLove() {
  * 保存电影到云数据库
  */
 async function saveMovieToCloud(movie) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyMovies', 'title', movie.title)
+  if (isExists) {
+    console.log('[DailyContent] 电影已存在，跳过保存:', movie.title)
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyMovies').add({
@@ -746,6 +818,13 @@ async function generateMovie() {
  * 保存音乐到云数据库
  */
 async function saveMusicToCloud(music) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyMusics', 'title', music.title)
+  if (isExists) {
+    console.log('[DailyContent] 音乐已存在，跳过保存:', music.title)
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyMusics').add({
@@ -880,6 +959,13 @@ async function generateMusic() {
  * 保存科技知识到云数据库
  */
 async function saveTechToCloud(tech) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyTechs', 'title', tech.title)
+  if (isExists) {
+    console.log('[DailyContent] 科技知识已存在，跳过保存:', tech.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyTechs').add({
@@ -992,6 +1078,13 @@ async function generateTech() {
  * 保存中医知识到云数据库
  */
 async function saveTcmToCloud(tcm) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyTcms', 'title', tcm.title)
+  if (isExists) {
+    console.log('[DailyContent] 中医知识已存在，跳过保存:', tcm.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyTcms').add({
@@ -1104,6 +1197,13 @@ async function generateTcm() {
  * 保存旅游知识到云数据库
  */
 async function saveTravelToCloud(travel) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyTravels', 'title', travel.title)
+  if (isExists) {
+    console.log('[DailyContent] 旅游知识已存在，跳过保存:', travel.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyTravels').add({
@@ -1218,6 +1318,13 @@ async function generateTravel() {
  * 保存占卜知识到云数据库
  */
 async function saveFortuneToCloud(fortune) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyFortunes', 'title', fortune.title)
+  if (isExists) {
+    console.log('[DailyContent] 占卜知识已存在，跳过保存:', fortune.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyFortunes').add({
@@ -1355,6 +1462,13 @@ async function generateFortune() {
  * 保存文学知识到云数据库
  */
 async function saveLiteratureToCloud(literature) {
+  // 去重检查：以作者名作为唯一标识
+  const isExists = await checkContentExists('dailyLiteratures', 'author', literature.author)
+  if (isExists) {
+    console.log('[DailyContent] 文学知识已存在，跳过保存:', literature.author)
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyLiteratures').add({
@@ -1484,6 +1598,13 @@ async function generateLiterature() {
  * 保存外贸知识到云数据库
  */
 async function saveForeignTradeToCloud(foreignTrade) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyForeignTrades', 'title', foreignTrade.title)
+  if (isExists) {
+    console.log('[DailyContent] 外贸知识已存在，跳过保存:', foreignTrade.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyForeignTrades').add({
@@ -1597,6 +1718,13 @@ async function generateForeignTrade() {
  * 保存电商知识到云数据库
  */
 async function saveECommerceToCloud(ecommerce) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyECommerces', 'title', ecommerce.title)
+  if (isExists) {
+    console.log('[DailyContent] 电商知识已存在，跳过保存:', ecommerce.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyECommerces').add({
@@ -1779,6 +1907,13 @@ async function generateECommerce() {
  * 保存数学知识到云数据库
  */
 async function saveMathToCloud(math) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyMaths', 'title', math.title)
+  if (isExists) {
+    console.log('[DailyContent] 数学知识已存在，跳过保存:', math.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyMaths').add({
@@ -1959,6 +2094,13 @@ async function generateMath() {
  * 保存英语知识到云数据库
  */
 async function saveEnglishToCloud(english) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyEnglishes', 'title', english.title)
+  if (isExists) {
+    console.log('[DailyContent] 英语知识已存在，跳过保存:', english.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyEnglishes').add({
@@ -2173,6 +2315,13 @@ async function generateEnglish() {
  * 保存编程知识到云数据库
  */
 async function saveProgrammingToCloud(programming) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyProgrammings', 'title', programming.title)
+  if (isExists) {
+    console.log('[DailyContent] 编程知识已存在，跳过保存:', programming.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyProgrammings').add({
@@ -2387,6 +2536,13 @@ async function generateProgramming() {
  * 保存摄影知识到云数据库
  */
 async function savePhotographyToCloud(photography) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyPhotographies', 'title', photography.title)
+  if (isExists) {
+    console.log('[DailyContent] 摄影知识已存在，跳过保存:', photography.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyPhotographies').add({
@@ -2611,6 +2767,13 @@ async function generatePhotography() {
  * 保存美妆知识到云数据库
  */
 async function saveBeautyToCloud(beauty) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyBeauties', 'title', beauty.title)
+  if (isExists) {
+    console.log('[DailyContent] 美妆知识已存在，跳过保存:', beauty.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyBeauties').add({
@@ -2835,6 +2998,13 @@ async function generateBeauty() {
  * 保存投资理财知识到云数据库
  */
 async function saveInvestmentToCloud(investment) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyInvestments', 'title', investment.title)
+  if (isExists) {
+    console.log('[DailyContent] 投资理财知识已存在，跳过保存:', investment.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyInvestments').add({
@@ -3059,6 +3229,13 @@ async function generateInvestment() {
  * 保存钓鱼知识到云数据库
  */
 async function saveFishingToCloud(fishing) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyFishings', 'title', fishing.title)
+  if (isExists) {
+    console.log('[DailyContent] 钓鱼知识已存在，跳过保存:', fishing.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyFishings').add({
@@ -3283,6 +3460,13 @@ async function generateFishing() {
  * 保存健身知识到云数据库
  */
 async function saveFitnessToCloud(fitness) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyFitnesses', 'title', fitness.title)
+  if (isExists) {
+    console.log('[DailyContent] 健身知识已存在，跳过保存:', fitness.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyFitnesses').add({
@@ -3507,6 +3691,13 @@ async function generateFitness() {
  * 保存宠物知识到云数据库
  */
 async function savePetToCloud(pet) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyPets', 'title', pet.title)
+  if (isExists) {
+    console.log('[DailyContent] 宠物知识已存在，跳过保存:', pet.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyPets').add({
@@ -3727,6 +3918,13 @@ async function generatePet() {
 // ─── 时尚达人 ─────────────────────────────────────────────────
 
 async function saveFashionToCloud(fashion) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyFashions', 'title', fashion.title)
+  if (isExists) {
+    console.log('[DailyContent] 时尚知识已存在，跳过保存:', fashion.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyFashions').add({
@@ -3911,6 +4109,13 @@ async function generateFashion() {
 // ─── 穿搭达人 ─────────────────────────────────────────────────
 
 async function saveOutfitToCloud(outfit) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyOutfits', 'title', outfit.title)
+  if (isExists) {
+    console.log('[DailyContent] 穿搭知识已存在，跳过保存:', outfit.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyOutfits').add({
@@ -4095,6 +4300,13 @@ async function generateOutfit() {
 // ─── 装修达人 ─────────────────────────────────────────────────
 
 async function saveDecorationToCloud(decoration) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyDecorations', 'title', decoration.title)
+  if (isExists) {
+    console.log('[DailyContent] 装修知识已存在，跳过保存:', decoration.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyDecorations').add({
@@ -4279,6 +4491,13 @@ async function generateDecoration() {
 // ─── 玻纤达人 ─────────────────────────────────────────────────
 
 async function saveFiberToCloud(fiber) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyGlassFibers', 'title', fiber.title)
+  if (isExists) {
+    console.log('[DailyContent] 玻纤知识已存在，跳过保存:', fiber.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyGlassFibers').add({
@@ -4461,6 +4680,13 @@ async function generateFiber() {
 // ─── 树脂达人 ─────────────────────────────────────────────────
 
 async function saveResinToCloud(resin) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyResins', 'title', resin.title)
+  if (isExists) {
+    console.log('[DailyContent] 树脂知识已存在，跳过保存:', resin.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyResins').add({
@@ -4643,6 +4869,13 @@ async function generateResin() {
 // ─── 财税助手 ─────────────────────────────────────────────────
 
 async function saveTaxToCloud(tax) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyTaxs', 'title', tax.title)
+  if (isExists) {
+    console.log('[DailyContent] 财税知识已存在，跳过保存:', tax.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyTaxs').add({
@@ -4825,6 +5058,13 @@ async function generateTax() {
 // ─── 法律顾问 ─────────────────────────────────────────────────
 
 async function saveLawToCloud(law) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyLaws', 'title', law.title)
+  if (isExists) {
+    console.log('[DailyContent] 法律知识已存在，跳过保存:', law.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyLaws').add({
@@ -5007,6 +5247,13 @@ async function generateLaw() {
 // ─── 官场达人 ─────────────────────────────────────────────────
 
 async function saveOfficialToCloud(item) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyOfficials', 'title', item.title)
+  if (isExists) {
+    console.log('[DailyContent] 官场达人已存在，跳过保存:', item.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyOfficials').add({ data: item })
@@ -5103,6 +5350,13 @@ async function generateOfficial() {
 // ─── 处事达人 ─────────────────────────────────────────────────
 
 async function saveHandlingToCloud(item) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyHandlings', 'title', item.title)
+  if (isExists) {
+    console.log('[DailyContent] 处事达人已存在，跳过保存:', item.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyHandlings').add({ data: item })
@@ -5167,6 +5421,13 @@ async function generateHandling() {
 // ─── 花艺达人 ─────────────────────────────────────────────────
 
 async function saveFloralToCloud(item) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyFlorals', 'title', item.title)
+  if (isExists) {
+    console.log('[DailyContent] 花艺达人已存在，跳过保存:', item.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyFlorals').add({ data: item })
@@ -5231,6 +5492,13 @@ async function generateFloral() {
 // ─── 历史典故达人 ─────────────────────────────────────────────────
 
 async function saveHistoryToCloud(item) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyHistorys', 'title', item.title)
+  if (isExists) {
+    console.log('[DailyContent] 历史典故已存在，跳过保存:', item.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyHistorys').add({ data: item })
@@ -5295,6 +5563,13 @@ async function generateHistory() {
 // ─── 军事达人 ─────────────────────────────────────────────────
 
 async function saveMilitaryToCloud(item) {
+  // 去重检查：以标题作为唯一标识
+  const isExists = await checkContentExists('dailyMilitarys', 'title', item.title)
+  if (isExists) {
+    console.log('[DailyContent] 军事达人已存在，跳过保存:', item.title.substring(0, 20))
+    return false
+  }
+  
   try {
     const db = wx.cloud.database()
     await db.collection('dailyMilitarys').add({ data: item })
@@ -5356,6 +5631,231 @@ async function generateMilitary() {
   return result
 }
 
+// ─── 云数据库去重工具方法 ─────────────────────────────────────────────────
+
+/**
+ * 所有模块的云数据库集合配置
+ * collection: 集合名称
+ * uniqueField: 唯一标识字段（用于去重判断）
+ */
+const COLLECTION_CONFIGS = [
+  { collection: 'dailyQuotes', uniqueField: 'content' },
+  { collection: 'dailyJokes', uniqueField: 'title' },
+  { collection: 'dailyPsychology', uniqueField: 'title' },
+  { collection: 'dailyFinance', uniqueField: 'title' },
+  { collection: 'dailyLoves', uniqueField: 'content' },
+  { collection: 'dailyMovies', uniqueField: 'title' },
+  { collection: 'dailyMusics', uniqueField: 'title' },
+  { collection: 'dailyTechs', uniqueField: 'title' },
+  { collection: 'dailyTcms', uniqueField: 'title' },
+  { collection: 'dailyTravels', uniqueField: 'title' },
+  { collection: 'dailyFortunes', uniqueField: 'title' },
+  { collection: 'dailyLiteratures', uniqueField: 'author' },
+  { collection: 'dailyForeignTrades', uniqueField: 'title' },
+  { collection: 'dailyECommerces', uniqueField: 'title' },
+  { collection: 'dailyMaths', uniqueField: 'title' },
+  { collection: 'dailyEnglishes', uniqueField: 'title' },
+  { collection: 'dailyProgrammings', uniqueField: 'title' },
+  { collection: 'dailyPhotographies', uniqueField: 'title' },
+  { collection: 'dailyBeauties', uniqueField: 'title' },
+  { collection: 'dailyInvestments', uniqueField: 'title' },
+  { collection: 'dailyFishings', uniqueField: 'title' },
+  { collection: 'dailyFitnesses', uniqueField: 'title' },
+  { collection: 'dailyPets', uniqueField: 'title' },
+  { collection: 'dailyFashions', uniqueField: 'title' },
+  { collection: 'dailyOutfits', uniqueField: 'title' },
+  { collection: 'dailyDecorations', uniqueField: 'title' },
+  { collection: 'dailyGlassFibers', uniqueField: 'title' },
+  { collection: 'dailyResins', uniqueField: 'title' },
+  { collection: 'dailyTaxs', uniqueField: 'title' },
+  { collection: 'dailyLaws', uniqueField: 'title' },
+  { collection: 'dailyOfficials', uniqueField: 'title' },
+  { collection: 'dailyHandlings', uniqueField: 'title' },
+  { collection: 'dailyFlorals', uniqueField: 'title' },
+  { collection: 'dailyHistorys', uniqueField: 'title' },
+  { collection: 'dailyMilitarys', uniqueField: 'title' },
+]
+
+/**
+ * 去除指定集合中的重复记录
+ * @param {string} collectionName - 集合名称
+ * @param {string} uniqueField - 唯一标识字段
+ * @returns {Promise<object>} - 返回删除结果统计 { total, duplicates, deleted }
+ */
+async function removeDuplicatesFromCollection(collectionName, uniqueField) {
+  const result = { total: 0, duplicates: 0, deleted: 0 }
+  
+  try {
+    const db = wx.cloud.database()
+    const _ = db.command
+    
+    // 获取集合中所有记录
+    const res = await db.collection(collectionName).get()
+    const records = res.data || []
+    result.total = records.length
+    
+    if (records.length <= 1) {
+      console.log(`[DailyContent] ${collectionName} 无重复记录（共${records.length}条）`)
+      return result
+    }
+    
+    // 使用 Map 按唯一字段分组，记录每个值的文档ID列表
+    const fieldMap = new Map()
+    
+    for (const record of records) {
+      const fieldValue = record[uniqueField]
+      if (!fieldValue) continue  // 跳过没有唯一标识字段的记录
+      
+      if (!fieldMap.has(fieldValue)) {
+        fieldMap.set(fieldValue, [])
+      }
+      fieldMap.get(fieldValue).push(record._id)
+    }
+    
+    // 找出重复的记录，保留第一条，删除其余
+    const idsToDelete = []
+    
+    for (const [fieldValue, ids] of fieldMap) {
+      if (ids.length > 1) {
+        // 保留第一个，标记其余为删除
+        idsToDelete.push(...ids.slice(1))
+        result.duplicates += ids.length - 1
+      }
+    }
+    
+    // 批量删除重复记录（每次最多删除20条）
+    const batchSize = 20
+    for (let i = 0; i < idsToDelete.length; i += batchSize) {
+      const batch = idsToDelete.slice(i, i + batchSize)
+      try {
+        await db.collection(collectionName).where({
+          _id: _.in(batch)
+        }).remove()
+        result.deleted += batch.length
+      } catch (e) {
+        console.error(`[DailyContent] 删除${collectionName}重复记录失败:`, e.message)
+      }
+    }
+    
+    console.log(`[DailyContent] ${collectionName} 去重完成: 总共${result.total}条, 发现重复${result.duplicates}条, 已删除${result.deleted}条`)
+    
+  } catch (e) {
+    console.error(`[DailyContent] 处理${collectionName}失败:`, e.message)
+  }
+  
+  return result
+}
+
+/**
+ * 去除所有模块云数据库中的重复记录
+ * @param {function} onProgress - 进度回调函数 (collectionName, progress, total) => void
+ * @returns {Promise<object>} - 返回总体删除结果统计
+ */
+async function removeAllDuplicates(onProgress) {
+  const overallResult = { collections: 0, totalRecords: 0, totalDuplicates: 0, totalDeleted: 0 }
+  const results = []
+  
+  for (let i = 0; i < COLLECTION_CONFIGS.length; i++) {
+    const config = COLLECTION_CONFIGS[i]
+    
+    // 回调进度
+    if (onProgress) {
+      onProgress(config.collection, i + 1, COLLECTION_CONFIGS.length)
+    }
+    
+    // 处理每个集合
+    const result = await removeDuplicatesFromCollection(config.collection, config.uniqueField)
+    results.push({
+      collection: config.collection,
+      ...result
+    })
+    
+    overallResult.collections++
+    overallResult.totalRecords += result.total
+    overallResult.totalDuplicates += result.duplicates
+    overallResult.totalDeleted += result.deleted
+  }
+  
+  console.log('[DailyContent] ════════════════════════════════════')
+  console.log('[DailyContent] 所有模块去重完成!')
+  console.log(`[DailyContent] 处理集合数: ${overallResult.collections}`)
+  console.log(`[DailyContent] 总记录数: ${overallResult.totalRecords}`)
+  console.log(`[DailyContent] 发现重复: ${overallResult.totalDuplicates}`)
+  console.log(`[DailyContent] 已删除重复: ${overallResult.totalDeleted}`)
+  console.log('[DailyContent] ════════════════════════════════════')
+  
+  return {
+    ...overallResult,
+    results  // 详细结果
+  }
+}
+
+/**
+ * 检查指定集合的去重情况（不删除）
+ * @returns {Promise<object>} - 返回各集合的重复情况
+ */
+async function checkDuplicates() {
+  const checkResult = { collections: 0, totalRecords: 0, totalDuplicates: 0 }
+  const details = []
+  
+  for (const config of COLLECTION_CONFIGS) {
+    try {
+      const db = wx.cloud.database()
+      const res = await db.collection(config.collection).get()
+      const records = res.data || []
+      
+      const fieldMap = new Map()
+      let duplicates = 0
+      
+      for (const record of records) {
+        const fieldValue = record[config.uniqueField]
+        if (!fieldValue) continue
+        
+        if (!fieldMap.has(fieldValue)) {
+          fieldMap.set(fieldValue, 0)
+        }
+        fieldMap.set(fieldValue, fieldMap.get(fieldValue) + 1)
+      }
+      
+      // 计算重复数量
+      for (const count of fieldMap.values()) {
+        if (count > 1) {
+          duplicates += count - 1
+        }
+      }
+      
+      details.push({
+        collection: config.collection,
+        total: records.length,
+        duplicates: duplicates
+      })
+      
+      checkResult.collections++
+      checkResult.totalRecords += records.length
+      checkResult.totalDuplicates += duplicates
+      
+    } catch (e) {
+      console.error(`[DailyContent] 检查${config.collection}失败:`, e.message)
+      details.push({
+        collection: config.collection,
+        error: e.message
+      })
+    }
+  }
+  
+  console.log('[DailyContent] ════════════════════════════════════')
+  console.log('[DailyContent] 重复数据检查结果:')
+  console.log(`[DailyContent] 检查集合数: ${checkResult.collections}`)
+  console.log(`[DailyContent] 总记录数: ${checkResult.totalRecords}`)
+  console.log(`[DailyContent] 发现重复: ${checkResult.totalDuplicates}`)
+  console.log('[DailyContent] ════════════════════════════════════')
+  
+  return {
+    ...checkResult,
+    details
+  }
+}
+
 // ─── 导出 ─────────────────────────────────────────────────
 
 module.exports = {
@@ -5396,6 +5896,11 @@ module.exports = {
     generateHistory,
     generateMilitary,
   },
+  // 云数据库去重工具方法
+  removeAllDuplicates,
+  removeDuplicatesFromCollection,
+  checkDuplicates,
+  COLLECTION_CONFIGS,
   // 重新导出数据，方便外部访问
   PSYCHOLOGY_FIELDS,
   JOKE_SCENES,

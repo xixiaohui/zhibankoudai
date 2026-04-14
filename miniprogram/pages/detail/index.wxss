@@ -176,3 +176,73 @@ page {
   opacity: 0.85;
   transform: scale(0.98);
 }
+
+/* ========== 新增：详细内容展示区域样式 ========== */
+
+/* 区块标题 */
+.section-title {
+  margin-top: 40rpx;
+  margin-bottom: 20rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.section-title.warning {
+  color: #E64340;
+}
+
+/* 区块内容 */
+.section-content {
+  padding: 24rpx;
+  background: #fafafa;
+  border-radius: 12rpx;
+  margin-bottom: 10rpx;
+}
+
+.warning-content {
+  background: #FFF1F0;
+  border: 1rpx solid #FFCDC7;
+}
+
+/* 引用内容样式 */
+.quote-content {
+  border-left: 4rpx solid var(--primary-color, #7C6AFF);
+  background: linear-gradient(to right, rgba(124, 106, 255, 0.05), transparent);
+  font-style: italic;
+}
+
+/* 歌词内容样式 */
+.lyric-content {
+  background: linear-gradient(135deg, #f8f4ff 0%, #f0f8ff 100%);
+  text-align: center;
+}
+
+/* 核心要点列表 */
+.key-points-list {
+  margin-bottom: 20rpx;
+}
+
+.key-point-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 16rpx 24rpx;
+  margin-bottom: 12rpx;
+  background: #fafafa;
+  border-radius: 12rpx;
+  line-height: 1.6;
+}
+
+.point-num {
+  flex-shrink: 0;
+  width: 40rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--primary-color, #7C6AFF);
+}
+
+.point-text {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.6;
+}
