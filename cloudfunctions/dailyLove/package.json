@@ -1,9 +1,0 @@
-{
-  "name": "dailyLove",
-  "version": "1.0.0",
-  "description": "生成每日情话",
-  "main": "index.js",
-  "dependencies": {
-    "wx-server-sdk": "~2.6.3"
-  }
-}

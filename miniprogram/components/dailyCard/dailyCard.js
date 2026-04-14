@@ -55,6 +55,61 @@ function getFallbackContent(moduleType, config) {
   const index = seed % fallbackList.length
   
   const fallback = { ...fallbackList[index] }
+  
+  // 统一字段映射：统一为 title + content 格式，方便海报生成
+  // 注：quote/love 数据已统一使用新字段名，无需额外映射
+  if (moduleType === 'quote') {
+    // 时光絮语: 字段已统一为 { content, title, subtitle, categoryIcon, category }
+    // 兼容处理：如果存在旧字段名则映射，否则直接使用
+    if (fallback.text && !fallback.content) {
+      fallback.title = fallback.author || '佚名'
+      fallback.content = fallback.text || ''
+      fallback.subtitle = fallback.work || ''
+      fallback.category = fallback.domainName || '名言'
+      fallback.categoryIcon = fallback.domainIcon || '📜'
+      // 删除原始字段
+      delete fallback.text
+      delete fallback.author
+      delete fallback.work
+      delete fallback.domainName
+      delete fallback.domainIcon
+    } else {
+      // 新格式字段，确保必需字段有默认值
+      fallback.title = fallback.title || '佚名'
+      fallback.content = fallback.content || ''
+      fallback.subtitle = fallback.subtitle || ''
+      fallback.categoryIcon = fallback.categoryIcon || '📜'
+      fallback.category = fallback.category || '名言'
+    }
+  } else if (moduleType === 'love') {
+    // 心动絮语: title=出处, content=情话, subtitle=作者
+    fallback.title = fallback.source || (fallback.category ? getLoveCategoryName(fallback.category) : '情话')
+    fallback.content = fallback.content || ''
+    fallback.subtitle = fallback.author || '佚名'
+    fallback.categoryIcon = getLoveCategoryIcon(fallback.category)
+    // 删除原始字段
+    delete fallback.category
+  } else if (moduleType === 'fortune') {
+    // 卦象玄机: title=卦名, content=描述, subtitle=卦象属性
+    fallback.title = fallback.name
+    fallback.content = fallback.description
+    fallback.subtitle = fallback.nature || fallback.attribute || '玄学'
+    fallback.category = fallback.nature || fallback.element || fallback.trait || '玄学'
+    fallback.categoryIcon = fallback.symbol || '🔮'
+    // 删除原始字段
+    delete fallback.name
+    delete fallback.description
+    delete fallback.symbol
+    delete fallback.nature
+    delete fallback.attribute
+    delete fallback.meaning
+    delete fallback.element
+    delete fallback.planet
+    delete fallback.trait
+    delete fallback.date
+    delete fallback.year
+  }
+  
   fallback.date = today.toISOString().split('T')[0]
   fallback.isAIGenerated = false
   fallback.isFallback = true
@@ -65,6 +120,32 @@ function getFallbackContent(moduleType, config) {
   }
   
   return fallback
+}
+
+/**
+ * 获取情话分类名称
+ */
+function getLoveCategoryName(category) {
+  const categoryNames = {
+    classic: '经典古风',
+    modern: '甜蜜现代',
+    celebrity: '名人情话',
+    poetry: '诗词传情'
+  }
+  return categoryNames[category] || '情话'
+}
+
+/**
+ * 获取情话分类图标
+ */
+function getLoveCategoryIcon(category) {
+  const categoryIcons = {
+    classic: '🌸',
+    modern: '💕',
+    celebrity: '⭐',
+    poetry: '📜'
+  }
+  return categoryIcons[category] || '💕'
 }
 
 Component({
@@ -878,6 +959,7 @@ Component({
       }
     },
 
+
     // 分享
     onShare() {
       const { content, config } = this.data
@@ -891,8 +973,9 @@ Component({
 
       switch (config.posterType) {
         case 'quote':
+          // 时光絮语: title=名言内容, author=作者, subtitle=出处
           url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.text)}&author=${encodeURIComponent(content.author)}&subtitle=${encodeURIComponent(content.domainName || '名言')}&icon=${encodeURIComponent(content.domainIcon || '📜')}`
+          params += `&title=${encodeURIComponent(content.subtitle)}&content=${encodeURIComponent(content.content + ' - ' + content.title)}&icon=${encodeURIComponent(content.categoryIcon || '📜')}`
           break
         case 'joke':
           url = `/pages/poster/index`
@@ -907,8 +990,9 @@ Component({
           params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent(content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💰')}`
           break
         case 'love':
+          // 心动絮语: title=情话内容, author=作者, subtitle=出处
           url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.content)}&author=${encodeURIComponent(content.author)}&subtitle=${encodeURIComponent(content.source || content.categoryName)}&icon=${encodeURIComponent(content.categoryIcon || '💕')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent(content.author)}&icon=${encodeURIComponent(content.categoryIcon || '💕')}`
           break
         case 'movie':
           url = `/pages/poster/index`
@@ -931,12 +1015,13 @@ Component({
           params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent(content.region)}&icon=${encodeURIComponent(content.regionIcon || '🌍')}`
           break
         case 'fortune':
+          // 卦象玄机: title=卦名, content=描述, subtitle=属性
           url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent(content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🔮')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent(content.subtitle || content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🔮')}`
           break
         case 'literature':
           url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.author)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent(content.works ? content.works.join('、') : '')}&icon=${encodeURIComponent('📚')}`
+          params += `&title=${encodeURIComponent(content.author)}&content=${encodeURIComponent(content.summary +"【"+ content.quote +"】")}&subtitle=${encodeURIComponent(content.works ? content.works.join('、') : '')}&icon=${encodeURIComponent('📚')}`
           break
         case 'foreignTrade':
           url = `/pages/poster/index`

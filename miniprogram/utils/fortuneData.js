@@ -268,6 +268,12 @@ const CHINESE_ZODIAC_DATA = [
   }
 ];
 
+const FALLBACK_FORTUNES = [
+  ...BAGUA_DATA,
+  ...ZODIAC_DATA,
+  ...CHINESE_ZODIAC_DATA
+];
+
 // 占卜类型
 const FORTUNE_TYPES = [
   { id: 'bagua', name: '易经八卦', icon: '☰' },
@@ -281,19 +287,5 @@ module.exports = {
   ZODIAC_DATA,
   CHINESE_ZODIAC_DATA,
   FORTUNE_TYPES,
-  // 合并所有fallback数据
-  getFORTUNE_DATA() {
-    return [
-      ...BAGUA_DATA,
-      ...ZODIAC_DATA,
-      ...CHINESE_ZODIAC_DATA
-    ];
-  }
+  FALLBACK_FORTUNES,
 };
-
-// 简化导出，供其他模块使用
-module.exports.FALLBACK_FORTUNES = [
-  ...BAGUA_DATA,
-  ...ZODIAC_DATA,
-  ...CHINESE_ZODIAC_DATA
-];

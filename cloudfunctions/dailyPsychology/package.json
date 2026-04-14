@@ -1,9 +1,0 @@
-{
-  "name": "dailyPsychology",
-  "version": "1.0.0",
-  "description": "AI作为心理学专家生成每日心理学知识",
-  "main": "index.js",
-  "dependencies": {
-    "wx-server-sdk": "~2.6.3"
-  }
-}

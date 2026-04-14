@@ -72,14 +72,14 @@
       </block>
     </view>
 
+
     <!-- 内容区域 - 根据类型渲染 -->
     <block wx:if="{{moduleType === 'quote'}}">
-      <view class="quote-content" style="color: {{config.colors.text}};">"{{content.text}}"</view>
-      <view class="quote-author" style="color: {{config.colors.textSecondary}};">—— {{content.author}}</view>
-      <view class="quote-meta" wx:if="{{content.era || content.region}}">
-        <text class="era-tag" wx:if="{{content.era === 'ancient'}}" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">古训</text>
-        <text class="era-tag modern" wx:if="{{content.era === 'modern'}}" style="background: rgba(255, 154, 118, 0.1); color: #FF9A76;">今言</text>
-        <text class="region-tag">{{content.region === 'china' ? '🇨🇳' : '🌍'}}</text>
+      <view class="quote-content" style="color: {{config.colors.text}};">"{{content.content}}"</view>
+      <view class="quote-author" style="color: {{config.colors.textSecondary}};">—— {{content.title}}</view>
+      <view class="quote-meta" wx:if="{{content.subtitle}}">
+        <text class="source-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{content.subtitle}}</text>
+        <text class="category-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{content.category}}</text>
       </view>
     </block>
 
@@ -100,10 +100,10 @@
 
     <block wx:elif="{{moduleType === 'love'}}">
       <view class="love-content" style="color: {{config.colors.text}};">"{{content.content}}"</view>
-      <view class="love-author" wx:if="{{content.author}}" style="color: {{config.colors.textSecondary}}; border-top: 1rpx solid {{config.colors.bg}};">
+      <view class="love-author" wx:if="{{content.subtitle}}" style="color: {{config.colors.textSecondary}}; border-top: 1rpx solid {{config.colors.bg}};">
         <text class="author-prefix">——</text>
-        <text class="author-name" style="color: {{config.colors.accent}};">{{content.author}}</text>
-        <text class="author-source" wx:if="{{content.source}}">「{{content.source}}」</text>
+        <text class="author-name" style="color: {{config.colors.accent}};">{{content.subtitle}}</text>
+        <text class="author-source" wx:if="{{content.title}}">「{{content.title}}」</text>
       </view>
     </block>
 

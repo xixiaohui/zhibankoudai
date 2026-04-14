@@ -12,6 +12,7 @@
  */
 
 const AI_CONFIG = require('./aiConfig.js')
+const { DAILY_PROMPTS } = require('./dailyPrompts.js')
 const { 
   PSYCHOLOGY_FIELDS, 
   JOKE_SCENES, 
@@ -126,14 +127,14 @@ async function saveQuoteToCloud(quote) {
     const db = wx.cloud.database()
     await db.collection('dailyQuotes').add({
       data: {
-        text: quote.text,
-        author: quote.author,
-        work: quote.work || '',
-        domainName: quote.domainName || '名言',
-        domainIcon: quote.domainIcon || '📜',
-        era: quote.era || 'modern',
-        region: quote.region || 'china',
-        source: quote.author + (quote.work ? ' ' + quote.work : ''),
+        content: quote.content,  // 名言内容
+        title: quote.title,  // 作者
+        subtitle: quote.subtitle,  // 出处
+        categoryIcon: quote.categoryIcon || '📜',
+        category: quote.category || '名言',
+        era: quote.era,
+        region: quote.region,
+        type: quote.type,
         date: new Date().toISOString().split('T')[0],
         createdAt: db.serverDate()
       }
@@ -235,6 +236,7 @@ function getRandomQuoteFromLibrary() {
 
 /**
  * 生成每日名言（AI创作 + 名言库兜底）
+ * 返回统一格式: { content, title, subtitle, categoryIcon, category }
  */
 async function generateQuote() {
   // 尝试AI生成
@@ -246,29 +248,12 @@ async function generateQuote() {
     const topics = ['春天', '夏天', '秋天', '冬天', '山水', '思乡', '友情', '人生', '离别', '思念']
     const topic = topics[Math.floor(Math.random() * topics.length)]
     
-    prompt = `请从中国古典诗词库中查找或创作一句经典诗词名句（必须是真实存在的古诗词，不得杜撰），要求：
-1. 主题：${topic}
-2. 必须是真实的、广泛流传的经典诗句
-3. 注明作者、朝代和诗题
-
-格式：诗句|作者|朝代|诗题
-
-直接输出，示例：但愿人长久，千里共婵娟。|苏轼|宋|水调歌头`
+    prompt = DAILY_PROMPTS.quote.poetry.prompt.replace('诗词主题', topic)
   } else {
     const categories = ['人生哲理', '励志名言', '情感感悟', '生活智慧', '读书感悟', '处世哲学']
     const category = categories[Math.floor(Math.random() * categories.length)]
     
-    prompt = `请从世界名言库中查找一句经典名人名言（必须是真实存在的名言，不得杜撰），要求：
-1. 主题：${category}
-2. 必须是真实的、广泛流传的经典名言
-3. 注明作者和出处
-
-格式：名言内容|作者|出处
-
-直接输出，示例：知识就是力量。|培根|
-
-
-直接输出，不要任何前缀说明：`
+    prompt = DAILY_PROMPTS.quote.sayings.prompt.replace('名言主题', category)
   }
 
   messages = [{ role: 'user', content: prompt }]
@@ -285,78 +270,79 @@ async function generateQuote() {
         // 古诗词格式：诗句|作者|朝代|诗题
         if (isPoetry) {
           quote = {
-            text: parts[0],
-            author: parts[1],
-            work: parts[3] ? '《' + parts[3] + '》' : '',
-            domainName: parts[2] + '诗词',
-            domainIcon: '📜',
-            era: 'ancient',
-            region: 'china',
+            content: parts[0],  // 名言内容
+            title: parts[1],  // 作者
+            subtitle: parts[3] ? '《' + parts[3] + '》' : parts[2] + '诗词',  // 出处/诗题
+            categoryIcon: '📜',
+            category: parts[2] + '诗词',
             type: 'poetry'
           }
         } else {
           // 现代名言格式：名言|作者|出处
           quote = {
-            text: parts[0],
-            author: parts[1],
-            work: parts[2] || '',
-            domainName: '名言警句',
-            domainIcon: '💬',
-            era: 'modern',
-            region: 'foreign',
+            content: parts[0],
+            title: parts[1],  // 作者
+            subtitle: parts[2] || '名言警句',  // 出处
+            categoryIcon: '💡',
+            category: '名言',
             type: 'quote'
           }
         }
       } else if (parts.length >= 2) {
         quote = {
-          text: parts[0],
-          author: parts[1],
-          work: '',
-          domainName: isPoetry ? '诗词' : '名言',
-          domainIcon: isPoetry ? '📜' : '💬',
-          era: isPoetry ? 'ancient' : 'modern',
-          region: 'china',
+          content: parts[0],
+          title: parts[1],  // 作者
+          subtitle: isPoetry ? '古诗词' : '名言警句',  // 出处
+          categoryIcon: isPoetry ? '📜' : '💡',
+          category: isPoetry ? '诗词' : '名言',
           type: isPoetry ? 'poetry' : 'quote'
         }
       } else {
         // 无法解析，直接使用AI返回内容
         quote = {
-          text: result.trim(),
-          author: '佚名',
-          work: '',
-          domainName: isPoetry ? '诗词' : '名言',
-          domainIcon: isPoetry ? '📜' : '💬',
-          era: isPoetry ? 'ancient' : 'modern',
-          region: 'china',
+          content: result.trim(),
+          title: 'AI创作',
+          subtitle: isPoetry ? '古诗词' : '名言警句',
+          categoryIcon: isPoetry ? '📜' : '💡',
+          category: isPoetry ? '诗词' : '名言',
           type: isPoetry ? 'poetry' : 'quote'
         }
       }
       
       quote.date = new Date().toISOString().split('T')[0]
-      quote.source = quote.author + (quote.work ? ' ' + quote.work : '')
       quote.isAIGenerated = true
       
       // 保存到云数据库
       saveQuoteToCloud(quote).catch(() => {})
       
-      console.log('[DailyContent] AI生成名言:', quote.text.substring(0, 20) + '...', '-', quote.author)
+      console.log('[DailyContent] AI生成名言:', quote.content.substring(0, 20) + '...')
       return quote
     }
   } catch (e) {
     console.error('[DailyContent] AI生成名言失败:', e.message)
   }
   
-  // AI失败，使用名言库兜底
+  // AI失败，使用名言库兜底（字段已统一：content, title, subtitle, categoryIcon, category）
   const fallback = getRandomQuoteFromLibrary()
-  fallback.date = new Date().toISOString().split('T')[0]
-  fallback.source = fallback.author + (fallback.work ? ' ' + fallback.work : '')
-  fallback.isAIGenerated = false
+  // 转换为统一格式
+  const quote = {
+    content: fallback.content || '',
+    title: fallback.title || '佚名',
+    subtitle: fallback.subtitle || fallback.category || '名言',
+    categoryIcon: fallback.categoryIcon || '📜',
+    category: fallback.category || '名言',
+    era: fallback.era,
+    region: fallback.region,
+    type: fallback.type || (fallback.era === 'ancient' ? 'poetry' : (fallback.era === 'modern' ? 'quote' : 'quote')),
+    date: new Date().toISOString().split('T')[0],
+    isAIGenerated: false
+  }
   
   // 保存到云数据库
-  saveQuoteToCloud(fallback).catch(() => {})
+  saveQuoteToCloud(quote).catch(() => {})
   
-  console.log('[DailyContent] 名言库兜底:', fallback.text.substring(0, 20) + '...', '-', fallback.author)
-  return fallback
+  console.log('[DailyContent] 名言库兜底:', quote.content.substring(0, 20) + '...')
+  return quote
 }
 
 /**
@@ -366,17 +352,7 @@ async function generateJoke() {
   const scene = JOKE_SCENES[Math.floor(Math.random() * JOKE_SCENES.length)]
   const topic = scene.topics[Math.floor(Math.random() * scene.topics.length)]
   
-  const prompt = `请创作一段搞笑段子，要求：
-1. 场景：${scene.name} - ${topic}
-2. 200字以内，要完整有趣
-3. 接地气，有共鸣感
-4. 结局反转或意外最好
-5. 可以有轻微夸张但不要低俗
-
-格式要求：
-标题|正文内容（标题和内容用|分隔）
-
-直接输出：`
+  const prompt = DAILY_PROMPTS.joke.default.prompt.replace('场景主题', `${scene.name} - ${topic}`)
 
   const messages = [{ role: 'user', content: prompt }]
   
@@ -424,23 +400,7 @@ async function generatePsychology() {
   const field = PSYCHOLOGY_FIELDS[Math.floor(Math.random() * PSYCHOLOGY_FIELDS.length)]
   const topic = field.topics[Math.floor(Math.random() * field.topics.length)]
   
-  const prompt = `你是一位资深心理学专家，请用通俗易懂的语言，分享一个实用的心理学知识。
-
-要求：
-1. 心理学领域：${field.name} - ${topic}
-2. 内容要点：
-   - 核心概念解释（1-2句）
-   - 日常生活中的应用（2-3个具体例子）
-   - 实用建议或练习（1-2个可操作的方法）
-3. 语言要通俗生动，避免过于学术化
-4. 长度控制在150-200字
-5. 内容要有价值、有深度、接地气
-
-格式要求：
-用|分隔各部分，结构如下：
-领域名称|知识点标题|正文内容
-
-直接输出，不要任何前缀：`
+  const prompt = DAILY_PROMPTS.psychology.default.prompt.replace('知识主题', `${field.name} - ${topic}`)
 
   const messages = [{ role: 'user', content: prompt }]
   
@@ -502,24 +462,7 @@ async function generateFinance() {
   const field = FINANCE_FIELDS[Math.floor(Math.random() * FINANCE_FIELDS.length)]
   const topic = field.topics[Math.floor(Math.random() * field.topics.length)]
   
-  const prompt = `你是一位专业金融顾问，请用通俗易懂的语言，分享一个实用的金融知识常识。
-
-要求：
-1. 金融领域：${field.name} - ${topic}
-2. 内容要点：
-   - 核心概念解释（1-2句，让小白也能看懂）
-   - 实际应用场景（2-3个具体例子）
-   - 实用建议或注意事项（1-2个可操作的方法）
-3. 语言要通俗生动，避免过于学术化
-4. 长度控制在150-200字
-5. 内容要有价值、有深度、接地气
-6. 可以适当举例说明
-
-格式要求：
-用|分隔各部分，结构如下：
-分类名称|知识标题|正文内容
-
-直接输出，不要任何前缀：`
+  const prompt = DAILY_PROMPTS.finance.default.prompt.replace('知识主题', `${field.name} - ${topic}`)
 
   const messages = [{ role: 'user', content: prompt }]
   
@@ -596,45 +539,25 @@ async function saveLoveToCloud(love) {
 
 /**
  * 生成每日情话
+ * 返回统一格式: { content, title, subtitle, categoryIcon, category }
  */
 async function generateLove() {
   const category = LOVE_FIELDS[Math.floor(Math.random() * LOVE_FIELDS.length)]
   
-  const prompts = {
-    'classic': `请创作一句古风情话，要求：
-1. 仿古诗词风格，文言文或半文言
-2. 表达恋人间的思念、爱慕、承诺等情感
-3. 意境优美，含蓄深情
-4. 15-30字
-
-直接输出一句古风情话，不要任何前缀说明：`,
-
-    'modern': `请创作一句现代甜蜜情话，要求：
-1. 浪漫温馨，甜蜜撩人
-2. 表达对爱人的思念、喜欢、深情
-3. 语言生动，可以有点俏皮
-4. 15-40字
-
-直接输出一句现代情话，不要任何前缀说明：`,
-
-    'celebrity': `请创作一句名人风格的情话，要求：
-1. 仿名家写作风格，如沈从文、张爱玲、三毛、王小波等
-2. 文笔优美，感情真挚
-3. 富有文学气息和感染力
-4. 20-50字
-
-直接输出一句名人风格情话，不要任何前缀说明：`,
-
-    'poetry': `请从中国古典诗词中挑选或化用一句经典的爱情诗句，要求：
-1. 必须是真实存在的古诗词名句
-2. 表达爱情、思念、相思等情感
-3. 注明出处和作者
-4. 格式：诗句|出处|作者
-
-直接输出，格式示例：两情若是久长时，又岂在朝朝暮暮。|鹊桥仙|秦观`
+  // 分类图标映射
+  const categoryIcons = {
+    classic: '🌸',
+    modern: '💕',
+    celebrity: '⭐',
+    poetry: '📜'
   }
+  const categoryIcon = categoryIcons[category.id] || '💕'
+  
+  // 使用 dailyPrompts 中的情话提示词
+  const promptKey = category.id || 'modern'
+  const promptTemplate = DAILY_PROMPTS.love[promptKey]?.prompt || DAILY_PROMPTS.love.modern.prompt
+  const prompt = promptTemplate.replace('情感主题', category.name || '情感表达')
 
-  const prompt = prompts[category.id] || prompts['modern']
   const messages = [{ role: 'user', content: prompt }]
   
   try {
@@ -643,9 +566,7 @@ async function generateLove() {
     if (result && result.length > 5) {
       let love = {
         category: category.id,
-        categoryName: category.name,
-        categoryIcon: category.icon,
-        source: 'AI创作',
+        categoryIcon: categoryIcon,
         isAIGenerated: true,
         date: new Date().toISOString().split('T')[0]
       }
@@ -653,13 +574,14 @@ async function generateLove() {
       // 诗词格式需要解析
       if (category.id === 'poetry') {
         const parts = result.split('|').map(p => p.trim())
-        love.content = parts[0] || result
-        love.author = parts[2] || '佚名'
-        love.source = parts[1] || '诗词精选'
+        love.content = parts[0] || result  // 情话内容
+        love.title = parts[1] || '诗词精选'  // 出处位置
+        love.subtitle = parts[2] || '佚名'  // 作者位置
       } else {
-        love.content = result
-        love.author = 'AI创作'
-        love.source = ''
+        // 非诗词格式情话，使用AI生成的作者或"AI创作"
+        love.content = result  // 情话内容
+        love.title = category.name  // 显示分类名
+        love.subtitle = 'AI创作'  // AI创作的情话无真实作者
       }
       
       // 保存到云数据库
@@ -670,19 +592,21 @@ async function generateLove() {
     console.error('[DailyContent] 生成情话失败:', e)
   }
   
-  // 使用备用
+  // 使用备用 - 转换为统一格式
   const fallback = FALLBACK_LOVE[Math.floor(Math.random() * FALLBACK_LOVE.length)]
-  const result = {
-    ...fallback,
-    categoryName: category.name,
-    categoryIcon: category.icon,
-    source: '经典情话库',
+  const love = {
+    content: fallback.content,  // 情话内容
+    title: fallback.source || category.name,  // 出处位置
+    subtitle: fallback.author || '佚名',  // 作者位置
+    category: fallback.category,
+    categoryIcon: categoryIcon,
     isAIGenerated: false,
     date: new Date().toISOString().split('T')[0]
   }
+  
   // 保存到云数据库
-  saveLoveToCloud(result).catch(() => {})
-  return result
+  saveLoveToCloud(love).catch(() => {})
+  return love
 }
 
 // ─── 每日电影 ─────────────────────────────────────────────────
@@ -740,68 +664,17 @@ async function generateMovie() {
   
   let prompt
   if (promptType === 'classic') {
-    prompt = `你是一位资深影评人，请推荐一部影史经典高分电影。
-
-要求：
-1. 选择豆瓣9分以上的经典电影
-2. 可以是任何类型：剧情、爱情、科幻、动画等
-3. 必须是真正有深度、有口碑、经得起时间考验的经典之作
-
-格式：
-片名|导演|年份|评分|类型|剧情简介|经典台词|标签
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.movie.classic.prompt
   } else if (promptType === 'recent') {
-    prompt = `你是一位资深影评人，请推荐一部近年上映的口碑佳作。
-
-要求：
-1. 选择2018年以后上映的8.5分以上电影
-2. 类型不限：${genre.name} - ${topic}
-3. 可以是院线片或流媒体佳作
-
-格式：
-片名|导演|年份|评分|类型|剧情简介|推荐理由|标签
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.movie.recent.prompt
+      .replace('${genre.name}', genre.name)
+      .replace('${topic}', topic)
   } else if (promptType === 'chinese') {
-    prompt = `你是一位资深影评人，请推荐一部国产经典电影。
-
-要求：
-1. 选择中国（包括港澳台）的优秀电影
-2. 优先推荐有深度、有情怀、展现中国文化特色的作品
-3. 类型可以是：${genre.name}
-
-格式：
-片名|导演|年份|评分|类型|剧情简介|推荐理由|标签
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.movie.chinese.prompt.replace('${genre.name}', genre.name)
   } else if (promptType === 'animation') {
-    prompt = `你是一位资深影评人，请推荐一部经典动画电影。
-
-要求：
-1. 可以是任何国家的优秀动画：宫崎骏、皮克斯、迪士尼、国产动画等
-2. 选择真正有深度、老少皆宜的动画佳作
-
-格式：
-片名|导演|年份|评分|剧情简介|推荐理由|经典台词|标签
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.movie.animation.prompt
   } else {
-    prompt = `你是一位资深影评人，请推荐一部经典电影。
-
-要求：
-1. 电影类型：${genre.name} - ${topic}
-2. 可以是中国电影或外国电影，优先推荐9分以上的高分经典
-3. 内容要点：
-   - 电影基本信息（片名、导演、年份、评分）
-   - 剧情简介（不剧透关键情节，100字以内）
-   - 一句推荐理由或经典台词
-4. 语言要生动有感染力
-
-格式要求：
-片名|导演|年份|评分|类型|类型图标|剧情简介|推荐理由/经典台词|标签1,标签2,标签3
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.movie.default?.prompt?.replace('经典电影', `${genre.name} - ${topic}`) || `你是一位资深影评人，请推荐一部${genre.name} - ${topic}相关的经典电影。直接输出：`
   }
 
   const messages = [{ role: 'user', content: prompt }]
@@ -925,46 +798,11 @@ async function generateMusic() {
   
   let prompt
   if (promptType === 'classical') {
-    prompt = `你是一位资深古典音乐评论人，请推荐一首经典古典音乐作品。
-
-要求：
-1. 选择古典音乐史上的经典作品
-2. 可以是任何时期：巴洛克、古典主义、浪漫主义、现代
-3. 必须是真正有深度、有艺术价值的作品
-
-格式：
-曲名|艺术家|年代|类型|专辑|时长|音乐简介|推荐理由|情绪|情绪图标|标签
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.music.classical.prompt
   } else if (promptType === 'chinese') {
-    prompt = `你是一位资深音乐评论人，请推荐一首中国经典音乐作品。
-
-要求：
-1. 选择中国（包括港澳台）的优秀音乐作品
-2. 可以是任何类型：古典、流行、民乐、影视原声
-3. 优先推荐展现中国文化特色或有深度情感的作品
-
-格式：
-曲名|艺术家|年代|类型|专辑|简介|推荐理由|情绪|情绪图标|标签
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.music.chinese.prompt
   } else {
-    prompt = `你是一位资深音乐评论人，请推荐一首经典音乐作品。
-
-要求：
-1. 音乐类型：${genre.name} - ${topic}
-2. 可以是中国音乐或外国音乐，优先推荐真正有艺术价值和情感共鸣的作品
-3. 内容要点：
-   - 音乐基本信息（曲名、艺术家、年代、类型）
-   - 音乐简介（音乐风格、创作背景，100字以内）
-   - 一句推荐理由或经典歌词/乐句
-   - 推荐给什么情绪或场景听
-4. 语言要生动有感染力
-
-格式要求：
-曲名|艺术家|年代|类型|类型图标|专辑|时长|音乐简介|推荐理由/经典歌词|音乐情绪|情绪图标|标签1,标签2,标签3
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.music.default?.prompt?.replace('经典音乐', `${genre.name} - ${topic}`) || `你是一位资深音乐评论人，请推荐一首${genre.name} - ${topic}相关的经典音乐作品。直接输出：`
   }
 
   const messages = [{ role: 'user', content: prompt }]
@@ -1088,55 +926,11 @@ async function generateTech() {
   
   let prompt
   if (promptType === 'ai') {
-    prompt = `你是一位AI科技专家，请分享一个当前最热门、最前沿的AI科技动态或知识。
-
-要求：
-1. 聚焦AI人工智能领域：ChatGPT、大模型、AI Agent、AI手机、AIGC等
-2. 内容要点：
-   - 技术概念通俗解释
-   - 实际应用案例
-   - 对未来的影响
-3. 语言生动有趣，引发读者兴趣
-4. 长度150-200字
-
-格式：
-AI人工智能|科技标题|正文内容
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.tech.ai.prompt
   } else if (promptType === 'china') {
-    prompt = `你是一位科技评论员，请分享一个中国科技发展的亮点或成就。
-
-要求：
-1. 聚焦中国科技：国产芯片、鸿蒙系统、量子计算、新能源、航天成就等
-2. 内容要点：
-   - 技术亮点介绍
-   - 重要意义
-   - 未来展望
-3. 语言要自豪自信，体现中国科技实力
-4. 长度150-200字
-
-格式：
-科技领域|科技标题|正文内容
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.tech.china.prompt
   } else {
-    prompt = `你是一位科技科普达人，请用通俗易懂的语言，分享一个实用的科技知识或最新科技动态。
-
-要求：
-1. 科技领域：${category.name} - ${topic}
-2. 内容要点：
-   - 科技概念/动态介绍（让小白也能看懂）
-   - 实际应用场景或影响（2-3个具体例子）
-   - 发展趋势或意义（简短展望）
-3. 语言要生动有趣，避免过于专业化
-4. 长度控制在150-200字
-5. 内容要有价值、有深度、接地气
-
-格式要求：
-用|分隔各部分，结构如下：
-领域名称|科技标题|正文内容
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.tech.default?.prompt?.replace('知识主题', `${category.name} - ${topic}`) || `你是一位科技科普达人，请用通俗易懂的语言，分享一个实用的科技知识。直接输出：`
   }
 
   const messages = [{ role: 'user', content: prompt }]
@@ -1244,57 +1038,11 @@ async function generateTcm() {
   
   let prompt
   if (promptType === 'herb') {
-    prompt = `你是一位中医养生专家，请分享一味中药或药食同源食材的养生知识。
-
-要求：
-1. 选择常用中药材：人参、黄芪、当归、枸杞、山药、茯苓、陈皮、三七、西洋参、灵芝、酸枣仁、黄精等
-2. 内容要点：
-   - 性味归经功效
-   - 适用人群
-   - 使用方法（包括食疗方）
-   - 注意事项
-3. 语言通俗，体现中医智慧
-4. 长度150-200字
-
-格式：
-药食同源|养生标题|正文内容
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.tcm.herb.prompt
   } else if (promptType === 'therapy') {
-    prompt = `你是一位中医理疗专家，请分享一种中医外治法的养生保健知识。
-
-要求：
-1. 选择一种特色疗法：艾灸、拔罐、刮痧、推拿、足浴、耳穴压豆、三伏贴等
-2. 内容要点：
-   - 疗法原理
-   - 适应症
-   - 操作方法
-   - 注意事项
-3. 语言通俗易懂，实用性强
-4. 长度150-200字
-
-格式：
-特色疗法|疗法名称|正文内容
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.tcm.therapy.prompt
   } else {
-    prompt = `你是一位资深中医养生专家，请用通俗易懂的语言，分享一个实用的中医药养生知识或日常保健方法。
-
-要求：
-1. 中医领域随机选择：时节养生(二十四节气)、药食同源、穴位保健、传统功法(八段锦、五禽戏)、体质调理、食疗药膳、脏腑养护、特色疗法
-2. 内容要点：
-   - 中医概念/知识介绍（让普通人也能理解中医智慧）
-   - 日常应用场景（2-3个具体实用的例子）
-   - 养生建议或注意事项（简明实用的方法）
-3. 语言要生动有趣，体现中医"治未病"的智慧
-4. 长度控制在150-200字
-5. 内容要有价值、有深度、接地气
-
-格式要求：
-用|分隔各部分，结构如下：
-领域名称|养生标题|正文内容（包含知识点介绍+实用建议）
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.tcm.default?.prompt?.replace('中医领域', `${category.name} - ${topic}`) || `你是一位资深中医养生专家，请用通俗易懂的语言，分享一个实用的中医药养生知识。直接输出：`
   }
 
   const messages = [{ role: 'user', content: prompt }]
@@ -1404,57 +1152,11 @@ async function generateTravel() {
   
   let prompt
   if (promptType === 'natural') {
-    prompt = `你是一位自然风光摄影师，请分享一个世界上最美的自然景观。
-
-要求：
-1. 目的地包括：挪威峡湾、新西兰冰川、玻利维亚天空之境、冰岛极光、非洲草原、瑞士雪山、日本富士山、张家界天门山、马尔代夫、大堡礁等
-2. 内容要点：
-   - 自然景观特色和形成原因
-   - 最佳观赏季节和时间
-   - 摄影技巧和建议
-   - 游览实用建议
-3. 语言优美浪漫，体现大自然魅力
-4. 长度150-200字
-
-格式：
-地区|景点名称|正文内容（特色介绍+游览建议）
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.travel.natural.prompt
   } else if (promptType === 'cultural') {
-    prompt = `你是一位文化历史专家，请分享一个世界文化遗产的故事。
-
-要求：
-1. 选择世界遗产：长城、故宫、吴哥窟、庞贝古城、马丘比丘、佩特拉古城、新天鹅堡、圣家族大教堂等
-2. 内容要点：
-   - 历史背景和建造故事
-   - 文化价值和艺术特色
-   - 保护意义
-   - 参观实用提示
-3. 语言有文化底蕴，体现历史厚重感
-4. 长度150-200字
-
-格式：
-地区|遗产名称|正文内容
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.travel.cultural.prompt
   } else {
-    prompt = `你是一位资深旅行达人，请分享一个世界各地著名的旅游景点或名胜古迹。
-
-要求：
-1. 目的地随机选择：${country}及周边著名景点
-2. 内容要点：
-   - 景点名称和位置
-   - 历史背景和文化意义
-   - 游览亮点和特色体验
-   - 实用旅游建议（如最佳季节、门票、注意事项）
-3. 语言生动有趣，激发读者的旅行欲望
-4. 长度控制在150-200字
-
-格式要求：
-用|分隔各部分，结构如下：
-地区名称|景点名称|正文内容（景点介绍+游览建议）
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.travel.default?.prompt?.replace('著名景点', `${country}及周边著名景点`) || `你是一位资深旅行达人，请分享一个世界各地著名的旅游景点或名胜古迹。直接输出：`
   }
 
   const messages = [{ role: 'user', content: prompt }]
@@ -1559,28 +1261,16 @@ async function generateFortune() {
   let prompt, categoryName, categoryIcon, titleField, summaryField
   
   if (fortuneType === 'bagua') {
-    categoryName = '易经八卦'
-    categoryIcon = '☰'
     const bagua = BAGUA_DATA[Math.floor(Math.random() * BAGUA_DATA.length)]
+    categoryName = '易经八卦'
+    categoryIcon = bagua.symbol || '☰'
     titleField = 'name'
     summaryField = 'description'
     
-    prompt = `你是一位资深易学大师，请解读易经${bagua.name}（${bagua.symbol}）的智慧。
-
-要求：
-1. 内容要点：
-   - 卦象的基本含义（卦名、卦象、象征事物）
-   - 核心哲理或启示
-   - 现代生活中的应用指导
-2. 语言神秘而富有哲理，体现易经智慧
-3. 长度控制在150-200字
-4. 要有深度和启发性
-
-格式要求：
-用|分隔各部分，结构如下：
-卦象解读|${bagua.name}|正文内容（象征意义+智慧解读+实用建议）
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.fortune.bagua.prompt
+      .replace('${bagua.name}', bagua.name)
+      .replace('${bagua.symbol}', bagua.symbol)
+      .replace('${bagua.name}', bagua.name)
   } else if (fortuneType === 'zodiac') {
     const zodiac = ZODIAC_DATA[Math.floor(Math.random() * ZODIAC_DATA.length)]
     categoryName = '星座解读'
@@ -1588,22 +1278,10 @@ async function generateFortune() {
     titleField = 'name'
     summaryField = 'description'
     
-    prompt = `你是一位星座研究专家，请解读${zodiac.name}（${zodiac.date}）的性格特点。
-
-要求：
-1. 内容要点：
-   - 星座的基本特征（日期范围、守护星、元素属性）
-   - 性格优点和特点
-   - 与人相处之道或生活建议
-2. 语言生动有趣，贴近年轻人
-3. 长度控制在150-200字
-4. 要有实用性和趣味性
-
-格式要求：
-用|分隔各部分，结构如下：
-星座解读|${zodiac.name}|正文内容（基本特征+性格解读+相处建议）
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.fortune.zodiac.prompt
+      .replace('${zodiac.name}', zodiac.name)
+      .replace('${zodiac.date}', zodiac.date)
+      .replace('${zodiac.name}', zodiac.name)
   } else {
     const chinese = CHINESE_ZODIAC_DATA[Math.floor(Math.random() * CHINESE_ZODIAC_DATA.length)]
     categoryName = '生肖解读'
@@ -1611,22 +1289,9 @@ async function generateFortune() {
     titleField = 'name'
     summaryField = 'description'
     
-    prompt = `你是一位民俗文化专家，请分享${chinese.name}年的文化寓意。
-
-要求：
-1. 内容要点：
-   - 生肖的文化象征意义
-   - 性格特点或命运特征
-   - 与其他生肖的关系或相处之道
-2. 语言通俗易懂，体现传统文化
-3. 长度控制在150-200字
-4. 要有文化内涵和趣味性
-
-格式要求：
-用|分隔各部分，结构如下：
-生肖解读|${chinese.name}年|正文内容（文化象征+性格特点+相处智慧）
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.fortune.chinese.prompt
+      .replace('${chinese.name}', chinese.name)
+      .replace('${chinese.name}', chinese.name)
   }
 
   const messages = [{ role: 'user', content: prompt }]
@@ -1734,61 +1399,11 @@ async function generateLiterature() {
   
   let prompt
   if (promptType === 'chinese') {
-    prompt = `你是一位中国文学研究专家，请介绍一位中国文学大师及其代表作。
-
-要求：
-1. 选择一位中国经典作家：鲁迅、钱钟书、沈从文、张爱玲、莫言、余华、路遥、王小波、林语堂、老舍、巴金、曹雪芹、施耐庵、罗贯中、吴承恩等
-2. 内容要点：
-   - 作家生平与文学地位（生卒年、笔名、主要成就）
-   - 代表作品的文学价值（2-3部作品简介）
-   - 经典名言或名句赏析
-   - 阅读推荐理由
-3. 语言有文化底蕴，体现中国文学之美
-4. 长度控制在150-200字
-
-格式要求：
-用|分隔各部分，结构如下：
-作家姓名|时代/年代|代表作1,代表作2,代表作3|正文内容（简介+作品特色+名言赏析）|经典名言|标签1,标签2,标签3
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.literature.chinese.prompt
   } else if (promptType === 'foreign') {
-    prompt = `你是一位世界文学研究专家，请介绍一位外国文学大师及其代表作。
-
-要求：
-1. 选择一位世界著名作家：莎士比亚、托尔斯泰、雨果、海明威、马尔克斯、卡夫卡、简·奥斯汀、狄更斯、加缪、太宰治、川端康成、村上春树等
-2. 内容要点：
-   - 作家生平与文学成就（国籍、生卒年、文学地位）
-   - 代表作品介绍（2-3部作品背景和特色）
-   - 在世界文学中的地位
-   - 阅读推荐理由
-3. 语言优美开阔，体现世界文学魅力
-4. 长度控制在150-200字
-
-格式要求：
-用|分隔各部分，结构如下：
-作家姓名|国籍/时代|代表作1,代表作2,代表作3|正文内容（简介+作品特色+地位）|经典名言|标签1,标签2,标签3
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.literature.foreign.prompt
   } else {
-    prompt = `你是一位资深文学评论家，请介绍一位著名作家及其代表作品。
-
-要求：
-1. 随机选择一位作家：
-   - 中国作家：鲁迅、钱钟书、沈从文、张爱玲、莫言、余华、路遥、王小波、林语堂、老舍、巴金、曹雪芹等
-   - 外国作家：莎士比亚、托尔斯泰、雨果、海明威、马尔克斯、卡夫卡、简·奥斯汀、狄更斯、加缪等
-2. 内容要点：
-   - 作家简介（生卒年、国籍、文学地位）
-   - 代表作品介绍（2-3部作品的背景和特色）
-   - 一句经典名言
-   - 阅读建议
-3. 语言优美有文采，体现文学魅力
-4. 长度控制在150-200字
-
-格式要求：
-用|分隔各部分，结构如下：
-作家姓名|时代/国籍|代表作1,代表作2,代表作3|正文内容（简介+作品特色+名言）|经典名言|标签1,标签2,标签3
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.literature.default?.prompt || `你是一位资深文学评论家，请介绍一位著名作家及其代表作品。直接输出：`
   }
 
   const messages = [{ role: 'user', content: prompt }]
@@ -1845,14 +1460,14 @@ async function generateLiterature() {
     console.error('[DailyContent] 生成文学知识失败:', e)
   }
   
-  // 使用备用文学库
+  // 使用备用文学库（字段已统一：author, era, region, works, summary, quote）
   const fallback = getRandomLiteratureFromLibrary()
   const result = {
-    author: fallback.name,
+    author: fallback.author || fallback.name || '佚名',
     era: fallback.era,
     region: fallback.region,
     works: fallback.works,
-    summary: fallback.description,
+    summary: fallback.summary || fallback.description || '',
     quote: fallback.quote,
     source: '文学库',
     isAIGenerated: false,
@@ -1914,83 +1529,13 @@ async function generateForeignTrade() {
   
   let prompt
   if (promptType === 'term') {
-    prompt = `你是一位外贸培训讲师，请解释一个外贸专业术语的含义和应用。
-
-要求：
-1. 选择一个外贸常用术语：FOB离岸价、CIF到岸价、EXW工厂交货、CFR成本加运费、CPT运费付至、CIP运费保险费付至、DAP完税后交货、DDP完税后交货、L/C信用证、T/T电汇、D/P付款交单、D/A承兑交单、MOQ最小起订量、HS Code海关编码、提单B/L、原产地证CO等
-2. 内容要点：
-   - 术语的全称、中文含义和英文缩写
-   - 买卖双方的责任划分（谁负责运输、保险、报关）
-   - 适用场景和举例
-   - 使用注意事项
-3. 语言简洁专业，便于理解记忆
-4. 长度控制在150-200字
-
-格式要求：
-用|分隔各部分，结构如下：
-术语解读|术语名称|正文内容（含义+责任划分+应用场景+注意事项）
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.foreignTrade.term.prompt
   } else if (promptType === 'payment') {
-    prompt = `你是一位外贸财务专家，请分享一种外贸付款方式的使用技巧和风险防范。
-
-要求：
-1. 选择一种付款方式：L/C信用证、T/T电汇、D/P付款交单、D/A承兑交单、DPs等
-2. 内容要点：
-   - 付款方式的操作流程和基本概念
-   - 优点和缺点分析
-   - 风险点和防范措施
-   - 适合什么样的客户或订单
-3. 语言专业严谨，有实操指导价值
-4. 长度控制在150-200字
-
-格式要求：
-用|分隔各部分，结构如下：
-付款方式|方式名称|正文内容（流程+优缺点+风险防范+适用场景）
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.foreignTrade.payment.prompt
   } else if (promptType === 'logistics') {
-    prompt = `你是一位国际物流专家，请分享一个货运物流的知识或技巧。
-
-要求：
-1. 选择一个物流主题：集装箱规格（20GP/40GP/40HQ）、海运整箱与拼箱选择、空运流程与时效、目的港清关流程、货运保险投保技巧、出口包装与唛头要求等
-2. 内容要点：
-   - 物流环节的核心知识点
-   - 实际操作要点和常见问题
-   - 成本优化或风险防范建议
-3. 语言实用易懂，贴近业务需求
-4. 长度控制在150-200字
-
-格式要求：
-用|分隔各部分，结构如下：
-物流货运|主题名称|正文内容（知识点+实操要点+建议）
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.foreignTrade.logistics?.prompt || DAILY_PROMPTS.foreignTrade.default?.prompt || `你是一位国际物流专家，请分享一个货运物流的知识或技巧。直接输出：`
   } else {
-    prompt = `你是一位资深外贸专家，请分享一个实用的外贸业务知识或技巧。
-
-要求：
-1. 外贸知识随机选择以下主题之一：
-   - 贸易术语应用（FOB、CIF、EXW等）
-   - 付款方式选择（L/C、T/T、D/P等）
-   - 货运物流知识（海运、空运、集装箱）
-   - 报关报检流程（HS编码、原产地证、出口退税）
-   - 客户开发技巧（开发信、展会、社交媒体）
-   - 合同条款与风险防范
-   - 外贸流程与跟单要点
-2. 内容要点：
-   - 概念或知识点的专业解释
-   - 实际应用场景或案例（2-3个实用例子）
-   - 操作建议或注意事项
-3. 语言要专业实用，符合外贸行业风格
-4. 长度控制在150-200字
-5. 内容要有价值、有深度、接地气
-
-格式要求：
-用|分隔各部分，结构如下：
-领域名称|知识标题|正文内容（知识点介绍+实用建议+注意事项）
-
-直接输出，不要任何前缀：`
+    prompt = DAILY_PROMPTS.foreignTrade.default?.prompt?.replace('领域', category.name) || `你是一位资深外贸专家，请分享一个实用的外贸业务知识或技巧。直接输出：`
   }
 
   const messages = [{ role: 'user', content: prompt }]
