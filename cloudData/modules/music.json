@@ -1,0 +1,572 @@
+{
+  "id": "music",
+  "name": "音乐分享",
+  "icon": "icon-music",
+  "color": "#F39C12",
+  "fields": [],
+  "fallback": [
+    {
+      "title": "月光奏鸣曲",
+      "artist": "路德维希·贝多芬",
+      "year": "1801",
+      "genre": "古典",
+      "genreIcon": "🎻",
+      "album": "钢琴奏鸣曲第14号",
+      "duration": "15分钟",
+      "description": "贝多芬最著名的钢琴奏鸣曲之一，第一乐章如月光般柔和流动，被誉为\"音乐史上最美丽的篇章之一\"。",
+      "lyric": "音乐是比一切智慧、一切哲学更高的启示。",
+      "mood": "宁静",
+      "moodIcon": "🌙",
+      "tags": [
+        "古典",
+        "钢琴",
+        "经典",
+        "舒缓"
+      ]
+    },
+    {
+      "title": "天空之城",
+      "artist": "久石让",
+      "year": "1986",
+      "genre": "影视原声",
+      "genreIcon": "🎬",
+      "album": "天空之城 原声带",
+      "duration": "5:55",
+      "description": "宫崎骏动画《天空之城》的主题曲，旋律纯净空灵，充满对梦想与自由的向往。",
+      "lyric": "如谷之歌，扎根土里。与风共存，与种子越冬。与鸟歌，在云端飞扬。",
+      "mood": "治愈",
+      "moodIcon": "☁️",
+      "tags": [
+        "影视",
+        "治愈",
+        "纯音乐",
+        "梦想"
+      ]
+    },
+    {
+      "title": "卡农",
+      "artist": "约翰·帕赫贝尔",
+      "year": "1680",
+      "genre": "古典",
+      "genreIcon": "🎻",
+      "album": "D大调卡农",
+      "duration": "5:50",
+      "description": "巴洛克时期的经典作品，以简单的旋律轮唱创造出动人的和声，是音乐史上流传最广的作品之一。",
+      "lyric": "音乐是灵魂的呼吸，是情感的语言。",
+      "mood": "平静",
+      "moodIcon": "🕊️",
+      "tags": [
+        "古典",
+        "经典",
+        "钢琴",
+        "治愈"
+      ]
+    },
+    {
+      "title": "Canon in D Major",
+      "artist": "Pachelbel",
+      "year": "1680",
+      "genre": "古典",
+      "genreIcon": "🎻",
+      "album": "Canon and Gigue",
+      "duration": "5:30",
+      "description": "帕赫贝尔的D大调卡农，是巴洛克音乐的代表作，常被用于婚礼和重要仪式。",
+      "lyric": "Music is the universal language of mankind.",
+      "mood": "庄重",
+      "moodIcon": "🏛️",
+      "tags": [
+        "古典",
+        "经典",
+        "管弦乐",
+        "仪式感"
+      ]
+    },
+    {
+      "title": "梁祝",
+      "artist": "陈钢 / 何占豪",
+      "year": "1959",
+      "genre": "民族",
+      "genreIcon": "🎵",
+      "album": "梁祝小提琴协奏曲",
+      "duration": "26分钟",
+      "description": "中国最著名的小提琴协奏曲，以梁山伯与祝英台的爱情故事为蓝本，旋律优美，情感深沉。",
+      "lyric": "彩虹万里百花开，蝴蝶双双花间来。",
+      "mood": "深情",
+      "moodIcon": "🦋",
+      "tags": [
+        "民族",
+        "经典",
+        "小提琴",
+        "爱情"
+      ]
+    },
+    {
+      "title": "夜曲 Op.9 No.2",
+      "artist": "弗雷德里克·肖邦",
+      "year": "1832",
+      "genre": "古典",
+      "genreIcon": "🎻",
+      "album": "夜曲集 Op.9",
+      "duration": "4:35",
+      "description": "肖邦夜曲中最受欢迎的一首，旋律如诗如画，充满了浪漫主义的柔情。",
+      "lyric": "音乐是热情洋溢的自由艺术，是室内的心灵，是闯入道德世界的热情。",
+      "mood": "浪漫",
+      "moodIcon": "💫",
+      "tags": [
+        "古典",
+        "钢琴",
+        "浪漫",
+        "抒情"
+      ]
+    },
+    {
+      "title": "River Flows in You",
+      "artist": "李闰珉",
+      "year": "2003",
+      "genre": "新世纪",
+      "genreIcon": "🌊",
+      "album": "First Love",
+      "duration": "3:08",
+      "description": "韩国钢琴家李闰珉的代表作，旋律优美流畅，如同溪流般温柔地流淌。",
+      "lyric": "你的心河，流向何方？流向爱情，流向永恒。",
+      "mood": "温柔",
+      "moodIcon": "💧",
+      "tags": [
+        "钢琴",
+        "新世纪",
+        "抒情",
+        "浪漫"
+      ]
+    },
+    {
+      "title": "My Heart Will Go On",
+      "artist": "Celine Dion",
+      "year": "1997",
+      "genre": "流行",
+      "genreIcon": "🎤",
+      "album": "Let's Talk About Love",
+      "duration": "5:14",
+      "description": "《泰坦尼克号》主题曲，席琳·迪翁的巅峰之作，歌声深情大气，传唱至今。",
+      "lyric": "You are here, there's nothing I fear. And I know that my heart will go on.",
+      "mood": "感动",
+      "moodIcon": "🚢",
+      "tags": [
+        "流行",
+        "影视",
+        "爱情",
+        "经典"
+      ]
+    },
+    {
+      "title": "黄河钢琴协奏曲",
+      "artist": "殷承宗 等",
+      "year": "1969",
+      "genre": "民族",
+      "genreIcon": "🎵",
+      "album": "黄河钢琴协奏曲",
+      "duration": "22分钟",
+      "description": "改编自《黄河大合唱》的钢琴协奏曲，气势磅礴，充满中华民族的奋进精神。",
+      "lyric": "黄河在咆哮！黄河在咆哮！",
+      "mood": "激昂",
+      "moodIcon": "🌊",
+      "tags": [
+        "民族",
+        "钢琴",
+        "交响",
+        "力量"
+      ]
+    },
+    {
+      "title": "Time to Say Goodbye",
+      "artist": "Andrea Bocelli / Sarah Brightman",
+      "year": "1997",
+      "genre": "跨界",
+      "genreIcon": "🎭",
+      "album": "Arena di Verona",
+      "duration": "4:12",
+      "description": "波切利与莎拉·布莱曼的经典二重唱，旋律壮丽而感人，是跨界音乐的巅峰之作。",
+      "lyric": "Con tepartirò, su navi per mari che io non so. (我将与你远航，穿越未知的海洋。)",
+      "mood": "告别",
+      "moodIcon": "🌅",
+      "tags": [
+        "跨界",
+        "歌剧",
+        "二重唱",
+        "经典"
+      ]
+    },
+    {
+      "title": "菊次郎的夏天",
+      "artist": "久石让",
+      "year": "1999",
+      "genre": "影视原声",
+      "genreIcon": "🎬",
+      "album": "Summer",
+      "duration": "3:48",
+      "description": "北野武电影《菊次郎的夏天》主题曲，旋律轻快活泼，充满夏日的温暖与童真。",
+      "lyric": "夏天就是要去远方啊，哪怕口袋里只有几个硬币。",
+      "mood": "欢快",
+      "moodIcon": "☀️",
+      "tags": [
+        "影视",
+        "钢琴",
+        "夏日",
+        "治愈"
+      ]
+    },
+    {
+      "title": "A Thousand Years",
+      "artist": "Christina Perri",
+      "year": "2011",
+      "genre": "流行",
+      "genreIcon": "🎤",
+      "album": "Breaking Dawn Part 1",
+      "duration": "4:45",
+      "description": "《暮光之城：破晓》主题曲，歌词讲述跨越千年的爱情，旋律感人至深。",
+      "lyric": "A thousand years, a thousand more, a thousand years to hold you tight.",
+      "mood": "深情",
+      "moodIcon": "🧛",
+      "tags": [
+        "流行",
+        "影视",
+        "爱情",
+        "告白"
+      ]
+    },
+    {
+      "title": "土耳其进行曲",
+      "artist": "沃尔夫冈·阿玛多伊斯·莫扎特",
+      "year": "1788",
+      "genre": "古典",
+      "genreIcon": "🎻",
+      "album": "A大调第11奏鸣曲",
+      "duration": "3:25",
+      "description": "莫扎特最受欢迎的作品之一，旋律轻快活泼，带有土耳其音乐特色。",
+      "lyric": "音乐是流动的建筑，建筑是凝固的音乐。",
+      "mood": "轻快",
+      "moodIcon": "🎪",
+      "tags": [
+        "古典",
+        "钢琴",
+        "轻快",
+        "经典"
+      ]
+    },
+    {
+      "title": "二泉映月",
+      "artist": "华彦钧（阿炳）",
+      "year": "1950",
+      "genre": "民族",
+      "genreIcon": "🎵",
+      "album": "二泉映月",
+      "duration": "7:30",
+      "description": "中国二胡名曲，旋律苍凉深沉，表达了一位民间艺人对人生的感悟。",
+      "lyric": "月映二泉，映出人间悲欢。",
+      "mood": "苍凉",
+      "moodIcon": "🌙",
+      "tags": [
+        "民族",
+        "二胡",
+        "经典",
+        "深刻"
+      ]
+    },
+    {
+      "title": "Canon in D",
+      "artist": "Pachelbel",
+      "year": "1680",
+      "genre": "古典",
+      "genreIcon": "🎻",
+      "album": "Canon & Gigue",
+      "duration": "6:00",
+      "description": "巴洛克时期的经典作品，简约的和声进行却创造了永恒的美感。",
+      "lyric": "Music expresses that which cannot be put into words.",
+      "mood": "平和",
+      "moodIcon": "🕊️",
+      "tags": [
+        "古典",
+        "管弦乐",
+        "经典",
+        "庄重"
+      ]
+    },
+    {
+      "title": "Yesterday",
+      "artist": "The Beatles",
+      "year": "1965",
+      "genre": "摇滚",
+      "genreIcon": "🎸",
+      "album": "Help!",
+      "duration": "2:03",
+      "description": "披头士最著名的抒情歌曲，被吉尼斯认证为\"史上被翻唱最多的歌曲\"。",
+      "lyric": "Yesterday, all my troubles seemed so far away.",
+      "mood": "怀念",
+      "moodIcon": "📼",
+      "tags": [
+        "摇滚",
+        "经典",
+        "抒情",
+        "披头士"
+      ]
+    },
+    {
+      "title": "渔舟唱晚",
+      "artist": "娄树华 改编",
+      "year": "1930s",
+      "genre": "民族",
+      "genreIcon": "🎵",
+      "album": "古筝名曲",
+      "duration": "3:30",
+      "description": "中国古典筝曲，描绘夕阳下渔舟归来的美景，意境悠远。",
+      "lyric": "渔舟唱晚，响穷彭蠡之滨；雁阵惊寒，声断衡阳之浦。",
+      "mood": "悠然",
+      "moodIcon": "🌅",
+      "tags": [
+        "民族",
+        "古筝",
+        "意境",
+        "经典"
+      ]
+    },
+    {
+      "title": "致爱丽丝",
+      "artist": "路德维希·贝多芬",
+      "year": "1810",
+      "genre": "古典",
+      "genreIcon": "🎻",
+      "album": "致爱丽丝",
+      "duration": "3:25",
+      "description": "贝多芬为学生特蕾莎所作，旋律优美亲切，是世界上最著名的钢琴小品之一。",
+      "lyric": "音乐是人类的第二语言。",
+      "mood": "温柔",
+      "moodIcon": "💐",
+      "tags": [
+        "古典",
+        "钢琴",
+        "经典",
+        "入门"
+      ]
+    },
+    {
+      "title": "Shape of You",
+      "artist": "Ed Sheeran",
+      "year": "2017",
+      "genre": "流行",
+      "genreIcon": "🎤",
+      "album": "÷",
+      "duration": "3:53",
+      "description": "黄老板的全球大热单曲，融合流行与民谣元素，节奏欢快，朗朗上口。",
+      "lyric": "I'm in love with the shape of you. We push and pull like magnets do.",
+      "mood": "活力",
+      "moodIcon": "💃",
+      "tags": [
+        "流行",
+        "欧美",
+        "舞曲",
+        "浪漫"
+      ]
+    },
+    {
+      "title": "高山流水",
+      "artist": "俞伯牙 / 钟子期",
+      "year": "战国",
+      "genre": "民族",
+      "genreIcon": "🎵",
+      "album": "古琴名曲",
+      "duration": "8:00",
+      "description": "中国十大古曲之一，讲述伯牙与子期的知音故事，\"高山流水遇知音\"成为千古佳话。",
+      "lyric": "巍巍乎若泰山，汤汤乎若流水。",
+      "mood": "知己",
+      "moodIcon": "🏔️",
+      "tags": [
+        "民族",
+        "古琴",
+        "经典",
+        "知音"
+      ]
+    },
+    {
+      "title": "Unchained Melody",
+      "artist": "The Righteous Brothers",
+      "year": "1965",
+      "genre": "灵魂",
+      "genreIcon": "🎤",
+      "album": "Just Once in My Life",
+      "duration": "3:52",
+      "description": "电影《人鬼情未了》主题曲，深情款款的歌声感动了无数人。",
+      "lyric": "Oh, my love, my darling, I've hungered for your touch.",
+      "mood": "深情",
+      "moodIcon": "👻",
+      "tags": [
+        "灵魂",
+        "影视",
+        "经典",
+        "深情"
+      ]
+    },
+    {
+      "title": "春江花月夜",
+      "artist": "古曲 彭 soson 编",
+      "year": "1920s",
+      "genre": "民族",
+      "genreIcon": "🎵",
+      "album": "民族管弦乐",
+      "duration": "10:00",
+      "description": "中国古典名曲，以月夜春江为背景，描绘了一幅动人的江南水墨画卷。",
+      "lyric": "春江潮水连海平，海上明月共潮生。",
+      "mood": "优雅",
+      "moodIcon": "🌸",
+      "tags": [
+        "民族",
+        "民乐",
+        "经典",
+        "意境"
+      ]
+    },
+    {
+      "title": "Victory",
+      "artist": "Two Steps From Hell",
+      "year": "2015",
+      "genre": "史诗",
+      "genreIcon": "⚔️",
+      "album": "Battlecry",
+      "duration": "3:08",
+      "description": "史诗音乐公司Two Steps From Hell的代表作品，气势恢宏，常用于影视预告片。",
+      "lyric": "Victory, victory, shall be mine!",
+      "mood": "振奋",
+      "moodIcon": "🏆",
+      "tags": [
+        "史诗",
+        "管弦",
+        "励志",
+        "燃向"
+      ]
+    },
+    {
+      "title": "夜空中最亮的星",
+      "artist": "逃跑计划",
+      "year": "2011",
+      "genre": "摇滚",
+      "genreIcon": "🎸",
+      "album": "世界",
+      "duration": "4:32",
+      "description": "中国独立摇滚代表作，歌词充满理想主义情怀，旋律优美动人。",
+      "lyric": "夜空中最亮的星，能否听清，那仰望的人心底的孤独和叹息。",
+      "mood": "励志",
+      "moodIcon": "⭐",
+      "tags": [
+        "摇滚",
+        "民谣",
+        "国产",
+        "励志"
+      ]
+    },
+    {
+      "title": "悲怆奏鸣曲",
+      "artist": "路德维希·贝多芬",
+      "year": "1798",
+      "genre": "古典",
+      "genreIcon": "🎻",
+      "album": "钢琴奏鸣曲第8号",
+      "duration": "18分钟",
+      "description": "贝多芬\"悲怆\"奏鸣曲，第三乐章充满战斗精神，展现了作曲家与命运抗争的勇气。",
+      "lyric": "我要扼住命运的咽喉，它绝不能使我完全屈服。",
+      "mood": "激昂",
+      "moodIcon": "⚡",
+      "tags": [
+        "古典",
+        "钢琴",
+        "悲怆",
+        "力量"
+      ]
+    },
+    {
+      "title": "卡农",
+      "artist": "乔治·温斯顿",
+      "year": "2001",
+      "genre": "新世纪",
+      "genreIcon": "🌊",
+      "album": "Dream",
+      "duration": "5:05",
+      "description": "新世纪钢琴家乔治·温斯顿改编的钢琴版卡农，旋律如流水般温润。",
+      "lyric": "音乐是通往灵魂深处的桥梁。",
+      "mood": "平静",
+      "moodIcon": "💫",
+      "tags": [
+        "新世纪",
+        "钢琴",
+        "治愈",
+        "静心"
+      ]
+    },
+    {
+      "title": "青花瓷",
+      "artist": "周杰伦",
+      "year": "2008",
+      "genre": "流行",
+      "genreIcon": "🎤",
+      "album": "我很忙",
+      "duration": "3:59",
+      "description": "周杰伦中国风代表作，歌词意境优美，旋律婉转悠扬。",
+      "lyric": "天青色等烟雨，而我在等你。",
+      "mood": "古韵",
+      "moodIcon": "🏺",
+      "tags": [
+        "流行",
+        "中国风",
+        "经典",
+        "周杰伦"
+      ]
+    },
+    {
+      "title": "G弦上的咏叹调",
+      "artist": "约翰·塞巴斯蒂安·巴赫",
+      "year": "1730s",
+      "genre": "古典",
+      "genreIcon": "🎻",
+      "album": "无伴奏大提琴组曲第三号",
+      "duration": "5:20",
+      "description": "在G弦上演奏的巴赫名曲，旋律如歌般温柔，被改编为各种乐器版本。",
+      "lyric": "音乐家必须演奏音乐，这是他存在的理由。",
+      "mood": "神圣",
+      "moodIcon": "✨",
+      "tags": [
+        "古典",
+        "小提琴",
+        "经典",
+        "神圣"
+      ]
+    },
+    {
+      "title": "Canon in D Major",
+      "artist": "George Winston",
+      "year": "1980",
+      "genre": "新世纪",
+      "genreIcon": "🌊",
+      "album": "December",
+      "duration": "5:40",
+      "description": "新世纪音乐大师乔治·温斯顿改编的卡农，钢琴版更加温暖治愈。",
+      "lyric": "每个音符都是一颗星星，照亮你的夜空。",
+      "mood": "治愈",
+      "moodIcon": "🌟",
+      "tags": [
+        "新世纪",
+        "钢琴",
+        "治愈",
+        "冬日"
+      ]
+    }
+  ],
+  "prompts": {
+    "generate": "生成一条音乐分享",
+    "share": "{content}"
+  },
+  "share": {
+    "title": "音乐分享",
+    "template": "{content}"
+  },
+  "meta": {
+    "generated": "2026-04-15T06:37:23.973Z",
+    "source": "musicData.js"
+  }
+}

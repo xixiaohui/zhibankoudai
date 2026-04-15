@@ -1,0 +1,279 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-04-15T06:37:24.036Z",
+  "modules": [
+    {
+      "id": "quote",
+      "name": "每日名言",
+      "icon": "icon-quote",
+      "color": "#FF6B6B",
+      "count": 202
+    },
+    {
+      "id": "joke",
+      "name": "每日段子",
+      "icon": "icon-joke",
+      "color": "#4ECDC4",
+      "count": 4
+    },
+    {
+      "id": "psychology",
+      "name": "心理学",
+      "icon": "icon-psychology",
+      "color": "#9B59B6",
+      "count": 6
+    },
+    {
+      "id": "finance",
+      "name": "金融知识",
+      "icon": "icon-finance",
+      "color": "#27AE60",
+      "count": 4
+    },
+    {
+      "id": "love",
+      "name": "情感语录",
+      "icon": "icon-love",
+      "color": "#E91E63",
+      "count": 50
+    },
+    {
+      "id": "movie",
+      "name": "电影推荐",
+      "icon": "icon-movie",
+      "color": "#3498DB",
+      "count": 30
+    },
+    {
+      "id": "music",
+      "name": "音乐分享",
+      "icon": "icon-music",
+      "color": "#F39C12",
+      "count": 29
+    },
+    {
+      "id": "tech",
+      "name": "科技前沿",
+      "icon": "icon-tech",
+      "color": "#1ABC9C",
+      "count": 29
+    },
+    {
+      "id": "tcm",
+      "name": "中医养生",
+      "icon": "icon-tcm",
+      "color": "#2ECC71",
+      "count": 29
+    },
+    {
+      "id": "travel",
+      "name": "旅行攻略",
+      "icon": "icon-travel",
+      "color": "#E67E22",
+      "count": 29
+    },
+    {
+      "id": "fortune",
+      "name": "每日运势",
+      "icon": "icon-fortune",
+      "color": "#8E44AD",
+      "count": 20
+    },
+    {
+      "id": "literature",
+      "name": "文学赏析",
+      "icon": "icon-literature",
+      "color": "#D35400",
+      "count": 50
+    },
+    {
+      "id": "foreignTrade",
+      "name": "外贸资讯",
+      "icon": "icon-trade",
+      "color": "#16A085",
+      "count": 39
+    },
+    {
+      "id": "ecommerce",
+      "name": "电商动态",
+      "icon": "icon-ecommerce",
+      "color": "#2980B9",
+      "count": 41
+    },
+    {
+      "id": "math",
+      "name": "数学趣题",
+      "icon": "icon-math",
+      "color": "#8E44AD",
+      "count": 41
+    },
+    {
+      "id": "english",
+      "name": "英语学习",
+      "icon": "icon-english",
+      "color": "#C0392B",
+      "count": 40
+    },
+    {
+      "id": "programming",
+      "name": "编程技巧",
+      "icon": "icon-code",
+      "color": "#27AE60",
+      "count": 39
+    },
+    {
+      "id": "photography",
+      "name": "摄影技巧",
+      "icon": "icon-camera",
+      "color": "#D68910",
+      "count": 48
+    },
+    {
+      "id": "beauty",
+      "name": "美容护肤",
+      "icon": "icon-beauty",
+      "color": "#F38D9C",
+      "count": 48
+    },
+    {
+      "id": "investment",
+      "name": "投资理财",
+      "icon": "icon-invest",
+      "color": "#1E8449",
+      "count": 48
+    },
+    {
+      "id": "fishing",
+      "name": "钓鱼技巧",
+      "icon": "icon-fish",
+      "color": "#3498DB",
+      "count": 48
+    },
+    {
+      "id": "fitness",
+      "name": "健身指导",
+      "icon": "icon-fitness",
+      "color": "#E74C3C",
+      "count": 48
+    },
+    {
+      "id": "pet",
+      "name": "宠物养护",
+      "icon": "icon-pet",
+      "color": "#9B59B6",
+      "count": 31
+    },
+    {
+      "id": "fashion",
+      "name": "时尚穿搭",
+      "icon": "icon-fashion",
+      "color": "#F39C12",
+      "count": 21
+    },
+    {
+      "id": "outfit",
+      "name": "穿搭推荐",
+      "icon": "icon-outfit",
+      "color": "#E91E63",
+      "count": 20
+    },
+    {
+      "id": "decoration",
+      "name": "家居装饰",
+      "icon": "icon-home",
+      "color": "#795548",
+      "count": 20
+    },
+    {
+      "id": "glassFiber",
+      "name": "玻璃纤维",
+      "icon": "icon-material",
+      "color": "#607D8B",
+      "count": 14
+    },
+    {
+      "id": "resin",
+      "name": "树脂工艺",
+      "icon": "icon-resin",
+      "color": "#00BCD4",
+      "count": 14
+    },
+    {
+      "id": "tax",
+      "name": "税务筹划",
+      "icon": "icon-tax",
+      "color": "#FF5722",
+      "count": 15
+    },
+    {
+      "id": "law",
+      "name": "法律常识",
+      "icon": "icon-law",
+      "color": "#455A64",
+      "count": 15
+    },
+    {
+      "id": "official",
+      "name": "政务服务",
+      "icon": "icon-official",
+      "color": "#2196F3",
+      "count": 19
+    },
+    {
+      "id": "handling",
+      "name": "办事指南",
+      "icon": "icon-handle",
+      "color": "#4CAF50",
+      "count": 19
+    },
+    {
+      "id": "floral",
+      "name": "花卉养护",
+      "icon": "icon-flower",
+      "color": "#E91E63",
+      "count": 19
+    },
+    {
+      "id": "history",
+      "name": "历史故事",
+      "icon": "icon-history",
+      "color": "#795548",
+      "count": 21
+    },
+    {
+      "id": "military",
+      "name": "军事动态",
+      "icon": "icon-military",
+      "color": "#607D8B",
+      "count": 20
+    },
+    {
+      "id": "stock",
+      "name": "股市行情",
+      "icon": "icon-stock",
+      "color": "#F44336",
+      "count": 8
+    },
+    {
+      "id": "economics",
+      "name": "经济观察",
+      "icon": "icon-economy",
+      "color": "#FF9800",
+      "count": 8
+    },
+    {
+      "id": "business",
+      "name": "商业洞察",
+      "icon": "icon-business",
+      "color": "#673AB7",
+      "count": 8
+    },
+    {
+      "id": "news",
+      "name": "每日资讯",
+      "icon": "icon-news",
+      "color": "#00BCD4",
+      "count": 8
+    }
+  ]
+}

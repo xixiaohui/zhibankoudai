@@ -9,7 +9,8 @@
     "pages/mood/index",
     "pages/memory/index",
     "pages/mine/index",
-    "pages/poster/index"
+    "pages/poster/index",
+    "pages/uploadData/uploadData"
   ],
   "usingComponents": {
     "posterCanvas": "components/posterCanvas/posterCanvas"

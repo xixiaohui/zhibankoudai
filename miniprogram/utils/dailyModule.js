@@ -4,50 +4,11 @@
  * 定义所有每日板块的配置信息，包括：
  * - 板块基本信息（名称、图标、颜色）
  * - AI生成提示词
- * - 兜底数据
  * - 海报分享配置
+ * 
+ * 注意：兜底数据已迁移到云存储（cloudData.js），
+ * 不再依赖本地的 xxxData.js 文件
  */
-
-// 引入各板块兜底数据
-const { FALLBACK_QUOTES } = require('./quoteData.js')
-const { FALLBACK_JOKES } = require('./jokeData.js')
-const { FALLBACK_PSYCHOLOGY } = require('./psychologyData.js')
-const { FALLBACK_FINANCE } = require('./financeData.js')
-const { FALLBACK_LOVE } = require('./loveData.js')
-const { FALLBACK_MOVIES } = require('./movieData.js')
-const { FALLBACK_MUSICS } = require('./musicData.js')
-const { FALLBACK_TECHS } = require('./techData.js')
-const { FALLBACK_TCMS } = require('./tcmData.js')
-const { FALLBACK_TRAVELS } = require('./travelData.js')
-const { FALLBACK_FORTUNES } = require('./fortuneData.js')
-const { FALLBACK_AUTHORS } = require('./literatureData.js')
-const { FALLBACK_FOREIGN_TRADES } = require('./foreignTradeData.js')
-const { FALLBACK_ECOMMERCE } = require('./eCommerceData.js')
-const { FALLBACK_MATH } = require('./mathData.js')
-const { FALLBACK_ENGLISH } = require('./englishData.js')
-const { FALLBACK_PROGRAMMING } = require('./programmingData.js')
-const { FALLBACK_PHOTOGRAPHY } = require('./photographyData.js')
-const { FALLBACK_BEAUTY } = require('./beautyData.js')
-const { FALLBACK_INVESTMENT } = require('./investmentData.js')
-const { FALLBACK_FISHING } = require('./fishingData.js')
-const { FALLBACK_FITNESS } = require('./fitnessData.js')
-const { FALLBACK_PET } = require('./petData.js')
-const { FALLBACK_FASHION } = require('./fashionData.js')
-const { FALLBACK_OUTFIT } = require('./outfitData.js')
-const { FALLBACK_DECORATION } = require('./decorationData.js')
-const { FALLBACK_FIBER } = require('./glassFiberData.js')
-const { FALLBACK_RESIN } = require('./resinData.js')
-const { FALLBACK_TAX } = require('./taxData.js')
-const { FALLBACK_LAW } = require('./lawData.js')
-const { FALLBACK_OFFICIAL } = require('./officialData.js')
-const { FALLBACK_HANDLING } = require('./handlingData.js')
-const { FALLBACK_FLORAL } = require('./floralData.js')
-const { FALLBACK_HISTORY } = require('./historyData.js')
-const { FALLBACK_MILITARY } = require('./militaryData.js')
-const { FALLBACK_STOCKS } = require('./stockData.js')
-const { FALLBACK_ECONOMICS } = require('./economicsData.js')
-const { FALLBACK_BUSINESS } = require('./businessData.js')
-const { FALLBACK_NEWS } = require('./newsData.js')
 
 // ─── 板块类型定义 ─────────────────────────────────────────────────
 const MODULE_TYPES = {
@@ -1224,57 +1185,9 @@ const MODULE_CONFIGS = {
   },
 }
 
-// ─── 兜底数据映射 ─────────────────────────────────────────────────
-const FALLBACK_DATA = {
-  [MODULE_TYPES.QUOTE]: FALLBACK_QUOTES,
-  [MODULE_TYPES.JOKE]: FALLBACK_JOKES,
-  [MODULE_TYPES.PSYCHOLOGY]: FALLBACK_PSYCHOLOGY,
-  [MODULE_TYPES.FINANCE]: FALLBACK_FINANCE,
-  [MODULE_TYPES.LOVE]: FALLBACK_LOVE,
-  [MODULE_TYPES.MOVIE]: FALLBACK_MOVIES,
-  [MODULE_TYPES.MUSIC]: FALLBACK_MUSICS,
-  [MODULE_TYPES.TECH]: FALLBACK_TECHS,
-  [MODULE_TYPES.TCM]: FALLBACK_TCMS,
-  [MODULE_TYPES.TRAVEL]: FALLBACK_TRAVELS,
-  [MODULE_TYPES.FORTUNE]: FALLBACK_FORTUNES,
-  [MODULE_TYPES.LITERATURE]: FALLBACK_AUTHORS,
-  [MODULE_TYPES.FOREIGN_TRADE]: FALLBACK_FOREIGN_TRADES,
-  [MODULE_TYPES.ECOMMERCE]: FALLBACK_ECOMMERCE,
-  [MODULE_TYPES.MATH]: FALLBACK_MATH,
-  [MODULE_TYPES.ENGLISH]: FALLBACK_ENGLISH,
-  [MODULE_TYPES.PROGRAMMING]: FALLBACK_PROGRAMMING,
-  [MODULE_TYPES.PHOTOGRAPHY]: FALLBACK_PHOTOGRAPHY,
-  [MODULE_TYPES.BEAUTY]: FALLBACK_BEAUTY,
-  [MODULE_TYPES.INVESTMENT]: FALLBACK_INVESTMENT,
-  [MODULE_TYPES.FISHING]: FALLBACK_FISHING,
-  [MODULE_TYPES.FITNESS]: FALLBACK_FITNESS,
-  [MODULE_TYPES.PET]: FALLBACK_PET,
-  [MODULE_TYPES.FASHION]: FALLBACK_FASHION,
-  [MODULE_TYPES.OUTFIT]: FALLBACK_OUTFIT,
-  [MODULE_TYPES.DECORATION]: FALLBACK_DECORATION,
-  [MODULE_TYPES.GLASS_FIBER]: FALLBACK_FIBER,
-  [MODULE_TYPES.RESIN]: FALLBACK_RESIN,
-  [MODULE_TYPES.TAX]: FALLBACK_TAX,
-  [MODULE_TYPES.LAW]: FALLBACK_LAW,
-  [MODULE_TYPES.OFFICIAL]: FALLBACK_OFFICIAL,
-  [MODULE_TYPES.HANDLING]: FALLBACK_HANDLING,
-  [MODULE_TYPES.FLORAL]: FALLBACK_FLORAL,
-  [MODULE_TYPES.HISTORY]: FALLBACK_HISTORY,
-  [MODULE_TYPES.MILITARY]: FALLBACK_MILITARY,
-  [MODULE_TYPES.STOCK]: FALLBACK_STOCKS,
-  [MODULE_TYPES.ECONOMICS]: FALLBACK_ECONOMICS,
-  [MODULE_TYPES.BUSINESS]: FALLBACK_BUSINESS,
-  [MODULE_TYPES.NEWS]: FALLBACK_NEWS,
-}
-
-// ─── AI提示词（从 dailyPrompts.js 引入）────────────────────────────
-const { AI_PROMPTS } = require('./dailyPrompts.js')
-
 // ─── 导出 ───────────────────────────────────────────────────────
 module.exports = {
   MODULE_TYPES,
   MODULE_CONFIGS,
-  FALLBACK_DATA,
-  AI_PROMPTS,
 }
 

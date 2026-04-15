@@ -1,0 +1,346 @@
+{
+  "id": "love",
+  "name": "情感语录",
+  "icon": "icon-love",
+  "color": "#E91E63",
+  "fields": [
+    {
+      "id": "classic",
+      "name": "经典古风",
+      "icon": "flower",
+      "desc": "古诗词中的浪漫表达"
+    },
+    {
+      "id": "modern",
+      "name": "甜蜜现代",
+      "icon": "heart",
+      "desc": "现代情话甜言蜜语"
+    },
+    {
+      "id": "celebrity",
+      "name": "名人情话",
+      "icon": "star",
+      "desc": "名人经典爱情语录"
+    },
+    {
+      "id": "poetry",
+      "name": "诗词传情",
+      "icon": "book",
+      "desc": "古诗词中的爱情名句"
+    }
+  ],
+  "fallback": [
+    {
+      "content": "愿我如星君如月，夜夜流光相皎洁。",
+      "author": "范成大",
+      "source": "车遥遥篇",
+      "category": "classic"
+    },
+    {
+      "content": "入我相思门，知我相思苦。",
+      "author": "李白",
+      "source": "三五七言",
+      "category": "classic"
+    },
+    {
+      "content": "只愿君心似我心，定不负相思意。",
+      "author": "李之仪",
+      "source": "卜算子",
+      "category": "classic"
+    },
+    {
+      "content": "身无彩凤双飞翼，心有灵犀一点通。",
+      "author": "李商隐",
+      "source": "无题",
+      "category": "classic"
+    },
+    {
+      "content": "愿得一心人，白头不相离。",
+      "author": "卓文君",
+      "source": "白头吟",
+      "category": "classic"
+    },
+    {
+      "content": "问世间，情为何物，直教生死相许。",
+      "author": "元好问",
+      "source": "摸鱼儿",
+      "category": "classic"
+    },
+    {
+      "content": "两情若是久长时，又岂在朝朝暮暮。",
+      "author": "秦观",
+      "source": "鹊桥仙",
+      "category": "classic"
+    },
+    {
+      "content": "在天愿作比翼鸟，在地愿为连理枝。",
+      "author": "白居易",
+      "source": "长恨歌",
+      "category": "classic"
+    },
+    {
+      "content": "曾经沧海难为水，除却巫山不是云。",
+      "author": "元稹",
+      "source": "离思",
+      "category": "classic"
+    },
+    {
+      "content": "平生不会相思，才会相思，便害相思。",
+      "author": "徐再思",
+      "source": "折桂令",
+      "category": "classic"
+    },
+    {
+      "content": "山有木兮木有枝，心悦君兮君不知。",
+      "author": "佚名",
+      "source": "越人歌",
+      "category": "classic"
+    },
+    {
+      "content": "执子之手，与子偕老。",
+      "author": "佚名",
+      "source": "诗经·击鼓",
+      "category": "classic"
+    },
+    {
+      "content": "衣带渐宽终不悔，为伊消得人憔悴。",
+      "author": "柳永",
+      "source": "蝶恋花",
+      "category": "classic"
+    },
+    {
+      "content": "人生若只如初见，何事秋风悲画扇。",
+      "author": "纳兰性德",
+      "source": "木兰词",
+      "category": "classic"
+    },
+    {
+      "content": "情不知所起，一往而深，生者可以死，死可以生。",
+      "author": "汤显祖",
+      "source": "牡丹亭",
+      "category": "classic"
+    },
+    {
+      "content": "我行过许多地方的桥，看过许多次数的云，喝过许多种类的酒，却只爱过一个正当最好年龄的人。",
+      "author": "沈从文",
+      "source": "湘行散记",
+      "category": "modern"
+    },
+    {
+      "content": "于千万人之中遇见你所要遇见的人，于千万年之中，时间的无涯的荒野里，没有早一步，也没有晚一步，刚巧赶上了。",
+      "author": "张爱玲",
+      "source": "爱",
+      "category": "modern"
+    },
+    {
+      "content": "你再差劲也会有一个人爱你。",
+      "author": "张爱玲",
+      "source": "",
+      "category": "modern"
+    },
+    {
+      "content": "我将于茫茫人海中访我唯一灵魂之伴侣；得之，我幸；不得，我命。",
+      "author": "徐志摩",
+      "source": "致梁启超",
+      "category": "modern"
+    },
+    {
+      "content": "别问我爱不爱你，因为余光中都是你。",
+      "author": "余光中",
+      "source": "",
+      "category": "modern"
+    },
+    {
+      "content": "我见了她，她便存在于我整个世界。",
+      "author": "林徽因",
+      "source": "",
+      "category": "modern"
+    },
+    {
+      "content": "每想你一次，天上飘落一粒沙，从此形成了撒哈拉。",
+      "author": "三毛",
+      "source": "撒哈拉的故事",
+      "category": "modern"
+    },
+    {
+      "content": "如果有来生，要做一棵树，站成永恒，没有悲欢的姿势。一半在土里安详，一半在风里飞扬。",
+      "author": "三毛",
+      "source": "如果有来生",
+      "category": "modern"
+    },
+    {
+      "content": "我把我整个灵魂都给你，连同它的怪癖，耍小脾气，忽明忽暗，一千八百种坏毛病。",
+      "author": "王小波",
+      "source": "爱你就像爱生命",
+      "category": "modern"
+    },
+    {
+      "content": "你要是愿意，我就永远爱你；你要是不愿意，我就永远相思。",
+      "author": "王小波",
+      "source": "爱你就像爱生命",
+      "category": "modern"
+    },
+    {
+      "content": "答案很长，我准备用一生的时间来回答，你准备要听了吗？",
+      "author": "林徽因",
+      "source": "",
+      "category": "modern"
+    },
+    {
+      "content": "遇见你之前，我没想过结婚；遇见你之后，结婚我没想过别人。",
+      "author": "钱钟书",
+      "source": "",
+      "category": "modern"
+    },
+    {
+      "content": "在遇见你之前，我从未想过结婚；在遇见你之后，我从未想过和别人结婚。",
+      "author": "杨绛",
+      "source": "",
+      "category": "modern"
+    },
+    {
+      "content": "你是我纸短情长的雨季，也是我满目星河的根本。",
+      "author": "佚名",
+      "source": "",
+      "category": "modern"
+    },
+    {
+      "content": "斯人若彩虹，遇上方知有。",
+      "author": "文德琳·范·德拉安南",
+      "source": "怦然心动",
+      "category": "modern"
+    },
+    {
+      "content": "我顽固地爱你。",
+      "author": "胡适",
+      "source": "",
+      "category": "celebrity"
+    },
+    {
+      "content": "我不要孤独，不要做愚人，我要在死后世界找到你的灵魂。",
+      "author": "朱生豪",
+      "source": "朱生豪情书",
+      "category": "celebrity"
+    },
+    {
+      "content": "我愿意舍弃一切，以想念你终此一生。",
+      "author": "朱生豪",
+      "source": "朱生豪情书",
+      "category": "celebrity"
+    },
+    {
+      "content": "我一天一天明白你的平凡，同时却一天一天愈更深切地爱你。",
+      "author": "朱生豪",
+      "source": "朱生豪情书",
+      "category": "celebrity"
+    },
+    {
+      "content": "醒来觉得甚是爱你。",
+      "author": "朱生豪",
+      "source": "朱生豪情书",
+      "category": "celebrity"
+    },
+    {
+      "content": "我愿意像把我包围的枕头一样，抱着你。",
+      "author": "徐志摩",
+      "source": "",
+      "category": "celebrity"
+    },
+    {
+      "content": "我将于人海之中遇见你，只为了一个不确定的未来。",
+      "author": "顾城",
+      "source": "",
+      "category": "celebrity"
+    },
+    {
+      "content": "我永恒的灵魂，注视着你的心，纵然黑夜孤寂，白昼如焚。",
+      "author": "兰波",
+      "source": "",
+      "category": "celebrity"
+    },
+    {
+      "content": "你微微地笑着，不同我说什么话。而我觉得，为了这个，我已等待很久了。",
+      "author": "泰戈尔",
+      "source": "飞鸟集",
+      "category": "celebrity"
+    },
+    {
+      "content": "我把我整个灵魂都给你，连同它的怪癖，耍小脾气，忽明忽暗。",
+      "author": "王小波",
+      "source": "爱你就像爱生命",
+      "category": "celebrity"
+    },
+    {
+      "content": "关关雎鸠，在河之洲。窈窕淑女，君子好逑。",
+      "author": "佚名",
+      "source": "诗经·关雎",
+      "category": "poetry"
+    },
+    {
+      "content": "蒹葭苍苍，白露为霜。所谓伊人，在水一方。",
+      "author": "佚名",
+      "source": "诗经·蒹葭",
+      "category": "poetry"
+    },
+    {
+      "content": "死生契阔，与子成说。执子之手，与子偕老。",
+      "author": "佚名",
+      "source": "诗经·击鼓",
+      "category": "poetry"
+    },
+    {
+      "content": "上邪！我欲与君相知，长命无绝衰。",
+      "author": "佚名",
+      "source": "上邪",
+      "category": "poetry"
+    },
+    {
+      "content": "山无陵，江水为竭，冬雷震震，夏雨雪，天地合，乃敢与君绝。",
+      "author": "佚名",
+      "source": "上邪",
+      "category": "poetry"
+    },
+    {
+      "content": "春蚕到死丝方尽，蜡炬成灰泪始干。",
+      "author": "李商隐",
+      "source": "无题",
+      "category": "poetry"
+    },
+    {
+      "content": "何当共剪西窗烛，却话巴山夜雨时。",
+      "author": "李商隐",
+      "source": "夜雨寄北",
+      "category": "poetry"
+    },
+    {
+      "content": "此情可待成追忆，只是当时已惘然。",
+      "author": "李商隐",
+      "source": "锦瑟",
+      "category": "poetry"
+    },
+    {
+      "content": "金风玉露一相逢，便胜却人间无数。",
+      "author": "秦观",
+      "source": "鹊桥仙",
+      "category": "poetry"
+    },
+    {
+      "content": "柔情似水，佳期如梦，忍顾鹊桥归路。",
+      "author": "秦观",
+      "source": "鹊桥仙",
+      "category": "poetry"
+    }
+  ],
+  "prompts": {
+    "generate": "生成一条情感语录",
+    "share": "{content}"
+  },
+  "share": {
+    "title": "情感语录",
+    "template": "{content}"
+  },
+  "meta": {
+    "generated": "2026-04-15T06:37:23.968Z",
+    "source": "loveData.js"
+  }
+}

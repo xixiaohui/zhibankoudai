@@ -1,8 +1,21 @@
 // components/dailyCard/dailyCard.js - 每日内容卡片组件
-const { MODULE_TYPES, MODULE_CONFIGS, FALLBACK_DATA } = require('../../utils/dailyModule.js')
-const { DailyContent } = require('../../utils/dailyContent.js')
-const { getModuleConfigSync, getModuleConfig } = require('../../utils/moduleConfig.js')
 const cloudData = require('../../utils/cloudData.js')
+const { DailyContent } = require('../../utils/dailyContent.js')
+
+// 兼容旧常量
+const MODULE_TYPES = {
+  QUOTE: 'quote', JOKE: 'joke', PSYCHOLOGY: 'psychology', FINANCE: 'finance',
+  LOVE: 'love', MOVIE: 'movie', MUSIC: 'music', TECH: 'tech', TCM: 'tcm',
+  TRAVEL: 'travel', FORTUNE: 'fortune', LITERATURE: 'literature',
+  FOREIGN_TRADE: 'foreignTrade', ECOMMERCE: 'ecommerce', MATH: 'math',
+  ENGLISH: 'english', PROGRAMMING: 'programming', PHOTOGRAPHY: 'photography',
+  BEAUTY: 'beauty', INVESTMENT: 'investment', FISHING: 'fishing',
+  FITNESS: 'fitness', PET: 'pet', FASHION: 'fashion', OUTFIT: 'outfit',
+  DECORATION: 'decoration', GLASS_FIBER: 'glassFiber', RESIN: 'resin',
+  TAX: 'tax', LAW: 'law', OFFICIAL: 'official', HANDLING: 'handling',
+  FLORAL: 'floral', HISTORY: 'history', MILITARY: 'military',
+  STOCK: 'stock', ECONOMICS: 'economics', BUSINESS: 'business', NEWS: 'news'
+}
 
 // 全局请求队列，控制同时发起的 AI 请求数量
 const MAX_CONCURRENT_REQUESTS = 3
@@ -44,47 +57,29 @@ function enqueueRequest(fn) {
 
 /**
  * 获取兜底数据（使用日期作为种子，保证每天固定）
- * 优先级：云端数据 > 本地 JS 数据
+ * 数据来源：云端数据（cloudData.js）
  */
 function getFallbackContent(moduleType, config) {
   console.log('[DailyCard] getFallbackContent, moduleType:', moduleType)
   
-  // 1. 优先从云端数据获取
-  let fallbackList = null
+  // 使用 cloudData.getDailyItem 获取每日固定数据
+  const fallback = cloudData.getDailyItem(moduleType)
   
-  // 尝试从 cloudData 获取
-  const cloudModuleData = cloudData.getModuleData(moduleType)
-  if (cloudModuleData) {
-    // 查找 FALLBACK_ 开头的数组
-    const fallbackKey = Object.keys(cloudModuleData).find(k => 
-      k.startsWith('FALLBACK_') || k.endsWith('_QUOTES') || k.endsWith('_DATA') || k.endsWith('_SCENES')
-    )
-    if (fallbackKey && Array.isArray(cloudModuleData[fallbackKey])) {
-      fallbackList = cloudModuleData[fallbackKey]
-      console.log('[DailyCard] 使用云端数据:', fallbackList.length + ' 条')
+  if (!fallback) {
+    console.log('[DailyCard] 无可用数据，使用默认')
+    // 返回一个空数据对象，避免页面报错
+    return {
+      title: config.name || '每日推荐',
+      content: '点击「换一条」让AI为你生成内容',
+      date: new Date().toISOString().split('T')[0],
+      isFallback: true
     }
   }
   
-  // 2. 降级到本地 JS 数据
-  if (!fallbackList || fallbackList.length === 0) {
-    fallbackList = FALLBACK_DATA[moduleType]
-    console.log('[DailyCard] 使用本地数据:', fallbackList ? fallbackList.length + ' 条' : '无数据')
-  }
+  console.log('[DailyCard] 云端数据: 已获取')
   
-  if (!fallbackList || fallbackList.length === 0) {
-    return null
-  }
-  if (!fallbackList || fallbackList.length === 0) {
-    return null
-  }
-  
-  // 使用日期种子，保证每天看到相同内容
+  // 使用日期种子
   const today = new Date()
-  const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate()
-  const index = seed % fallbackList.length
-
-  
-  const fallback = { ...fallbackList[index] }
   
   // 统一字段映射：统一为 title + content 格式，方便海报生成
   // 注：quote/love 数据已统一使用新字段名，无需额外映射
@@ -217,48 +212,23 @@ Component({
   _initModule() {
     const moduleType = this.properties.moduleType
     console.log('[DailyCard] _initModule 开始, moduleType:', moduleType)
-      
-    // 1. 优先从本地缓存的配置读取（同步，快速）
-    const cloudConfig = getModuleConfigSync()
-    console.log('[DailyCard] cloudConfig:', cloudConfig ? '有数据' : '无数据', 
-                 cloudConfig?.modules?.length ? cloudConfig.modules.length + ' 个模块' : '')
     
-    const moduleConfig = cloudConfig?.modules?.find(m => m.id === moduleType)
-    console.log('[DailyCard] moduleConfig:', moduleConfig ? '找到' : '未找到', moduleType)
+    // 1. 优先使用 cloudData 获取模块配置（同步，快速）
+    const config = cloudData.getModuleConfig(moduleType)
+    console.log('[DailyCard] 模块配置:', config ? config.name : '未找到', moduleType)
     
-    if (moduleConfig) {
-      // 使用云配置文件中的配置
-      const config = {
-        ...moduleConfig,
-        id: moduleType,
-      }
-      console.log('[DailyCard] 使用云端配置:', config.name)
+    if (config) {
       this.setData({ config })
-      this._loadContent(config)
+      // 预加载模块数据用于兜底
+      cloudData.getModule(moduleType).then(() => {
+        this._loadContent(config)
+      }).catch(() => {
+        this._loadContent(config)
+      })
     } else {
-      // 2. 降级到硬编码配置
-      const config = MODULE_CONFIGS[moduleType]
-      console.log('[DailyCard] 使用硬编码配置:', config ? config.name : '未找到')
-      if (!config) {
-        console.error('[DailyCard] 未知的模块类型:', moduleType)
-        return
-      }
-      this.setData({ config })
-      this._loadContent(config)
-      
-      // 3. 异步尝试加载云配置（更新缓存）
-      this._syncCloudConfig()
+      console.error('[DailyCard] 未知的模块类型:', moduleType)
     }
   },
-
-    // 异步同步云配置到本地
-    async _syncCloudConfig() {
-      try {
-        await getModuleConfig()
-      } catch (e) {
-        // 静默失败，使用硬编码配置
-      }
-    },
 
     // 加载内容（从配置读取后执行）
     _loadContent(config) {

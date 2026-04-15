@@ -1,0 +1,501 @@
+{
+  "id": "english",
+  "name": "英语学习",
+  "icon": "icon-english",
+  "color": "#C0392B",
+  "fields": [],
+  "fallback": [
+    {
+      "title": "英语五大基本句型结构",
+      "category": "语法基础",
+      "categoryIcon": "📝",
+      "summary": "英语五大基本句型是构建所有句子的基石：1）主谓结构（S+V）：The sun rises. 太阳升起。2）主谓宾结构（S+V+O）：I love reading. 我喜欢阅读。3）主谓双宾结构（S+V+IO+DO）：She gave me a book. 她给了我一本书。4）主谓宾补结构（S+V+O+C）：We call him Bob. 我们叫他鲍勃。5）主系表结构（S+V+P）：She is a teacher. 她是一名教师。掌握这些结构是分析复杂句子的关键。",
+      "tips": "技巧：遇到长难句时，先找主语和谓语动词，确定基本句型，再分析其他成分。可用\"括号法\"标注各成分。",
+      "tags": [
+        "句型",
+        "语法",
+        "基础"
+      ]
+    },
+    {
+      "title": "动词时态完整梳理",
+      "category": "语法基础",
+      "categoryIcon": "📝",
+      "summary": "初中英语八大时态：1）一般现在时：习惯动作、客观事实；2）一般过去时：过去发生的动作；3）一般将来时：将来计划或打算；4）现在进行时：正在进行的动作；5）过去进行时：过去某时正在进行的动作；6）现在完成时：过去发生影响现在的结果；7）过去完成时：过去的过去；8）过去将来时：过去看将来。每个时态都有特定的时间状语标志词。",
+      "tips": "易错点：现在完成时的\"已完成\"与\"未完成\"用法容易混淆。注意时间状语：already/yet/for/since等是现在完成时的标志。",
+      "tags": [
+        "时态",
+        "动词",
+        "语法"
+      ]
+    },
+    {
+      "title": "定语从句关系词用法",
+      "category": "语法基础",
+      "categoryIcon": "📝",
+      "summary": "定语从句的关系词分为：1）关系代词：who/whom（指人），which（指物），that（指人或物），whose（所有格）；2）关系副词：when（时间），where（地点），why（原因）。使用原则：that不用情况：非限定性定语从句、先行词被序数词/最高级/only/first修饰、介词后。which不用情况：先行词是all/everything/nothing等不定代词或被其修饰。",
+      "tips": "技巧：选关系词时先看先行词是人还是物，再看从句缺什么成分（主语、宾语、状语等）。",
+      "tags": [
+        "从句",
+        "定语从句",
+        "关系词"
+      ]
+    },
+    {
+      "title": "名词性从句四大类型",
+      "category": "语法基础",
+      "categoryIcon": "📝",
+      "summary": "名词性从句包括四种：1）主语从句：That he won made us happy. 他赢了让我们高兴。2）宾语从句：I believe that he is honest. 我相信他是诚实的。3）表语从句：The problem is who can help us. 问题是谁能帮助我们。4）同位语从句：The news that he won surprised us. 他获胜的消息让我们惊讶。连接词：that（无意义，仅起连接作用），whether/if（是否），特殊疑问词（what/who/where等）。",
+      "tips": "易错点：if只用于宾语从句，其他名词性从句用whether。that在宾语从句中可省略，其他从句一般不省略。",
+      "tags": [
+        "从句",
+        "名词性从句",
+        "语法"
+      ]
+    },
+    {
+      "title": "形容词与副词的比较级、最高级",
+      "category": "语法基础",
+      "categoryIcon": "📝",
+      "summary": "比较级和最高级的规则变化：1）单音节词直接加-er/-est；2）以e结尾加-r/-st；3）辅音+y结尾改y为i加-er/-est；4）重读闭音节双写末尾辅音加-er/-est；5）多音节词前加more/most。不规则变化：good/well→better/best，bad/badly→worse/worst，many/much→more/most，little→less→least，far→farther/further→farthest/furthest。",
+      "tips": "比较结构：A + be + 形容词比较级 + than + B；A + 动词 + 副词比较级 + than + B。the + 最高级 + in/of表示范围。",
+      "tags": [
+        "形容词",
+        "副词",
+        "比较级"
+      ]
+    },
+    {
+      "title": "状语从句九大类型",
+      "category": "语法基础",
+      "categoryIcon": "📝",
+      "summary": "状语从句根据意义分为九类：1）时间：when/while/as（当...时），before，after，since，until/till；2）原因：because，since，as（因为）；3）地点：where，wherever；4）条件：if，unless（除非），as long as；5）目的：so that，in order that；6）结果：so...that，such...that；7）让步：although/though，even if/though，no matter what；8）方式：as if/though，the way；9）比较：than，as...as。",
+      "tips": "易混点：because和because of，because接句子，because of接名词/代词/动名词。so that既可表目的（后接may/can）也可表结果（后接did）。",
+      "tags": [
+        "从句",
+        "状语从句",
+        "语法"
+      ]
+    },
+    {
+      "title": "阅读理解猜词义技巧",
+      "category": "阅读理解",
+      "categoryIcon": "📰",
+      "summary": "阅读中遇到生词不必惊慌，可通过上下文推测词义：1）定义法：通过is called/called/refers to等判断；2）举例法：like/such as/for example后是例子；3）对比法：通过but/however/while等找反义词；4）因果法：通过because/so/therefore判断因果关系；5）词缀法：un-/dis-/re-/ -tion/-ful等常见词缀；6）经验法：根据生活常识判断。",
+      "tips": "技巧：先读题目，带着问题回原文找答案。细节题在原文中找，主旨题看首段和尾段。学会略读和扫读，提高阅读速度。",
+      "tags": [
+        "阅读",
+        "猜词",
+        "技巧"
+      ]
+    },
+    {
+      "title": "完形填空解题步骤",
+      "category": "阅读理解",
+      "categoryIcon": "📰",
+      "summary": "完形填空三步法：1）通读全文，把握大意（跳过空格），了解文章主题和结构；2）逐句阅读，上下求索（逐个填空），注意上下文逻辑关系（转折、因果、并列、递进）；3）复读检查，全文贯通，验证答案是否符合语法、语义和逻辑。常见考点：词汇辨析、固定搭配、语法结构、逻辑关系、文化背景。",
+      "tips": "技巧：先易后难，第一遍有把握的先填，没把握的根据上下文线索猜测。常见逻辑词要熟记：however/although/therefore/because等。",
+      "tags": [
+        "完形填空",
+        "阅读",
+        "解题技巧"
+      ]
+    },
+    {
+      "title": "阅读理解题型分类突破",
+      "category": "阅读理解",
+      "categoryIcon": "📰",
+      "summary": "阅读理解常见题型及解法：1）细节题：回原文找对应句子，注意同义替换；2）词义猜测：联系上下文语境；3）推理判断：不能选原文原句，要推一步；4）主旨大意：概括全文或段落中心；5）观点态度：注意作者用词的感情色彩；6）文章结构：注意首尾段和每段首句。",
+      "tips": "技巧：做题顺序建议：先看题目和选项→带着问题读文章→边读边标记关键信息→最后答题。注意陷阱选项：与原文完全一致或完全相反的都要谨慎。",
+      "tags": [
+        "阅读",
+        "题型",
+        "应试"
+      ]
+    },
+    {
+      "title": "英语写作常用连接词",
+      "category": "写作技巧",
+      "categoryIcon": "✍️",
+      "summary": "高分作文离不开恰当的连接词。常用连接词分类：1）表顺序：first/second/third/lastly；2）表增补：what's more/besides/moreover/in addition；3）表转折：however/but/although/nevertheless；4）表原因：because of/due to/owing to；5）表结果：as a result/therefore/consequently；6）表举例：for example/for instance/such as；7）表结论：in conclusion/to sum up/in short。",
+      "tips": "技巧：不要每句都用连接词，保持自然过渡。变换使用不同连接词，避免重复。建议每段开头或结尾用1-2个，体现逻辑层次。",
+      "tags": [
+        "写作",
+        "连接词",
+        "高级表达"
+      ]
+    },
+    {
+      "title": "初中英语写作万能句型",
+      "category": "写作技巧",
+      "categoryIcon": "✍️",
+      "summary": "让作文增色的万能句型：1）开头：As we all know.../It is well-known that.../Recently, ... has become a hot topic. 2）观点表达：In my opinion.../As far as I am concerned.../Personally, I believe... 3）引出原因：The reason why...is that.../There are two main reasons for... 4）提出建议：It is high time that we should.../It is necessary that... 5）结尾升华：In a word.../All in all.../Taking all these factors into account...",
+      "tips": "技巧：背诵5-10个万能句型，考试时灵活套用。注意主谓一致、时态正确、名词单复数等细节问题。",
+      "tags": [
+        "写作",
+        "句型",
+        "模板"
+      ]
+    },
+    {
+      "title": "图表作文写作模板",
+      "category": "写作技巧",
+      "categoryIcon": "✍️",
+      "summary": "图表作文常用框架：1）开头：The chart/graph shows/illustrates/reveals that.../As we can see from the chart... 2）描述数据：The number increased/decreased rose/fell from...to.../There was a slight/sharp rise/drop in... 3）分析原因：Several factors contribute to this change./The reasons are as follows. 4）结尾预测：It is predicted that.../In the future, this trend will continue./Measures should be taken to...",
+      "tips": "描述趋势的词汇：上升rise/soar/climb，下降fall/drop/decline，稳定remain stable/keep steady，波动fluctuate。数据要具体，不要模糊。",
+      "tags": [
+        "写作",
+        "图表",
+        "模板"
+      ]
+    },
+    {
+      "title": "词根词缀记忆法大全",
+      "category": "词汇记忆",
+      "categoryIcon": "📖",
+      "summary": "词根词缀法高效记忆词汇：常见词根：vis/vid（看）→visible可见的，visit参观；struct（建造）→construct建造，destroy破坏；duct（引导）→conduct引导，produce生产。常见前缀：un-/in-/dis-（否定），re-（再），pre-（前），ex-（外），anti-（反）。常见后缀：-tion（名词），-ful（形容词），-ly（副词），-er/-or（人/物），-able/-ible（能...的）。",
+      "tips": "技巧：遇到生词先拆解，识别词根词缀义，再组合推断整体含义。坚持积累，一个词根能记一串单词。",
+      "tags": [
+        "词汇",
+        "词根",
+        "记忆法"
+      ]
+    },
+    {
+      "title": "联想记忆法记单词",
+      "category": "词汇记忆",
+      "categoryIcon": "📖",
+      "summary": "联想记忆让单词难忘：1）谐音联想：ambition→\"俺必胜\"→雄心壮志；pest→\"拍死它\"→害虫；strawberry→\"草莓\"→谐音记忆；2）图像联想：把单词想象成图像，如eye两个e像眼睛，banana的b像弯曲形状；3）归类联想：同义词、近义词、反义词一起记；4）情境联想：把单词放进句子或场景中记忆；5）构词联想：同一个词根的单词一起记。",
+      "tips": "建议：每天背10-15个新词，同时复习旧词。用艾宾浩斯遗忘曲线安排复习：20分钟、1小时、1天、1周、1月。",
+      "tags": [
+        "词汇",
+        "联想",
+        "记忆法"
+      ]
+    },
+    {
+      "title": "听力数字专项训练",
+      "category": "听力训练",
+      "categoryIcon": "🎧",
+      "summary": "听力中的数字是难点：1）基数词：注意十几和几十的区别（thirteen vs thirty）；2）序数词：first, second, third, 21st等；3）电话号码：重复听，注意double/triple的用法；4）时间：am/pm，quarter past/to，half past；5）日期：月份和日期顺序；6）年龄、分数、小数、百分数；7）价格：dollar/yuan/pound，注意事项。",
+      "tips": "技巧：预览选项时预测数字类型。听时快速记录关键词，如时间、地点、数字。听后核对是否符合常理。",
+      "tags": [
+        "听力",
+        "数字",
+        "训练"
+      ]
+    },
+    {
+      "title": "听力场景词汇大汇总",
+      "category": "听力训练",
+      "categoryIcon": "🎧",
+      "summary": "初中听力常见场景及词汇：1）购物：price, discount, sale, size, color, cash, credit card；2）餐厅：menu, order, bill, tip, delicious, waiter；3）医院：doctor, patient, fever, headache, medicine, prescription；4）学校：subject, homework, exam, classmate, teacher, library；5）旅游：travel, ticket, hotel, sightseeing, baggage；6）交通：bus, train, subway, station, destination。",
+      "tips": "技巧：熟悉场景词汇能快速理解听力内容。考试前多听真题，熟悉语音语速。每天坚持听英语15-30分钟。",
+      "tags": [
+        "听力",
+        "场景词汇",
+        "汇总"
+      ]
+    },
+    {
+      "title": "初中必背不规则动词表",
+      "category": "语法基础",
+      "categoryIcon": "📝",
+      "summary": "不规则动词三类记忆法：1）AAA型（原形=过去式=过去分词）：cut-cut-cut, put-put-put, let-let-let；2）ABB型（过去式=过去分词）：build-built-built, deal-dealt-dealt, feel-felt-felt；3）ABC型（三者都不同）：go-went-gone, swim-swam-swum, drive-drove-driven。建议分类背诵，反复默写，写作和完形填空中经常考查。",
+      "tips": "技巧：把不规则动词放在句子中记忆，如I cut the apple yesterday. I have cut the apple. 形成语境记忆。",
+      "tags": [
+        "动词",
+        "不规则",
+        "必背"
+      ]
+    },
+    {
+      "title": "there be 句型详解",
+      "category": "语法基础",
+      "categoryIcon": "📝",
+      "summary": "there be句型表示\"某地有某物/人\"。结构：there is + 单数可数名词/不可数名词，there are + 复数名词。常见变形：there will be/there is going to be（将来），there is/are doing（正在进行），there seems/appears to be（似乎有）。就近原则：be动词与最近的主语保持一致，如There is a pen and some books on the desk.",
+      "tips": "易错点：there be和have/has不能混用。there be表示\"有\"，have表示\"拥有\"。如：There is a book in my bag. / I have a book.",
+      "tags": [
+        "句型",
+        "there be",
+        "语法"
+      ]
+    },
+    {
+      "title": "被动语态用法总结",
+      "category": "语法基础",
+      "categoryIcon": "📝",
+      "summary": "被动语态结构：be + 过去分词。不同时态的被动：1）一般现在时：am/is/are + done；2）一般过去时：was/were + done；3）一般将来时：will be done/be going to be done；4）现在进行时：am/is/are being done；5）现在完成时：have/has been done。使用被动的情况：不知道动作执行者、强调动作承受者、礼貌表达。",
+      "tips": "技巧：主动变被动，先找主语和宾语，宾语变主语，主语变by短语，谓语变被动形式。时态和人称要正确。",
+      "tags": [
+        "被动语态",
+        "时态",
+        "语法"
+      ]
+    },
+    {
+      "title": "情态动词用法辨析",
+      "category": "语法基础",
+      "categoryIcon": "📝",
+      "summary": "主要情态动词用法：1）can/could：能力、许可、可能性（could更委婉）；2）may/might：许可、可能性、祝愿（might更不确定）；3）must/have to：必须（must主观，have to客观）；4）should：建议、义务；5）will/would：将来、意愿、请求（would更客气）；6）need：需要（实义动词或情态动词）。否定回答：mustn't（不许），needn't（不必）。",
+      "tips": "易混点：must not = mustn't（禁止），must提问否定回答用needn't（不必）。如：Must I finish today? No, you needn't.",
+      "tags": [
+        "情态动词",
+        "语法",
+        "易混"
+      ]
+    },
+    {
+      "title": "介词用法口诀与总结",
+      "category": "语法基础",
+      "categoryIcon": "📝",
+      "summary": "常用介词用法：时间介词：at（时刻、节日），in（月、年、季节），on（具体日期、星期）；地点介词：in（在...里面），on（在...上面），at（在...地点）；方位介词：in front of（在...前面），behind（在...后面），between（在...之间），among（在...当中）；其他：by（通过、靠近），with（用、带着），without（没有）。",
+      "tips": "口诀：in年in月in季节，on日on星期；in里面on上面，at小地点大地方。介词搭配要积累，如：arrive in/at, look forward to, be good at等。",
+      "tags": [
+        "介词",
+        "用法",
+        "总结"
+      ]
+    },
+    {
+      "title": "口语情景对话高频句型",
+      "category": "口语表达",
+      "categoryIcon": "🗣️",
+      "summary": "日常口语必备句型：1）问候：How are you doing?/What's up?/Long time no see! 2）介绍：Let me introduce myself./This is my friend... 3）感谢：I really appreciate it./Thanks a million! 4）道歉：I'm so sorry about that./I apologize for... 5）邀请：Would you like to.../How about...? 6）建议：Why not...?/You should try... 7）同意/反对：I agree./I'm afraid I can't.",
+      "tips": "技巧：多说多练，不要怕出错。可跟读模仿原声，注意语调。准备一些万能过渡句，如：Well, you know, I mean...",
+      "tags": [
+        "口语",
+        "句型",
+        "情景对话"
+      ]
+    },
+    {
+      "title": "英语口语发音技巧",
+      "category": "口语表达",
+      "categoryIcon": "🗣️",
+      "summary": "提升发音的技巧：1）元音饱满：英语元音要发到位，如/æ/苹果音，/iː/长音；2）辅音轻浊：清浊辅音要区分，如/p/和/b/，/t/和/d/；3）连读：辅元连读，如pick it up；4）失去爆破：爆破音+爆破音，前者失去，如good boy；5）重音：单词重音和句子重音；6）语调：陈述句降调，一般疑问句升调。",
+      "tips": "建议：多听多说，模仿英语原声材料。可以录音对比，找出差距。重点练习连读和失去爆破，这是地道的关键。",
+      "tags": [
+        "发音",
+        "口语",
+        "技巧"
+      ]
+    },
+    {
+      "title": "常见英语易混词汇辨析",
+      "category": "易错辨析",
+      "categoryIcon": "⚠️",
+      "summary": "初中易混词汇对比：1）look/see/watch：看（动作）/看（结果）/观看；2）listen/hear：听（动作）/听见；3）say/speak/talk/tell：说（内容）/说（语言）/交谈/告诉；4）bring/take/fetch/get：带来/带走/去取回/获取；5）spend/cost/take/pay：花钱/物花费/时间花费/人付款；6）borrow/lend/keep：借进/借出/借一段时间。",
+      "tips": "技巧：每组词从意义上区分，再记住固定搭配。建议做词汇对比笔记，如：spend...on sth., spend...doing sth.",
+      "tags": [
+        "易混词",
+        "辨析",
+        "词汇"
+      ]
+    },
+    {
+      "title": "初中英语语法易错点汇总",
+      "category": "易错辨析",
+      "categoryIcon": "⚠️",
+      "summary": "初中英语语法易错点：1）a/an混淆：元音音素开头用an；2）some/any混用：some用于肯定和委婉疑问，any用于否定和一般疑问；3）both/all/neither/none：both两者都，all三者及以上都，neither两者都不，none三者及以上都不；4）few/a few/little/a little：few/little表否定，a few/a little表肯定；5）than后面人称：I am taller than him/she is taller than her.",
+      "tips": "易错点：than后用主格还是宾格？口语中常用宾格，正式书面语用主格。如：He is taller than I (am).",
+      "tags": [
+        "易错",
+        "语法",
+        "汇总"
+      ]
+    },
+    {
+      "title": "阅读理解长难句分析",
+      "category": "阅读理解",
+      "categoryIcon": "📰",
+      "summary": "阅读中的长难句分析技巧：1）找出主谓：主语+谓语是句子的核心，其他都是修饰成分；2）识别从句：注意that/which/who/when/where等连接词；3）分析结构：前置定语、介词短语、分词结构的位置；4）理清逻辑：并列、转折、因果、从属关系；5）简化句子：去掉修饰成分，抓住核心意思。",
+      "tips": "技巧：遇到长难句不要慌，按顺序找主语、谓语、宾语。可以用括号法标注各成分，层层剥开理解。",
+      "tags": [
+        "长难句",
+        "阅读",
+        "分析技巧"
+      ]
+    },
+    {
+      "title": "中考英语作文评分标准与高分技巧",
+      "category": "应试技巧",
+      "categoryIcon": "💯",
+      "summary": "中考英语作文评分标准：1）内容完整、逻辑清晰（8-10分）；2）语法正确、表达地道（8-10分）；3）衔接自然、层次分明（8-10分）；4）卷面整洁、书写工整（附加分）。高分技巧：1）认真审题，确定体裁和人称；2）列出提纲，组织材料；3）使用高级词汇和句型；4）检查语法错误和拼写；5）保持卷面整洁。",
+      "tips": "建议：考前背诵几篇范文和万能句型。考试时先打草稿，检查后再抄写。注意开头结尾要出彩。",
+      "tags": [
+        "中考",
+        "作文",
+        "应试技巧"
+      ]
+    },
+    {
+      "title": "单项选择解题技巧",
+      "category": "应试技巧",
+      "categoryIcon": "💯",
+      "summary": "单项选择解题步骤：1）直接法：根据语法规则直接判断；2）排除法：排除明显错误的选项；3）推理法：根据上下文逻辑推理；4）代入法：把选项代入句子检验是否通顺。常见考点：动词时态语态、非谓语动词、形容词副词、连词、介词、从句、情景交际。",
+      "tips": "技巧：注意题干中的时间状语和关键词，它们往往提示时态和语境。情景交际题要符合英语国家习惯和场合。",
+      "tags": [
+        "单项选择",
+        "解题技巧",
+        "应试"
+      ]
+    },
+    {
+      "title": "任务型阅读答题技巧",
+      "category": "应试技巧",
+      "categoryIcon": "💯",
+      "summary": "任务型阅读答题要点：1）认真审题，明确任务要求；2）快速阅读全文，把握主旨；3）带着问题回原文搜索信息；4）注意同义替换和归纳总结；5）答案要简洁、准确、完整。常见题型：回答问题、补全句子、信息匹配、标题选择、推理判断。",
+      "tips": "技巧：回答问题要用完整句子，首字母大写。补全句子要注意字数限制和语法正确。做完后检查是否符合字数要求。",
+      "tags": [
+        "任务型阅读",
+        "答题技巧",
+        "应试"
+      ]
+    },
+    {
+      "title": "音标与拼读规则",
+      "category": "词汇记忆",
+      "categoryIcon": "📖",
+      "summary": "英语拼读规则：1）元音字母在开音节发字母音（name, he, like, home, use）；2）元音字母在闭音节发短音（cat, bed, sit, hot, cup）；3）辅音字母组合ch读/tʃ/，sh读/ʃ/，th读/θ/或/ð/；4）字母组合oo读长音/uː/或短音/ʊ/；5）字母g有时读/g/有时读/dʒ/。掌握这些规则，见词能读，听词能写。",
+      "tips": "技巧：学习音标是记忆单词的基础。建议使用自然拼读法，结合音标练习发音。多听多读，培养语感。",
+      "tags": [
+        "音标",
+        "拼读",
+        "词汇"
+      ]
+    },
+    {
+      "title": "高频动词短语汇总",
+      "category": "词汇记忆",
+      "categoryIcon": "📖",
+      "summary": "初中必背动词短语：1）put短语：put on穿戴上，put away放好，put up举起搭建，put off推迟，put out熄灭，put down写下；2）turn短语：turn on打开，turn off关闭，turn up调大，turn down调小，turn around转身；3）take短语：take up占据，take out取出，take away带走，take care of照顾；4）get短语：get up起床，get on上车，get along相处。",
+      "tips": "技巧：动词短语是完形填空和写作的高频考点。建议分类记忆，做练习巩固。注意同一动词不同短语的意义差异。",
+      "tags": [
+        "动词短语",
+        "固定搭配",
+        "必背"
+      ]
+    },
+    {
+      "title": "初中英语作文开头结尾模板",
+      "category": "写作技巧",
+      "categoryIcon": "✍️",
+      "summary": "高分作文开头：1）开门见山：With the development of.../In recent years,...has become a hot topic. 2）引出话题：As the saying goes,.../It is well-known that... 3）数据引入：According to a recent survey/Survey shows that... 高分作文结尾：1）总结全文：In a word/In conclusion/In short, ... 2）提出建议：It is necessary for us to.../We should take measures to... 3）展望未来：I believe that.../I hope that...",
+      "tips": "技巧：开头要吸引读者，结尾要有升华。避免模板过于明显，适当个性化调整。",
+      "tags": [
+        "写作",
+        "模板",
+        "开头结尾"
+      ]
+    },
+    {
+      "title": "冠词a/an/the用法详解",
+      "category": "语法基础",
+      "categoryIcon": "📝",
+      "summary": "冠词用法总结：不定冠词a/an：1）泛指一个；2）首次提到；3）某类中的一个；4）固定搭配。定冠词the：1）特指；2）上文已提；3）独一无二；4）最高级/序数词前；5）the+姓氏复数表示一家人；6）乐器名称前。零冠词：1）专有名词；2）学科名称；3）球类运动；4）三餐名称；5）by+交通工具。",
+      "tips": "口诀：泛指用a/an，特指用the；元音开头发an，辅音开头用a；不可数名词泛指不加冠词。",
+      "tags": [
+        "冠词",
+        "a/an/the",
+        "语法"
+      ]
+    },
+    {
+      "title": "感叹句与祈使句",
+      "category": "语法基础",
+      "categoryIcon": "📝",
+      "summary": "感叹句两种结构：1）What + (a/an) + 形容词 + 名词 + 主语 + 谓语！如：What a beautiful girl she is! 2）How + 形容词/副词 + 主语 + 谓语！如：How beautiful she is!/How fast he runs! 祈使句结构：1）动词原形开头：Sit down, please. 2）Don't + 动词原形：Don't be late. 3）Let's do...：Let's go shopping. 4）Please do...：Please close the door.",
+      "tips": "技巧：感叹句记忆口诀：what和how互换，剩下部分顺序放，去掉主谓是核心，感叹句式即完成。",
+      "tags": [
+        "感叹句",
+        "祈使句",
+        "句型"
+      ]
+    },
+    {
+      "title": "if条件从句时态规则",
+      "category": "语法基础",
+      "categoryIcon": "📝",
+      "summary": "if条件句分两类：1）真实条件句（可能实现）：if从句用现在时，主句用将来时。如：If it rains tomorrow, I will stay at home. 2）虚拟条件句（与事实相反）：与现在相反：从句用过去时（be用were），主句用would/could/might+动词原形。如：If I were you, I would take the job. 与过去相反：从句had+过去分词，主句would have done。",
+      "tips": "易错点：if从句中不能用will/would，要用现在时代替将来时，用过去时代替过去将来时。",
+      "tags": [
+        "if从句",
+        "条件句",
+        "虚拟语气"
+      ]
+    },
+    {
+      "title": "阅读理解主旨大意题解题方法",
+      "category": "阅读理解",
+      "categoryIcon": "📰",
+      "summary": "主旨大意题三种类型：1）标题选择题：选出的标题应概括全文、吸引读者、无细节信息；2）段落主旨题：关注段落首句和尾句，或根据关键词概括；3）全文主旨题：关注文章首段和末段，或综合各段要点。解题方法：1）略读法：快速浏览获取大意；2）主题句法：寻找topic sentence；3）归纳法：从具体信息中提炼 general idea。",
+      "tips": "技巧：干扰选项通常太具体（包含细节）或是错误的概括。正确答案往往是对原文的概括或同义改写。",
+      "tags": [
+        "主旨大意",
+        "阅读",
+        "解题方法"
+      ]
+    },
+    {
+      "title": "用英语讲好中国故事",
+      "category": "口语表达",
+      "categoryIcon": "🗣️",
+      "summary": "用英语传播中国文化已成为中考热点。必备表达：1）传统节日：The Spring Festival/Mid-Autumn Festival/Dragon Boat Festival；2）中国美食：dumplings, mooncakes, zongzi, Peking Duck；3）传统文化：paper cutting, Chinese calligraphy, Chinese kung fu, acupuncture；4）著名景点：Great Wall, Forbidden City, West Lake。句型：The Spring Festival is the most important traditional festival in China.",
+      "tips": "技巧：准备几个万能句子，如：Chinese culture has a long history./Traditional Chinese culture is becoming more and more popular around the world.",
+      "tags": [
+        "中国文化",
+        "口语",
+        "热点"
+      ]
+    },
+    {
+      "title": "初中英语易错介词搭配",
+      "category": "易错辨析",
+      "categoryIcon": "⚠️",
+      "summary": "易错介词搭配汇总：1）arrive in + 大地点，arrive at + 小地点；2）be good at doing sth.擅长做某事；3）be interested in对...感兴趣；4）depend on依靠/取决于；5）laugh at嘲笑；6）look after照顾；7）wait for等待；8）think of/about考虑/想起；9）ask for请求；10）hear of/from听说/收到来信；11）play with玩耍/和...一起玩；12）agree with/to/on同意...",
+      "tips": "技巧：介词搭配是固定用法，没有规律可循，需要逐一记忆。建议做卡片记忆，每天复习5-10个。",
+      "tags": [
+        "介词",
+        "搭配",
+        "易错"
+      ]
+    },
+    {
+      "title": "中考英语阅读理解预测与训练",
+      "category": "应试技巧",
+      "categoryIcon": "💯",
+      "summary": "中考阅读理解备考策略：1）限时训练：每篇阅读控制在5-7分钟；2）精读与泛读结合：真题精读，课外泛读；3）题材多样：故事类、说明文、议论文、应用文都要练习；4）词汇积累：阅读中遇到的生词要记录背诵；5）技巧训练：学会略读、扫读、精读。常见话题：校园生活、环境保护、科技发展、健康生活、节日文化。",
+      "tips": "建议：每天坚持阅读2-3篇，保持语感。做完阅读后要分析错题，找出原因，针对性训练。",
+      "tags": [
+        "备考",
+        "阅读",
+        "训练"
+      ]
+    },
+    {
+      "title": "英语写作高级词汇替换",
+      "category": "写作技巧",
+      "categoryIcon": "✍️",
+      "summary": "高级词汇替换让作文更出彩：1）good→excellent/outstanding/remarkable；2）bad→terrible/awful/dreadful；3）important→essential/vital/crucial/significant；4）many→numerous/a large number of/a variety of；5）think→believe/hold the opinion/consider；6）like→be fond of/be keen on/be crazy about；7）beautiful→gorgeous/stunning/eye-catching；8）easy→effortless/simple/uncomplicated。",
+      "tips": "技巧：使用高级词汇时要准确，不要为了高级而高级。注意词性和搭配是否正确。可以先在草稿中用普通词，再升级。",
+      "tags": [
+        "写作",
+        "高级词汇",
+        "替换"
+      ]
+    }
+  ],
+  "prompts": {
+    "generate": "生成一条英语学习",
+    "share": "{content}"
+  },
+  "share": {
+    "title": "英语学习",
+    "template": "{content}"
+  },
+  "meta": {
+    "generated": "2026-04-15T06:37:23.991Z",
+    "source": "englishData.js"
+  }
+}

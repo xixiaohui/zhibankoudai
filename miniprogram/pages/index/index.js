@@ -1,17 +1,7 @@
-// pages/index/index.js - 智伴口袋首页
+// pages/index/index.js - 智伴口袋首页 (云端数据版)
 const app = getApp()
 const util = require('../../utils/util.js')
-const moduleConfig = require('../../utils/moduleConfig.js')
-
-// 静态模块列表（WXML中硬编码的模块，按显示顺序）
-const ALL_MODULE_TYPES = [
-  'quote', 'joke', 'psychology', 'finance', 'love', 'movie', 'music', 'tech',
-  'tcm', 'travel', 'fortune', 'literature', 'foreignTrade', 'ecommerce',
-  'math', 'english', 'programming', 'photography', 'beauty', 'investment',
-  'fishing', 'fitness', 'pet', 'fashion', 'outfit', 'decoration', 'glassFiber',
-  'resin', 'tax', 'law', 'official', 'handling', 'floral', 'history', 'military',
-  'stock', 'economics', 'business', 'news'
-]
+const cloudData = require('../../utils/cloudData.js')
 
 Page({
   data: {
@@ -33,8 +23,9 @@ Page({
     // 每日卡片
     dailyCard: null,
     
-    // 动态模块列表（从配置读取，用于控制显示）
+    // 动态模块列表（从云端配置读取）
     enabledModules: [],
+    homeModules: [],
     
     // 近期状态
     recentMood: null,
@@ -44,15 +35,18 @@ Page({
     // UI状态
     showNicknameModal: false,
     nicknameInput: '',
-    showBackTop: false, // 是否显示回到顶部按钮
-    scrollTop: 0, // 滚动距离
+    showBackTop: false,
+    scrollTop: 0,
+    
+    // 加载状态
+    isLoading: true,
   },
 
   onLoad() {
     // 检查昵称设置
     this.checkNickname()
-    // 预加载模块配置
-    this.loadModuleConfig()
+    // 初始化云端数据（确保配置已加载）
+    this.initCloudData()
   },
 
   onShow() {
@@ -60,9 +54,56 @@ Page({
     this.loadData()
   },
 
+  onReady() {
+    // 页面Ready后，等待云端数据加载完成
+    this.waitForCloudData()
+  },
+
   onPullDownRefresh() {
-    this.loadData()
-    wx.stopPullDownRefresh()
+    // 下拉刷新：重新加载云端数据
+    cloudData.clearCache()
+    this.initCloudData().then(() => {
+      this.loadData()
+      wx.stopPullDownRefresh()
+    })
+  },
+
+  // 初始化云端数据
+  async initCloudData() {
+    this.setData({ isLoading: true })
+    try {
+      await cloudData.init()
+      // 加载完成后更新UI
+      const homeModules = cloudData.getOrderedHomeModules()
+      const enabledModules = homeModules.filter(m => m.enabled).map(m => m.id)
+      this.setData({
+        homeModules,
+        enabledModules,
+        isLoading: false
+      })
+      console.log('[Index] 云端数据初始化完成', { 
+        homeModulesCount: homeModules.length,
+        enabledCount: enabledModules.length 
+      })
+    } catch (e) {
+      console.error('[Index] 云端数据初始化失败:', e)
+      this.setData({ isLoading: false })
+    }
+  },
+
+  // 等待云端数据加载
+  waitForCloudData() {
+    if (cloudData.initPromise) {
+      cloudData.initPromise.then(() => {
+        const homeModules = cloudData.getOrderedHomeModules()
+        const enabledModules = homeModules.filter(m => m.enabled).map(m => m.id)
+        this.setData({
+          homeModules,
+          enabledModules,
+          isLoading: false
+        })
+      })
+    }
   },
 
   // 页面滚动事件
@@ -88,56 +129,6 @@ Page({
     if (!profile || !profile.nickname) {
       this.setData({ showNicknameModal: true })
     }
-  },
-
-  // 加载模块配置（同步获取，用于初始化）
-  loadModuleConfig() {
-    // 同步获取配置（优先使用本地缓存）
-    const config = moduleConfig.getModuleConfigSync()
-    
-    console.log('[Index] config 详情:', {
-      hasConfig: !!config,
-      hasModules: !!(config && config.modules),
-      modulesLength: config && config.modules ? config.modules.length : 0,
-      configKeys: config ? Object.keys(config) : []
-    })
-    
-    // 获取启用的模块ID列表
-    let enabledModules = []
-    if (config && config.modules) {
-      enabledModules = config.modules
-        .filter(m => m.enabled)
-        .map(m => m.id)
-    } else {
-      console.error('[Index] 配置中没有 modules，使用默认值')
-      enabledModules = ALL_MODULE_TYPES
-    }
-    
-    this.setData({ enabledModules })
-    console.log('[Index] enabledModules:', enabledModules)
-
-    // 异步更新云端配置（不阻塞UI）
-    moduleConfig.getModuleConfig().catch(e => {
-      console.warn('[Index] 同步云端配置失败:', e)
-    })
-  },
-
-  // 检查模块是否启用
-  isModuleEnabled(moduleType) {
-    return this.data.enabledModules.includes(moduleType)
-  },
-
-  // 工具函数绑定
-  getMoodEmoji(mood) {
-    return util.getMoodEmoji(mood)
-  },
-
-  formatRelativeTime(timeStr) {
-    return util.formatRelativeTime(timeStr)
-  },
-
-  formatDateDisplay(dateStr) {
-    return util.formatDateDisplay(dateStr)
   },
 
   // 加载首页数据
@@ -177,7 +168,18 @@ Page({
       .slice(0, 3)
     this.setData({ pendingGoals })
     
-    // 每日内容模块（名言、段子、心理学、金融、情话、电影）由 daily-card 组件自动加载
+    // 更新云端模块数据（如果已加载）
+    if (cloudData.initPromise) {
+      cloudData.initPromise.then(() => {
+        const homeModules = cloudData.getOrderedHomeModules()
+        const enabledModules = homeModules.filter(m => m.enabled).map(m => m.id)
+        this.setData({
+          homeModules,
+          enabledModules,
+          isLoading: false
+        })
+      })
+    }
   },
 
   // ========== 用户交互处理 ==========
@@ -188,17 +190,12 @@ Page({
     
     switch(actionId) {
       case 'chat':
-        // 跳转到聊天页，显示模式选择
-        wx.navigateTo({
-          url: '/pages/chat/index',
-        })
+        wx.navigateTo({ url: '/pages/chat/index' })
         break
       case 'mood':
-        // 跳转到心情记录页
         wx.switchTab({ url: '/pages/mood/index' })
         break
       case 'start':
-        // 开始随机陪伴对话
         const modes = util.getChatModes()
         const randomMode = modes[Math.floor(Math.random() * modes.length)]
         wx.navigateTo({
@@ -310,10 +307,8 @@ Page({
     wx.navigateTo({ url: '/pages/poster/index?type=home' })
   },
 
-  // 空操作（用于阻止事件穿透）
-  noop() {
-    // do nothing
-  },
+  // 空操作
+  noop() {},
 
   // 分享到朋友圈
   onShareTimeline() {

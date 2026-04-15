@@ -1,0 +1,202 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-04-15T06:37:24.037Z",
+  "title": "每日知识口袋",
+  "modules": [
+    {
+      "id": "quote",
+      "enabled": true,
+      "order": 0
+    },
+    {
+      "id": "joke",
+      "enabled": true,
+      "order": 1
+    },
+    {
+      "id": "psychology",
+      "enabled": true,
+      "order": 2
+    },
+    {
+      "id": "finance",
+      "enabled": true,
+      "order": 3
+    },
+    {
+      "id": "love",
+      "enabled": true,
+      "order": 4
+    },
+    {
+      "id": "movie",
+      "enabled": true,
+      "order": 5
+    },
+    {
+      "id": "music",
+      "enabled": true,
+      "order": 6
+    },
+    {
+      "id": "tech",
+      "enabled": true,
+      "order": 7
+    },
+    {
+      "id": "tcm",
+      "enabled": true,
+      "order": 8
+    },
+    {
+      "id": "travel",
+      "enabled": true,
+      "order": 9
+    },
+    {
+      "id": "fortune",
+      "enabled": true,
+      "order": 10
+    },
+    {
+      "id": "literature",
+      "enabled": true,
+      "order": 11
+    },
+    {
+      "id": "foreignTrade",
+      "enabled": true,
+      "order": 12
+    },
+    {
+      "id": "ecommerce",
+      "enabled": true,
+      "order": 13
+    },
+    {
+      "id": "math",
+      "enabled": true,
+      "order": 14
+    },
+    {
+      "id": "english",
+      "enabled": true,
+      "order": 15
+    },
+    {
+      "id": "programming",
+      "enabled": true,
+      "order": 16
+    },
+    {
+      "id": "photography",
+      "enabled": true,
+      "order": 17
+    },
+    {
+      "id": "beauty",
+      "enabled": true,
+      "order": 18
+    },
+    {
+      "id": "investment",
+      "enabled": true,
+      "order": 19
+    },
+    {
+      "id": "fishing",
+      "enabled": true,
+      "order": 20
+    },
+    {
+      "id": "fitness",
+      "enabled": true,
+      "order": 21
+    },
+    {
+      "id": "pet",
+      "enabled": true,
+      "order": 22
+    },
+    {
+      "id": "fashion",
+      "enabled": true,
+      "order": 23
+    },
+    {
+      "id": "outfit",
+      "enabled": true,
+      "order": 24
+    },
+    {
+      "id": "decoration",
+      "enabled": true,
+      "order": 25
+    },
+    {
+      "id": "glassFiber",
+      "enabled": true,
+      "order": 26
+    },
+    {
+      "id": "resin",
+      "enabled": true,
+      "order": 27
+    },
+    {
+      "id": "tax",
+      "enabled": true,
+      "order": 28
+    },
+    {
+      "id": "law",
+      "enabled": true,
+      "order": 29
+    },
+    {
+      "id": "official",
+      "enabled": true,
+      "order": 30
+    },
+    {
+      "id": "handling",
+      "enabled": true,
+      "order": 31
+    },
+    {
+      "id": "floral",
+      "enabled": true,
+      "order": 32
+    },
+    {
+      "id": "history",
+      "enabled": true,
+      "order": 33
+    },
+    {
+      "id": "military",
+      "enabled": true,
+      "order": 34
+    },
+    {
+      "id": "stock",
+      "enabled": true,
+      "order": 35
+    },
+    {
+      "id": "economics",
+      "enabled": true,
+      "order": 36
+    },
+    {
+      "id": "business",
+      "enabled": true,
+      "order": 37
+    },
+    {
+      "id": "news",
+      "enabled": true,
+      "order": 38
+    }
+  ]
+}

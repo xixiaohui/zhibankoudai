@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0",
+  "app": {
+    "name": "知识口袋",
+    "title": "每日知识口袋",
+    "subtitle": "每天一个知识盲区",
+    "version": "1.0.0"
+  },
+  "features": {
+    "enableAI": true,
+    "enableShare": true,
+    "enableMemory": true,
+    "enableWeather": false
+  },
+  "limits": {
+    "maxCardsPerDay": 10,
+    "maxAIRequests": 5,
+    "maxFavorites": 100
+  },
+  "ui": {
+    "theme": "auto",
+    "primaryColor": "#4A90D9",
+    "cardStyle": "modern"
+  },
+  "cache": {
+    "enable": true,
+    "ttl": 86400,
+    "maxSize": 5242880
+  },
+  "updated": "2026-04-15"
+}

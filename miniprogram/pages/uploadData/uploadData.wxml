@@ -1,0 +1,31 @@
+<!-- miniprogram/pages/uploadData/uploadData.wxml -->
+<view class="container">
+  <view class="header">
+    <text class="title">数据同步工具</text>
+    <text class="subtitle">将本地数据上传到云存储</text>
+  </view>
+
+  <view class="status-box">
+    <text class="status-label">上传进度</text>
+    <text class="status-value">{{progress}}</text>
+  </view>
+
+  <view class="log-box">
+    <text class="log-title">上传日志</text>
+    <scroll-view scroll-y class="log-content">
+      <block wx:for="{{logs}}" wx:key="index">
+        <text class="log-item {{item.type}}">{{item.msg}}</text>
+      </block>
+    </scroll-view>
+  </view>
+
+  <button class="upload-btn {{uploading ? 'disabled' : ''}}" 
+          bindtap="startUpload" 
+          disabled="{{uploading}}">
+    {{uploading ? '上传中...' : '开始上传'}}
+  </button>
+
+  <view class="tip">
+    <text>提示：如果部分文件上传失败，请检查本地文件是否存在</text>
+  </view>
+</view>
