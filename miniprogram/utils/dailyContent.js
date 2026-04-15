@@ -29,7 +29,7 @@ const { FALLBACK_MUSICS, MUSIC_GENRES } = require('./musicData.js')
 const { FALLBACK_TECHS, TECH_CATEGORIES } = require('./techData.js')
 const { FALLBACK_TCMS, TCM_CATEGORIES } = require('./tcmData.js')
 const { FALLBACK_TRAVELS, TRAVEL_REGIONS, TRAVEL_TYPES } = require('./travelData.js')
-const { FALLBACK_FORTUNES, BAGUA_DATA, ZODIAC_DATA, CHINESE_ZODIAC_DATA, FORTUNE_TYPES } = require('./fortuneData.js')
+const { FALLBACK_FORTUNES, BAGUA_DATA, ZODIAC_DATA, FORTUNE_TYPES } = require('./fortuneData.js')
 const { FALLBACK_AUTHORS, AUTHORS_DATA } = require('./literatureData.js')
 const { FALLBACK_FOREIGN_TRADES, FOREIGN_TRADE_CATEGORIES } = require('./foreignTradeData.js')
 const { FALLBACK_ECOMMERCE, ECOMMERCE_CATEGORIES } = require('./eCommerceData.js')
@@ -54,6 +54,10 @@ const { HANDLING_FIELDS, FALLBACK_HANDLING } = require('./handlingData.js')
 const { FLORAL_FIELDS, FALLBACK_FLORAL } = require('./floralData.js')
 const { HISTORY_FIELDS, FALLBACK_HISTORY } = require('./historyData.js')
 const { MILITARY_FIELDS, FALLBACK_MILITARY } = require('./militaryData.js')
+const { FALLBACK_STOCKS, STOCK_CATEGORIES } = require('./stockData.js')
+const { FALLBACK_ECONOMICS, ECONOMICS_CATEGORIES } = require('./economicsData.js')
+const { FALLBACK_BUSINESS, BUSINESS_CATEGORIES } = require('./businessData.js')
+const { FALLBACK_NEWS, NEWS_CATEGORIES } = require('./newsData.js')
 
 // ─── AI 调用核心 ─────────────────────────────────────────────────
 
@@ -1389,17 +1393,7 @@ async function generateFortune() {
       .replace('${zodiac.name}', zodiac.name)
       .replace('${zodiac.date}', zodiac.date)
       .replace('${zodiac.name}', zodiac.name)
-  } else {
-    const chinese = CHINESE_ZODIAC_DATA[Math.floor(Math.random() * CHINESE_ZODIAC_DATA.length)]
-    categoryName = '生肖解读'
-    categoryIcon = '🐾'
-    titleField = 'name'
-    summaryField = 'description'
-    
-    prompt = DAILY_PROMPTS.fortune.chinese.prompt
-      .replace('${chinese.name}', chinese.name)
-      .replace('${chinese.name}', chinese.name)
-  }
+  } 
 
   const messages = [{ role: 'user', content: prompt }]
   
@@ -5631,6 +5625,282 @@ async function generateMilitary() {
   return result
 }
 
+// ─── 股票期货专家 ─────────────────────────────────────────────────
+
+async function saveStockToCloud(item) {
+  const isExists = await checkContentExists('dailyStocks', 'title', item.title)
+  if (isExists) {
+    console.log('[DailyContent] 股票期货已存在，跳过保存:', item.title.substring(0, 20))
+    return false
+  }
+  try {
+    const db = wx.cloud.database()
+    await db.collection('dailyStocks').add({ data: item })
+  } catch (e) {
+    console.error('[DailyContent] 保存股票期货到云失败:', e.message)
+  }
+}
+
+async function generateStock() {
+  const category = STOCK_CATEGORIES[Math.floor(Math.random() * STOCK_CATEGORIES.length)]
+  const prompt = `你是一位资深股票期货分析师，拥有丰富的投资实战经验。请分享一个关于"${category.name}"的投资知识。
+
+要求：
+1. 标题专业醒目，8-15个字，简洁有力
+2. 内容200-300字，包含核心概念讲解、实战应用、风险提示，结尾要有投资建议
+3. 要点提示：以"📈"开头，50字左右
+4. 4个精炼标签
+
+格式：
+股票期货|${category.name}|标题|正文内容|📈要点提示|标签1|标签2|标签3|标签4
+
+直接输出，不要任何前缀：`
+
+  const messages = [{ role: 'user', content: prompt }]
+  const rawText = await callAI(messages)
+
+  let result
+  if (rawText) {
+    const parts = rawText.split('|')
+    if (parts.length >= 5) {
+      const content = parts.slice(3, -4).join('|')
+      result = {
+        category: category.name,
+        categoryIcon: '📈',
+        title: parts[2],
+        summary: content,
+        tips: parts[parts.length - 4],
+        tags: parts.slice(-3),
+        isAIGenerated: true,
+        date: new Date().toISOString().split('T')[0]
+      }
+    }
+  }
+
+  if (!result) {
+    const fallback = FALLBACK_STOCKS[Math.floor(Math.random() * FALLBACK_STOCKS.length)]
+    result = {
+      category: category.name,
+      categoryIcon: '📈',
+      title: fallback.title,
+      summary: fallback.content,
+      tips: '📈 投资有风险，入市需谨慎',
+      tags: [category.name, '股票', '期货'],
+      isAIGenerated: false,
+      date: new Date().toISOString().split('T')[0]
+    }
+  }
+  saveStockToCloud(result).catch(() => {})
+  return result
+}
+
+// ─── 经济学专家 ─────────────────────────────────────────────────
+
+async function saveEconomicsToCloud(item) {
+  const isExists = await checkContentExists('dailyEconomics', 'title', item.title)
+  if (isExists) {
+    console.log('[DailyContent] 经济学已存在，跳过保存:', item.title.substring(0, 20))
+    return false
+  }
+  try {
+    const db = wx.cloud.database()
+    await db.collection('dailyEconomics').add({ data: item })
+  } catch (e) {
+    console.error('[DailyContent] 保存经济学到云失败:', e.message)
+  }
+}
+
+async function generateEconomics() {
+  const category = ECONOMICS_CATEGORIES[Math.floor(Math.random() * ECONOMICS_CATEGORIES.length)]
+  const prompt = `你是一位知名经济学家，擅长用通俗易懂的语言讲解经济现象。请分享一个关于"${category.name}"的经济学知识。
+
+要求：
+1. 标题有深度，8-15个字，体现经济学智慧
+2. 内容200-300字，包含理论讲解、现实案例、实践意义，结尾要有启示
+3. 经济洞察：以"💰"开头，50字左右
+4. 4个精炼标签
+
+格式：
+经济学|${category.name}|标题|正文内容|💰经济洞察|标签1|标签2|标签3|标签4
+
+直接输出，不要任何前缀：`
+
+  const messages = [{ role: 'user', content: prompt }]
+  const rawText = await callAI(messages)
+
+  let result
+  if (rawText) {
+    const parts = rawText.split('|')
+    if (parts.length >= 5) {
+      const content = parts.slice(3, -4).join('|')
+      result = {
+        category: category.name,
+        categoryIcon: '💰',
+        title: parts[2],
+        summary: content,
+        tips: parts[parts.length - 4],
+        tags: parts.slice(-3),
+        isAIGenerated: true,
+        date: new Date().toISOString().split('T')[0]
+      }
+    }
+  }
+
+  if (!result) {
+    const fallback = FALLBACK_ECONOMICS[Math.floor(Math.random() * FALLBACK_ECONOMICS.length)]
+    result = {
+      category: category.name,
+      categoryIcon: '💰',
+      title: fallback.title,
+      summary: fallback.content,
+      tips: '💰 经济学就在我们身边',
+      tags: [category.name, '经济', '分析'],
+      isAIGenerated: false,
+      date: new Date().toISOString().split('T')[0]
+    }
+  }
+  saveEconomicsToCloud(result).catch(() => {})
+  return result
+}
+
+// ─── 生意人助手 ─────────────────────────────────────────────────
+
+async function saveBusinessToCloud(item) {
+  const isExists = await checkContentExists('dailyBusinesss', 'title', item.title)
+  if (isExists) {
+    console.log('[DailyContent] 生意人已存在，跳过保存:', item.title.substring(0, 20))
+    return false
+  }
+  try {
+    const db = wx.cloud.database()
+    await db.collection('dailyBusinesss').add({ data: item })
+  } catch (e) {
+    console.error('[DailyContent] 保存生意人到云失败:', e.message)
+  }
+}
+
+async function generateBusiness() {
+  const category = BUSINESS_CATEGORIES[Math.floor(Math.random() * BUSINESS_CATEGORIES.length)]
+  const prompt = `你是一位成功的民营企业家，有多年创业和经营经验。请分享一个关于"${category.name}"的商业智慧。
+
+要求：
+1. 标题接地气，8-15个字，体现实战经验
+2. 内容200-300字，包含核心要点、实操方法、避坑指南，结尾要有金句
+3. 生意经：以"💼"开头，50字左右
+4. 4个精炼标签
+
+格式：
+生意经|${category.name}|标题|正文内容|💼生意经|标签1|标签2|标签3|标签4
+
+直接输出，不要任何前缀：`
+
+  const messages = [{ role: 'user', content: prompt }]
+  const rawText = await callAI(messages)
+
+  let result
+  if (rawText) {
+    const parts = rawText.split('|')
+    if (parts.length >= 5) {
+      const content = parts.slice(3, -4).join('|')
+      result = {
+        category: category.name,
+        categoryIcon: '💼',
+        title: parts[2],
+        summary: content,
+        tips: parts[parts.length - 4],
+        tags: parts.slice(-3),
+        isAIGenerated: true,
+        date: new Date().toISOString().split('T')[0]
+      }
+    }
+  }
+
+  if (!result) {
+    const fallback = FALLBACK_BUSINESS[Math.floor(Math.random() * FALLBACK_BUSINESS.length)]
+    result = {
+      category: category.name,
+      categoryIcon: '💼',
+      title: fallback.title,
+      summary: fallback.content,
+      tips: '💼 诚信经营，久久为功',
+      tags: [category.name, '商业', '经营'],
+      isAIGenerated: false,
+      date: new Date().toISOString().split('T')[0]
+    }
+  }
+  saveBusinessToCloud(result).catch(() => {})
+  return result
+}
+
+// ─── 新闻助手 ─────────────────────────────────────────────────
+
+async function saveNewsToCloud(item) {
+  const isExists = await checkContentExists('dailyNewss', 'title', item.title)
+  if (isExists) {
+    console.log('[DailyContent] 新闻已存在，跳过保存:', item.title.substring(0, 20))
+    return false
+  }
+  try {
+    const db = wx.cloud.database()
+    await db.collection('dailyNewss').add({ data: item })
+  } catch (e) {
+    console.error('[DailyContent] 保存新闻到云失败:', e.message)
+  }
+}
+
+async function generateNews() {
+  const category = NEWS_CATEGORIES[Math.floor(Math.random() * NEWS_CATEGORIES.length)]
+  const prompt = `你是一位资深财经记者，对国内外大事有敏锐洞察力。请分享一个关于"${category.name}"的热点解读。
+
+要求：
+1. 标题吸引眼球，8-15个字，体现新闻价值
+2. 内容200-300字，包含事件背景、影响分析、发展趋势，结尾要有观点
+3. 深度点评：以"📰"开头，50字左右
+4. 4个精炼标签
+
+格式：
+新闻解读|${category.name}|标题|正文内容|📰深度点评|标签1|标签2|标签3|标签4
+
+直接输出，不要任何前缀：`
+
+  const messages = [{ role: 'user', content: prompt }]
+  const rawText = await callAI(messages)
+
+  let result
+  if (rawText) {
+    const parts = rawText.split('|')
+    if (parts.length >= 5) {
+      const content = parts.slice(3, -4).join('|')
+      result = {
+        category: category.name,
+        categoryIcon: '📰',
+        title: parts[2],
+        summary: content,
+        tips: parts[parts.length - 4],
+        tags: parts.slice(-3),
+        isAIGenerated: true,
+        date: new Date().toISOString().split('T')[0]
+      }
+    }
+  }
+
+  if (!result) {
+    const fallback = FALLBACK_NEWS[Math.floor(Math.random() * FALLBACK_NEWS.length)]
+    result = {
+      category: category.name,
+      categoryIcon: '📰',
+      title: fallback.title,
+      summary: fallback.content,
+      tips: '📰 关注时事，把握机遇',
+      tags: [category.name, '新闻', '热点'],
+      isAIGenerated: false,
+      date: new Date().toISOString().split('T')[0]
+    }
+  }
+  saveNewsToCloud(result).catch(() => {})
+  return result
+}
+
 // ─── 云数据库去重工具方法 ─────────────────────────────────────────────────
 
 /**
@@ -5895,6 +6165,10 @@ module.exports = {
     generateFloral,
     generateHistory,
     generateMilitary,
+    generateStock,
+    generateEconomics,
+    generateBusiness,
+    generateNews,
   },
   // 云数据库去重工具方法
   removeAllDuplicates,
@@ -5921,7 +6195,6 @@ module.exports = {
   FORTUNE_TYPES,
   BAGUA_DATA,
   ZODIAC_DATA,
-  CHINESE_ZODIAC_DATA,
   FALLBACK_FORTUNES,
   AUTHORS_DATA,
   FALLBACK_AUTHORS,
@@ -5945,4 +6218,13 @@ module.exports = {
   FALLBACK_FISHING,
   FITNESS_FIELDS,
   FALLBACK_FITNESS,
+  // 新增4个模块
+  STOCK_CATEGORIES,
+  FALLBACK_STOCKS,
+  ECONOMICS_CATEGORIES,
+  FALLBACK_ECONOMICS,
+  BUSINESS_CATEGORIES,
+  FALLBACK_BUSINESS,
+  NEWS_CATEGORIES,
+  FALLBACK_NEWS,
 }

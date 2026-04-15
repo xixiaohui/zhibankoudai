@@ -151,6 +151,18 @@
   <!-- 军事达人 -->
   <daily-card moduleType="military" />
 
+  <!-- 股票期货专家 -->
+  <daily-card moduleType="stock" />
+
+  <!-- 经济学专家 -->
+  <daily-card moduleType="economics" />
+
+  <!-- 生意人助手 -->
+  <daily-card moduleType="business" />
+
+  <!-- 新闻助手 -->
+  <daily-card moduleType="news" />
+
   <!-- 快速陪伴入口 -->
   <view class="quick-modes-section">
     <view class="section-title">快速陪伴模式</view>

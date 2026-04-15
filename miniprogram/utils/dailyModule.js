@@ -44,6 +44,10 @@ const { FALLBACK_HANDLING } = require('./handlingData.js')
 const { FALLBACK_FLORAL } = require('./floralData.js')
 const { FALLBACK_HISTORY } = require('./historyData.js')
 const { FALLBACK_MILITARY } = require('./militaryData.js')
+const { FALLBACK_STOCKS } = require('./stockData.js')
+const { FALLBACK_ECONOMICS } = require('./economicsData.js')
+const { FALLBACK_BUSINESS } = require('./businessData.js')
+const { FALLBACK_NEWS } = require('./newsData.js')
 
 // ─── 板块类型定义 ─────────────────────────────────────────────────
 const MODULE_TYPES = {
@@ -82,6 +86,10 @@ const MODULE_TYPES = {
   FLORAL: 'floral', // 花艺达人
   HISTORY: 'history', // 历史典故达人
   MILITARY: 'military', // 军事达人
+  STOCK: 'stock', // 股票期货专家
+  ECONOMICS: 'economics', // 经济学专家
+  BUSINESS: 'business', // 生意人助手
+  NEWS: 'news', // 新闻助手
 }
 
 // ─── 板块配置 ─────────────────────────────────────────────────────
@@ -1097,6 +1105,118 @@ const MODULE_CONFIGS = {
     posterType: 'military',
     slogan: '知己知彼，百战不殆',
   },
+  [MODULE_TYPES.STOCK]: {
+    id: MODULE_TYPES.STOCK,
+    name: '股海明灯',
+    icon: '📈',
+    storageKey: 'dailyStock',
+    collection: 'dailyStocks',
+    cacheEnabled: true,
+    colors: {
+      primary: '#1E88E5',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#E3F2FD',
+      accent: '#1565C0',
+      text: '#0D47A1',
+      textSecondary: '#1976D2',
+      bg: 'rgba(30, 136, 229, 0.1)',
+      shadow: 'rgba(30, 136, 229, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: 'AI专家',
+    },
+    aiTags: ['股票', '期货'],
+    refreshText: '换一条',
+    loadingText: '投资专家正在为你分析...',
+    placeholderText: '点击「换一条」获取投资知识',
+    posterType: 'stock',
+    slogan: '理性投资，稳健增值',
+  },
+  [MODULE_TYPES.ECONOMICS]: {
+    id: MODULE_TYPES.ECONOMICS,
+    name: '经济视窗',
+    icon: '💰',
+    storageKey: 'dailyEconomics',
+    collection: 'dailyEconomics',
+    cacheEnabled: true,
+    colors: {
+      primary: '#00897B',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#E0F2F1',
+      accent: '#00695C',
+      text: '#004D40',
+      textSecondary: '#00796B',
+      bg: 'rgba(0, 137, 123, 0.1)',
+      shadow: 'rgba(0, 137, 123, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: 'AI专家',
+    },
+    aiTags: ['经济', '分析'],
+    refreshText: '换一条',
+    loadingText: '经济学家正在为你解读...',
+    placeholderText: '点击「换一条」学习经济学知识',
+    posterType: 'economics',
+    slogan: '洞悉经济，把握趋势',
+  },
+  [MODULE_TYPES.BUSINESS]: {
+    id: MODULE_TYPES.BUSINESS,
+    name: '商道智慧',
+    icon: '💼',
+    storageKey: 'dailyBusiness',
+    collection: 'dailyBusinesss',
+    cacheEnabled: true,
+    colors: {
+      primary: '#6D4C41',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#EFEBE9',
+      accent: '#5D4037',
+      text: '#3E2723',
+      textSecondary: '#4E342E',
+      bg: 'rgba(109, 76, 65, 0.1)',
+      shadow: 'rgba(109, 76, 65, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: 'AI导师',
+    },
+    aiTags: ['商业', '经营'],
+    refreshText: '换一条',
+    loadingText: '商业导师正在为你指点...',
+    placeholderText: '点击「换一条」学习商业智慧',
+    posterType: 'business',
+    slogan: '商道即人道，赢在格局',
+  },
+  [MODULE_TYPES.NEWS]: {
+    id: MODULE_TYPES.NEWS,
+    name: '资讯前沿',
+    icon: '📰',
+    storageKey: 'dailyNews',
+    collection: 'dailyNewss',
+    cacheEnabled: true,
+    colors: {
+      primary: '#D32F2F',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#FFEBEE',
+      accent: '#C62828',
+      text: '#B71C1C',
+      textSecondary: '#C62828',
+      bg: 'rgba(211, 47, 47, 0.1)',
+      shadow: 'rgba(211, 47, 47, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: 'AI解读',
+    },
+    aiTags: ['新闻', '热点'],
+    refreshText: '换一条',
+    loadingText: '媒体专家正在为你解读...',
+    placeholderText: '点击「换一条」获取新闻解读',
+    posterType: 'news',
+    slogan: '资讯为王，洞察为先',
+  },
   
   // 默认配置（首页/其他）
   home: {
@@ -1141,6 +1261,10 @@ const FALLBACK_DATA = {
   [MODULE_TYPES.FLORAL]: FALLBACK_FLORAL,
   [MODULE_TYPES.HISTORY]: FALLBACK_HISTORY,
   [MODULE_TYPES.MILITARY]: FALLBACK_MILITARY,
+  [MODULE_TYPES.STOCK]: FALLBACK_STOCKS,
+  [MODULE_TYPES.ECONOMICS]: FALLBACK_ECONOMICS,
+  [MODULE_TYPES.BUSINESS]: FALLBACK_BUSINESS,
+  [MODULE_TYPES.NEWS]: FALLBACK_NEWS,
 }
 
 // ─── AI提示词（从 dailyPrompts.js 引入）────────────────────────────

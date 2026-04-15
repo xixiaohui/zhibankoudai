@@ -53,6 +53,7 @@ function getFallbackContent(moduleType, config) {
   const today = new Date()
   const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate()
   const index = seed % fallbackList.length
+
   
   const fallback = { ...fallbackList[index] }
   
@@ -92,7 +93,7 @@ function getFallbackContent(moduleType, config) {
   } else if (moduleType === 'fortune') {
     // 卦象玄机: title=卦名, content=描述, subtitle=卦象属性
     fallback.title = fallback.name
-    fallback.content = fallback.description
+    fallback.content = fallback.description || '卦象'
     fallback.subtitle = fallback.nature || fallback.attribute || '玄学'
     fallback.category = fallback.nature || fallback.element || fallback.trait || '玄学'
     fallback.categoryIcon = fallback.symbol || '🔮'
@@ -376,6 +377,14 @@ Component({
               return await this._getDailyHistory(refresh)
             case MODULE_TYPES.MILITARY:
               return await this._getDailyMilitary(refresh)
+            case MODULE_TYPES.STOCK:
+              return await this._getDailyStock(refresh)
+            case MODULE_TYPES.ECONOMICS:
+              return await this._getDailyEconomics(refresh)
+            case MODULE_TYPES.BUSINESS:
+              return await this._getDailyBusiness(refresh)
+            case MODULE_TYPES.NEWS:
+              return await this._getDailyNews(refresh)
             default:
               throw new Error('未知的模块类型')
           }
@@ -900,6 +909,58 @@ Component({
       return content
     },
 
+    // 获取股票期货专家
+    async _getDailyStock(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyStock')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateStock()
+      return content
+    },
+
+    // 获取经济学专家
+    async _getDailyEconomics(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyEconomics')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateEconomics()
+      return content
+    },
+
+    // 获取生意人助手
+    async _getDailyBusiness(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyBusiness')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateBusiness()
+      return content
+    },
+
+    // 获取新闻助手
+    async _getDailyNews(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyNews')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateNews()
+      return content
+    },
+
     // 保存到云数据库
     async _saveToCloud(content) {
       const { moduleType } = this.data
@@ -942,6 +1003,10 @@ Component({
           [MODULE_TYPES.FLORAL]: 'dailyFlorals',
           [MODULE_TYPES.HISTORY]: 'dailyHistorys',
           [MODULE_TYPES.MILITARY]: 'dailyMilitarys',
+          [MODULE_TYPES.STOCK]: 'dailyStocks',
+          [MODULE_TYPES.ECONOMICS]: 'dailyEconomics',
+          [MODULE_TYPES.BUSINESS]: 'dailyBusinesss',
+          [MODULE_TYPES.NEWS]: 'dailyNewss',
         }
 
         const collection = collectionMap[moduleType]
@@ -1114,6 +1179,22 @@ Component({
         case 'military':
           url = `/pages/poster/index`
           params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🎖️') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🎖️')}`
+          break
+        case 'stock':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '📈') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '📈')}`
+          break
+        case 'economics':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💰') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💰')}`
+          break
+        case 'business':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💼') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💼')}`
+          break
+        case 'news':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '📰') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '📰')}`
           break
       }
 
