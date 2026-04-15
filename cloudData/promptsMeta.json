@@ -1,0 +1,670 @@
+{
+  "version": "1.0.0",
+  "type": "prompts",
+  "generated": "2026-04-15T03:41:05.352Z",
+  "totalModules": 172,
+  "modules": {
+    "quote": {
+      "subModules": [
+        "poetry"
+      ],
+      "hasFullPrompt": true
+    },
+    "poetry": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "sayings": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "love": {
+      "subModules": [
+        "classic"
+      ],
+      "hasFullPrompt": true
+    },
+    "classic": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "modern": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "celebrity": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "joke": {
+      "subModules": [
+        "default"
+      ],
+      "hasFullPrompt": true
+    },
+    "default": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "psychology": {
+      "subModules": [
+        "default"
+      ],
+      "hasFullPrompt": true
+    },
+    "finance": {
+      "subModules": [
+        "default"
+      ],
+      "hasFullPrompt": true
+    },
+    "movie": {
+      "subModules": [
+        "classic"
+      ],
+      "hasFullPrompt": true
+    },
+    "recent": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "chinese": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "animation": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "music": {
+      "subModules": [
+        "classical"
+      ],
+      "hasFullPrompt": true
+    },
+    "classical": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "tech": {
+      "subModules": [
+        "ai"
+      ],
+      "hasFullPrompt": true
+    },
+    "ai": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "china": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "tcm": {
+      "subModules": [
+        "herb"
+      ],
+      "hasFullPrompt": true
+    },
+    "herb": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "therapy": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "travel": {
+      "subModules": [
+        "natural"
+      ],
+      "hasFullPrompt": true
+    },
+    "natural": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "cultural": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "fortune": {
+      "subModules": [
+        "bagua"
+      ],
+      "hasFullPrompt": true
+    },
+    "bagua": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "zodiac": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "literature": {
+      "subModules": [
+        "chinese"
+      ],
+      "hasFullPrompt": true
+    },
+    "foreign": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "foreignTrade": {
+      "subModules": [
+        "term"
+      ],
+      "hasFullPrompt": true
+    },
+    "term": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "payment": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "logistics": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "ecommerce": {
+      "subModules": [
+        "selection"
+      ],
+      "hasFullPrompt": true
+    },
+    "selection": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "promotion": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "data": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "math": {
+      "subModules": [
+        "algebra"
+      ],
+      "hasFullPrompt": true
+    },
+    "algebra": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "geometry": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "function": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "english": {
+      "subModules": [
+        "grammar"
+      ],
+      "hasFullPrompt": true
+    },
+    "grammar": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "vocabulary": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "reading": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "writing": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "listening": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "programming": {
+      "subModules": [
+        "frontend"
+      ],
+      "hasFullPrompt": true
+    },
+    "frontend": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "backend": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "database": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "devops": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "algorithm": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "photography": {
+      "subModules": [
+        "basics"
+      ],
+      "hasFullPrompt": true
+    },
+    "basics": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "composition": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "light": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "portrait": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "landscape": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "mobile": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "beauty": {
+      "subModules": [
+        "skincare"
+      ],
+      "hasFullPrompt": true
+    },
+    "skincare": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "makeup": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "haircare": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "nailcare": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "bodycare": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "tips": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "investment": {
+      "subModules": [
+        "fund"
+      ],
+      "hasFullPrompt": true
+    },
+    "fund": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "index": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "value": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "global": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "strategy": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "risk": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "fishing": {
+      "subModules": [
+        "technique"
+      ],
+      "hasFullPrompt": true
+    },
+    "technique": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "gear": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "bait": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "location": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "species": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "season": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "fitness": {
+      "subModules": [
+        "concept"
+      ],
+      "hasFullPrompt": true
+    },
+    "concept": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "fatLoss": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "hipUp": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "nutrition": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "habit": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "pet": {
+      "subModules": [
+        "concept"
+      ],
+      "hasFullPrompt": true
+    },
+    "daily": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "health": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "behavior": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "interaction": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "fashion": {
+      "subModules": [
+        "concept"
+      ],
+      "hasFullPrompt": true
+    },
+    "trend": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "rule": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "accessory": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "color": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "style": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "outfit": {
+      "subModules": [
+        "basic"
+      ],
+      "hasFullPrompt": true
+    },
+    "basic": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "seasonal": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "body": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "item": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "scene": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "pitfall": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "decoration": {
+      "subModules": [
+        "concept"
+      ],
+      "hasFullPrompt": true
+    },
+    "space": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "material": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "lighting": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "soft": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "fiber": {
+      "subModules": [
+        "type"
+      ],
+      "hasFullPrompt": true
+    },
+    "type": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "process": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "application": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "equipment": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "quality": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "safety": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "resin": {
+      "subModules": [
+        "type"
+      ],
+      "hasFullPrompt": true
+    },
+    "handlayup": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "vacuum": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "mold": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "tax": {
+      "subModules": [
+        "basic"
+      ],
+      "hasFullPrompt": true
+    },
+    "planning": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "invoice": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "social": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "report": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "question": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "law": {
+      "subModules": [
+        "contract"
+      ],
+      "hasFullPrompt": true
+    },
+    "contract": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "labor": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "ip": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "company": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "civil": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "official": {
+      "subModules": [
+        "official"
+      ],
+      "hasFullPrompt": true
+    },
+    "wisdom": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "career": {
+      "subModules": [],
+      "hasFullPrompt": true
+    },
+    "handling": {
+      "subModules": [
+        "default"
+      ],
+      "hasFullPrompt": true
+    },
+    "floral": {
+      "subModules": [
+        "default"
+      ],
+      "hasFullPrompt": true
+    },
+    "history": {
+      "subModules": [
+        "default"
+      ],
+      "hasFullPrompt": true
+    },
+    "military": {
+      "subModules": [
+        "default"
+      ],
+      "hasFullPrompt": true
+    },
+    "stock": {
+      "subModules": [
+        "default"
+      ],
+      "hasFullPrompt": true
+    },
+    "economics": {
+      "subModules": [
+        "default"
+      ],
+      "hasFullPrompt": true
+    },
+    "business": {
+      "subModules": [
+        "default"
+      ],
+      "hasFullPrompt": true
+    },
+    "news": {
+      "subModules": [
+        "default"
+      ],
+      "hasFullPrompt": true
+    }
+  }
+}

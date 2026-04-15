@@ -46,121 +46,125 @@
     </view>
   </view>
 
-  <!-- 今日名言 -->
+  <!-- =============================================
+       每日内容模块（配置驱动 - 修改 enabled 属性即可增删模块）
+       ============================================= -->
+  
+  <!-- 今日名言 - 配置ID: quote -->
   <daily-card moduleType="quote" />
 
-  <!-- 今日段子 -->
+  <!-- 今日段子 - 配置ID: joke -->
   <daily-card moduleType="joke" />
 
-  <!-- 每日心理学 -->
+  <!-- 每日心理学 - 配置ID: psychology -->
   <daily-card moduleType="psychology" />
 
-  <!-- 每日金融 -->
+  <!-- 每日金融 - 配置ID: finance -->
   <daily-card moduleType="finance" />
 
-  <!-- 每日情话 -->
+  <!-- 每日情话 - 配置ID: love -->
   <daily-card moduleType="love" />
 
-  <!-- 每日电影 -->
+  <!-- 每日电影 - 配置ID: movie -->
   <daily-card moduleType="movie" />
 
-  <!-- 每日音乐 -->
+  <!-- 每日音乐 - 配置ID: music -->
   <daily-card moduleType="music" />
 
-  <!-- 每日科技 -->
+  <!-- 每日科技 - 配置ID: tech -->
   <daily-card moduleType="tech" />
 
-  <!-- 每日中医 -->
+  <!-- 每日中医 - 配置ID: tcm -->
   <daily-card moduleType="tcm" />
 
-  <!-- 每日旅游 -->
+  <!-- 每日旅游 - 配置ID: travel -->
   <daily-card moduleType="travel" />
 
-  <!-- 每日一卦 -->
+  <!-- 每日一卦 - 配置ID: fortune -->
   <daily-card moduleType="fortune" />
 
-  <!-- 每日文学 -->
+  <!-- 每日文学 - 配置ID: literature -->
   <daily-card moduleType="literature" />
 
-  <!-- 外贸助手 -->
+  <!-- 外贸助手 - 配置ID: foreignTrade -->
   <daily-card moduleType="foreignTrade" />
 
-  <!-- 电商运营助手 -->
+  <!-- 电商运营助手 - 配置ID: ecommerce -->
   <daily-card moduleType="ecommerce" />
 
-  <!-- 中学数学助手 -->
+  <!-- 中学数学助手 - 配置ID: math -->
   <daily-card moduleType="math" />
 
-  <!-- 中学英语助手 -->
+  <!-- 中学英语助手 - 配置ID: english -->
   <daily-card moduleType="english" />
 
-  <!-- 计算机编程助手 -->
+  <!-- 计算机编程助手 - 配置ID: programming -->
   <daily-card moduleType="programming" />
 
-  <!-- 摄影达人 -->
+  <!-- 摄影达人 - 配置ID: photography -->
   <daily-card moduleType="photography" />
 
-  <!-- 美妆达人 -->
+  <!-- 美妆达人 - 配置ID: beauty -->
   <daily-card moduleType="beauty" />
 
-  <!-- 投资理财达人 -->
+  <!-- 投资理财达人 - 配置ID: investment -->
   <daily-card moduleType="investment" />
 
-  <!-- 钓鱼达人 -->
+  <!-- 钓鱼达人 - 配置ID: fishing -->
   <daily-card moduleType="fishing" />
 
-  <!-- 健身达人 -->
+  <!-- 健身达人 - 配置ID: fitness -->
   <daily-card moduleType="fitness" />
 
-  <!-- 宠物达人 -->
+  <!-- 宠物达人 - 配置ID: pet -->
   <daily-card moduleType="pet" />
 
-  <!-- 时尚达人 -->
+  <!-- 时尚达人 - 配置ID: fashion -->
   <daily-card moduleType="fashion" />
 
-  <!-- 穿搭达人 -->
+  <!-- 穿搭达人 - 配置ID: outfit -->
   <daily-card moduleType="outfit" />
 
-  <!-- 装修达人 -->
+  <!-- 装修达人 - 配置ID: decoration -->
   <daily-card moduleType="decoration" />
 
-  <!-- 玻纤达人 -->
+  <!-- 玻纤达人 - 配置ID: glassFiber -->
   <daily-card moduleType="glassFiber" />
 
-  <!-- 树脂达人 -->
+  <!-- 树脂达人 - 配置ID: resin -->
   <daily-card moduleType="resin" />
 
-  <!-- 财税助手 -->
+  <!-- 财税助手 - 配置ID: tax -->
   <daily-card moduleType="tax" />
 
-  <!-- 法律顾问 -->
+  <!-- 法律顾问 - 配置ID: law -->
   <daily-card moduleType="law" />
 
-  <!-- 官场达人 -->
+  <!-- 官场达人 - 配置ID: official -->
   <daily-card moduleType="official" />
 
-  <!-- 处事达人 -->
+  <!-- 处事达人 - 配置ID: handling -->
   <daily-card moduleType="handling" />
 
-  <!-- 花艺达人 -->
+  <!-- 花艺达人 - 配置ID: floral -->
   <daily-card moduleType="floral" />
 
-  <!-- 历史典故达人 -->
+  <!-- 历史典故达人 - 配置ID: history -->
   <daily-card moduleType="history" />
 
-  <!-- 军事达人 -->
+  <!-- 军事达人 - 配置ID: military -->
   <daily-card moduleType="military" />
 
-  <!-- 股票期货专家 -->
+  <!-- 股票期货专家 - 配置ID: stock -->
   <daily-card moduleType="stock" />
 
-  <!-- 经济学专家 -->
+  <!-- 经济学专家 - 配置ID: economics -->
   <daily-card moduleType="economics" />
 
-  <!-- 生意人助手 -->
+  <!-- 生意人助手 - 配置ID: business -->
   <daily-card moduleType="business" />
 
-  <!-- 新闻助手 -->
+  <!-- 新闻助手 - 配置ID: news -->
   <daily-card moduleType="news" />
 
   <!-- 快速陪伴入口 -->

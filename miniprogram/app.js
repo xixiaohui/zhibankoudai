@@ -1,5 +1,6 @@
 // miniprogram/app.js
 const util = require('./utils/util.js')
+const cloudData = require('./utils/cloudData.js')
 
 App({
   globalData: {
@@ -38,15 +39,21 @@ App({
   },
 
   onLaunch() {
+    console.log('[App] onLaunch 开始')
+    
     // 初始化云开发
     if (!wx.cloud) {
-      console.warn('请使用 2.2.3 或以上的基础库以使用云能力')
+      console.warn('[App] wx.cloud 不存在，无法使用云能力')
     } else {
       wx.cloud.init({
         env: "zhiban-4g34epre1ce6ce1c", // 使用当前云环境
         traceUser: true,
       })
-      console.log('【App】云开发初始化成功')
+      console.log('[App] 云开发初始化成功')
+      
+      // 初始化云端数据（异步，不阻塞UI）
+      console.log('[App] 调用 cloudData.init()')
+      cloudData.init()
     }
     
     // 初始化本地存储

@@ -1,6 +1,17 @@
 // pages/index/index.js - 智伴口袋首页
 const app = getApp()
 const util = require('../../utils/util.js')
+const moduleConfig = require('../../utils/moduleConfig.js')
+
+// 静态模块列表（WXML中硬编码的模块，按显示顺序）
+const ALL_MODULE_TYPES = [
+  'quote', 'joke', 'psychology', 'finance', 'love', 'movie', 'music', 'tech',
+  'tcm', 'travel', 'fortune', 'literature', 'foreignTrade', 'ecommerce',
+  'math', 'english', 'programming', 'photography', 'beauty', 'investment',
+  'fishing', 'fitness', 'pet', 'fashion', 'outfit', 'decoration', 'glassFiber',
+  'resin', 'tax', 'law', 'official', 'handling', 'floral', 'history', 'military',
+  'stock', 'economics', 'business', 'news'
+]
 
 Page({
   data: {
@@ -22,6 +33,9 @@ Page({
     // 每日卡片
     dailyCard: null,
     
+    // 动态模块列表（从配置读取，用于控制显示）
+    enabledModules: [],
+    
     // 近期状态
     recentMood: null,
     pendingGoals: [],
@@ -37,6 +51,8 @@ Page({
   onLoad() {
     // 检查昵称设置
     this.checkNickname()
+    // 预加载模块配置
+    this.loadModuleConfig()
   },
 
   onShow() {
@@ -72,6 +88,43 @@ Page({
     if (!profile || !profile.nickname) {
       this.setData({ showNicknameModal: true })
     }
+  },
+
+  // 加载模块配置（同步获取，用于初始化）
+  loadModuleConfig() {
+    // 同步获取配置（优先使用本地缓存）
+    const config = moduleConfig.getModuleConfigSync()
+    
+    console.log('[Index] config 详情:', {
+      hasConfig: !!config,
+      hasModules: !!(config && config.modules),
+      modulesLength: config && config.modules ? config.modules.length : 0,
+      configKeys: config ? Object.keys(config) : []
+    })
+    
+    // 获取启用的模块ID列表
+    let enabledModules = []
+    if (config && config.modules) {
+      enabledModules = config.modules
+        .filter(m => m.enabled)
+        .map(m => m.id)
+    } else {
+      console.error('[Index] 配置中没有 modules，使用默认值')
+      enabledModules = ALL_MODULE_TYPES
+    }
+    
+    this.setData({ enabledModules })
+    console.log('[Index] enabledModules:', enabledModules)
+
+    // 异步更新云端配置（不阻塞UI）
+    moduleConfig.getModuleConfig().catch(e => {
+      console.warn('[Index] 同步云端配置失败:', e)
+    })
+  },
+
+  // 检查模块是否启用
+  isModuleEnabled(moduleType) {
+    return this.data.enabledModules.includes(moduleType)
   },
 
   // 工具函数绑定

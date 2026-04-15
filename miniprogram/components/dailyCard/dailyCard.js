@@ -1,6 +1,8 @@
 // components/dailyCard/dailyCard.js - 每日内容卡片组件
 const { MODULE_TYPES, MODULE_CONFIGS, FALLBACK_DATA } = require('../../utils/dailyModule.js')
 const { DailyContent } = require('../../utils/dailyContent.js')
+const { getModuleConfigSync, getModuleConfig } = require('../../utils/moduleConfig.js')
+const cloudData = require('../../utils/cloudData.js')
 
 // 全局请求队列，控制同时发起的 AI 请求数量
 const MAX_CONCURRENT_REQUESTS = 3
@@ -42,9 +44,36 @@ function enqueueRequest(fn) {
 
 /**
  * 获取兜底数据（使用日期作为种子，保证每天固定）
+ * 优先级：云端数据 > 本地 JS 数据
  */
 function getFallbackContent(moduleType, config) {
-  const fallbackList = FALLBACK_DATA[moduleType]
+  console.log('[DailyCard] getFallbackContent, moduleType:', moduleType)
+  
+  // 1. 优先从云端数据获取
+  let fallbackList = null
+  
+  // 尝试从 cloudData 获取
+  const cloudModuleData = cloudData.getModuleData(moduleType)
+  if (cloudModuleData) {
+    // 查找 FALLBACK_ 开头的数组
+    const fallbackKey = Object.keys(cloudModuleData).find(k => 
+      k.startsWith('FALLBACK_') || k.endsWith('_QUOTES') || k.endsWith('_DATA') || k.endsWith('_SCENES')
+    )
+    if (fallbackKey && Array.isArray(cloudModuleData[fallbackKey])) {
+      fallbackList = cloudModuleData[fallbackKey]
+      console.log('[DailyCard] 使用云端数据:', fallbackList.length + ' 条')
+    }
+  }
+  
+  // 2. 降级到本地 JS 数据
+  if (!fallbackList || fallbackList.length === 0) {
+    fallbackList = FALLBACK_DATA[moduleType]
+    console.log('[DailyCard] 使用本地数据:', fallbackList ? fallbackList.length + ' 条' : '无数据')
+  }
+  
+  if (!fallbackList || fallbackList.length === 0) {
+    return null
+  }
   if (!fallbackList || fallbackList.length === 0) {
     return null
   }
@@ -169,6 +198,7 @@ Component({
 
   lifetimes: {
     attached() {
+      console.log('[DailyCard] attached 执行, moduleType:', this.properties.moduleType)
       this._initModule()
     },
   },
@@ -183,20 +213,63 @@ Component({
   },
 
   methods: {
-    // 初始化模块配置
-    _initModule() {
-      const config = MODULE_CONFIGS[this.properties.moduleType]
+  // 初始化模块配置
+  _initModule() {
+    const moduleType = this.properties.moduleType
+    console.log('[DailyCard] _initModule 开始, moduleType:', moduleType)
+      
+    // 1. 优先从本地缓存的配置读取（同步，快速）
+    const cloudConfig = getModuleConfigSync()
+    console.log('[DailyCard] cloudConfig:', cloudConfig ? '有数据' : '无数据', 
+                 cloudConfig?.modules?.length ? cloudConfig.modules.length + ' 个模块' : '')
+    
+    const moduleConfig = cloudConfig?.modules?.find(m => m.id === moduleType)
+    console.log('[DailyCard] moduleConfig:', moduleConfig ? '找到' : '未找到', moduleType)
+    
+    if (moduleConfig) {
+      // 使用云配置文件中的配置
+      const config = {
+        ...moduleConfig,
+        id: moduleType,
+      }
+      console.log('[DailyCard] 使用云端配置:', config.name)
+      this.setData({ config })
+      this._loadContent(config)
+    } else {
+      // 2. 降级到硬编码配置
+      const config = MODULE_CONFIGS[moduleType]
+      console.log('[DailyCard] 使用硬编码配置:', config ? config.name : '未找到')
       if (!config) {
-        console.error('[DailyCard] 未知的模块类型:', this.properties.moduleType)
+        console.error('[DailyCard] 未知的模块类型:', moduleType)
         return
       }
       this.setData({ config })
+      this._loadContent(config)
+      
+      // 3. 异步尝试加载云配置（更新缓存）
+      this._syncCloudConfig()
+    }
+  },
+
+    // 异步同步云配置到本地
+    async _syncCloudConfig() {
+      try {
+        await getModuleConfig()
+      } catch (e) {
+        // 静默失败，使用硬编码配置
+      }
+    },
+
+    // 加载内容（从配置读取后执行）
+    _loadContent(config) {
+      console.log('[DailyCard] _loadContent 开始, storageKey:', config.storageKey)
 
       // 1. 先检查缓存（今天的数据直接使用）
       const cached = wx.getStorageSync(config.storageKey)
       if (cached) {
         const today = new Date().toISOString().split('T')[0]
         if (cached.date === today) {
+          console.log('[DailyCard] 使用缓存数据')
           this.setData({ content: cached, hasAIRefreshed: cached.isAIGenerated || false })
           this._buildTags(cached)
           return
@@ -204,7 +277,9 @@ Component({
       }
 
       // 2. 无缓存时，立即显示兜底数据（不调用AI）
+      console.log('[DailyCard] 无缓存，获取兜底数据')
       const fallback = getFallbackContent(this.properties.moduleType, config)
+      console.log('[DailyCard] fallback 结果:', fallback ? '有数据' : '无数据')
       if (fallback) {
         this.setData({ content: fallback })
         this._buildTags(fallback)

@@ -1,0 +1,4 @@
+{
+  "_comment": "每日提示词数据 - 请将 dailyPrompts.js 中的 DAILY_PROMPTS 对象内容复制到这里",
+  "_instruction": "保留 JS 文件作为 fallback，本 JSON 用于云端更新数据"
+}
