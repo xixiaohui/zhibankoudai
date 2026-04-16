@@ -197,6 +197,11 @@
       "id": "news",
       "enabled": true,
       "order": 38
+    },
+    {
+      "id": "apple",
+      "enabled": true,
+      "order": 39
     }
   ]
 }

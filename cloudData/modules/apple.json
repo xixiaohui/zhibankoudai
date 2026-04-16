@@ -1,0 +1,195 @@
+{
+  "id": "apple",
+  "name": "果核学堂",
+  "icon": "icon-apple",
+  "color": "#007AFF",
+  "fields": [],
+  "version": "1.0.0",
+  "updated": "2026-04-16",
+  "fallback": [
+    {
+      "title": "Swift Optional可选类型",
+      "content": "Swift的Optional类型是保障代码安全的重要特性。在Objective-C中，nil消息是被允许的，但可能导致崩溃。Swift通过Optional强制开发者在编译期处理空值情况，有效降低了运行时错误。Optional本质上是一个枚举，包含None和Some两种情况。正确使用Optional能让代码更加健壮，也是Swift区别于其他语言的重要设计。",
+      "category": "Swift基础",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "UIViewController生命周期",
+      "content": "理解UIViewController的生命周期对于iOS开发至关重要。viewDidLoad在视图加载时调用一次，适合做初始化操作。viewWillAppear每次视图即将显示前调用，viewDidAppear则在视图已经显示后调用。viewWillDisappear和viewDidDisappear分别在视图即将消失和已经消失时触发。合理利用这些时机可以优化内存使用和用户体验。",
+      "category": "UIKit框架",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "SwiftUI声明式UI",
+      "content": "SwiftUI代表了苹果UI开发的未来方向。它采用声明式语法，让开发者描述UI应该长什么样，而不是像UIKit那样命令式地告诉系统如何构建界面。这种方式大大简化了代码量，配合Xcode的实时预览功能，开发效率显著提升。SwiftUI与UIKit可以无缝混用，为既有项目提供了平滑的迁移路径。",
+      "category": "SwiftUI框架",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "ARC自动引用计数",
+      "content": "Swift使用ARC来自动管理内存，这大大减轻了开发者的负担。ARC会跟踪对象的引用计数，当计数归零时自动释放内存。但循环引用仍是需要警惕的问题。强引用会保持对象存活，weak引用在对象释放后自动变为nil，unowned引用则假设对象存在但不会保持。这三种引用方式的正确选择是避免内存泄漏的关键。",
+      "category": "内存管理",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "Combine响应式编程",
+      "content": "Combine框架为Swift提供了强大的响应式编程能力。通过发布者(Publisher)和订阅者(Subscriber)模式，开发者可以优雅地处理异步事件流。@Published属性包装器让视图模型与UI的绑定变得简单。Combine内置了丰富的操作符，如map、filter、merge等，可以链式组合处理数据流。",
+      "category": "Swift进阶",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "Protocol协议与代理模式",
+      "content": "Protocol是Swift中实现多态的重要手段，类似于其他语言中的接口。通过协议，我们可以定义一组方法签名，让具体类型来实现。代理模式是iOS开发中最常用的设计模式之一，通过协议定义交互接口，实现了对象间的解耦。delegate属性通常被声明为weak以避免循环引用。",
+      "category": "设计模式",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "GCD并发编程",
+      "content": "Grand Central Dispatch是苹果提供的强大并发解决方案。通过全局队列和主队列，开发者可以轻松实现任务的并行与串行执行。DispatchWorkItem提供了更灵活的任务封装，可以取消正在执行的任务。并发编程需要注意线程安全问题，适当使用barrier和semaphore可以避免竞态条件。",
+      "category": "多线程",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "Core Data数据持久化",
+      "content": "Core Data是苹果官方推荐的本地数据存储方案，特别适合管理复杂对象图。它提供了对象图管理、持久化、查询优化等功能。NSManagedObjectContext是操作数据的核心上下文，通过fetch、save等方法完成增删改查。合理使用批量操作和后台上下文可以提升性能。",
+      "category": "数据存储",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "Xcode调试技巧",
+      "content": "熟练使用Xcode的调试工具能大幅提升开发效率。LLDB调试器支持po命令打印对象、expr执行代码、bt查看堆栈。断点可以设置条件，只在特定情况下触发。Memory Graph工具能直观发现内存泄漏。Instruments的Leaks和Allocations模板是排查问题的利器。",
+      "category": "开发工具",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "App Store上架流程",
+      "content": "将应用发布到App Store需要几个关键步骤：首先是创建App ID和证书，然后在Xcode中配置签名信息，接着构建Archive并通过Organizer上传至App Store Connect。在App Store Connect填写应用信息、截图和描述后提交审核。了解App Store审核指南能有效避免被拒。",
+      "category": "应用发布",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "Swift Codable协议",
+      "content": "Codable让Swift类型与JSON之间的转换变得极其简单。只需让结构体遵循Codable协议，即可自动获得编码和解码能力。KeyedDecodingContainer支持自定义键名映射，JSONDecoder可以配置日期格式、数字解析策略等。对于复杂的转换逻辑，还可以通过实现自定义编码器和解码器来满足需求。",
+      "category": "Swift基础",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "iOS应用安全实践",
+      "content": "保护用户数据安全是开发者的重要责任。敏感信息如API密钥绝不能硬编码在代码中，应使用Keychain存储。使用HTTPS进行网络通信，并校验服务器证书。防止SQL注入和XSS攻击，对用户输入进行充分验证。启用App Transport Security可以强制应用使用安全连接。",
+      "category": "安全加固",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "Auto Layout自动布局",
+      "content": "Auto Layout是构建响应式界面的核心。它通过约束描述视图之间的关系，让界面能够适配不同尺寸的设备。Visual Format Language提供了一种声明式的约束写法，而锚点系统则更加直观。Stack View可以简化复杂的布局，UIScreen.main.bounds提供了设备尺寸信息。",
+      "category": "UIKit框架",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "Swift泛型编程",
+      "content": "泛型让代码更加通用和类型安全。通过<T>这样的形式参数，函数和类型可以处理任意类型的数据。where子句可以对泛型类型添加约束，确保类型具有特定能力。关联类型在协议中定义泛型占位符，由遵循者指定具体类型。泛型大大减少了代码重复。",
+      "category": "Swift进阶",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "手势识别与交互",
+      "content": "iOS提供了丰富的手势识别器来增强用户交互。UITapGestureRecognizer处理点击，UIPanGestureRecognizer支持拖拽，UIPinchGestureRecognizer和UIRotationGestureRecognizer分别处理缩放和旋转。这些手势识别器可以同时工作，通过requireGestureRecognizerToFail方法可以设置优先级关系。",
+      "category": "UI交互",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "SwiftUI状态管理",
+      "content": "SwiftUI提供了多种状态管理机制来控制UI更新。@State用于值类型的本地状态，@Binding实现双向绑定。@ObservedObject和@StateObject处理引用类型的状态共享，而@EnvironmentObject则实现了全局状态传递。正确选择状态管理方式能让应用架构更加清晰。",
+      "category": "SwiftUI框架",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "网络层架构设计",
+      "content": "良好的网络层设计是应用架构的基础。常见的做法是封装NetworkManager或APIClient类，统一处理请求头、超时设置、错误处理。结合protocol定义接口规范，便于测试和替换实现。URLSession的async/await语法让网络请求更加简洁。考虑添加请求缓存和离线支持提升体验。",
+      "category": "架构设计",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "动画与转场",
+      "content": "精美的动画能极大提升用户体验。UIView.animate方法是创建视图动画的经典方式，支持duration、delay、options等参数。Core Animation提供了更底层的动画控制，可以实现复杂的3D效果。UIViewController的自定义转场通过UIViewControllerAnimatedTransitioning协议实现，让导航和模态展示更加炫酷。",
+      "category": "视觉效果",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "Swift闭包逃逸",
+      "content": "闭包是Swift中的重要概念，而逃逸闭包是必须掌握的概念。当闭包作为参数传入函数但在函数返回后才被调用时，这个闭包就是逃逸的。需要在参数前加@escaping标注。常见的逃逸闭包场景包括异步操作、存储为属性等。循环引用是使用闭包时需要特别注意的问题。",
+      "category": "Swift基础",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "单元测试与TDD",
+      "content": "编写测试是保证代码质量的有效手段。XCTest框架提供了完整的测试能力，包括断言、异步测试、性能测试。依赖注入能让代码更容易测试。Test-Driven Development倡导先写测试再写实现，确保代码从一开始就具备可测试性。Coverage报告帮助了解代码测试覆盖情况。",
+      "category": "代码质量",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "Swift Property Wrapper",
+      "content": "属性包装器是Swift 5.1引入的强大特性，通过@propertyWrapper标注。它允许为属性访问添加统一的逻辑，如数据验证、格式转换。@Published、@State、@SceneStorage都是系统内置的属性包装器。我们也可以创建自定义的包装器来复用逻辑，如@UserDefaults、@Keychain等。",
+      "category": "Swift进阶",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "App性能优化技巧",
+      "content": "性能优化是打造优秀应用的关键。首先使用 Instruments 的 Time Profiler 定位耗时操作。主线程只做UI操作，耗时任务放到后台队列。图片使用合适的尺寸和格式，tableView通过预加载和复用优化滚动性能。内存泄漏会慢慢拖垮性能，使用 Memory Graph 定期检查。",
+      "category": "性能优化",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "SwiftUI与UIKit互操作",
+      "content": "SwiftUI和UIKit可以无缝混用，满足不同场景需求。通过UIViewControllerRepresentable包装UIKit视图，通过UIViewRepresentable包装SwiftUI视图，反向则使用UIHostingController。这种互操作性让我们能够逐步迁移现有项目到SwiftUI，同时保留成熟的UIKit代码库。",
+      "category": "SwiftUI框架",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "通知机制与推送",
+      "content": "iOS的通知系统分为本地通知和远程推送两类。UNUserNotificationCenter管理通知权限和调度。本地通知适合定时提醒等场景。远程推送需要配置APNs，获取设备token后发送到服务器。了解通知的优先级、分类、交互操作能提供更好的用户体验。",
+      "category": "系统服务",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "Swift类型系统",
+      "content": "Swift拥有强大而安全的类型系统。Struct是值类型，Class是引用类型，两者在内存管理、继承、多态上有本质区别。枚举可以关联值和实现方法。Extension允许为现有类型添加功能。Typealias定义类型别名。正确理解这些概念能写出更优雅的代码。",
+      "category": "Swift基础",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "文件管理与沙盒",
+      "content": "iOS应用运行在沙盒环境中，只能访问受限的文件系统。Documents目录用于存储用户数据，会被iCloud备份。Library适合存储应用配置和缓存。tmp目录存放临时文件，系统可能在需要时清理。通过FileManager进行文件和目录操作，理解沙盒机制是文件管理的基础。",
+      "category": "系统服务",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "Swift错误处理",
+      "content": "Swift提供了do-catch、try?、try!三种错误处理方式。do-catch提供最完整的错误处理能力。try?将错误转换为可选值，简化非关键错误的处理。try!在确定不会出错时使用，但要谨慎以免崩溃。自定义错误类型遵循Error协议，可以携带详细的错误信息。",
+      "category": "Swift基础",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "多窗口与iPad支持",
+      "content": "iPadOS支持多窗口功能，应用可以通过拖拽创建新的窗口实例。UISceneDelegate管理场景的生命周期和状态恢复。UISplitViewController在iPad上提供主从视图的经典布局。做好多窗口支持需要正确处理scene相关代理方法，确保各窗口状态同步。",
+      "category": "iPad开发",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "Swift访问控制",
+      "content": "Swift有五个访问级别：open、public、internal、fileprivate、private。open允许模块外继承和重写，public只允许模块外访问。internal是默认值。fileprivate限制在当前文件，private限制在当前作用域。合理的访问控制能隐藏实现细节，构建清晰的API接口。",
+      "category": "Swift进阶",
+      "categoryIcon": "🍎"
+    },
+    {
+      "title": "导航与页面流转",
+      "content": "UINavigationController提供栈式导航，push和pop操作管理视图层级。UITabBarController实现多标签页切换。Modal呈现提供临时视图的展示方式。导航条和标签栏的外观可以通过UINavigationBarAppearance和UITabBarAppearance统一配置，打造一致的应用风格。",
+      "category": "UI架构",
+      "categoryIcon": "🍎"
+    }
+  ],
+  "share": {
+    "title": "果核学堂",
+    "template": "{content}"
+  }
+}

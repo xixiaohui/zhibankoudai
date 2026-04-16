@@ -400,6 +400,17 @@ function normalizeContent(moduleId, aiResult) {
         date: today,
         isAIGenerated: true
       }
+
+    case 'apple':
+      return {
+        title: json.title || '苹果开发',
+        content: json.content || json.text || aiResult,
+        summary: json.summary || json.content || '',
+        category: json.category || 'iOS开发',
+        categoryIcon: '🍎',
+        date: today,
+        isAIGenerated: true
+      }
       
     default:
       // 通用格式
@@ -989,6 +1000,18 @@ const DailyContent = {
     if (!promptData) throw new Error('获取新闻提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
     const content = await generateContent('news', userPrompt, onChunk, 800)
+    onDone && onDone(content)
+    return content
+  },
+
+  /**
+   * 生成果核学堂 - Apple开发知识
+   */
+  async generateApple(onChunk, onDone) {
+    const promptData = getPrompt('apple')
+    if (!promptData) throw new Error('获取果核学堂提示词失败')
+    const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
+    const content = await generateContent('apple', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },

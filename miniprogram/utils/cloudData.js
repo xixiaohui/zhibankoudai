@@ -73,6 +73,7 @@ const LOCAL_HOME_MODULES = {
     { id: "food", enabled: true, order: 15 },
     { id: "history", enabled: false, order: 16 },
     { id: "news", enabled: true, order: 17 },
+    { id: "apple", enabled: true, order: 18 },
   ]
 }
 
@@ -141,6 +142,10 @@ const LOCAL_PROMPTS = {
     news: {
       generate: "你是一位资深新闻编辑。请总结今日重要新闻（3-5条），每条50字内。输出格式：📰【今日要闻】\\n\\n1️⃣ 【分类】标题\\n   简述\\n\\n2️⃣ ...",
       share: "📰【今日要闻】\\n\\n{content}"
+    },
+    apple: {
+      generate: "你是一位苹果开发专家。请分享一个实用的 iOS/Swift 开发知识点，要求实用、通俗易懂。输出格式：🍎【知识点】\\n📖 原理：[简述]\\n💻 示例：[代码示例]\\n🎯 适用场景：[何时用]",
+      share: "🍎【苹果开发】{title}\\n\\n{content}"
     }
   },
   system: {
@@ -433,6 +438,12 @@ const DEFAULT_STYLES = {
     refreshText: '换一条', loadingText: '资讯加载中...', placeholderText: '点击「换一条」获取最新资讯',
     tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: 'AI解读' },
     colors: generateColors('#00BCD4')
+  },
+  apple: {
+    id: 'apple', name: '果核学堂', icon: '🍎', color: '#007AFF', storageKey: 'dailyApple', posterType: 'apple',
+    refreshText: '换一条', loadingText: '苹果开发专家正在为你讲解...', placeholderText: '点击「换一条」学习苹果开发知识',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: 'AI专家' },
+    colors: generateColors('#007AFF')
   }
 }
 
@@ -638,7 +649,32 @@ async function getModule(moduleId) {
     
     return moduleData
   } catch (e) {
-    // 云存储文件不存在时静默处理，使用 DEFAULT_STYLES 中的配置兜底
+    // 云存储文件不存在时，使用本地备用数据
+    console.warn(`[CloudData] 云端模块 ${moduleId} 不可用，尝试使用本地备用数据`)
+    
+    // apple 模块本地备用数据
+    if (moduleId === 'apple') {
+      const localFallback = {
+        version: "1.0.0",
+        updated: "2026-04-16",
+        fallback: [
+          { title: "Swift Optional", category: "Swift", categoryIcon: "💻", content: "Swift 的 Optional 类型用于处理值缺失的情况。使用 ? 表示值可能为 nil，让编译器帮助避免空指针异常。", subtitle: "安全处理空值" },
+          { title: "UIViewController 生命周期", category: "iOS", categoryIcon: "🍎", content: "ViewController 的主要生命周期：viewDidLoad、viewWillAppear、viewDidAppear、viewWillDisappear、viewDidDisappear。理解生命周期对管理资源和状态至关重要。", subtitle: "视图控制器生命周期" },
+          { title: "SwiftUI 状态管理", category: "SwiftUI", categoryIcon: "🎨", content: "SwiftUI 使用 @State、@Binding、@ObservedObject 管理状态。@State 用于简单值类型，@ObservedObject 用于引用类型。", subtitle: "响应式编程" },
+          { title: "Core Data 入门", category: "iOS", categoryIcon: "🗄️", content: "Core Data 是 Apple 的持久化框架。使用 NSManagedObject 表示实体，NSManagedObjectContext 进行操作。适用于复杂数据和大量数据场景。", subtitle: "数据持久化" },
+          { title: "GCD 并发编程", category: "iOS", categoryIcon: "⚡", content: "GCD 是 Apple 的并发框架。使用 DispatchQueue 管理任务，主队列用于UI，工作队列用于耗时任务。", subtitle: "多线程编程" },
+          { title: "Auto Layout 约束", category: "UIKit", categoryIcon: "📐", content: "Auto Layout 通过约束描述视图关系。使用 SnapKit 简化约束：view.snp.makeConstraints { make in make.edges.equalToSuperview() }", subtitle: "响应式布局" },
+          { title: "Protocol 协议", category: "Swift", categoryIcon: "🤝", content: "Swift 协议定义方法、属性的蓝图，可被类、结构体、枚举实现。广泛用于依赖注入和委托模式。", subtitle: "面向协议编程" },
+          { title: "Combine 响应式框架", category: "Swift", categoryIcon: "🔄", content: "Combine 是响应式框架，核心：Publisher 发布数据、Subscriber 订阅数据。常用操作符：map、filter、reduce。", subtitle: "函数式编程" },
+          { title: "Xcode 调试技巧", category: "开发工具", categoryIcon: "🔧", content: "LLDB 命令：po 打印对象，expr 执行代码；Watchpoint 监控变量；Memory Graph 排查内存泄漏。", subtitle: "提升开发效率" },
+          { title: "App Store 审核", category: "上架指南", categoryIcon: "📱", content: "App Store 审核注意：1. 功能完整无闪退；2. 无虚假内容；3. 描述与功能一致；4. 付费需说明。", subtitle: "上架注意事项" }
+        ]
+      }
+      moduleCache[moduleId] = localFallback
+      console.log(`[CloudData] 使用本地备用数据: ${moduleId}`)
+      return localFallback
+    }
+    
     return null
   }
 }
@@ -686,6 +722,7 @@ const ICON_TO_EMOJI = {
   'icon-economics': '💰',
   'icon-business': '💼',
   'icon-news': '📰',
+  'icon-apple': '🍎',
 }
 
 /**
@@ -696,8 +733,11 @@ function getModuleConfig(moduleId) {
   // 1. 获取基础信息（从索引）
   const indexInfo = indexCache?.modules?.find(m => m.id === moduleId) || {}
   
-  // 2. 获取默认样式
+  // 2. 获取默认样式（关键：DEFAULT_STYLES 必须存在）
   const defaultStyle = DEFAULT_STYLES[moduleId] || {}
+  if (!defaultStyle.id) {
+    console.warn(`[CloudData] getModuleConfig: ${moduleId} 在 DEFAULT_STYLES 中未找到配置`)
+  }
   
   // 3. 获取首页配置
   const homeConfig = homeConfigCache?.modules?.find(m => m.id === moduleId) || {}

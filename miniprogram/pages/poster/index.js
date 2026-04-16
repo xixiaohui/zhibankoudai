@@ -254,6 +254,7 @@ Page({
       floral: '花语无声，美好相伴',
       history: '以史为鉴，可以知兴替',
       military: '知己知彼，百战不殆',
+      apple: '用Swift编织苹果生态',
       home: '每天一点，美好生活',
     }
     return slogans[type] || '每天一点，美好生活'
@@ -562,6 +563,14 @@ Page({
         titleColor: '#202020',
         contentColor: '#4E4A43',
         subtitleColor: '#8F7E62',
+      },
+
+      // 果核学堂 - Apple蓝
+      apple: {
+        backgroundColor: '#F0F7FF',
+        titleColor: '#0056B3',
+        contentColor: '#1E5AA8',
+        subtitleColor: '#007AFF',
       },
 
     }

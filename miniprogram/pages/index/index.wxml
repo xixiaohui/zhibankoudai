@@ -167,6 +167,9 @@
   <!-- 新闻助手 - 配置ID: news -->
   <daily-card moduleType="news" />
 
+  <!-- 果核学堂 - 配置ID: apple -->
+  <daily-card moduleType="apple" />
+
   <!-- 快速陪伴入口 -->
   <view class="quick-modes-section">
     <view class="section-title">快速陪伴模式</view>

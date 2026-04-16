@@ -51,6 +51,7 @@ const MODULE_TYPES = {
   ECONOMICS: 'economics', // 经济学专家
   BUSINESS: 'business', // 生意人助手
   NEWS: 'news', // 新闻助手
+  APPLE: 'apple', // Apple苹果开发专家
 }
 
 // ─── 板块配置 ─────────────────────────────────────────────────────
@@ -1177,6 +1178,34 @@ const MODULE_CONFIGS = {
     placeholderText: '点击「换一条」获取新闻解读',
     posterType: 'news',
     slogan: '资讯为王，洞察为先',
+  },
+  [MODULE_TYPES.APPLE]: {
+    id: MODULE_TYPES.APPLE,
+    name: '果核学堂',
+    icon: '🍎',
+    storageKey: 'dailyApple',
+    collection: 'dailyApples',
+    cacheEnabled: true,
+    colors: {
+      primary: '#007AFF',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#E3F2FD',
+      accent: '#007AFF',
+      text: '#0056B3',
+      textSecondary: '#007AFF',
+      bg: 'rgba(0, 122, 255, 0.1)',
+      shadow: 'rgba(0, 122, 255, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: 'AI专家',
+    },
+    aiTags: ['iOS', 'Swift'],
+    refreshText: '换一条',
+    loadingText: '苹果开发专家正在为你讲解...',
+    placeholderText: '点击「换一条」学习苹果开发知识',
+    posterType: 'apple',
+    slogan: '用Swift编织苹果生态',
   },
   
   // 默认配置（首页/其他）

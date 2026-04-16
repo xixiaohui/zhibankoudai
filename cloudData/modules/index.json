@@ -274,6 +274,13 @@
       "icon": "icon-news",
       "color": "#00BCD4",
       "count": 8
+    },
+    {
+      "id": "apple",
+      "name": "果核学堂",
+      "icon": "icon-apple",
+      "color": "#007AFF",
+      "count": 30
     }
   ]
 }

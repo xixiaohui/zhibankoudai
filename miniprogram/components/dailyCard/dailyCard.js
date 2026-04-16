@@ -14,7 +14,8 @@ const MODULE_TYPES = {
   DECORATION: 'decoration', GLASS_FIBER: 'glassFiber', RESIN: 'resin',
   TAX: 'tax', LAW: 'law', OFFICIAL: 'official', HANDLING: 'handling',
   FLORAL: 'floral', HISTORY: 'history', MILITARY: 'military',
-  STOCK: 'stock', ECONOMICS: 'economics', BUSINESS: 'business', NEWS: 'news'
+  STOCK: 'stock', ECONOMICS: 'economics', BUSINESS: 'business', NEWS: 'news',
+  APPLE: 'apple'
 }
 
 // 全局请求队列，控制同时发起的 AI 请求数量
@@ -209,15 +210,18 @@ Component({
 
   methods: {
   // 初始化模块配置
-  _initModule() {
+  async _initModule() {
     const moduleType = this.properties.moduleType
     console.log('[DailyCard] _initModule 开始, moduleType:', moduleType)
     
-    // 1. 优先使用 cloudData 获取模块配置（同步，快速）
+    // 确保 cloudData 初始化完成
+    await cloudData.initAsync()
+    
+    // 获取模块配置（同步，快速）
     const config = cloudData.getModuleConfig(moduleType)
     console.log('[DailyCard] 模块配置:', config ? config.name : '未找到', moduleType)
     
-    if (config) {
+    if (config && config.id) {
       this.setData({ config })
       // 预加载模块数据用于兜底
       cloudData.getModule(moduleType).then(() => {
@@ -430,6 +434,8 @@ Component({
               return await this._getDailyBusiness(refresh)
             case MODULE_TYPES.NEWS:
               return await this._getDailyNews(refresh)
+            case MODULE_TYPES.APPLE:
+              return await this._getDailyApple(refresh)
             default:
               throw new Error('未知的模块类型')
           }
@@ -1006,6 +1012,19 @@ Component({
       return content
     },
 
+    // 获取果核学堂
+    async _getDailyApple(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyApple')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateApple()
+      return content
+    },
+
     // 保存到云数据库
     async _saveToCloud(content) {
       const { moduleType } = this.data
@@ -1052,6 +1071,7 @@ Component({
           [MODULE_TYPES.ECONOMICS]: 'dailyEconomics',
           [MODULE_TYPES.BUSINESS]: 'dailyBusinesss',
           [MODULE_TYPES.NEWS]: 'dailyNewss',
+          [MODULE_TYPES.APPLE]: 'dailyApples',
         }
 
         const collection = collectionMap[moduleType]
@@ -1240,6 +1260,10 @@ Component({
         case 'news':
           url = `/pages/poster/index`
           params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '📰') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '📰')}`
+          break
+        case 'apple':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🍎') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🍎')}`
           break
       }
 
