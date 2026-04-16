@@ -45,7 +45,9 @@
     { "id": "apple", "enabled": true, "order": 40, "showOnHome": true },
     { "id": "growth", "enabled": true, "order": 41, "showOnHome": true },
     { "id": "uiDesigner", "enabled": true, "order": 42, "showOnHome": true },
-    { "id": "futures", "enabled": true, "order": 43, "showOnHome": true }
+    { "id": "futures", "enabled": true, "order": 43, "showOnHome": true },
+    { "id": "freud", "enabled": true, "order": 44, "showOnHome": true },
+    { "id": "fashionBrand", "enabled": true, "order": 45, "showOnHome": true }
   ],
   "updated": "2026-04-15"
 }

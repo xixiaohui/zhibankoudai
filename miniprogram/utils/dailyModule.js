@@ -55,6 +55,8 @@ const MODULE_TYPES = {
   GROWTH: 'growth', // 市场品牌增长专家
   UI_DESIGNER: 'uiDesigner', // UI设计师专家
   FUTURES: 'futures', // 大宗贸易期货专家
+  FREUD: 'freud', // 弗洛伊德学术专家
+  FASHION_BRAND: 'fashionBrand', // 世界服装品牌大师
 }
 
 // ─── 板块配置 ─────────────────────────────────────────────────────
@@ -1293,6 +1295,62 @@ const MODULE_CONFIGS = {
     placeholderText: '点击「换一条」获取期货知识',
     posterType: 'futures',
     slogan: '洞察大宗，运筹期货',
+  },
+  [MODULE_TYPES.FREUD]: {
+    id: MODULE_TYPES.FREUD,
+    name: '弗洛伊德学术专家',
+    icon: '🧠',
+    storageKey: 'dailyFreud',
+    collection: 'dailyFreud',
+    cacheEnabled: true,
+    colors: {
+      primary: '#6D4C41',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#EFEBE9',
+      accent: '#6D4C41',
+      text: '#4E342E',
+      textSecondary: '#6D4C41',
+      bg: 'rgba(109, 76, 65, 0.1)',
+      shadow: 'rgba(109, 76, 65, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: '精神分析',
+    },
+    aiTags: ['弗洛伊德', '精神分析'],
+    refreshText: '换一条',
+    loadingText: '精神分析专家正在为你解读...',
+    placeholderText: '点击「换一条」探索潜意识世界',
+    posterType: 'freud',
+    slogan: '探索潜意识，理解真实的自己',
+  },
+  [MODULE_TYPES.FASHION_BRAND]: {
+    id: MODULE_TYPES.FASHION_BRAND,
+    name: '世界服装品牌大师',
+    icon: '👔',
+    storageKey: 'dailyFashionBrand',
+    collection: 'dailyFashionBrands',
+    cacheEnabled: true,
+    colors: {
+      primary: '#D4AF37',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#FFF8E1',
+      accent: '#D4AF37',
+      text: '#B8860B',
+      textSecondary: '#D4AF37',
+      bg: 'rgba(212, 175, 55, 0.1)',
+      shadow: 'rgba(212, 175, 55, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: '品牌专家',
+    },
+    aiTags: ['服装', '品牌', '时尚'],
+    refreshText: '换一条',
+    loadingText: '品牌大师正在为你解读...',
+    placeholderText: '点击「换一条」探索品牌世界',
+    posterType: 'fashionBrand',
+    slogan: '解读世界名品，品味时尚生活',
   },
 
   // 默认配置（首页/其他）

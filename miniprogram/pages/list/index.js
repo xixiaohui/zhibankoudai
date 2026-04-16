@@ -42,6 +42,10 @@ Page({
       // 默认选中第一个模块
       if (this.data.modules.length > 0) {
         this.setData({ currentModule: this.data.modules[0] })
+        // 延迟滚动到选中模块位置，确保 DOM 渲染完成
+        setTimeout(() => {
+          this._scrollToCurrentModule()
+        }, 300)
         this._loadData()
       }
     }
@@ -161,13 +165,16 @@ Page({
     // 动态获取屏幕宽度和标签尺寸
     const sysInfo = wx.getSystemInfoSync()
     const screenWidth = sysInfo.windowWidth  // px
-    const tabWidth = 172  // 每个tab宽度约172rpx
-    // rpx转px: 1rpx = screenWidth/750 px
-    const tabWidthPx = tabWidth * screenWidth / 750
-    const screenWidthPx = screenWidth
+    const rpxToPx = screenWidth / 750
+    const tabWidth = 188  // 每个tab宽度约188rpx
+    const tabGap = 16  // 标签之间的gap
+    const navPadding = 24  // nav-inner左边距24rpx
+    const tabWidthPx = tabWidth * rpxToPx
+    const tabGapPx = tabGap * rpxToPx
+    const navPaddingPx = navPadding * rpxToPx
     
-    // 计算居中位置：标签起始位置 - 屏幕一半 + 标签一半
-    const scrollLeft = Math.max(0, index * tabWidthPx - screenWidthPx / 2 + tabWidthPx / 2)
+    // 计算居中位置：左边距 + 前面所有标签宽度 - 屏幕一半 + 标签一半
+    const scrollLeft = Math.max(0, navPaddingPx + index * (tabWidthPx + tabGapPx) - screenWidth / 2 + tabWidthPx / 2)
 
     this.setData({ scrollLeft })
   },

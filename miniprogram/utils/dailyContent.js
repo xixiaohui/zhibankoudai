@@ -163,6 +163,10 @@ const LOCAL_PROMPTS_FALLBACK = {
   futures: {
     generate: "你是一位资深大宗贸易期货专家。请分享期货交易知识，介绍期货品种原理，说明分析要点和实战技巧，强调风险管理。内容长度200-500字。输出JSON：{\"title\":\"期货主题\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
     share: "📊【大宗期货】{title}\\n\\n{content}"
+  },
+  fashionBrand: {
+    generate: "你是一位世界服装品牌研究专家。请分享世界知名服装品牌知识，涵盖奢侈品、高端品牌、设计师品牌、潮牌、运动品牌等。介绍品牌历史、设计风格、工艺特色、文化内涵。内容长度200-500字。输出JSON：{\"title\":\"品牌名称\",\"content\":\"详细介绍200-500字\",\"category\":\"类型\",\"subtitle\":\"一句话15字内\"}",
+    share: "👔【世界服装品牌】{title}\\n\\n{content}"
   }
 }
 
@@ -1135,6 +1139,18 @@ const DailyContent = {
     if (!promptData) throw new Error('获取期货提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
     const content = await generateContent('futures', userPrompt, onChunk, 800)
+    onDone && onDone(content)
+    return content
+  },
+
+  /**
+   * 生成世界服装品牌大师
+   */
+  async generateFashionBrand(onChunk, onDone) {
+    const promptData = getPrompt('fashionBrand')
+    if (!promptData) throw new Error('获取服装品牌提示词失败')
+    const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
+    const content = await generateContent('fashionBrand', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },

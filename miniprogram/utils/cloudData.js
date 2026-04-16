@@ -158,6 +158,14 @@ const LOCAL_PROMPTS = {
     futures: {
       generate: "你是一位资深大宗贸易期货专家。请分享期货交易知识，介绍期货品种原理，说明分析要点和实战技巧，强调风险管理。内容长度200-500字。输出JSON：{\"title\":\"期货主题\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
       share: "📊【大宗期货】{title}\\n\\n{content}"
+    },
+    freud: {
+      generate: "你是一位弗洛伊德学术研究专家。请分享弗洛伊德学术知识，涵盖精神分析、释梦理论、人格结构、神经症理论等。介绍理论原理和应用，提供通俗解释。内容长度200-500字。输出JSON：{\"title\":\"学术主题\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+      share: "🧠【弗洛伊德学术】{title}\\n\\n{content}"
+    },
+    fashionBrand: {
+      generate: "你是一位世界服装品牌研究专家。请分享世界知名服装品牌知识，涵盖奢侈品、高端品牌、设计师品牌、潮牌、运动品牌等。介绍品牌历史、设计风格、工艺特色、文化内涵。内容长度200-500字。输出JSON：{\"title\":\"品牌名称\",\"content\":\"详细介绍200-500字\",\"category\":\"类型\",\"subtitle\":\"一句话15字内\"}",
+      share: "👔【世界服装品牌】{title}\\n\\n{content}"
     }
   },
   system: {
@@ -474,6 +482,18 @@ const DEFAULT_STYLES = {
     refreshText: '换一条', loadingText: '期货专家正在为你分析...', placeholderText: '点击「换一条」获取期货知识',
     tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '期货专家' },
     colors: generateColors('#FF5722')
+  },
+  freud: {
+    id: 'freud', name: '弗洛伊德学术专家', icon: '🧠', color: '#6D4C41', storageKey: 'dailyFreud', posterType: 'freud',
+    refreshText: '换一条', loadingText: '精神分析专家正在为你解读...', placeholderText: '点击「换一条」探索潜意识世界',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '精神分析' },
+    colors: generateColors('#6D4C41')
+  },
+  fashionBrand: {
+    id: 'fashionBrand', name: '世界服装品牌大师', icon: '👔', color: '#D4AF37', storageKey: 'dailyFashionBrand', posterType: 'fashionBrand',
+    refreshText: '换一条', loadingText: '品牌大师正在为你解读...', placeholderText: '点击「换一条」探索品牌世界',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '品牌专家' },
+    colors: generateColors('#D4AF37')
   }
 }
 
@@ -809,8 +829,9 @@ const ICON_TO_EMOJI = {
   'icon-apple': '🍎',
   'icon-growth': '🚀',
   'icon-ui': '🎨',
-  'icon-ui': '🎨',
   'icon-futures': '📊',
+  'icon-freud': '🧠',
+  'icon-fashionBrand': '👔',
 }
 
 /**

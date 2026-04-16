@@ -302,6 +302,20 @@
       "icon": "icon-futures",
       "color": "#FF5722",
       "count": 10
+    },
+    {
+      "id": "freud",
+      "name": "弗洛伊德学术专家",
+      "icon": "icon-freud",
+      "color": "#6D4C41",
+      "count": 10
+    },
+    {
+      "id": "fashionBrand",
+      "name": "世界服装品牌大师",
+      "icon": "icon-fashionBrand",
+      "color": "#D4AF37",
+      "count": 10
     }
   ]
 }

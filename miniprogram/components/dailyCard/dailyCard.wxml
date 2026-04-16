@@ -110,15 +110,15 @@
     <block wx:elif="{{moduleType === 'movie'}}">
       <view class="movie-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
         <text class="movie-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
-        <view class="movie-rating" style="background: {{config.colors.bg}};">
+        <view class="movie-rating" style="background: {{config.colors.bg}};" wx:if="{{content.rating}}">
           <text style="color: {{config.colors.accent}};">⭐ {{content.rating}}</text>
         </view>
       </view>
-      <view class="movie-meta">
-        <text class="movie-director" style="color: {{config.colors.textSecondary}};">导演：{{content.director}}</text>
-        <text class="movie-year" style="color: {{config.colors.accent}};">{{content.year}}年</text>
+      <view class="movie-meta" wx:if="{{content.director || content.year}}">
+        <text class="movie-director" style="color: {{config.colors.textSecondary}};" wx:if="{{content.director}}">导演：{{content.director}}</text>
+        <text class="movie-year" style="color: {{config.colors.accent}};" wx:if="{{content.year}}">{{content.year}}年</text>
       </view>
-      <view class="movie-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="movie-summary" style="color: {{config.colors.textSecondary}};">{{content.summary || content.content}}</view>
       <view class="movie-quote" wx:if="{{content.quote}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
         <text>"{{content.quote}}"</text>
       </view>
@@ -136,15 +136,15 @@
           <text style="color: {{config.colors.accent}};">{{content.moodIcon || '🎵'}} {{content.mood}}</text>
         </view>
       </view>
-      <view class="music-meta">
-        <text class="music-artist" style="color: {{config.colors.textSecondary}};">{{content.artist}}</text>
-        <text class="music-year" style="color: {{config.colors.accent}};">{{content.year}}</text>
+      <view class="music-meta" wx:if="{{content.artist || content.year}}">
+        <text class="music-artist" style="color: {{config.colors.textSecondary}};" wx:if="{{content.artist}}">{{content.artist}}</text>
+        <text class="music-year" style="color: {{config.colors.accent}};" wx:if="{{content.year}}">{{content.year}}</text>
       </view>
       <view class="music-album" wx:if="{{content.album}}" style="color: {{config.colors.textSecondary}};">
         <text class="album-label">专辑：</text><text>{{content.album}}</text>
         <text wx:if="{{content.duration}}" class="music-duration"> · {{content.duration}}</text>
       </view>
-      <view class="music-content" style="color: {{config.colors.textSecondary}};">{{content.content}}</view>
+      <view class="music-content" style="color: {{config.colors.textSecondary}};">{{content.description || content.content}}</view>
       <view class="music-lyric" wx:if="{{content.lyric}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
         <text>"{{content.lyric}}"</text>
       </view>
@@ -728,6 +728,40 @@
       <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary || content.content}}</view>
       <view class="trade-tips" wx:if="{{content.subtitle}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
         <text>💡 {{content.subtitle}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <!-- 弗洛伊德学术专家 -->
+    <block wx:elif="{{moduleType === 'freud'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '🧠'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary || content.content}}</view>
+      <view class="trade-tips" wx:if="{{content.subtitle}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>🧠 {{content.subtitle}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <!-- 世界服装品牌大师 -->
+    <block wx:elif="{{moduleType === 'fashionBrand'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '👔'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary || content.content}}</view>
+      <view class="trade-tips" wx:if="{{content.subtitle}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>👔 {{content.subtitle}}</text>
       </view>
       <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
         <block wx:for="{{content.tags}}" wx:key="index">

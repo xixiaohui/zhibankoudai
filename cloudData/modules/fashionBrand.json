@@ -1,0 +1,77 @@
+{
+  "id": "fashionBrand",
+  "name": "世界服装品牌大师",
+  "icon": "icon-fashionBrand",
+  "color": "#D4AF37",
+  "fields": [
+    { "id": "luxury", "name": "奢侈品牌", "icon": "👑" },
+    { "id": "highEnd", "name": "高端品牌", "icon": "💎" },
+    { "id": "designer", "name": "设计师品牌", "icon": "🎨" },
+    { "id": "street", "name": "街头潮牌", "icon": "🔥" },
+    { "id": "sports", "name": "运动品牌", "icon": "⚡" }
+  ],
+  "version": "1.0.0",
+  "updated": "2026-04-16",
+  "fallback": [
+    {
+      "title": "CHANEL的优雅哲学",
+      "category": "奢侈品牌",
+      "categoryIcon": "👑",
+      "content": "香奈儿（CHANEL）由可可·香奈儿创立于1910年的巴黎，代表着永恒的优雅与自由。品牌以其简约而不失奢华的设计风格著称，小黑裙、2.55手袋和No.5香水成为经典符号。香奈儿倡导的女性独立精神，超越了时尚本身，成为一种生活态度。",
+      "subtitle": "永恒优雅的代名词"
+    },
+    {
+      "title": "Louis Vuitton的旅行艺术",
+      "category": "奢侈品牌",
+      "categoryIcon": "👑",
+      "content": "路易威登（Louis Vuitton）始创于1854年，以精湛的箱包工艺闻名于世。其标志性的Monogram图案和皮革工艺，代表了对旅行与探索精神的追求。LV不仅是奢华的象征，更是品质与传承的标志，每一件作品都承载着百年工艺的精髓。",
+      "subtitle": "旅行与奢华的完美结合"
+    },
+    {
+      "title": "Gucci的复古华丽",
+      "category": "奢侈品牌",
+      "categoryIcon": "👑",
+      "content": "古驰（Gucci）创立于1921年的佛罗伦萨，凭借独特的双G标识和大胆的设计风格，成为当代奢侈品的标杆。品牌在创作总监亚力山卓·米开理的带领下，将复古美学与现代时尚完美融合，创造出既有历史底蕴又具前卫精神的独特风格。",
+      "subtitle": "复古与前卫的交融"
+    },
+    {
+      "title": "Prada的实用奢华",
+      "category": "高端品牌",
+      "categoryIcon": "💎",
+      "content": "普拉达（Prada）由马里奥·普拉达于1913年在米兰创立，以高品质的箱包和皮革制品起家。品牌坚持'形式追随功能'的设计理念，将实用主义与奢华品质相结合。尼龙材质的使用革命性地改变了奢侈品定义，让时尚变得更加平民化。",
+      "subtitle": "实用主义的奢华表达"
+    },
+    {
+      "title": "Hermès的工匠精神",
+      "category": "奢侈品牌",
+      "categoryIcon": "👑",
+      "content": "爱马仕（Hermès）创立于1837年的巴黎，以精湛的手工皮具工艺著称。每一只铂金包都需要工匠花费数十小时手工制作，代表着极致品质与稀缺性。品牌坚持传统工艺与现代设计的结合，传达了一种慢时尚、高品质的生活理念。",
+      "subtitle": "极致工艺的象征"
+    },
+    {
+      "title": "Balenciaga的先锋美学",
+      "category": "设计师品牌",
+      "categoryIcon": "🎨",
+      "content": "巴黎世家（Balenciaga）由克里斯托瓦尔·巴伦西亚加于1919年创立，以大胆创新的设计闻名于世。从老爹鞋到超大廓形外套，品牌始终站在时尚前沿，挑战传统美学界限。Demna执掌后，更是以讽刺与高级时装的融合，开创了新的设计语言。",
+      "subtitle": "先锋设计的代表"
+    },
+    {
+      "title": "Nike的运动精神",
+      "category": "运动品牌",
+      "categoryIcon": "⚡",
+      "content": "耐克（Nike）创立于1964年，以'Just Do It'的口号激励着全球运动爱好者。品牌不仅是运动装备的提供者，更是运动文化的塑造者。从Air Max到Flyknit，Nike不断突破技术边界，将科技创新与时尚设计完美结合。",
+      "subtitle": "运动与创新的标杆"
+    },
+    {
+      "title": "Supreme的街头神话",
+      "category": "街头潮牌",
+      "categoryIcon": "🔥",
+      "content": "Supreme于1994年在纽约诞生，以限量的滑板文化服饰起家，迅速成为全球街头时尚的标杆。红底白字的Box Logo成为最具辨识度的品牌标识。Supreme善于跨界联名，将街头文化与奢侈品、艺术等领域完美融合。",
+      "subtitle": "街头时尚的传奇"
+    }
+  ],
+  "share": {
+    "title": "世界服装品牌大师",
+    "template": "{content}"
+  }
+}

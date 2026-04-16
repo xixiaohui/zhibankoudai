@@ -217,6 +217,16 @@
       "id": "futures",
       "enabled": true,
       "order": 42
+    },
+    {
+      "id": "freud",
+      "enabled": true,
+      "order": 43
+    },
+    {
+      "id": "fashionBrand",
+      "enabled": true,
+      "order": 44
     }
   ]
 }
