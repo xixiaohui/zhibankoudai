@@ -22,28 +22,6 @@ Page({
     scrollLeft: 0,
   },
 
-  onLoad(options) {
-    this._initModules()
-    // 如果有传入模块类型，默认选中
-    if (options.type) {
-      const module = this.data.modules.find(m => m.id === options.type)
-      if (module) {
-        this.setData({ currentModule: module })
-        // 延迟滚动到选中模块位置，确保 DOM 渲染完成
-        setTimeout(() => {
-          this._scrollToCurrentModule()
-        }, 300)
-        this._loadData()
-      }
-    } else {
-      // 默认选中第一个模块
-      if (this.data.modules.length > 0) {
-        this.setData({ currentModule: this.data.modules[0] })
-        this._loadData()
-      }
-    }
-  },
-
   // 页面缓存标识（静态属性）
   _cacheKey: 'list_page_cache',
 
@@ -216,10 +194,18 @@ Page({
         .limit(pageSize)
         .get()
 
+      // 编程模块需要解析代码块
+      const contentList = result.data.map(item => {
+        if (currentModule.id === 'programming' && item.summary) {
+          return this._parseCodeBlocks(item)
+        }
+        return item
+      })
+
       this.setData({
-        contentList: result.data,
+        contentList,
         hasMore: page * pageSize < total,
-        isEmpty: result.data.length === 0,
+        isEmpty: contentList.length === 0,
       })
     } catch (e) {
       console.error('加载数据失败:', e)
@@ -247,8 +233,16 @@ Page({
         .limit(pageSize)
         .get()
 
+      // 编程模块需要解析代码块
+      const newItems = result.data.map(item => {
+        if (currentModule.id === 'programming' && item.summary) {
+          return this._parseCodeBlocks(item)
+        }
+        return item
+      })
+
       this.setData({
-        contentList: [...contentList, ...result.data],
+        contentList: [...contentList, ...newItems],
         page: nextPage,
         hasMore: result.data.length === pageSize,
       })
@@ -258,6 +252,74 @@ Page({
     } finally {
       this.setData({ isLoadingMore: false })
     }
+  },
+
+  // 解析编程模块中的代码块
+  _parseCodeBlocks(content) {
+    if (!content || !content.summary) return content
+
+    const summary = content.summary
+    const codeBlocks = []
+    
+    // 分割文本和代码块
+    // 格式: 内容 |代码示例: 代码内容 |其他内容
+    const parts = summary.split(/(?=\|[^\S\r\n]*(?:代码示例|示例代码)[：:]?\s*)/)
+    
+    parts.forEach(part => {
+      const codeMatch = part.match(/^[^\S\r\n]*\|[^\S\r\n]*(?:代码示例|示例代码)[：:]?\s*([\s\S]*?)$/i)
+      if (codeMatch && codeMatch[1]) {
+        const code = codeMatch[1].trim()
+        if (code) {
+          codeBlocks.push({
+            code: code,
+            language: this._detectLanguage(code)
+          })
+        }
+      }
+    })
+
+    // 清理 summary 中的代码部分（用于普通文本展示）
+    content.cleanSummary = summary
+      .replace(/\|[^\S\r\n]*(?:代码示例|示例代码)[：:]?\s*[\s\S]*?(?=\s*(?:\|[^\S\r\n]*[^\n|]+|$))/gi, '')
+      .trim()
+    
+    // 存储代码块
+    content.codeBlocks = codeBlocks
+    
+    return content
+  },
+
+  // 检测代码语言
+  _detectLanguage(code) {
+    if (!code) return 'code'
+    
+    // 简单的语言检测
+    if (/^(import|export|const|let|var|function|class|interface|type)\s/m.test(code)) return 'javascript'
+    if (/^(def|class|import|from|if __name__|async def)\s/m.test(code)) return 'python'
+    if (/^(package|import|func|struct|type|var|const)\s/m.test(code)) return 'go'
+    if (/^(public|private|class|interface|void|static|import)\s/m.test(code)) return 'java'
+    if (/^(<\?php|namespace|use|class|function|public|private|protected)\s/m.test(code)) return 'php'
+    if (/^(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP)\s/m.test(code)) return 'sql'
+    if (/[{}\[\];]/.test(code) && /[<>]/.test(code)) return 'html'
+    if (/[#{}]\s*\w/.test(code) && /[@:"]/.test(code)) return 'css'
+    
+    return 'code'
+  },
+
+  // 复制代码
+  onCopyCode(e) {
+    const code = e.currentTarget.dataset.code
+    if (!code) return
+    
+    wx.setClipboardData({
+      data: code,
+      success: () => {
+        wx.showToast({ title: '代码已复制', icon: 'none' })
+      },
+      fail: () => {
+        wx.showToast({ title: '复制失败', icon: 'none' })
+      }
+    })
   },
 
   // 点击卡片查看详情（跳转详情页）

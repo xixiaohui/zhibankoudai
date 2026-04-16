@@ -1,0 +1,9 @@
+{
+  "name": "migrateContentFields",
+  "version": "1.0.0",
+  "description": "迁移旧数据，补充缺失的字段",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

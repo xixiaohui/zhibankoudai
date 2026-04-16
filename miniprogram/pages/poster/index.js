@@ -125,6 +125,13 @@ Page({
     })
   },
 
+  truncateContent(content, maxLength = 300) {
+    const decoded = decodeURIComponent(content || "");
+    return decoded.length > maxLength
+      ? decoded.slice(0, maxLength) + "..."
+      : decoded;
+  },
+
   async initPosterData(options) {
     // 保存原始参数
     console.log('【海报页面】原始参数:', options)
@@ -169,7 +176,7 @@ Page({
       
       // 内容
       title: decodeURIComponent(title),
-      content: decodeURIComponent(content),
+      content: this.truncateContent(content),
       subtitle: decodeURIComponent(subtitle),
       icon: decodeURIComponent(icon),
       author: decodeURIComponent(author),

@@ -316,3 +316,62 @@
 .no-more {
   padding: 16rpx 0;
 }
+
+/* 代码块样式 */
+.code-block-container {
+  margin: 16rpx 0;
+}
+
+.code-section-title {
+  font-size: 26rpx;
+  font-weight: 500;
+  margin-bottom: 12rpx;
+}
+
+.code-block {
+  background: #1e1e1e;
+  border-radius: 12rpx;
+  overflow: hidden;
+  margin-bottom: 16rpx;
+}
+
+.code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12rpx 20rpx;
+  background: #2d2d2d;
+}
+
+.code-lang {
+  font-size: 22rpx;
+  color: #888;
+  text-transform: uppercase;
+}
+
+.code-copy-btn {
+  padding: 6rpx 16rpx;
+  background: #3d8b40;
+  border-radius: 8rpx;
+  font-size: 20rpx;
+  color: #fff;
+}
+
+.code-copy-btn:active {
+  opacity: 0.8;
+}
+
+.code-content {
+  padding: 20rpx;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.code-text {
+  font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+  font-size: 24rpx;
+  line-height: 1.6;
+  color: #d4d4d4;
+  white-space: pre-wrap;
+  word-break: break-all;
+}

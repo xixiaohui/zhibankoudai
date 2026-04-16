@@ -120,6 +120,12 @@
               <view class="lit-quote" wx:if="{{item.quote}}" style="background: {{currentModule.colors.bg}}; color: {{currentModule.colors.accent}};">"{{item.quote}}"</view>
             </block>
 
+            <!-- 编程导师类型 -->
+            <block wx:elif="{{currentModule.id === 'programming'}}">
+              <view class="card-title" style="color: {{currentModule.colors.primary}};">{{item.title}}</view>
+              <view class="card-summary" style="color: {{currentModule.colors.textSecondary}};">{{item.summary}}</view>
+            </block>
+
             <!-- 通用类型 -->
             <block wx:else>
               <view class="card-title" style="color: {{currentModule.colors.primary}};">{{item.title}}</view>

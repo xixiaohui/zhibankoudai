@@ -144,7 +144,7 @@
         <text class="album-label">专辑：</text><text>{{content.album}}</text>
         <text wx:if="{{content.duration}}" class="music-duration"> · {{content.duration}}</text>
       </view>
-      <view class="music-description" style="color: {{config.colors.textSecondary}};">{{content.description}}</view>
+      <view class="music-content" style="color: {{config.colors.textSecondary}};">{{content.content}}</view>
       <view class="music-lyric" wx:if="{{content.lyric}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
         <text>"{{content.lyric}}"</text>
       </view>
@@ -219,13 +219,17 @@
         <text class="lit-author" style="color: {{config.colors.primary}};">{{content.author}}</text>
         <text class="lit-era" style="color: {{config.colors.accent}};">{{content.era}} · {{content.region}}</text>
       </view>
+      <view class="lit-title" wx:if="{{content.title}}" style="color: {{config.colors.primary}}; font-weight: bold;">
+        {{content.title}}
+      </view>
       <view class="lit-works" wx:if="{{content.works && content.works.length > 0}}" style="color: {{config.colors.textSecondary}};">
         <text class="works-label">代表作：</text>
         <block wx:for="{{content.works}}" wx:key="index">
           <text class="work-item">{{item}}{{index < content.works.length - 1 ? ' · ' : ''}}</text>
         </block>
       </view>
-      <view class="lit-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
+      <view class="lit-content" wx:if="{{content.content}}" style="color: {{config.colors.textSecondary}};">{{content.content}}</view>
+      <view class="lit-summary" wx:if="{{content.summary && content.summary !== content.content}}" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
       <view class="lit-quote" wx:if="{{content.quote}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
         <text>"{{content.quote}}"</text>
       </view>
@@ -306,14 +310,6 @@
         <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '💻'}} {{content.category}}</text>
       </view>
       <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
-      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
-        <text>💡 {{content.tips}}</text>
-      </view>
-      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
-        <block wx:for="{{content.tags}}" wx:key="index">
-          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
-        </block>
-      </view>
     </block>
 
     <block wx:elif="{{moduleType === 'photography'}}">

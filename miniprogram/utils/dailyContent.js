@@ -150,6 +150,7 @@ function normalizeContent(moduleId, aiResult) {
         // 核心字段
         title: json.author || json.title || json.作者 || '',
         content: json.content || json.quote || json.text || aiResult,
+        text: json.content || json.quote || json.text || aiResult, // 模板读取字段
         // 附加字段
         subtitle: json.source || json.book || json['出处'] || '',
         category: json.category || json.分类 || '名言',
@@ -202,6 +203,7 @@ function normalizeContent(moduleId, aiResult) {
       return {
         title: json.author || json.title || '',
         content: json.content || json.text || aiResult,
+        text: json.content || json.text || aiResult, // 模板读取字段
         // 兼容兜底数据的 author 和 source
         author: json.author || json.title || '',
         source: json.source || '',
@@ -233,12 +235,15 @@ function normalizeContent(moduleId, aiResult) {
       return {
         title: json.title || json.song || '歌曲推荐',
         content: json.content || json.reason || aiResult,
+        summary: json.summary || json.content || '', // 模板读取字段
+        description: json.content || json.reason || '', // 模板读取字段
         artist: json.artist || '',
         category: json.category || json.genre || '音乐',
         categoryIcon: '🎵',
         year: json.year || '',
         album: json.album || '',
-        summary: json.summary || json.content || '',
+        lyric: json.lyric || '',
+        duration: json.duration || '',
         date: today,
         isAIGenerated: true
       }
@@ -308,23 +313,52 @@ function normalizeContent(moduleId, aiResult) {
         isAIGenerated: true
       }
       
+    case 'fortune':
+      return {
+        title: json.title || '运势',
+        content: json.content || json.summary || aiResult,
+        summary: json.summary || json.content || '',
+        category: json.category || '星座',
+        categoryIcon: '🔮',
+        luckyDirection: json.luckyDirection || json['luckyDirection'] || '',
+        luckyNumber: json.luckyNumber || json['luckyNumber'] || '',
+        luckyColor: json.luckyColor || json['luckyColor'] || '',
+        date: today,
+        isAIGenerated: true
+      }
+      
     case 'news':
       return {
         title: json.title || '今日要闻',
         content: json.content || aiResult,
+        summary: json.summary || json.content || '',
         category: json.category || '资讯',
         categoryIcon: '📰',
+        keywords: json.keywords || '',
+        date: today,
+        isAIGenerated: true
+      }
+      
+    case 'literature':
+      return {
+        title: json.title || '文学赏析',
+        content: json.content || json.text || aiResult,
+        summary: json.summary || json.content || '', // 模板读取字段
+        author: json.author || '',
+        era: json.era || '',
+        region: json.region || '',
+        quote: json.quote || '',
+        category: json.category || '文学',
+        categoryIcon: '📚',
+        works: json.works || [],
         date: today,
         isAIGenerated: true
       }
       
     // 以下模块尚未定义单独的处理，统一使用通用格式
-    case 'fortune':
-    case 'literature':
     case 'foreignTrade':
     case 'ecommerce':
     case 'math':
-    case 'programming':
     case 'photography':
     case 'beauty':
     case 'investment':
@@ -347,10 +381,22 @@ function normalizeContent(moduleId, aiResult) {
     case 'business':
       return {
         title: json.title || json.name || moduleId,
-        content: json.content || json.summary || json.text || aiResult,
+        content: json.content || json.text || aiResult,
+        summary: json.summary || json.content || json.text || '',
         category: json.category || '',
         categoryIcon: json.categoryIcon || '📌',
-        summary: json.summary || '',
+        tips: json.tips || json.advice || '',
+        date: today,
+        isAIGenerated: true
+      }
+      
+    case 'programming':
+      return {
+        title: json.title || '编程概念',
+        content: json.content || json.text || aiResult,
+        summary: json.content || json.text || '',  // 编程模块用 content 作为 summary
+        category: '编程',
+        categoryIcon: '💻',
         date: today,
         isAIGenerated: true
       }
@@ -445,7 +491,7 @@ const DailyContent = {
       onChunk && onChunk(fullText)
     }
     
-    const result = await callAIStream(messages, handleChunk, { maxTokens: 400 })
+    const result = await callAIStream(messages, handleChunk, { maxTokens: 800 })
     
     // 统一格式
     const content = normalizeContent('quote', result)
@@ -477,7 +523,7 @@ const DailyContent = {
       onChunk && onChunk(fullText)
     }
     
-    const result = await callAIStream(messages, handleChunk, { maxTokens: 500 })
+    const result = await callAIStream(messages, handleChunk, { maxTokens: 800 })
     
     // 统一格式
     const content = normalizeContent('joke', result)
@@ -496,7 +542,7 @@ const DailyContent = {
     const promptData = getPrompt('psychology')
     if (!promptData) throw new Error('获取心理学提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('psychology', userPrompt, onChunk, 500)
+    const content = await generateContent('psychology', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -508,7 +554,7 @@ const DailyContent = {
     const promptData = getPrompt('finance')
     if (!promptData) throw new Error('获取金融提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('finance', userPrompt, onChunk, 400)
+    const content = await generateContent('finance', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -520,7 +566,7 @@ const DailyContent = {
     const promptData = getPrompt('love')
     if (!promptData) throw new Error('获取情话提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('love', userPrompt, onChunk, 300)
+    const content = await generateContent('love', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -532,7 +578,7 @@ const DailyContent = {
     const promptData = getPrompt('movie')
     if (!promptData) throw new Error('获取电影提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('movie', userPrompt, onChunk, 500)
+    const content = await generateContent('movie', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -544,7 +590,7 @@ const DailyContent = {
     const promptData = getPrompt('music')
     if (!promptData) throw new Error('获取音乐提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('music', userPrompt, onChunk, 500)
+    const content = await generateContent('music', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -556,7 +602,7 @@ const DailyContent = {
     const promptData = getPrompt('tech')
     if (!promptData) throw new Error('获取科技提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('tech', userPrompt, onChunk, 500)
+    const content = await generateContent('tech', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -568,9 +614,14 @@ const DailyContent = {
     const promptData = getPrompt('tcm')
     if (!promptData) throw new Error('获取中医提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('tcm', userPrompt, onChunk, 500)
+    const content = await generateContent('tcm', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
+  },
+
+  // 别名（小写）- 兼容 dailyCard 调用
+  async generateTcm(onChunk, onDone) {
+    return this.generateTCM(onChunk, onDone)
   },
 
   /**
@@ -580,7 +631,7 @@ const DailyContent = {
     const promptData = getPrompt('travel')
     if (!promptData) throw new Error('获取旅行提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('travel', userPrompt, onChunk, 500)
+    const content = await generateContent('travel', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -596,19 +647,9 @@ const DailyContent = {
     
     const today = formatDate()
     const userPrompt = promptData.generate.replace('{今日日期}', today)
-    const messages = [buildUserMessage(userPrompt)]
-    
-    let fullText = ''
-    
-    const handleChunk = (text) => {
-      fullText += text
-      onChunk && onChunk(fullText)
-    }
-    
-    const result = await callAIStream(messages, handleChunk, { maxTokens: 600 })
-    
-    onDone && onDone(result)
-    return result
+    const content = await generateContent('fortune', userPrompt, onChunk, 800)
+    onDone && onDone(content)
+    return content
   },
 
   /**
@@ -618,7 +659,7 @@ const DailyContent = {
     const promptData = getPrompt('literature')
     if (!promptData) throw new Error('获取文学提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('literature', userPrompt, onChunk, 500)
+    const content = await generateContent('literature', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -630,7 +671,7 @@ const DailyContent = {
     const promptData = getPrompt('foreignTrade')
     if (!promptData) throw new Error('获取外贸提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('foreignTrade', userPrompt, onChunk, 400)
+    const content = await generateContent('foreignTrade', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -642,7 +683,7 @@ const DailyContent = {
     const promptData = getPrompt('ecommerce')
     if (!promptData) throw new Error('获取电商提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('ecommerce', userPrompt, onChunk, 400)
+    const content = await generateContent('ecommerce', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -654,7 +695,7 @@ const DailyContent = {
     const promptData = getPrompt('math')
     if (!promptData) throw new Error('获取数学提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('math', userPrompt, onChunk, 500)
+    const content = await generateContent('math', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -666,19 +707,19 @@ const DailyContent = {
     const promptData = getPrompt('english')
     if (!promptData) throw new Error('获取英语提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('english', userPrompt, onChunk, 400)
+    const content = await generateContent('english', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
 
   /**
-   * 生成编程技巧
+   * 生成编程概念
    */
   async generateProgramming(onChunk, onDone) {
     const promptData = getPrompt('programming')
     if (!promptData) throw new Error('获取编程提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('programming', userPrompt, onChunk, 600)
+    const content = await generateContent('programming', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -690,7 +731,7 @@ const DailyContent = {
     const promptData = getPrompt('photography')
     if (!promptData) throw new Error('获取摄影提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('photography', userPrompt, onChunk, 500)
+    const content = await generateContent('photography', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -702,7 +743,7 @@ const DailyContent = {
     const promptData = getPrompt('beauty')
     if (!promptData) throw new Error('获取美容提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('beauty', userPrompt, onChunk, 500)
+    const content = await generateContent('beauty', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -714,7 +755,7 @@ const DailyContent = {
     const promptData = getPrompt('investment')
     if (!promptData) throw new Error('获取投资提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('investment', userPrompt, onChunk, 500)
+    const content = await generateContent('investment', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -726,7 +767,7 @@ const DailyContent = {
     const promptData = getPrompt('fishing')
     if (!promptData) throw new Error('获取钓鱼提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('fishing', userPrompt, onChunk, 500)
+    const content = await generateContent('fishing', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -738,7 +779,7 @@ const DailyContent = {
     const promptData = getPrompt('fitness')
     if (!promptData) throw new Error('获取健身提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('fitness', userPrompt, onChunk, 500)
+    const content = await generateContent('fitness', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -750,7 +791,7 @@ const DailyContent = {
     const promptData = getPrompt('pet')
     if (!promptData) throw new Error('获取宠物提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('pet', userPrompt, onChunk, 500)
+    const content = await generateContent('pet', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -762,7 +803,7 @@ const DailyContent = {
     const promptData = getPrompt('fashion')
     if (!promptData) throw new Error('获取时尚提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('fashion', userPrompt, onChunk, 500)
+    const content = await generateContent('fashion', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -774,7 +815,7 @@ const DailyContent = {
     const promptData = getPrompt('outfit')
     if (!promptData) throw new Error('获取穿搭提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('outfit', userPrompt, onChunk, 500)
+    const content = await generateContent('outfit', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -786,7 +827,7 @@ const DailyContent = {
     const promptData = getPrompt('decoration')
     if (!promptData) throw new Error('获取家居提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('decoration', userPrompt, onChunk, 500)
+    const content = await generateContent('decoration', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -798,9 +839,14 @@ const DailyContent = {
     const promptData = getPrompt('glassFiber')
     if (!promptData) throw new Error('获取玻纤提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('glassFiber', userPrompt, onChunk, 500)
+    const content = await generateContent('glassFiber', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
+  },
+
+  // 别名（小写）- 兼容 dailyCard 调用
+  async generateFiber(onChunk, onDone) {
+    return this.generateGlassFiber(onChunk, onDone)
   },
 
   /**
@@ -810,7 +856,7 @@ const DailyContent = {
     const promptData = getPrompt('resin')
     if (!promptData) throw new Error('获取树脂提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('resin', userPrompt, onChunk, 500)
+    const content = await generateContent('resin', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -822,7 +868,7 @@ const DailyContent = {
     const promptData = getPrompt('tax')
     if (!promptData) throw new Error('获取税务提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('tax', userPrompt, onChunk, 500)
+    const content = await generateContent('tax', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -834,7 +880,7 @@ const DailyContent = {
     const promptData = getPrompt('law')
     if (!promptData) throw new Error('获取法律提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('law', userPrompt, onChunk, 500)
+    const content = await generateContent('law', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -846,7 +892,7 @@ const DailyContent = {
     const promptData = getPrompt('official')
     if (!promptData) throw new Error('获取政务提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('official', userPrompt, onChunk, 500)
+    const content = await generateContent('official', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -858,7 +904,7 @@ const DailyContent = {
     const promptData = getPrompt('handling')
     if (!promptData) throw new Error('获取处事提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('handling', userPrompt, onChunk, 500)
+    const content = await generateContent('handling', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -870,7 +916,7 @@ const DailyContent = {
     const promptData = getPrompt('floral')
     if (!promptData) throw new Error('获取花卉提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('floral', userPrompt, onChunk, 500)
+    const content = await generateContent('floral', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -882,7 +928,7 @@ const DailyContent = {
     const promptData = getPrompt('history')
     if (!promptData) throw new Error('获取历史提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('history', userPrompt, onChunk, 600)
+    const content = await generateContent('history', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -894,7 +940,7 @@ const DailyContent = {
     const promptData = getPrompt('military')
     if (!promptData) throw new Error('获取军事提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('military', userPrompt, onChunk, 500)
+    const content = await generateContent('military', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -906,7 +952,7 @@ const DailyContent = {
     const promptData = getPrompt('stock')
     if (!promptData) throw new Error('获取股票提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('stock', userPrompt, onChunk, 500)
+    const content = await generateContent('stock', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -918,7 +964,7 @@ const DailyContent = {
     const promptData = getPrompt('economics')
     if (!promptData) throw new Error('获取经济学提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('economics', userPrompt, onChunk, 500)
+    const content = await generateContent('economics', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -930,7 +976,7 @@ const DailyContent = {
     const promptData = getPrompt('business')
     if (!promptData) throw new Error('获取商业提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('business', userPrompt, onChunk, 500)
+    const content = await generateContent('business', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -942,7 +988,7 @@ const DailyContent = {
     const promptData = getPrompt('news')
     if (!promptData) throw new Error('获取新闻提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent('news', userPrompt, onChunk, 600)
+    const content = await generateContent('news', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },
@@ -964,7 +1010,7 @@ const DailyContent = {
     }
     
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
-    const content = await generateContent(moduleId, userPrompt, onChunk, 500)
+    const content = await generateContent(moduleId, userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   }

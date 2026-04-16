@@ -1,0 +1,9 @@
+{
+  "name": "cleanDuplicates",
+  "version": "1.0.0",
+  "description": "清理云数据库中的重复记录",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}
