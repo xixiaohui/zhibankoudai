@@ -41,7 +41,11 @@
     { "id": "stock", "enabled": true, "order": 36, "showOnHome": false },
     { "id": "economics", "enabled": true, "order": 37, "showOnHome": false },
     { "id": "business", "enabled": true, "order": 38, "showOnHome": false },
-    { "id": "news", "enabled": true, "order": 39, "showOnHome": false }
+    { "id": "news", "enabled": true, "order": 39, "showOnHome": false },
+    { "id": "apple", "enabled": true, "order": 40, "showOnHome": true },
+    { "id": "growth", "enabled": true, "order": 41, "showOnHome": true },
+    { "id": "uiDesigner", "enabled": true, "order": 42, "showOnHome": true },
+    { "id": "futures", "enabled": true, "order": 43, "showOnHome": true }
   ],
   "updated": "2026-04-15"
 }

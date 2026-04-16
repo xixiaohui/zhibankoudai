@@ -1,0 +1,31 @@
+{
+  "id": "growth",
+  "name": "市场品牌增长专家",
+  "icon": "icon-growth",
+  "color": "#E91E63",
+  "fields": [
+    { "id": "acquisition", "name": "用户获取", "icon": "🎯" },
+    { "id": "conversion", "name": "转化优化", "icon": "📈" },
+    { "id": "retention", "name": "用户留存", "icon": "🔄" },
+    { "id": "revenue", "name": "收入增长", "icon": "💰" },
+    { "id": "data", "name": "数据与实验", "icon": "📊" }
+  ],
+  "version": "1.0.0",
+  "updated": "2026-04-16",
+  "fallback": [
+    { "title": "AARRR增长模型", "category": "用户获取", "categoryIcon": "🎯", "content": "AARRR模型即Acquisition（获取）、Activation（激活）、Retention（留存）、Revenue（变现）、Referral（推荐）。它是硅谷知名风险投资人戴夫·麦克卢尔提出的海盗指标，帮助创业公司理解用户生命周期。", "subtitle": "海盗指标法" },
+    { "title": "用户增长飞轮", "category": "用户留存", "categoryIcon": "🔄", "content": "增长飞轮是杰夫·贝索斯提出的核心商业理念。通过不断提升用户体验，形成『用户增长→更多选择→更低价格→更好体验』的正向循环，最终形成自动运转的飞轮效应。", "subtitle": "亚马逊增长飞轮" },
+    { "title": "RFM用户分层模型", "category": "数据与实验", "categoryIcon": "📊", "content": "RFM模型是客户管理中的经典方法论：Recency（最近一次消费）、Frequency（消费频率）、Monetary（消费金额）。通过这三个维度将用户分为8类，实现精细化运营。", "subtitle": "精准用户分层" },
+    { "title": "转化率优化CRO", "category": "转化优化", "categoryIcon": "📈", "content": "转化率优化(CRO)是一套系统性的方法，通过用户研究、数据分析、A/B测试等手段，不断优化用户体验和页面设计，提升从访客到付费用户的转化比例。", "subtitle": "提升转化效率" },
+    { "title": "裂变营销策略", "category": "用户获取", "categoryIcon": "🎯", "content": "裂变营销借助社交网络的病毒式传播特性，通过老用户分享带来新用户，实现低成本的用户增长。常见形式包括拼团、分销、邀请有礼、分享红包等。", "subtitle": "社交裂变增长" },
+    { "title": "LTV用户生命周期价值", "category": "收入增长", "categoryIcon": "💰", "content": "LTV（Life Time Value）即用户生命周期总价值，是衡量用户价值的重要指标。计算公式：LTV=用户平均消费×消费频率×平均利润×用户生命周期。", "subtitle": "用户价值评估" },
+    { "title": "私域流量运营", "category": "用户留存", "categoryIcon": "🔄", "content": "私域流量是指品牌自主拥有、可免费多次触达的用户池。通过企业微信、社群、公众号等渠道，建立与用户的直接连接，实现精准营销和长期价值运营。", "subtitle": "构建用户私域" },
+    { "title": "增长黑客GD方法论", "category": "数据与实验", "categoryIcon": "📊", "content": "增长黑客强调以数据驱动、实验验证的方式实现爆发式增长。核心框架：数据分析→提出假设→快速实验→迭代优化。代表案例：Dropbox推荐奖励、Hotmail签名营销。", "subtitle": "数据驱动增长" },
+    { "title": "用户画像构建", "category": "转化优化", "categoryIcon": "📈", "content": "用户画像是基于用户行为、人口属性、兴趣偏好等数据形成的虚拟用户原型。通过标签体系构建360度用户视图，支撑精准营销和个性化推荐。", "subtitle": "精准用户洞察" },
+    { "title": "会员体系设计", "category": "收入增长", "categoryIcon": "💰", "content": "会员体系通过分层权益设计，激励用户升级和持续消费。设计要点：明确升级路径、设置差异化权益、平衡成本收益。常见形式：积分制、等级制、订阅制。", "subtitle": "会员激励体系" }
+  ],
+  "share": {
+    "title": "市场品牌增长专家",
+    "template": "{content}"
+  }
+}

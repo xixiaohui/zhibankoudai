@@ -90,11 +90,98 @@ function formatDate() {
 
 // ─── 各模块生成函数 ─────────────────────────────────────────────────
 
+// 本地备用提示词（确保即使 cloudData 未初始化也能工作）- 统一200-500字
+const LOCAL_PROMPTS_FALLBACK = {
+  quote: {
+    generate: "你是一位文学大师。请生成经典名言或诗句，要求有深度，启迪人心，涵盖古今中外。内容长度200-500字。输出JSON：{\"title\":\"作者名\",\"content\":\"名言200-500字\",\"source\":\"出处\",\"era\":\"古代/现代\",\"region\":\"国内/国外\"}",
+    share: "「{content}」\\n—— {title}"
+  },
+  joke: {
+    generate: "你是一位幽默段子手。请生成幽默段子，贴近生活，有趣但不低俗。内容长度200-500字。输出JSON：{\"title\":\"段子标题\",\"content\":\"段子正文200-500字\"}",
+    share: "{content}"
+  },
+  psychology: {
+    generate: "你是一位资深心理咨询师。请分享心理学知识，介绍经典心理学效应，解释原理，举例说明，提供应用方法。内容长度200-500字。输出JSON：{\"title\":\"心理效应\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "🧠【心理学】{title}\\n\\n{content}"
+  },
+  finance: {
+    generate: "你是一位资深金融顾问。请分享实用的金融知识，解释金融概念，提供理财建议。内容长度200-500字。输出JSON：{\"title\":\"主题\",\"content\":\"详细解释200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "💳【金融】{title}\\n\\n{content}"
+  },
+  love: {
+    generate: "你是一位情感作家。请写温暖人心的情感语录，表达对爱情/亲情/友情的感悟，真诚动人。内容长度200-500字。输出JSON：{\"author\":\"署名\",\"content\":\"正文200-500字\",\"category\":\"情感类型\",\"subtitle\":\"一句话15字内\"}",
+    share: "💕 {content}"
+  },
+  movie: {
+    generate: "你是一位资深影评人。请推荐电影，介绍基本信息，分析亮点，说明推荐理由和适合人群。内容长度200-500字。输出JSON：{\"title\":\"电影名\",\"content\":\"推荐理由200-500字\",\"category\":\"类型\",\"director\":\"导演\",\"subtitle\":\"一句话15字内\"}",
+    share: "🎬【{title}】\\n\\n{content}\\n\\n#电影推荐"
+  },
+  music: {
+    generate: "你是一位资深音乐评论人。请推荐歌曲，介绍创作背景，分析歌词和旋律，分享推荐理由。内容长度200-500字。输出JSON：{\"title\":\"歌名\",\"artist\":\"歌手\",\"content\":\"推荐理由200-500字\",\"album\":\"专辑\",\"subtitle\":\"一句话15字内\"}",
+    share: "🎵【{title}】\\n\\n{content}\\n\\n#音乐分享"
+  },
+  tech: {
+    generate: "你是一位科技记者。请分享科技前沿动态，介绍背景和原理，分析对未来影响。内容长度200-500字。输出JSON：{\"title\":\"新闻标题\",\"content\":\"详细介绍200-500字\",\"category\":\"科技领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "🔬【科技前沿】{title}\\n\\n{content}"
+  },
+  tcm: {
+    generate: "你是一位资深中医师。请分享中医养生知识，介绍养生方法和操作步骤，说明适用人群和注意事项。内容长度200-500字。输出JSON：{\"title\":\"养生主题\",\"content\":\"详细介绍200-500字\",\"category\":\"养生领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "🍃【中医养生】{title}\\n\\n{content}"
+  },
+  travel: {
+    generate: "你是一位资深旅行家。请推荐旅行目的地，介绍景点、美食、文化体验，提供实用建议。内容长度200-500字。输出JSON：{\"title\":\"目的地\",\"content\":\"旅行攻略200-500字\",\"location\":\"位置\",\"subtitle\":\"一句话15字内\"}",
+    share: "🌍【{title}】旅行推荐\\n\\n{content}\\n\\n#旅行攻略"
+  },
+  fortune: {
+    generate: "你是一位玄学研究者。请生成今日运势分析，从事业、财运、感情、健康多维度分析，给出开运建议。内容长度200-500字。输出JSON：{\"title\":\"星座/生肖\",\"content\":\"运势分析200-500字\",\"luckyDirection\":\"方位\",\"luckyNumber\":\"数字\",\"luckyColor\":\"颜色\"}",
+    share: "🔮【{title}】今日运势\\n\\n{content}"
+  },
+  english: {
+    generate: "你是一位英语教学专家。请分享实用的英语知识点，解释含义用法，提供例句，说明使用场景。内容长度200-500字。输出JSON：{\"title\":\"知识点\",\"content\":\"详细解释200-500字\",\"category\":\"英语领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "🇬🇧【英语学习】{title}\\n\\n{content}"
+  },
+  fitness: {
+    generate: "你是一位资深健身教练。请分享健身知识，说明动作要领、呼吸方法、发力技巧，指出常见错误。内容长度200-500字。输出JSON：{\"title\":\"动作名称\",\"content\":\"训练指南200-500字\",\"category\":\"健身领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "🏋️【健身指导】{title}\\n\\n{content}"
+  },
+  news: {
+    generate: "你是一位资深新闻编辑。请总结今日重要新闻，介绍背景、经过、影响。内容长度200-500字。输出JSON：{\"title\":\"今日要闻\",\"content\":\"新闻分析200-500字\",\"category\":\"新闻\",\"subtitle\":\"一句话15字内\"}",
+    share: "📰【今日要闻】\\n\\n{content}"
+  },
+  apple: {
+    generate: "你是一位苹果开发专家。请分享iOS/Swift开发知识点，介绍原理和应用场景，提供实用技巧。内容长度200-500字。输出JSON：{\"title\":\"知识点\",\"content\":\"详细介绍200-500字\",\"category\":\"所属领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "🍎【苹果开发】{title}\\n\\n{content}"
+  },
+  growth: {
+    generate: "你是一位市场品牌增长专家。请分享增长营销知识，介绍方法论，提供实操技巧和成功案例。内容长度200-500字。输出JSON：{\"title\":\"增长主题\",\"content\":\"详细介绍200-500字\",\"category\":\"所属领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "🚀【市场增长】{title}\\n\\n{content}"
+  },
+  uiDesigner: {
+    generate: "你是一位资深UI设计师。请分享UI设计知识，介绍设计原则和原理，说明操作步骤和设计要点。内容长度200-500字。输出JSON：{\"title\":\"设计主题\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "🎨【UI设计】{title}\\n\\n{content}"
+  },
+  futures: {
+    generate: "你是一位资深大宗贸易期货专家。请分享期货交易知识，介绍期货品种原理，说明分析要点和实战技巧，强调风险管理。内容长度200-500字。输出JSON：{\"title\":\"期货主题\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "📊【大宗期货】{title}\\n\\n{content}"
+  }
+}
+
 /**
- * 获取模块提示词（从云端）
+ * 获取模块提示词（从云端，带本地备用）
  */
 function getPrompt(moduleId) {
-  return cloudData.getPrompt(moduleId)
+  // 优先从 cloudData 获取（如果已初始化）
+  const cloudPrompt = cloudData.getPrompt(moduleId)
+  if (cloudPrompt) return cloudPrompt
+  
+  // 回退到本地备用提示词
+  const localPrompt = LOCAL_PROMPTS_FALLBACK[moduleId]
+  if (localPrompt) {
+    console.log(`[DailyContent] 使用本地备用提示词: ${moduleId}`)
+    return localPrompt
+  }
+  
+  return null
 }
 
 // ─── AI 输出解析 ────────────────────────────────────────────────────
@@ -1012,6 +1099,42 @@ const DailyContent = {
     if (!promptData) throw new Error('获取果核学堂提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
     const content = await generateContent('apple', userPrompt, onChunk, 800)
+    onDone && onDone(content)
+    return content
+  },
+
+  /**
+   * 生成市场品牌增长专家
+   */
+  async generateGrowth(onChunk, onDone) {
+    const promptData = getPrompt('growth')
+    if (!promptData) throw new Error('获取市场增长提示词失败')
+    const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
+    const content = await generateContent('growth', userPrompt, onChunk, 800)
+    onDone && onDone(content)
+    return content
+  },
+
+  /**
+   * 生成UI设计师专家
+   */
+  async generateUiDesigner(onChunk, onDone) {
+    const promptData = getPrompt('uiDesigner')
+    if (!promptData) throw new Error('获取UI设计提示词失败')
+    const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
+    const content = await generateContent('uiDesigner', userPrompt, onChunk, 800)
+    onDone && onDone(content)
+    return content
+  },
+
+  /**
+   * 生成大宗贸易期货专家
+   */
+  async generateFutures(onChunk, onDone) {
+    const promptData = getPrompt('futures')
+    if (!promptData) throw new Error('获取期货提示词失败')
+    const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
+    const content = await generateContent('futures', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },

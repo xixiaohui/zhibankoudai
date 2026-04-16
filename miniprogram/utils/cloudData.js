@@ -84,68 +84,80 @@ const LOCAL_APP_CONFIG = {
   updateUrl: ""
 }
 
-// 本地AI提示词（云端不可用时的备用）
+// 本地AI提示词（云端不可用时的备用）- 统一200-500字
 const LOCAL_PROMPTS = {
   prompts: {
     quote: {
-      generate: "你是一位文学大师和人生导师。请生成一条经典名言或诗句，要求有深度，能启迪人心。输出：名言内容：[文字]\\n作者：[作者]\\n出处：[简介]\\n分类：[分类]",
+      generate: "你是一位文学大师。请生成经典名言或诗句，要求有深度，启迪人心，涵盖古今中外。内容长度200-500字。输出JSON：{\"title\":\"作者名\",\"content\":\"名言200-500字\",\"source\":\"出处\",\"era\":\"古代/现代\",\"region\":\"国内/国外\"}",
       share: "「{content}」\\n—— {title}"
     },
     joke: {
-      generate: "你是一位幽默段子手。请生成一个幽默段子（100-200字），贴近生活，有趣但不低俗。输出格式：【段子】\\n[正文]",
+      generate: "你是一位幽默段子手。请生成幽默段子，贴近生活，有趣但不低俗。内容长度200-500字。输出JSON：{\"title\":\"段子标题\",\"content\":\"段子正文200-500字\"}",
       share: "{content}"
     },
     psychology: {
-      generate: "你是一位资深心理咨询师。请分享一个心理学知识，要求通俗易懂，有实用建议。输出格式：【心理效应】[名称]\\n📖 原理解释：[简明解释]\\n💡 生活实例：[例子]\\n✅ 实用建议：[如何应用]",
+      generate: "你是一位资深心理咨询师。请分享心理学知识，介绍经典心理学效应，解释原理，举例说明，提供应用方法。内容长度200-500字。输出JSON：{\"title\":\"心理效应\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话总结15字内\"}",
       share: "🧠【心理学】{title}\\n\\n{content}"
     },
     finance: {
-      generate: "你是一位资深金融顾问。请分享一个实用的金融小知识，要求实用、通俗。输出格式：【金融知识】[主题]\\n[核心内容]\\n💰 实践建议：[建议]",
+      generate: "你是一位资深金融顾问。请分享实用的金融知识，解释金融概念，提供理财建议。内容长度200-500字。输出JSON：{\"title\":\"主题\",\"content\":\"详细解释200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话总结15字内\"}",
       share: "💳【金融】{title}\\n\\n{content}"
     },
     love: {
-      generate: "你是一位情感作家。请写一段温暖人心的情感语录（100字内），真诚动人。输出格式：【情话】\\n[正文]",
+      generate: "你是一位情感作家。请写温暖人心的情感语录，表达对爱情/亲情/友情的感悟，真诚动人。内容长度200-500字。输出JSON：{\"author\":\"署名\",\"content\":\"正文200-500字\",\"category\":\"情感类型\",\"subtitle\":\"一句话15字内\"}",
       share: "💕 {content}"
     },
     movie: {
-      generate: "你是一位资深影评人。请推荐一部电影，简述类型、推荐理由、适合人群。输出格式：🎬【电影名】\\n📽️ 类型：[类型]\\n🌟 推荐理由：[3点]\\n👥 适合人群：[描述]",
+      generate: "你是一位资深影评人。请推荐电影，介绍基本信息，分析亮点，说明推荐理由和适合人群。内容长度200-500字。输出JSON：{\"title\":\"电影名\",\"content\":\"推荐理由200-500字\",\"category\":\"类型\",\"director\":\"导演\",\"subtitle\":\"一句话15字内\"}",
       share: "🎬【{title}】\\n\\n{content}\\n\\n#电影推荐"
     },
     music: {
-      generate: "你是一位资深音乐评论人。请推荐一首歌曲，简述基本信息、推荐理由、适合场景。输出格式：🎵【歌名】- 歌手\\n📀 专辑：[专辑]\\n🎧 推荐理由：[3点]\\n☕ 适合场景：[场景]",
+      generate: "你是一位资深音乐评论人。请推荐歌曲，介绍创作背景，分析歌词和旋律，分享推荐理由。内容长度200-500字。输出JSON：{\"title\":\"歌名\",\"artist\":\"歌手\",\"content\":\"推荐理由200-500字\",\"album\":\"专辑\",\"subtitle\":\"一句话15字内\"}",
       share: "🎵【{title}】\\n\\n{content}\\n\\n#音乐分享"
     },
     tech: {
-      generate: "你是一位科技记者。请分享一个科技前沿动态（150字内），通俗易懂。输出格式：🚀【新闻标题】\\n[简要内容]\\n💡 意义：[对普通人的影响]",
+      generate: "你是一位科技记者。请分享科技前沿动态，介绍背景和原理，分析对未来影响。内容长度200-500字。输出JSON：{\"title\":\"新闻标题\",\"content\":\"详细介绍200-500字\",\"category\":\"科技领域\",\"subtitle\":\"一句话15字内\"}",
       share: "🔬【科技前沿】{title}\\n\\n{content}"
     },
     tcm: {
-      generate: "你是一位资深中医师。请分享一个中医养生小知识，说明适用人群和操作方法。输出格式：🌿【养生主题】\\n📖 原理：[简述]\\n🍵 方法：[步骤]\\n👥 适合人群：[描述]",
+      generate: "你是一位资深中医师。请分享中医养生知识，介绍养生方法和操作步骤，说明适用人群和注意事项。内容长度200-500字。输出JSON：{\"title\":\"养生主题\",\"content\":\"详细介绍200-500字\",\"category\":\"养生领域\",\"subtitle\":\"一句话15字内\"}",
       share: "🍃【中医养生】{title}\\n\\n{content}"
     },
     travel: {
-      generate: "你是一位资深旅行家。请推荐一个旅行目的地，介绍特色、景点、建议。输出格式：✈️【目的地】\\n📍 位置：[位置]\\n🌟 亮点：[3-5个]\\n💰 预算：[参考价格]",
+      generate: "你是一位资深旅行家。请推荐旅行目的地，介绍景点、美食、文化体验，提供实用建议。内容长度200-500字。输出JSON：{\"title\":\"目的地\",\"content\":\"旅行攻略200-500字\",\"location\":\"位置\",\"subtitle\":\"一句话15字内\"}",
       share: "🌍【{title}】旅行推荐\\n\\n{content}\\n\\n#旅行攻略"
     },
     fortune: {
-      generate: "你是一位玄学研究者。请生成今日运势简析，从事业、财运、感情、健康多维度分析。输出格式：🔮【星座】今日运势\\n💼 事业：[建议]\\n💰 财运：[提示]\\n💕 感情：[提示]\\n🌟 开运方位：[方位]",
+      generate: "你是一位玄学研究者。请生成今日运势分析，从事业、财运、感情、健康多维度分析，给出开运建议。内容长度200-500字。输出JSON：{\"title\":\"星座/生肖\",\"content\":\"运势分析200-500字\",\"luckyDirection\":\"方位\",\"luckyNumber\":\"数字\",\"luckyColor\":\"颜色\"}",
       share: "🔮【{title}】今日运势\\n\\n{content}"
     },
     english: {
-      generate: "你是一位英语教学专家。请分享一个实用的英语知识点（100字内），提供例句和使用场景。输出格式：📝【知识点】\\n📖 含义：[解释]\\n💬 例句：[英文例句 - 中文翻译]\\n🎯 场景：[何时用]",
+      generate: "你是一位英语教学专家。请分享实用的英语知识点，解释含义用法，提供例句，说明使用场景。内容长度200-500字。输出JSON：{\"title\":\"知识点\",\"content\":\"详细解释200-500字\",\"category\":\"英语领域\",\"subtitle\":\"一句话15字内\"}",
       share: "🇬🇧【英语学习】{title}\\n\\n{content}"
     },
     fitness: {
-      generate: "你是一位资深健身教练。请分享一个实用的健身知识，详细说明动作要领和注意事项。输出格式：💪【动作名称】\\n🎯 目标：[肌肉/效果]\\n📝 要领：[步骤]\\n❌ 常见错误：[避免什么]",
+      generate: "你是一位资深健身教练。请分享健身知识，说明动作要领、呼吸方法、发力技巧，指出常见错误。内容长度200-500字。输出JSON：{\"title\":\"动作名称\",\"content\":\"训练指南200-500字\",\"category\":\"健身领域\",\"subtitle\":\"一句话15字内\"}",
       share: "🏋️【健身指导】{title}\\n\\n{content}"
     },
     news: {
-      generate: "你是一位资深新闻编辑。请总结今日重要新闻（3-5条），每条50字内。输出格式：📰【今日要闻】\\n\\n1️⃣ 【分类】标题\\n   简述\\n\\n2️⃣ ...",
+      generate: "你是一位资深新闻编辑。请总结今日重要新闻，介绍背景、经过、影响。内容长度200-500字。输出JSON：{\"title\":\"今日要闻\",\"content\":\"新闻分析200-500字\",\"category\":\"新闻\",\"subtitle\":\"一句话15字内\"}",
       share: "📰【今日要闻】\\n\\n{content}"
     },
     apple: {
-      generate: "你是一位苹果开发专家。请分享一个实用的 iOS/Swift 开发知识点，要求实用、通俗易懂。输出格式：🍎【知识点】\\n📖 原理：[简述]\\n💻 示例：[代码示例]\\n🎯 适用场景：[何时用]",
+      generate: "你是一位苹果开发专家。请分享iOS/Swift开发知识点，介绍原理和应用场景，提供实用技巧。内容长度200-500字。输出JSON：{\"title\":\"知识点\",\"content\":\"详细介绍200-500字\",\"category\":\"所属领域\",\"subtitle\":\"一句话15字内\"}",
       share: "🍎【苹果开发】{title}\\n\\n{content}"
+    },
+    growth: {
+      generate: "你是一位市场品牌增长专家。请分享增长营销知识，介绍方法论，提供实操技巧和成功案例。内容长度200-500字。输出JSON：{\"title\":\"增长主题\",\"content\":\"详细介绍200-500字\",\"category\":\"所属领域\",\"subtitle\":\"一句话15字内\"}",
+      share: "🚀【市场增长】{title}\\n\\n{content}"
+    },
+    uiDesigner: {
+      generate: "你是一位资深UI设计师。请分享UI设计知识，介绍设计原则和原理，说明操作步骤和设计要点。内容长度200-500字。输出JSON：{\"title\":\"设计主题\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+      share: "🎨【UI设计】{title}\\n\\n{content}"
+    },
+    futures: {
+      generate: "你是一位资深大宗贸易期货专家。请分享期货交易知识，介绍期货品种原理，说明分析要点和实战技巧，强调风险管理。内容长度200-500字。输出JSON：{\"title\":\"期货主题\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+      share: "📊【大宗期货】{title}\\n\\n{content}"
     }
   },
   system: {
@@ -444,6 +456,24 @@ const DEFAULT_STYLES = {
     refreshText: '换一条', loadingText: '苹果开发专家正在为你讲解...', placeholderText: '点击「换一条」学习苹果开发知识',
     tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: 'AI专家' },
     colors: generateColors('#007AFF')
+  },
+  growth: {
+    id: 'growth', name: '市场品牌增长专家', icon: '🚀', color: '#E91E63', storageKey: 'dailyGrowth', posterType: 'growth',
+    refreshText: '换一条', loadingText: '增长专家正在为你分析...', placeholderText: '点击「换一条」获取增长策略',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '增长专家' },
+    colors: generateColors('#E91E63')
+  },
+  uiDesigner: {
+    id: 'uiDesigner', name: 'UI设计师专家', icon: '🎨', color: '#9C27B0', storageKey: 'dailyUiDesigner', posterType: 'uiDesigner',
+    refreshText: '换一条', loadingText: 'UI设计专家正在为你讲解...', placeholderText: '点击「换一条」获取设计灵感',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '设计专家' },
+    colors: generateColors('#9C27B0')
+  },
+  futures: {
+    id: 'futures', name: '大宗贸易期货专家', icon: '📊', color: '#FF5722', storageKey: 'dailyFutures', posterType: 'futures',
+    refreshText: '换一条', loadingText: '期货专家正在为你分析...', placeholderText: '点击「换一条」获取期货知识',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '期货专家' },
+    colors: generateColors('#FF5722')
   }
 }
 
@@ -674,7 +704,61 @@ async function getModule(moduleId) {
       console.log(`[CloudData] 使用本地备用数据: ${moduleId}`)
       return localFallback
     }
-    
+
+    // growth 模块本地备用数据
+    if (moduleId === 'growth') {
+      const localFallback = {
+        version: "1.0.0",
+        updated: "2026-04-16",
+        fallback: [
+          { title: "AARRR增长模型", category: "用户获取", categoryIcon: "🎯", content: "AARRR模型即Acquisition（获取）、Activation（激活）、Retention（留存）、Revenue（变现）、Referral（推荐）。它是硅谷风险投资人戴夫·麦克卢尔提出的海盗指标，帮助创业公司理解用户生命周期。", subtitle: "海盗指标法" },
+          { title: "用户增长飞轮", category: "用户留存", categoryIcon: "🔄", content: "增长飞轮是杰夫·贝索斯提出的核心商业理念。通过不断提升用户体验，形成『用户增长→更多选择→更低价格→更好体验』的正向循环，最终形成自动运转的飞轮效应。", subtitle: "亚马逊增长飞轮" },
+          { title: "RFM用户分层模型", category: "数据与实验", categoryIcon: "📊", content: "RFM模型是客户管理中的经典方法论：Recency（最近一次消费）、Frequency（消费频率）、Monetary（消费金额）。通过这三个维度将用户分为8类，实现精细化运营。", subtitle: "精准用户分层" },
+          { title: "转化率优化CRO", category: "转化优化", categoryIcon: "📈", content: "转化率优化(CRO)是一套系统性的方法，通过用户研究、数据分析、A/B测试等手段，不断优化用户体验和页面设计，提升从访客到付费用户的转化比例。", subtitle: "提升转化效率" },
+          { title: "裂变营销策略", category: "用户获取", categoryIcon: "🎯", content: "裂变营销借助社交网络的病毒式传播特性，通过老用户分享带来新用户，实现低成本的用户增长。常见形式包括拼团、分销、邀请有礼、分享红包等。", subtitle: "社交裂变增长" }
+        ]
+      }
+      moduleCache[moduleId] = localFallback
+      console.log(`[CloudData] 使用本地备用数据: ${moduleId}`)
+      return localFallback
+    }
+
+    // uiDesigner 模块本地备用数据
+    if (moduleId === 'uiDesigner') {
+      const localFallback = {
+        version: "1.0.0",
+        updated: "2026-04-16",
+        fallback: [
+          { title: "Figma组件变体设计", category: "设计系统", categoryIcon: "🧩", content: "组件变体（Variants）是Figma推出的强大功能，允许在同一组件内创建多个状态的组合。通过设置属性和变体，可以高效管理按钮、表单、卡片等组件的不同状态，大幅提升设计效率和一致性。", subtitle: "提升组件复用性" },
+          { title: "格式塔原则在UI中的应用", category: "视觉设计", categoryIcon: "🎨", content: "格式塔心理学原则包括接近性、相似性、闭合性、连续性等，设计师可以利用这些原则引导用户视觉流向。良好的视觉层次让用户自然地按照设计师意图浏览页面，提升信息传达效率。", subtitle: "视觉层次构建" },
+          { title: "微交互设计细节", category: "交互设计", categoryIcon: "🖱️", content: "微交互是指产品中那些细微但重要的交互细节，如按钮点击反馈、加载状态提示、下拉刷新动画等。优秀的微交互能够增强用户体验的愉悦感和信任度，让产品更加生动有趣。", subtitle: "细节决定体验" },
+          { title: "设计系统Token化", category: "设计系统", categoryIcon: "🧩", content: "Design Token是设计属性的抽象概念，如颜色、间距、阴影等。通过Token化，设计系统可以在不同平台间保持一致性，同时便于主题切换和动态样式调整。", subtitle: "设计一致性保障" },
+          { title: "品牌视觉一致性", category: "品牌设计", categoryIcon: "🏷️", content: "品牌视觉一致性是指在所有触点上保持统一的视觉语言，包括Logo使用、色彩体系、字体选择、图形元素等。一致性强的品牌能够建立用户认知和信任，提升品牌辨识度。", subtitle: "品牌识别建设" }
+        ]
+      }
+      moduleCache[moduleId] = localFallback
+      console.log(`[CloudData] 使用本地备用数据: ${moduleId}`)
+      return localFallback
+    }
+
+    // futures 模块本地备用数据
+    if (moduleId === 'futures') {
+      const localFallback = {
+        version: "1.0.0",
+        updated: "2026-04-16",
+        fallback: [
+          { title: "原油期货交易基础", category: "能源化工", categoryIcon: "⚡", content: "原油期货是最重要的能源类期货品种之一，主要包括WTI原油和布伦特原油。交易原油期货需要关注地缘政治、OPEC产能、库存数据等因素。WTI原油在纽约商品交易所交易，布伦特原油在伦敦洲际交易所交易。", subtitle: "能源期货入门" },
+          { title: "黄金期货投资策略", category: "金属矿产", categoryIcon: "🔩", content: "黄金作为避险资产，其期货价格受美元走势、通胀预期、地缘政治等因素影响。COMEX黄金是全球最大的黄金期货市场。投资者常使用黄金对冲通胀风险和股市波动风险。", subtitle: "避险资产配置" },
+          { title: "大豆期货产业链分析", category: "农产品", categoryIcon: "🌾", content: "大豆期货是重要的农产品期货，涉及CBOT大豆和国内豆粕、豆油合约。影响大豆价格的因素包括南美产量、美国种植面积、天气变化、中国采购需求等。", subtitle: "农产品期货" },
+          { title: "铜期货的宏观经济属性", category: "金属矿产", categoryIcon: "🔩", content: "铜被称为'经济晴雨表'，因其与宏观经济走势高度相关。铜期货交易需关注全球制造业PMI、房地产数据、新能源需求等因素。COMEX铜是全球铜定价的重要参考。", subtitle: "铜博士指标" },
+          { title: "天然气期货季节性规律", category: "能源化工", categoryIcon: "⚡", content: "天然气期货价格呈现明显的季节性特征，冬季取暖需求推高价格，夏季发电需求次之。页岩气产量、LNG出口、库存水平是影响天然气价格的关键因素。", subtitle: "能源季节波动" }
+        ]
+      }
+      moduleCache[moduleId] = localFallback
+      console.log(`[CloudData] 使用本地备用数据: ${moduleId}`)
+      return localFallback
+    }
+
     return null
   }
 }
@@ -723,6 +807,10 @@ const ICON_TO_EMOJI = {
   'icon-business': '💼',
   'icon-news': '📰',
   'icon-apple': '🍎',
+  'icon-growth': '🚀',
+  'icon-ui': '🎨',
+  'icon-ui': '🎨',
+  'icon-futures': '📊',
 }
 
 /**

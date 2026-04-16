@@ -255,6 +255,9 @@ Page({
       history: '以史为鉴，可以知兴替',
       military: '知己知彼，百战不殆',
       apple: '用Swift编织苹果生态',
+      growth: '数据驱动，敏捷增长',
+      uiDesigner: '用设计创造美好体验',
+      futures: '洞察大宗，运筹期货',
       home: '每天一点，美好生活',
     }
     return slogans[type] || '每天一点，美好生活'
@@ -571,6 +574,30 @@ Page({
         titleColor: '#0056B3',
         contentColor: '#1E5AA8',
         subtitleColor: '#007AFF',
+      },
+
+      // 市场品牌增长专家 - 活力粉红
+      growth: {
+        backgroundColor: '#FFF0F5',
+        titleColor: '#C2185B',
+        contentColor: '#E91E63',
+        subtitleColor: '#F48FB1',
+      },
+
+      // UI设计师专家 - 优雅紫
+      uiDesigner: {
+        backgroundColor: '#F5F0FF',
+        titleColor: '#6A1B9A',
+        contentColor: '#9C27B0',
+        subtitleColor: '#CE93D8',
+      },
+
+      // 大宗贸易期货专家 - 热情橙红
+      futures: {
+        backgroundColor: '#FBE9E7',
+        titleColor: '#D84315',
+        contentColor: '#FF5722',
+        subtitleColor: '#FFAB91',
       },
 
     }

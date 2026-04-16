@@ -52,6 +52,9 @@ const MODULE_TYPES = {
   BUSINESS: 'business', // 生意人助手
   NEWS: 'news', // 新闻助手
   APPLE: 'apple', // Apple苹果开发专家
+  GROWTH: 'growth', // 市场品牌增长专家
+  UI_DESIGNER: 'uiDesigner', // UI设计师专家
+  FUTURES: 'futures', // 大宗贸易期货专家
 }
 
 // ─── 板块配置 ─────────────────────────────────────────────────────
@@ -1207,7 +1210,91 @@ const MODULE_CONFIGS = {
     posterType: 'apple',
     slogan: '用Swift编织苹果生态',
   },
-  
+  [MODULE_TYPES.GROWTH]: {
+    id: MODULE_TYPES.GROWTH,
+    name: '市场品牌增长专家',
+    icon: '🚀',
+    storageKey: 'dailyGrowth',
+    collection: 'dailyGrowths',
+    cacheEnabled: true,
+    colors: {
+      primary: '#E91E63',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#FCE4EC',
+      accent: '#E91E63',
+      text: '#C2185B',
+      textSecondary: '#E91E63',
+      bg: 'rgba(233, 30, 99, 0.1)',
+      shadow: 'rgba(233, 30, 99, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: '增长专家',
+    },
+    aiTags: ['增长', '营销'],
+    refreshText: '换一条',
+    loadingText: '增长专家正在为你分析...',
+    placeholderText: '点击「换一条」获取增长策略',
+    posterType: 'growth',
+    slogan: '数据驱动，敏捷增长',
+  },
+  [MODULE_TYPES.UI_DESIGNER]: {
+    id: MODULE_TYPES.UI_DESIGNER,
+    name: 'UI设计师专家',
+    icon: '🎨',
+    storageKey: 'dailyUiDesigner',
+    collection: 'dailyUiDesigners',
+    cacheEnabled: true,
+    colors: {
+      primary: '#9C27B0',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#F3E5F5',
+      accent: '#9C27B0',
+      text: '#6A1B9A',
+      textSecondary: '#9C27B0',
+      bg: 'rgba(156, 39, 176, 0.1)',
+      shadow: 'rgba(156, 39, 176, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: '设计专家',
+    },
+    aiTags: ['UI', '设计'],
+    refreshText: '换一条',
+    loadingText: 'UI设计专家正在为你讲解...',
+    placeholderText: '点击「换一条」获取设计灵感',
+    posterType: 'uiDesigner',
+    slogan: '用设计创造美好体验',
+  },
+  [MODULE_TYPES.FUTURES]: {
+    id: MODULE_TYPES.FUTURES,
+    name: '大宗贸易期货专家',
+    icon: '📊',
+    storageKey: 'dailyFutures',
+    collection: 'dailyFutures',
+    cacheEnabled: true,
+    colors: {
+      primary: '#FF5722',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#FBE9E7',
+      accent: '#FF5722',
+      text: '#D84315',
+      textSecondary: '#FF5722',
+      bg: 'rgba(255, 87, 34, 0.1)',
+      shadow: 'rgba(255, 87, 34, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: '期货专家',
+    },
+    aiTags: ['期货', '大宗商品'],
+    refreshText: '换一条',
+    loadingText: '期货专家正在为你分析...',
+    placeholderText: '点击「换一条」获取期货知识',
+    posterType: 'futures',
+    slogan: '洞察大宗，运筹期货',
+  },
+
   // 默认配置（首页/其他）
   home: {
     slogan: '每天一点，美好生活',

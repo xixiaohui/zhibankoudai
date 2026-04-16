@@ -202,6 +202,21 @@
       "id": "apple",
       "enabled": true,
       "order": 39
+    },
+    {
+      "id": "growth",
+      "enabled": true,
+      "order": 40
+    },
+    {
+      "id": "uiDesigner",
+      "enabled": true,
+      "order": 41
+    },
+    {
+      "id": "futures",
+      "enabled": true,
+      "order": 42
     }
   ]
 }

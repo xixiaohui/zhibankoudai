@@ -281,6 +281,27 @@
       "icon": "icon-apple",
       "color": "#007AFF",
       "count": 30
+    },
+    {
+      "id": "growth",
+      "name": "市场品牌增长专家",
+      "icon": "icon-growth",
+      "color": "#E91E63",
+      "count": 10
+    },
+    {
+      "id": "uiDesigner",
+      "name": "UI设计师专家",
+      "icon": "icon-ui",
+      "color": "#9C27B0",
+      "count": 10
+    },
+    {
+      "id": "futures",
+      "name": "大宗贸易期货专家",
+      "icon": "icon-futures",
+      "color": "#FF5722",
+      "count": 10
     }
   ]
 }

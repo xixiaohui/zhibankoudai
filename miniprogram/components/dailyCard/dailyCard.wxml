@@ -684,6 +684,57 @@
         </block>
       </view>
     </block>
+
+    <!-- 市场品牌增长专家 -->
+    <block wx:elif="{{moduleType === 'growth'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '🚀'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary || content.content}}</view>
+      <view class="trade-tips" wx:if="{{content.subtitle}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>💡 {{content.subtitle}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <!-- UI设计师专家 -->
+    <block wx:elif="{{moduleType === 'uiDesigner'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '🎨'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary || content.content}}</view>
+      <view class="trade-tips" wx:if="{{content.subtitle}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>💡 {{content.subtitle}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
+
+    <!-- 大宗贸易期货专家 -->
+    <block wx:elif="{{moduleType === 'futures'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '📊'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary || content.content}}</view>
+      <view class="trade-tips" wx:if="{{content.subtitle}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>💡 {{content.subtitle}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+    </block>
   </view>
 
   <!-- 加载状态 -->

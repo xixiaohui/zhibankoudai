@@ -1,0 +1,31 @@
+{
+  "id": "uiDesigner",
+  "name": "UI设计师专家",
+  "icon": "icon-ui",
+  "color": "#9C27B0",
+  "fields": [
+    { "id": "visual", "name": "视觉设计", "icon": "🎨" },
+    { "id": "interaction", "name": "交互设计", "icon": "🖱️" },
+    { "id": "brand", "name": "品牌设计", "icon": "🏷️" },
+    { "id": "motion", "name": "动效设计", "icon": "✨" },
+    { "id": "system", "name": "设计系统", "icon": "🧩" }
+  ],
+  "version": "1.0.0",
+  "updated": "2026-04-16",
+  "fallback": [
+    { "title": "Figma组件变体设计", "category": "设计系统", "categoryIcon": "🧩", "content": "组件变体（Variants）是Figma推出的强大功能，允许在同一组件内创建多个状态的组合。通过设置属性和变体，可以高效管理按钮、表单、卡片等组件的不同状态，大幅提升设计效率和一致性。", "subtitle": "提升组件复用性" },
+    { "title": "格式塔原则在UI中的应用", "category": "视觉设计", "categoryIcon": "🎨", "content": "格式塔心理学原则包括接近性、相似性、闭合性、连续性等，设计师可以利用这些原则引导用户视觉流向。良好的视觉层次让用户自然地按照设计师意图浏览页面，提升信息传达效率。", "subtitle": "视觉层次构建" },
+    { "title": "微交互设计细节", "category": "交互设计", "categoryIcon": "🖱️", "content": "微交互是指产品中那些细微但重要的交互细节，如按钮点击反馈、加载状态提示、下拉刷新动画等。优秀的微交互能够增强用户体验的愉悦感和信任度，让产品更加生动有趣。", "subtitle": "细节决定体验" },
+    { "title": "设计系统Token化", "category": "设计系统", "categoryIcon": "🧩", "content": "Design Token是设计属性的抽象概念，如颜色、间距、阴影等。通过Token化，设计系统可以在不同平台间保持一致性，同时便于主题切换和动态样式调整。", "subtitle": "设计一致性保障" },
+    { "title": "品牌视觉一致性", "category": "品牌设计", "categoryIcon": "🏷️", "content": "品牌视觉一致性是指在所有触点上保持统一的视觉语言，包括Logo使用、色彩体系、字体选择、图形元素等。一致性强的品牌能够建立用户认知和信任，提升品牌辨识度。", "subtitle": "品牌识别建设" },
+    { "title": "Spring动画原理", "category": "动效设计", "categoryIcon": "✨", "content": "弹性动画（Spring Animation）模拟物理弹簧效果，具有自然流畅的运动特性。相比线性动画，弹性动画更符合用户认知习惯，能为界面带来活力和趣味性。", "subtitle": "自然运动曲线" },
+    { "title": "栅格系统布局", "category": "视觉设计", "categoryIcon": "🎨", "content": "栅格系统是将页面划分为规律的网格结构，帮助设计师保持布局的对齐和间距一致性。合理的栅格设计能让页面看起来整洁有序，提升开发还原度和协作效率。", "subtitle": "网格化布局" },
+    { "title": "手势交互设计", "category": "交互设计", "categoryIcon": "🖱️", "content": "移动端手势交互包括点击、滑动、捏合、长按等。设计师需要考虑手势的直观性、反馈性和防误触性，为用户提供自然流畅的操作体验。", "subtitle": "触控体验优化" },
+    { "title": "图标设计规范", "category": "品牌设计", "categoryIcon": "🏷️", "content": "图标设计需要遵循统一的视觉风格，包括线宽、圆角、尺寸、透视角度等。完整的图标规范能够确保不同设计师产出风格统一的设计资产。", "subtitle": "图标风格统一" },
+    { "title": "Cubic-bezier贝塞尔曲线", "category": "动效设计", "categoryIcon": "✨", "content": "贝塞尔曲线是定义动画时间曲线的重要工具，通过调整控制点可以创造出各种运动效果。常用的预设曲线包括ease-in、ease-out、ease-in-out等。", "subtitle": "动画曲线控制" }
+  ],
+  "share": {
+    "title": "UI设计师专家",
+    "template": "{content}"
+  }
+}

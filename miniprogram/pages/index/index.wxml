@@ -170,6 +170,15 @@
   <!-- 果核学堂 - 配置ID: apple -->
   <daily-card moduleType="apple" />
 
+  <!-- 市场品牌增长专家 - 配置ID: growth -->
+  <daily-card moduleType="growth" />
+
+  <!-- UI设计师专家 - 配置ID: uiDesigner -->
+  <daily-card moduleType="uiDesigner" />
+
+  <!-- 大宗贸易期货专家 - 配置ID: futures -->
+  <daily-card moduleType="futures" />
+
   <!-- 快速陪伴入口 -->
   <view class="quick-modes-section">
     <view class="section-title">快速陪伴模式</view>

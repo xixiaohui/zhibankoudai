@@ -15,7 +15,7 @@ const MODULE_TYPES = {
   TAX: 'tax', LAW: 'law', OFFICIAL: 'official', HANDLING: 'handling',
   FLORAL: 'floral', HISTORY: 'history', MILITARY: 'military',
   STOCK: 'stock', ECONOMICS: 'economics', BUSINESS: 'business', NEWS: 'news',
-  APPLE: 'apple'
+  APPLE: 'apple', GROWTH: 'growth', UI_DESIGNER: 'uiDesigner', FUTURES: 'futures'
 }
 
 // 全局请求队列，控制同时发起的 AI 请求数量
@@ -436,6 +436,12 @@ Component({
               return await this._getDailyNews(refresh)
             case MODULE_TYPES.APPLE:
               return await this._getDailyApple(refresh)
+            case MODULE_TYPES.GROWTH:
+              return await this._getDailyGrowth(refresh)
+            case MODULE_TYPES.UI_DESIGNER:
+              return await this._getDailyUiDesigner(refresh)
+            case MODULE_TYPES.FUTURES:
+              return await this._getDailyFutures(refresh)
             default:
               throw new Error('未知的模块类型')
           }
@@ -1025,6 +1031,45 @@ Component({
       return content
     },
 
+    // 获取市场品牌增长专家
+    async _getDailyGrowth(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyGrowth')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateGrowth()
+      return content
+    },
+
+    // 获取UI设计师专家
+    async _getDailyUiDesigner(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyUiDesigner')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateUiDesigner()
+      return content
+    },
+
+    // 获取大宗贸易期货专家
+    async _getDailyFutures(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyFutures')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateFutures()
+      return content
+    },
+
     // 保存到云数据库
     async _saveToCloud(content) {
       const { moduleType } = this.data
@@ -1072,6 +1117,9 @@ Component({
           [MODULE_TYPES.BUSINESS]: 'dailyBusinesss',
           [MODULE_TYPES.NEWS]: 'dailyNewss',
           [MODULE_TYPES.APPLE]: 'dailyApples',
+          [MODULE_TYPES.GROWTH]: 'dailyGrowths',
+          [MODULE_TYPES.UI_DESIGNER]: 'dailyUiDesigners',
+          [MODULE_TYPES.FUTURES]: 'dailyFutures',
         }
 
         const collection = collectionMap[moduleType]
@@ -1264,6 +1312,18 @@ Component({
         case 'apple':
           url = `/pages/poster/index`
           params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🍎') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🍎')}`
+          break
+        case 'growth':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🚀') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🚀')}`
+          break
+        case 'uiDesigner':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🎨') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🎨')}`
+          break
+        case 'futures':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '📊') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '📊')}`
           break
       }
 
