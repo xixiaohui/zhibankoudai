@@ -57,6 +57,8 @@ const MODULE_TYPES = {
   FUTURES: 'futures', // 大宗贸易期货专家
   FREUD: 'freud', // 弗洛伊德学术专家
   FASHION_BRAND: 'fashionBrand', // 世界服装品牌大师
+  ROBOT_AI: 'robotAi', // 机器人AI专家
+  AMERICAN_EXPERT: 'americanExpert', // 美国通
 }
 
 // ─── 板块配置 ─────────────────────────────────────────────────────
@@ -1351,6 +1353,64 @@ const MODULE_CONFIGS = {
     placeholderText: '点击「换一条」探索品牌世界',
     posterType: 'fashionBrand',
     slogan: '解读世界名品，品味时尚生活',
+  },
+
+  [MODULE_TYPES.ROBOT_AI]: {
+    id: MODULE_TYPES.ROBOT_AI,
+    name: '机器人AI专家',
+    icon: '🤖',
+    storageKey: 'dailyRobotAi',
+    collection: 'dailyRobotAi',
+    cacheEnabled: true,
+    colors: {
+      primary: '#7C4DFF',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#EDE7F6',
+      accent: '#7C4DFF',
+      text: '#4A148C',
+      textSecondary: '#7C4DFF',
+      bg: 'rgba(124, 77, 255, 0.1)',
+      shadow: 'rgba(124, 77, 255, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: 'AI专家',
+    },
+    aiTags: ['AI', '机器人', '科技'],
+    refreshText: '换一条',
+    loadingText: 'AI专家正在为你解读...',
+    placeholderText: '点击「换一条」探索AI世界',
+    posterType: 'robotAi',
+    slogan: '探索人工智能，洞察科技前沿',
+  },
+
+  [MODULE_TYPES.AMERICAN_EXPERT]: {
+    id: MODULE_TYPES.AMERICAN_EXPERT,
+    name: '美国通',
+    icon: '🗽',
+    storageKey: 'dailyAmericanExpert',
+    collection: 'dailyAmericanExpert',
+    cacheEnabled: true,
+    colors: {
+      primary: '#3F51B5',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#E8EAF6',
+      accent: '#3F51B5',
+      text: '#1A237E',
+      textSecondary: '#3F51B5',
+      bg: 'rgba(63, 81, 181, 0.1)',
+      shadow: 'rgba(63, 81, 181, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: '美国通',
+    },
+    aiTags: ['美国', '文化', '知识'],
+    refreshText: '换一条',
+    loadingText: '美国专家正在为你解读...',
+    placeholderText: '点击「换一条」探索美国文化',
+    posterType: 'americanExpert',
+    slogan: '深度解读美国，拓宽国际视野',
   },
 
   // 默认配置（首页/其他）

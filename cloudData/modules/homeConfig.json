@@ -227,6 +227,16 @@
       "id": "fashionBrand",
       "enabled": true,
       "order": 44
+    },
+    {
+      "id": "robotAi",
+      "enabled": true,
+      "order": 45
+    },
+    {
+      "id": "americanExpert",
+      "enabled": true,
+      "order": 46
     }
   ]
 }

@@ -167,6 +167,12 @@
   <!-- 新闻助手 - 配置ID: news -->
   <daily-card moduleType="news" />
 
+  <!-- 机器人AI专家 - 配置ID: robotAi -->
+  <daily-card moduleType="robotAi" />
+
+  <!-- 美国通 - 配置ID: americanExpert -->
+  <daily-card moduleType="americanExpert" />
+
   <!-- 果核学堂 - 配置ID: apple -->
   <daily-card moduleType="apple" />
 

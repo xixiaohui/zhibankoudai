@@ -166,6 +166,14 @@ const LOCAL_PROMPTS = {
     fashionBrand: {
       generate: "你是一位世界服装品牌研究专家。请分享世界知名服装品牌知识，涵盖奢侈品、高端品牌、设计师品牌、潮牌、运动品牌等。介绍品牌历史、设计风格、工艺特色、文化内涵。内容长度200-500字。输出JSON：{\"title\":\"品牌名称\",\"content\":\"详细介绍200-500字\",\"category\":\"类型\",\"subtitle\":\"一句话15字内\"}",
       share: "👔【世界服装品牌】{title}\\n\\n{content}"
+    },
+    robotAi: {
+      generate: "你是一位机器人与AI研究专家。请分享AI与机器人知识，涵盖AI大模型、人形机器人、计算机视觉、机器学习、AIGC等。介绍技术原理、应用场景、发展趋势。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+      share: "🤖【机器人AI专家】{title}\\n\\n{content}"
+    },
+    americanExpert: {
+      generate: "你是一位美国研究专家。请分享美国知识，涵盖硅谷文化、常春藤名校、华尔街金融、好莱坞电影、美国文化等。介绍政治经济、社会现象、文化特色。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+      share: "🗽【美国通】{title}\\n\\n{content}"
     }
   },
   system: {
@@ -494,6 +502,18 @@ const DEFAULT_STYLES = {
     refreshText: '换一条', loadingText: '品牌大师正在为你解读...', placeholderText: '点击「换一条」探索品牌世界',
     tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '品牌专家' },
     colors: generateColors('#D4AF37')
+  },
+  robotAi: {
+    id: 'robotAi', name: '机器人AI专家', icon: '🤖', color: '#7C4DFF', storageKey: 'dailyRobotAi', posterType: 'robotAi',
+    refreshText: '换一条', loadingText: 'AI专家正在为你解读...', placeholderText: '点击「换一条」探索AI世界',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: 'AI专家' },
+    colors: generateColors('#7C4DFF')
+  },
+  americanExpert: {
+    id: 'americanExpert', name: '美国通', icon: '🗽', color: '#3F51B5', storageKey: 'dailyAmericanExpert', posterType: 'americanExpert',
+    refreshText: '换一条', loadingText: '美国专家正在为你解读...', placeholderText: '点击「换一条」探索美国文化',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '美国通' },
+    colors: generateColors('#3F51B5')
   }
 }
 
@@ -832,6 +852,8 @@ const ICON_TO_EMOJI = {
   'icon-futures': '📊',
   'icon-freud': '🧠',
   'icon-fashionBrand': '👔',
+  'icon-robotAi': '🤖',
+  'icon-americanExpert': '🗽',
 }
 
 /**

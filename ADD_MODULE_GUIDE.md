@@ -148,14 +148,56 @@
 
 ---
 
-### 步骤6：上传云存储
+### 步骤6：上传云存储（重要！）
 
-使用 CloudBase MCP 工具上传以下文件：
-- `cloudData/modules/{moduleId}.json`
-- `cloudData/modules/index.json`
-- `cloudData/config/homeModules.json`
-- `cloudData/modules/homeConfig.json`
-- `cloudData/prompts/aiPrompts.json`
+**必须上传以下文件到云存储，否则客户端无法拉取最新配置**
+
+#### 上传路径：`cloudData/`
+
+需要上传的5个文件：
+| 序号 | 本地文件 | 云存储路径 |
+|:----:|----------|------------|
+| 1 | `cloudData/modules/{moduleId}.json` | `cloudData/modules/{moduleId}.json` |
+| 2 | `cloudData/modules/index.json` | `cloudData/modules/index.json` |
+| 3 | `cloudData/config/homeModules.json` | `cloudData/config/homeModules.json` |
+| 4 | `cloudData/modules/homeConfig.json` | `cloudData/modules/homeConfig.json` |
+| 5 | `cloudData/prompts/aiPrompts.json` | `cloudData/prompts/aiPrompts.json` |
+
+#### 上传方式
+
+**方式1：微信开发者工具（推荐）**
+
+1. 打开微信开发者工具
+2. 点击顶部「云开发」按钮，进入云开发控制台
+3. 左侧菜单选择「存储」
+4. 点击「上传文件」
+5. 依次上传上述5个文件到 `cloudData/` 目录下
+
+**方式2：CloudBase CLI**
+
+```bash
+# 安装 CloudBase CLI
+npm install -g @cloudbase/cli
+
+# 登录
+tcb login
+
+# 上传 cloudData 目录
+tcb storage upload ./cloudData cloudData --envId 你的环境ID
+```
+
+**方式3：MCP 工具（实验性）**
+
+```json
+{
+  "action": "upload",
+  "localPath": "cloudData",
+  "cloudPath": "cloudData",
+  "isDirectory": true
+}
+```
+
+⚠️ **注意**：新增模块后必须重新上传这些文件，客户端才能拉取到最新配置。
 
 ---
 

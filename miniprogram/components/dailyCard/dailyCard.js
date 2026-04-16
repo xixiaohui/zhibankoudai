@@ -16,7 +16,7 @@ const MODULE_TYPES = {
   FLORAL: 'floral', HISTORY: 'history', MILITARY: 'military',
   STOCK: 'stock', ECONOMICS: 'economics', BUSINESS: 'business', NEWS: 'news',
   APPLE: 'apple', GROWTH: 'growth', UI_DESIGNER: 'uiDesigner', FUTURES: 'futures',
-  FREUD: 'freud', FASHION_BRAND: 'fashionBrand'
+  FREUD: 'freud', FASHION_BRAND: 'fashionBrand', ROBOT_AI: 'robotAi', AMERICAN_EXPERT: 'americanExpert'
 }
 
 // 全局请求队列，控制同时发起的 AI 请求数量
@@ -447,6 +447,10 @@ Component({
               return await this._getDailyFreud(refresh)
             case MODULE_TYPES.FASHION_BRAND:
               return await this._getDailyFashionBrand(refresh)
+            case MODULE_TYPES.ROBOT_AI:
+              return await this._getDailyRobotAi(refresh)
+            case MODULE_TYPES.AMERICAN_EXPERT:
+              return await this._getDailyAmericanExpert(refresh)
             default:
               throw new Error('未知的模块类型')
           }
@@ -1101,6 +1105,32 @@ Component({
       return content
     },
 
+    // 获取机器人AI专家
+    async _getDailyRobotAi(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyRobotAi')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateRobotAi()
+      return content
+    },
+
+    // 获取美国通
+    async _getDailyAmericanExpert(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyAmericanExpert')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateAmericanExpert()
+      return content
+    },
+
     // 保存到云数据库
     async _saveToCloud(content) {
       const { moduleType } = this.data
@@ -1153,6 +1183,8 @@ Component({
           [MODULE_TYPES.FUTURES]: 'dailyFutures',
           [MODULE_TYPES.FREUD]: 'dailyFreud',
           [MODULE_TYPES.FASHION_BRAND]: 'dailyFashionBrand',
+          [MODULE_TYPES.ROBOT_AI]: 'dailyRobotAi',
+          [MODULE_TYPES.AMERICAN_EXPERT]: 'dailyAmericanExpert',
         }
 
         const collection = collectionMap[moduleType]
@@ -1365,6 +1397,14 @@ Component({
         case 'fashionBrand':
           url = `/pages/poster/index`
           params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '👔') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '👔')}`
+          break
+        case 'robotAi':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🤖') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🤖')}`
+          break
+        case 'americanExpert':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🗽') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🗽')}`
           break
       }
 

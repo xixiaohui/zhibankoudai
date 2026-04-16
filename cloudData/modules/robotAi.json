@@ -1,0 +1,63 @@
+{
+  "id": "robotAi",
+  "name": "机器人AI专家",
+  "icon": "icon-robotAi",
+  "color": "#7C4DFF",
+  "fields": [
+    { "id": "aiNews", "name": "AI动态", "icon": "🤖" },
+    { "id": "robotTech", "name": "机器人技术", "icon": "🦾" },
+    { "id": "aiApplication", "name": "AI应用", "icon": "💡" },
+    { "id": "futureTech", "name": "未来科技", "icon": "🔮" },
+    { "id": "aiEthics", "name": "AI伦理", "icon": "⚖️" }
+  ],
+  "version": "1.0.0",
+  "updated": "2026-04-16",
+  "fallback": [
+    {
+      "title": "大语言模型",
+      "category": "AI动态",
+      "categoryIcon": "🤖",
+      "content": "大语言模型（Large Language Model）是基于深度学习技术训练的自然语言处理模型。它们通过学习海量文本数据，能够理解和生成人类语言，完成写作、翻译、问答、代码生成等多种任务。ChatGPT、Claude等都是典型的大语言模型应用。",
+      "subtitle": "AI时代的新里程碑"
+    },
+    {
+      "title": "人形机器人",
+      "category": "机器人技术",
+      "categoryIcon": "🦾",
+      "content": "人形机器人是模仿人类外形和行为的智能机器人。它们具备双足行走、双手操作、自然对话等能力，被广泛应用于家庭服务、医疗护理、工业制造等领域。波士顿动力的Atlas、特斯拉的Optimus都是人形机器人的代表。",
+      "subtitle": "科技改变生活的伙伴"
+    },
+    {
+      "title": "计算机视觉",
+      "category": "AI应用",
+      "categoryIcon": "👁️",
+      "content": "计算机视觉是让机器具备“看懂”世界的能力。通过深度学习算法，AI可以识别图像中的物体、人脸、文字，甚至理解视频中的动作和场景。这项技术已广泛应用于自动驾驶、医学影像诊断、安防监控等领域。",
+      "subtitle": "赋予机器感知世界的眼睛"
+    },
+    {
+      "title": "强化学习",
+      "category": "AI技术",
+      "categoryIcon": "🎮",
+      "content": "强化学习是一种让AI通过试错学习决策的方法。智能体在环境中执行动作，根据奖励信号调整策略，最终学会完成复杂任务。AlphaGo击败围棋冠军就是强化学习的杰作，未来可应用于机器人控制、金融交易等领域。",
+      "subtitle": "让AI在试错中成长"
+    },
+    {
+      "title": "AI生成内容",
+      "category": "AI应用",
+      "categoryIcon": "✨",
+      "content": "AIGC（AI Generated Content）指利用人工智能技术自动生成文本、图像、音乐、视频等内容。Midjourney生成图片、ChatGPT写作、Suno创作音乐都是AIGC的典型应用。这项技术正在深刻改变内容创作行业的工作方式。",
+      "subtitle": "人工智能赋能创意产业"
+    },
+    {
+      "title": "机器学习",
+      "category": "AI技术",
+      "categoryIcon": "🧮",
+      "content": "机器学习是人工智能的核心分支，让计算机通过数据学习规律而非显式编程。它包括监督学习、无监督学习、强化学习等多种范式，被广泛应用于推荐系统、金融风控、医疗诊断、智能交通等领域。",
+      "subtitle": "让数据成为智能的源泉"
+    }
+  ],
+  "share": {
+    "title": "机器人AI专家",
+    "template": "{content}"
+  }
+}

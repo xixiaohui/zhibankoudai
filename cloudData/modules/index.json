@@ -316,6 +316,20 @@
       "icon": "icon-fashionBrand",
       "color": "#D4AF37",
       "count": 10
+    },
+    {
+      "id": "robotAi",
+      "name": "机器人AI专家",
+      "icon": "icon-robotAi",
+      "color": "#7C4DFF",
+      "count": 10
+    },
+    {
+      "id": "americanExpert",
+      "name": "美国通",
+      "icon": "icon-americanExpert",
+      "color": "#3F51B5",
+      "count": 10
     }
   ]
 }
