@@ -734,7 +734,7 @@
 
 /* ==================== 爱情内容 ==================== */
 .love-content {
-  font-size: 36rpx;
+  font-size: var(--font-size-lg);
   font-style: italic;
   color: var(--text-primary);
   line-height: 1.7;

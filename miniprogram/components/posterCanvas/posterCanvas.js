@@ -45,6 +45,20 @@ Component({
       value: ''
     },
 
+    // 用户信息
+    userName: {
+      type: String,
+      value: ''
+    },
+    timestamp: {
+      type: String,
+      value: ''
+    },
+    userId: {
+      type: String,
+      value: ''
+    },
+
     qrCodeUrl: {
       type: String,
       value: ''
@@ -138,7 +152,7 @@ Component({
   },
 
   observers: {
-    'template,themePreset,title,subtitle,author,content,icon,moduleName,qrCodeUrl,footerText,subFooterText,autoGenerate,backgroundColor,titleColor,accentColor,contentFontSize,contentMaxLines,qrCodeSize,radius,enableShadow,shadowColor,shadowBlur,shadowOffsetX,shadowOffsetY': function () {
+    'template,themePreset,title,subtitle,author,content,icon,moduleName,userName,timestamp,qrCodeUrl,footerText,subFooterText,autoGenerate,backgroundColor,titleColor,accentColor,contentFontSize,contentMaxLines,qrCodeSize,radius,enableShadow,shadowColor,shadowBlur,shadowOffsetX,shadowOffsetY': function () {
       if (!this.data.autoGenerate) return
       this.debounceGenerate()
     }
@@ -498,6 +512,8 @@ Component({
         footerText,
         subFooterText,
         moduleName,
+        userName,
+        timestamp,
         qrCodeSize,
         radius,
         enableShadow,
@@ -543,6 +559,20 @@ Component({
         ctx.fillStyle = theme.textSoft
         ctx.font = '20px sans-serif'
         ctx.fillText(subFooterText, 68, textY)
+        textY += 32
+      }
+
+      // 绘制用户名字和时间戳
+      if (userName || timestamp) {
+        ctx.fillStyle = theme.textLight
+        ctx.font = '18px sans-serif'
+        if (userName) {
+          ctx.fillText(userName, 68, textY)
+        }
+        if (timestamp) {
+          const timeText = userName ? ` · ${timestamp}` : timestamp
+          ctx.fillText(timeText, userName ? 68 + ctx.measureText(userName).width + 8 : 68, textY)
+        }
       }
 
       ctx.restore()
@@ -730,6 +760,8 @@ Component({
         qrCodeUrl,
         footerText,
         subFooterText,
+        userName,
+        timestamp,
         qrCodeSize,
         radius,
         enableShadow,
@@ -759,6 +791,20 @@ Component({
       ctx.fillStyle = theme.accent
       ctx.font = '18px sans-serif'
       ctx.fillText('SCAN TO READ', 84, baseY + 74)
+
+      // 绘制用户名字和时间戳
+      if (userName || timestamp) {
+        ctx.fillStyle = theme.textLight
+        ctx.font = '16px sans-serif'
+        const userInfoY = baseY + 100
+        if (userName) {
+          ctx.fillText(userName, 84, userInfoY)
+        }
+        if (timestamp) {
+          const startX = userName ? 84 + ctx.measureText(userName).width + 10 : 84
+          ctx.fillText(timestamp, startX, userInfoY)
+        }
+      }
 
       ctx.restore()
 

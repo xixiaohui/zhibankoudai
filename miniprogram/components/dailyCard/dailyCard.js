@@ -1,6 +1,7 @@
 // components/dailyCard/dailyCard.js - 每日内容卡片组件
 const cloudData = require('../../utils/cloudData.js')
 const { DailyContent } = require('../../utils/dailyContent.js')
+const { getUserId, getNickname } = require('../../utils/userManager.js')
 
 // 兼容旧常量
 const MODULE_TYPES = {
@@ -1243,10 +1244,18 @@ Component({
         const collection = collectionMap[moduleType]
         if (!collection) return
 
+        // 获取用户信息
+        const userId = await getUserId()
+        const nickname = getNickname()
+        
         await db.collection(collection).add({
           data: {
             ...content,
             createdAt: db.serverDate(),
+            // 用户标识，方便统计查询
+            userId: userId,
+            userName: nickname,
+            userNickname: nickname,
           }
         })
         console.log(`[DailyCard] 内容已保存到云数据库 (${collection})`)

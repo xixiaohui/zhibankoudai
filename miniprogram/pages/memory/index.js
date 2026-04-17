@@ -1,6 +1,7 @@
 // pages/memory/index.js - 口袋记忆页面
 const app = getApp()
 const util = require('../../utils/util.js')
+const { syncNickname } = require('../../utils/userManager.js')
 
 Page({
   data: {
@@ -149,6 +150,9 @@ Page({
       isEditingProfile: false,
       editProfileData: {},
     })
+    
+    // 同步昵称到云端
+    syncNickname(profile.nickname).catch(e => console.warn('昵称同步失败:', e))
     
     wx.showToast({ title: '资料已更新', icon: 'success' })
   },

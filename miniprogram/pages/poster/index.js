@@ -3,6 +3,7 @@
 // 适配 posterCanvas 组件和 dailyCard 组件的完整功能
 
 const { MODULE_CONFIGS } = require('../../utils/dailyModule.js')
+const { getUserId, getNickname } = require('../../utils/userManager.js')
 
 Page({
   data: {
@@ -19,6 +20,10 @@ Page({
       footerText: '长按识别二维码',
       subFooterText: '',
       moduleName: '',     // 模块名称（显示在slogan下方）
+      
+      // 【用户信息】
+      userName: '',       // 用户名字
+      timestamp: '',     // 时间戳
       
       // 【样式配置】
       backgroundColor: '#F8F4EC',
@@ -132,6 +137,29 @@ Page({
       : decoded;
   },
 
+  /**
+   * 获取用户信息（昵称、用户ID和时间戳）
+   */
+  async getUserInfo() {
+    // 获取当前时间戳
+    const now = new Date()
+    const year = now.getFullYear()
+    const month = String(now.getMonth() + 1).padStart(2, '0')
+    const day = String(now.getDate()).padStart(2, '0')
+    const hours = String(now.getHours()).padStart(2, '0')
+    const minutes = String(now.getMinutes()).padStart(2, '0')
+    const timestamp = `${year}.${month}.${day} ${hours}:${minutes}`
+    
+    // 获取用户昵称
+    const nickname = getNickname()
+    const userName = nickname || '智伴用户'
+    
+    // 获取用户ID
+    const userId = await getUserId()
+    
+    return { userName, nickname, userId, timestamp }
+  },
+
   async initPosterData(options) {
     // 保存原始参数
     console.log('【海报页面】原始参数:', options)
@@ -170,6 +198,9 @@ Page({
     const slogan = this.getModuleSlogan(type)
     const moduleName = this.getModuleName(type)
     
+    // 获取用户信息（异步）
+    const userInfo = await this.getUserInfo()
+    
     // 先设置基础配置，让组件可以渲染
     const posterConfig = {
       ...this.data.posterConfig,
@@ -184,6 +215,11 @@ Page({
       footerText: slogan,
       subFooterText: '',
       moduleName: moduleName,
+      
+      // 用户信息
+      userId: userInfo.userId,
+      userName: userInfo.userName,
+      timestamp: userInfo.timestamp,
       
       // 样式：优先使用URL参数，其次使用类型默认值
       backgroundColor: bgColor ? decodeURIComponent(bgColor) : colorScheme.backgroundColor,

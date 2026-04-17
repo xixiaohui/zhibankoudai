@@ -1,6 +1,7 @@
 // miniprogram/app.js
 const util = require('./utils/util.js')
 const cloudData = require('./utils/cloudData.js')
+const { initUser } = require('./utils/userManager.js')
 
 App({
   globalData: {
@@ -54,6 +55,9 @@ App({
       // 初始化云端数据（异步，不阻塞UI）
       console.log('[App] 调用 cloudData.init()')
       cloudData.init()
+      
+      // 初始化用户（获取或创建用户ID，同步昵称到云端）
+      initUser().catch(e => console.warn('[App] 用户初始化失败:', e))
     }
     
     // 初始化本地存储

@@ -40,6 +40,15 @@ const CLOUD_PATH = {
 // 云环境ID
 const CLOUD_ENV = 'zhiban-4g34epre1ce6ce1c.7a68-zhiban-4g34epre1ce6ce1c-1415458762'
 
+// 存储键
+const STORAGE_KEYS = {
+  PROMPTS_VERSION: 'cloudData_prompts_version',
+  LAST_CHECK_TIME: 'cloudData_prompts_check_time'
+}
+
+// 版本检查间隔（毫秒），避免频繁检查，默认 5 分钟
+const VERSION_CHECK_INTERVAL = 5 * 60 * 1000
+
 // 内存缓存
 let moduleCache = {}       // { moduleId: moduleData }
 let indexCache = null      // 模块索引
@@ -48,6 +57,7 @@ let homeConfigCache = null // 首页配置
 let promptsCache = null    // AI提示词
 let isInitialized = false
 let initPromise = null
+let versionCheckPending = false  // 防止并发检查
 
 // ─── 本地备用配置（云存储不可用时使用）─────────────────────────────
 
@@ -705,9 +715,23 @@ async function loadPrompts() {
     })
     const data = await readFile(res.tempFilePath)
     promptsCache = JSON.parse(data)
+    
     // 支持两种数据结构：prompts.modules 或 prompts（直接是模块对象）
     const promptsObj = promptsCache?.prompts || promptsCache?.modules || {}
     console.log(`[CloudData] 加载AI提示词: ${Object.keys(promptsObj).length} 个`)
+    
+    // 保存版本号到本地存储
+    const version = promptsCache?.version
+    if (version) {
+      try {
+        wx.setStorageSync(STORAGE_KEYS.PROMPTS_VERSION, version)
+        wx.setStorageSync(STORAGE_KEYS.LAST_CHECK_TIME, Date.now())
+        console.log(`[CloudData] 保存提示词版本: ${version}`)
+      } catch (e) {
+        console.warn('[CloudData] 保存版本失败:', e)
+      }
+    }
+    
     return promptsCache
   } catch (e) {
     console.warn('[CloudData] 云端AI提示词不可用，使用本地提示词')
@@ -717,11 +741,77 @@ async function loadPrompts() {
 }
 
 /**
- * 获取AI提示词
+ * 检查提示词版本并自动刷新（异步，不阻塞主流程）
+ * @param {boolean} force - 是否强制刷新
+ */
+async function checkPromptVersion(force = false) {
+  // 防止并发检查
+  if (versionCheckPending) return
+  versionCheckPending = true
+  
+  try {
+    // 非强制模式下，检查是否在检查间隔内
+    if (!force) {
+      const lastCheck = wx.getStorageSync(STORAGE_KEYS.LAST_CHECK_TIME) || 0
+      if (Date.now() - lastCheck < VERSION_CHECK_INTERVAL) {
+        return  // 间隔内，跳过检查
+      }
+    }
+    
+    // 获取云端最新版本
+    const res = await wx.cloud.downloadFile({
+      fileID: getCloudID(CLOUD_PATH.AI_PROMPTS)
+    })
+    const data = await readFile(res.tempFilePath)
+    const cloudVersion = data?.version
+    const localVersion = wx.getStorageSync(STORAGE_KEYS.PROMPTS_VERSION)
+    
+    // 更新检查时间
+    wx.setStorageSync(STORAGE_KEYS.LAST_CHECK_TIME, Date.now())
+    
+    // 版本不一致，刷新缓存
+    if (cloudVersion && cloudVersion !== localVersion) {
+      console.log(`[CloudData] 发现新版本提示词: ${localVersion} -> ${cloudVersion}`)
+      promptsCache = JSON.parse(data)
+      
+      // 保存新版本号
+      wx.setStorageSync(STORAGE_KEYS.PROMPTS_VERSION, cloudVersion)
+      
+      console.log('[CloudData] 提示词缓存已自动刷新')
+    } else {
+      console.log(`[CloudData] 提示词版本一致: ${cloudVersion || localVersion}`)
+    }
+  } catch (e) {
+    console.warn('[CloudData] 版本检查失败:', e)
+  } finally {
+    versionCheckPending = false
+  }
+}
+
+/**
+ * 强制重新加载AI提示词（更新云存储后调用此方法刷新缓存）
+ * @returns {Promise<object>} 重新加载后的提示词数据
+ */
+async function reloadPrompts() {
+  promptsCache = null
+  console.log('[CloudData] 正在重新加载AI提示词...')
+  await loadPrompts()
+  console.log('[CloudData] AI提示词已刷新')
+  return promptsCache
+}
+
+/**
+ * 获取AI提示词（自动检查版本更新）
  * @param {string} moduleId - 模块ID
+ * @param {boolean} checkVersion - 是否检查版本更新，默认 true
  * @returns {object|null} 提示词配置 { generate, share } 或 null
  */
-function getPrompt(moduleId) {
+function getPrompt(moduleId, checkVersion = true) {
+  // 异步检查版本更新（不阻塞返回）
+  if (checkVersion && promptsCache) {
+    checkPromptVersion().catch(() => {})
+  }
+  
   // 支持两种数据结构：prompts.modules.xxx 或 prompts.xxx
   const promptObj = promptsCache?.prompts || promptsCache?.modules || {}
   return promptObj[moduleId] || null
@@ -1064,6 +1154,8 @@ module.exports = {
   init,
   initAsync,
   clearCache,
+  reloadPrompts,
+  checkPromptVersion,
   
   // 模块数据
   getModule,
