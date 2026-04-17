@@ -59,13 +59,16 @@ const MODULE_TYPES = {
   FASHION_BRAND: 'fashionBrand', // 世界服装品牌大师
   ROBOT_AI: 'robotAi', // 机器人AI专家
   AMERICAN_EXPERT: 'americanExpert', // 美国通
+  XIN_STUDY: 'xinStudy', // 心学大师
+  LI_STUDY: 'liStudy', // 理学大师
+  WISDOM_BAG: 'wisdomBag', // 智慧锦囊
 }
 
 // ─── 板块配置 ─────────────────────────────────────────────────────
 const MODULE_CONFIGS = {
-  [MODULE_TYPES.QUOTE]: {
+  [MODULE_TYPES.QUOTE]: {  
     id: MODULE_TYPES.QUOTE,
-    name: '时光絮语',
+    name: '今日名言',
     icon: '📜',
     storageKey: 'dailyQuote',
     collection: 'dailyQuotes',
@@ -95,8 +98,8 @@ const MODULE_CONFIGS = {
   },
 
   [MODULE_TYPES.JOKE]: {
-    id: MODULE_TYPES.JOKE,
-    name: '段子时光',
+    id: MODULE_TYPES.JOKE,       
+    name: '今日段子',
     icon: '😂',
     storageKey: 'dailyJoke',
     collection: 'dailyJokes',
@@ -124,9 +127,9 @@ const MODULE_CONFIGS = {
     slogan: '笑一笑，十年少',
   },
 
-  [MODULE_TYPES.PSYCHOLOGY]: {
+  [MODULE_TYPES.PSYCHOLOGY]: {  
     id: MODULE_TYPES.PSYCHOLOGY,
-    name: '心灵解语',
+    name: '每日心理学',
     icon: '🧠',
     storageKey: 'dailyPsychology',
     collection: 'dailyPsychology',
@@ -153,9 +156,9 @@ const MODULE_CONFIGS = {
     slogan: '了解内心，遇见更好的自己',
   },
 
-  [MODULE_TYPES.FINANCE]: {
-    id: MODULE_TYPES.FINANCE,
-    name: '财富视界',
+  [MODULE_TYPES.FINANCE]: {    
+    id: MODULE_TYPES.FINANCE,   
+    name: '每日金融',
     icon: '💰',
     storageKey: 'dailyFinance',
     collection: 'dailyFinance',
@@ -182,9 +185,9 @@ const MODULE_CONFIGS = {
     slogan: '开启财富自由之路',
   },
 
-  [MODULE_TYPES.LOVE]: {
-    id: MODULE_TYPES.LOVE,
-    name: '心动絮语',
+  [MODULE_TYPES.LOVE]: {        
+    id: MODULE_TYPES.LOVE,      
+    name: '每日情话',
     icon: '💕',
     storageKey: 'dailyLove',
     collection: 'dailyLoves',
@@ -211,9 +214,9 @@ const MODULE_CONFIGS = {
     slogan: '用爱点亮每一天',
   },
 
-  [MODULE_TYPES.MOVIE]: {
-    id: MODULE_TYPES.MOVIE,
-    name: '光影流年',
+  [MODULE_TYPES.MOVIE]: {       
+    id: MODULE_TYPES.MOVIE,     
+    name: '每日电影',
     icon: '🎬',
     storageKey: 'dailyMovie',
     collection: 'dailyMovies',
@@ -243,9 +246,9 @@ const MODULE_CONFIGS = {
     slogan: '光影之间，遇见故事',
   },
 
-  [MODULE_TYPES.MUSIC]: {
-    id: MODULE_TYPES.MUSIC,
-    name: '旋律时光',
+  [MODULE_TYPES.MUSIC]: {       
+    id: MODULE_TYPES.MUSIC,     
+    name: '每日音乐',
     icon: '🎵',
     storageKey: 'dailyMusic',
     collection: 'dailyMusics',
@@ -275,9 +278,9 @@ const MODULE_CONFIGS = {
     slogan: '用音符治愈心灵',
   },
 
-  [MODULE_TYPES.TECH]: {
+  [MODULE_TYPES.TECH]: {        
     id: MODULE_TYPES.TECH,
-    name: '科技探趣',
+    name: '每日科技',
     icon: '🔬',
     storageKey: 'dailyTech',
     collection: 'dailyTechs',
@@ -306,7 +309,7 @@ const MODULE_CONFIGS = {
 
   [MODULE_TYPES.TCM]: {
     id: MODULE_TYPES.TCM,
-    name: '本草心语',
+    name: '每日中医',
     icon: '🌿',
     storageKey: 'dailyTcm',
     collection: 'dailyTcms',
@@ -335,7 +338,7 @@ const MODULE_CONFIGS = {
 
   [MODULE_TYPES.TRAVEL]: {
     id: MODULE_TYPES.TRAVEL,
-    name: '行旅日志',
+    name: '旅行日记',
     icon: '🌍',
     storageKey: 'dailyTravel',
     collection: 'dailyTravels',
@@ -365,7 +368,7 @@ const MODULE_CONFIGS = {
 
   [MODULE_TYPES.FORTUNE]: {
     id: MODULE_TYPES.FORTUNE,
-    name: '卦象玄机',
+    name: '每日一卦',
     icon: '🔮',
     storageKey: 'dailyFortune',
     collection: 'dailyFortunes',
@@ -394,7 +397,7 @@ const MODULE_CONFIGS = {
 
   [MODULE_TYPES.LITERATURE]: {
     id: MODULE_TYPES.LITERATURE,
-    name: '书卷时光',
+    name: '每日文学',
     icon: '📚',
     storageKey: 'dailyLiterature',
     collection: 'dailyLiteratures',
@@ -424,7 +427,7 @@ const MODULE_CONFIGS = {
 
   [MODULE_TYPES.FOREIGN_TRADE]: {
     id: MODULE_TYPES.FOREIGN_TRADE,
-    name: '贸商絮语',
+    name: '外贸助手',
     icon: '💼',
     storageKey: 'dailyForeignTrade',
     collection: 'dailyForeignTrades',
@@ -453,7 +456,7 @@ const MODULE_CONFIGS = {
 
   [MODULE_TYPES.ECOMMERCE]: {
     id: MODULE_TYPES.ECOMMERCE,
-    name: '电商智囊',
+    name: '电商运营助手',
     icon: '🛒',
     storageKey: 'dailyECommerce',
     collection: 'dailyECommerces',
@@ -482,7 +485,7 @@ const MODULE_CONFIGS = {
 
   [MODULE_TYPES.MATH]: {
     id: MODULE_TYPES.MATH,
-    name: '数理学堂',
+    name: '中学数学助手',
     icon: '📐',
     storageKey: 'dailyMath',
     collection: 'dailyMaths',
@@ -511,7 +514,7 @@ const MODULE_CONFIGS = {
 
   [MODULE_TYPES.ENGLISH]: {
     id: MODULE_TYPES.ENGLISH,
-    name: '英语花园',
+    name: '中学英语助手',
     icon: '📚',
     storageKey: 'dailyEnglish',
     collection: 'dailyEnglishes',
@@ -540,7 +543,7 @@ const MODULE_CONFIGS = {
 
   [MODULE_TYPES.PROGRAMMING]: {
     id: MODULE_TYPES.PROGRAMMING,
-    name: '代码工坊',
+    name: '计算机编程助手',
     icon: '💻',
     storageKey: 'dailyProgramming',
     collection: 'dailyProgrammings',
@@ -569,7 +572,7 @@ const MODULE_CONFIGS = {
 
   [MODULE_TYPES.PHOTOGRAPHY]: {
     id: MODULE_TYPES.PHOTOGRAPHY,
-    name: '光影捕手',
+    name: '摄影达人',
     icon: '📷',
     storageKey: 'dailyPhotography',
     collection: 'dailyPhotographies',
@@ -598,7 +601,7 @@ const MODULE_CONFIGS = {
 
   [MODULE_TYPES.BEAUTY]: {
     id: MODULE_TYPES.BEAUTY,
-    name: '美颜日志',
+    name: '美妆达人',
     icon: '💄',
     storageKey: 'dailyBeauty',
     collection: 'dailyBeauties',
@@ -627,7 +630,7 @@ const MODULE_CONFIGS = {
 
   [MODULE_TYPES.INVESTMENT]: {
     id: MODULE_TYPES.INVESTMENT,
-    name: '财富密码',
+    name: '投资理财达人',
     icon: '💰',
     storageKey: 'dailyInvestment',
     collection: 'dailyInvestments',
@@ -656,7 +659,7 @@ const MODULE_CONFIGS = {
 
   [MODULE_TYPES.FISHING]: {
     id: MODULE_TYPES.FISHING,
-    name: '垂纶闲趣',
+    name: '钓鱼达人',
     icon: '🎣',
     storageKey: 'dailyFishing',
     collection: 'dailyFishings',
@@ -684,7 +687,7 @@ const MODULE_CONFIGS = {
   },
   [MODULE_TYPES.FITNESS]: {
     id: MODULE_TYPES.FITNESS,
-    name: '活力时光',
+    name: '健身达人',
     icon: '💪',
     storageKey: 'dailyFitness',
     collection: 'dailyFitnesses',
@@ -712,7 +715,7 @@ const MODULE_CONFIGS = {
   },
   [MODULE_TYPES.PET]: {
     id: MODULE_TYPES.PET,
-    name: '萌宠日记',
+    name: '宠物达人',
     icon: '🐾',
     storageKey: 'dailyPet',
     collection: 'dailyPets',
@@ -740,7 +743,7 @@ const MODULE_CONFIGS = {
   },
   [MODULE_TYPES.FASHION]: {
     id: MODULE_TYPES.FASHION,
-    name: '潮流风向',
+    name: '时尚达人',
     icon: '✨',
     storageKey: 'dailyFashion',
     collection: 'dailyFashions',
@@ -768,7 +771,7 @@ const MODULE_CONFIGS = {
   },
   [MODULE_TYPES.OUTFIT]: {
     id: MODULE_TYPES.OUTFIT,
-    name: '衣橱絮语',
+    name: '穿搭达人',
     icon: '👗',
     storageKey: 'dailyOutfit',
     collection: 'dailyOutfits',
@@ -796,7 +799,7 @@ const MODULE_CONFIGS = {
   },
   [MODULE_TYPES.DECORATION]: {
     id: MODULE_TYPES.DECORATION,
-    name: '筑家美学',
+    name: '装修达人',
     icon: '🏠',
     storageKey: 'dailyDecoration',
     collection: 'dailyDecorations',
@@ -824,7 +827,7 @@ const MODULE_CONFIGS = {
   },
   [MODULE_TYPES.GLASS_FIBER]: {
     id: MODULE_TYPES.GLASS_FIBER,
-    name: '材质探秘',
+    name: '玻纤达人',
     icon: '🧵',
     storageKey: 'dailyGlassFiber',
     collection: 'dailyGlassFibers',
@@ -852,7 +855,7 @@ const MODULE_CONFIGS = {
   },
   [MODULE_TYPES.RESIN]: {
     id: MODULE_TYPES.RESIN,
-    name: '工艺匠心',
+    name: '树脂达人',
     icon: '🧪',
     storageKey: 'dailyResin',
     collection: 'dailyResins',
@@ -880,7 +883,7 @@ const MODULE_CONFIGS = {
   },
   [MODULE_TYPES.TAX]: {
     id: MODULE_TYPES.TAX,
-    name: '财税顾问',
+    name: '财税助手',
     icon: '📋',
     storageKey: 'dailyTax',
     collection: 'dailyTaxs',
@@ -908,7 +911,7 @@ const MODULE_CONFIGS = {
   },
   [MODULE_TYPES.LAW]: {
     id: MODULE_TYPES.LAW,
-    name: '法务视窗',
+    name: '法律顾问',
     icon: '⚖️',
     storageKey: 'dailyLaw',
     collection: 'dailyLaws',
@@ -934,9 +937,9 @@ const MODULE_CONFIGS = {
     posterType: 'law',
     slogan: '知法用法，权益保障',
   },
-  [MODULE_TYPES.OFFICIAL]: {
+  [MODULE_TYPES.OFFICIAL]: {       
     id: MODULE_TYPES.OFFICIAL,
-    name: '仕途心语',
+    name: '官场达人',
     icon: '🎩',
     storageKey: 'dailyOfficial',
     collection: 'dailyOfficials',
@@ -964,7 +967,7 @@ const MODULE_CONFIGS = {
   },
   [MODULE_TYPES.HANDLING]: {
     id: MODULE_TYPES.HANDLING,
-    name: '处世智慧',
+    name: '处事达人',
     icon: '💎',
     storageKey: 'dailyHandling',
     collection: 'dailyHandlings',
@@ -992,7 +995,7 @@ const MODULE_CONFIGS = {
   },
   [MODULE_TYPES.FLORAL]: {
     id: MODULE_TYPES.FLORAL,
-    name: '花语心田',
+    name: '花艺达人',
     icon: '💐',
     storageKey: 'dailyFloral',
     collection: 'dailyFlorals',
@@ -1020,7 +1023,7 @@ const MODULE_CONFIGS = {
   },
   [MODULE_TYPES.HISTORY]: {
     id: MODULE_TYPES.HISTORY,
-    name: '史海拾贝',
+    name: '历史典故达人',
     icon: '📚',
     storageKey: 'dailyHistory',
     collection: 'dailyHistorys',
@@ -1048,7 +1051,7 @@ const MODULE_CONFIGS = {
   },
   [MODULE_TYPES.MILITARY]: {
     id: MODULE_TYPES.MILITARY,
-    name: '兵法韬略',
+    name: '军事达人',
     icon: '🎖️',
     storageKey: 'dailyMilitary',
     collection: 'dailyMilitarys',
@@ -1076,7 +1079,7 @@ const MODULE_CONFIGS = {
   },
   [MODULE_TYPES.STOCK]: {
     id: MODULE_TYPES.STOCK,
-    name: '股海明灯',
+    name: '股票期货专家',
     icon: '📈',
     storageKey: 'dailyStock',
     collection: 'dailyStocks',
@@ -1104,7 +1107,7 @@ const MODULE_CONFIGS = {
   },
   [MODULE_TYPES.ECONOMICS]: {
     id: MODULE_TYPES.ECONOMICS,
-    name: '经济视窗',
+    name: '经济学专家',
     icon: '💰',
     storageKey: 'dailyEconomics',
     collection: 'dailyEconomics',
@@ -1132,7 +1135,7 @@ const MODULE_CONFIGS = {
   },
   [MODULE_TYPES.BUSINESS]: {
     id: MODULE_TYPES.BUSINESS,
-    name: '商道智慧',
+    name: '生意人助手',
     icon: '💼',
     storageKey: 'dailyBusiness',
     collection: 'dailyBusinesss',
@@ -1160,7 +1163,7 @@ const MODULE_CONFIGS = {
   },
   [MODULE_TYPES.NEWS]: {
     id: MODULE_TYPES.NEWS,
-    name: '资讯前沿',
+    name: '新闻助手',
     icon: '📰',
     storageKey: 'dailyNews',
     collection: 'dailyNewss',
@@ -1411,6 +1414,93 @@ const MODULE_CONFIGS = {
     placeholderText: '点击「换一条」探索美国文化',
     posterType: 'americanExpert',
     slogan: '深度解读美国，拓宽国际视野',
+  },
+
+  [MODULE_TYPES.XIN_STUDY]: {
+    id: MODULE_TYPES.XIN_STUDY,
+    name: '心学大师',
+    icon: '🔥',
+    storageKey: 'dailyXinStudy',
+    collection: 'dailyXinStudy',
+    cacheEnabled: true,
+    colors: {
+      primary: '#8B0000',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#FFEBEE',
+      accent: '#8B0000',
+      text: '#4A0000',
+      textSecondary: '#8B0000',
+      bg: 'rgba(139, 0, 0, 0.1)',
+      shadow: 'rgba(139, 0, 0, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: '心学',
+    },
+    aiTags: ['心学', '阳明', '知行合一'],
+    refreshText: '换一条',
+    loadingText: '心学大师正在为你开示...',
+    placeholderText: '点击「换一条」探索心学智慧',
+    posterType: 'xinStudy',
+    slogan: '知行合一，致良知',
+  },
+
+  [MODULE_TYPES.LI_STUDY]: {
+    id: MODULE_TYPES.LI_STUDY,
+    name: '理学大师',
+    icon: '📜',
+    storageKey: 'dailyLiStudy',
+    collection: 'dailyLiStudy',
+    cacheEnabled: true,
+    colors: {
+      primary: '#1E3A5F',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#E3F2FD',
+      accent: '#1E3A5F',
+      text: '#0D1B2A',
+      textSecondary: '#1E3A5F',
+      bg: 'rgba(30, 58, 95, 0.1)',
+      shadow: 'rgba(30, 58, 95, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: '理学',
+    },
+    aiTags: ['理学', '朱熹', '格物致知'],
+    refreshText: '换一条',
+    loadingText: '理学大师正在为你讲解...',
+    placeholderText: '点击「换一条」探索理学智慧',
+    posterType: 'liStudy',
+    slogan: '格物致知，穷究天理',
+  },
+
+  [MODULE_TYPES.WISDOM_BAG]: {
+    id: MODULE_TYPES.WISDOM_BAG,
+    name: '智慧锦囊',
+    icon: '💎',
+    storageKey: 'dailyWisdomBag',
+    collection: 'dailyWisdomBag',
+    cacheEnabled: true,
+    colors: {
+      primary: '#B8860B',
+      gradientStart: '#FFFFFF',
+      gradientEnd: '#FFFDE7',
+      accent: '#B8860B',
+      text: '#5D4037',
+      textSecondary: '#B8860B',
+      bg: 'rgba(184, 134, 11, 0.1)',
+      shadow: 'rgba(184, 134, 11, 0.15)',
+    },
+    tags: {
+      category: { field: 'category', icon: 'categoryIcon' },
+      ai: '智慧',
+    },
+    aiTags: ['智慧', '策略', '成长'],
+    refreshText: '换一条',
+    loadingText: '智慧锦囊正在为你指点...',
+    placeholderText: '点击「换一条」获取智慧锦囊',
+    posterType: 'wisdomBag',
+    slogan: '多元智慧，指点迷津',
   },
 
   // 默认配置（首页/其他）

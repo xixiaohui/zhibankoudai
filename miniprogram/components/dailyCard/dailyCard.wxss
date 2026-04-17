@@ -1,54 +1,21 @@
 /* components/dailyCard/dailyCard.wxss - Pinterest Design System */
 
-/* ==================== Pinterest Design Tokens ==================== */
+/* ==================== 组件特定变量（仅组件内使用） ==================== */
 .daily-card {
-  /* Pinterest Brand Colors */
+  /* Pinterest Brand Colors - 组件特有 */
   --pinterest-red: #e60023;
   --pinterest-plum: #211922;
-  
-  /* Text Colors */
-  --text-primary: #211922;
-  --text-secondary: #62625b;
-  --text-muted: #91918c;
-  --text-white: #ffffff;
-  --text-black: #000000;
-  
-  /* Surface Colors - Warm Neautrals */
-  --surface-white: #ffffff;
-  --surface-fog: #f6f6f3;
-  --surface-sand: #e5e5e0;
-  --surface-warm-light: #e0e0d9;
-  
-  /* Border Colors */
-  --border-light: #c8c8c1;
-  --border-focus: #435ee5;
-  
-  /* Badge Background - Warm Wash */
-  --badge-wash: hsla(60, 20%, 98%, 0.5);
-  
-  /* Border Radius - Pinterest Scale */
-  --radius-sm: 12rpx;
-  --radius-md: 16rpx;
-  --radius-lg: 20rpx;
-  --radius-full: 999rpx;
-  
-  /* Spacing - 8px Base Unit */
-  --space-xs: 8rpx;
-  --space-sm: 12rpx;
-  --space-md: 16rpx;
-  --space-lg: 24rpx;
-  --space-xl: 32rpx;
 }
 
 /* ==================== 每日卡片容器 - Pinterest Card Style ==================== */
-/* White bg, 20px radius, no shadow - flat design */
+/* White bg, 24px radius, no shadow - flat design (使用全局变量) */
 .daily-card {
   width: 100%;
-  background-color: var(--surface-white);
+  background-color: var(--surface);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
   margin-bottom: var(--space-md);
-  border: 1rpx solid var(--border-light);
+  border: 1rpx solid var(--border);
   box-sizing: border-box;
 }
 
@@ -63,7 +30,7 @@
   justify-content: space-between;
   margin-bottom: var(--space-md);
   padding-bottom: var(--space-sm);
-  border-bottom: 1rpx solid var(--surface-sand);
+  border-bottom: 1rpx solid var(--border);
 }
 
 .date-section {
@@ -87,16 +54,16 @@
 
 .date-year {
   font-size: var(--font-size-xs);
-  color: var(--text-muted);
+  color: var(--text-placeholder);
   margin-top: 2rpx;
 }
 
-/* Pinterest Badge - Warm Wash Background */
+/* Pinterest Badge - Warm Wash Background (使用全局变量) */
 .module-badge {
   display: inline-flex;
   align-items: center;
   padding: var(--space-xs) var(--space-sm);
-  background-color: var(--badge-wash);
+  background-color: var(--accent-warm-light);
   border-radius: var(--radius-full);
   font-size: var(--font-size-xs);
   color: var(--text-secondary);
@@ -126,7 +93,7 @@
 .content-body {
   margin-top: var(--space-md);
   padding: var(--space-md);
-  background-color: var(--surface-fog);
+  background-color: var(--surface-accent);
   border-radius: var(--radius-md);
 }
 
@@ -143,7 +110,7 @@
   margin-top: var(--space-md);
   padding: var(--space-md);
   padding-left: var(--space-xl);
-  background-color: var(--surface-fog);
+  background-color: var(--surface-accent);
   border-radius: var(--radius-md);
 }
 
@@ -153,7 +120,7 @@
   top: 8rpx;
   left: 16rpx;
   font-size: 80rpx;
-  color: var(--surface-sand);
+  color: var(--border);
   font-family: serif;
   line-height: 1;
 }
@@ -192,7 +159,7 @@
   width: 100%;
   aspect-ratio: 1;
   border-radius: var(--radius-md);
-  background-color: var(--surface-fog);
+  background-color: var(--surface-accent);
 }
 
 .grid-image.single {
@@ -213,7 +180,7 @@
   display: inline-flex;
   align-items: center;
   padding: var(--space-xs) var(--space-sm);
-  background-color: var(--badge-wash);
+  background-color: var(--accent-warm-light);
   border-radius: var(--radius-full);
   font-size: var(--font-size-xs);
   color: var(--text-secondary);
@@ -222,7 +189,7 @@
 
 .tag-item.highlight {
   background-color: var(--pinterest-red);
-  color: var(--text-black);
+  color: #000000;
 }
 
 /* ==================== 操作按钮 ==================== */
@@ -232,7 +199,7 @@
   gap: var(--space-sm);
   margin-top: var(--space-md);
   padding-top: var(--space-md);
-  border-top: 1rpx solid var(--surface-sand);
+  border-top: 1rpx solid var(--border);
 }
 
 .action-btn {
@@ -241,7 +208,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--space-sm) var(--space-md);
-  background-color: var(--surface-sand);
+  background-color: var(--border);
   border-radius: var(--radius-md);
   border: none;
   font-size: var(--font-size-sm);
@@ -255,14 +222,14 @@
 }
 
 .action-btn.focus-ring:focus {
-  outline: 3rpx solid var(--border-focus);
+  outline: 3rpx solid var(--focus-ring);
   outline-offset: 2rpx;
 }
 
 /* Pinterest Primary Red Button */
 .action-btn.primary {
   background-color: var(--pinterest-red);
-  color: var(--text-black);
+  color: #000000;
 }
 
 .action-btn-icon {
@@ -290,7 +257,7 @@
   align-items: center;
   gap: 4rpx;
   padding: 6rpx var(--space-sm);
-  background-color: var(--surface-sand);
+  background-color: var(--border);
   border-radius: var(--radius-full);
   font-size: 20rpx;
   color: var(--text-secondary);
@@ -299,7 +266,7 @@
 
 .footer-time {
   font-size: 22rpx;
-  color: var(--text-muted);
+  color: var(--text-placeholder);
 }
 
 .footer-actions {
@@ -314,7 +281,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--surface-warm-light);
+  background-color: var(--accent-warm-light);
   border-radius: 50%;
   border: none;
   font-size: var(--font-size-base);
@@ -327,7 +294,7 @@
 }
 
 .icon-btn.focus-ring:focus {
-  outline: 3rpx solid var(--border-focus);
+  outline: 3rpx solid var(--focus-ring);
   outline-offset: 2rpx;
 }
 
@@ -375,7 +342,7 @@
 .loading-spinner {
   width: 56rpx;
   height: 56rpx;
-  border: 3rpx solid var(--surface-sand);
+  border: 3rpx solid var(--border);
   border-top-color: var(--pinterest-red);
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -428,7 +395,7 @@
   width: 100%;
   padding: var(--space-md);
   background-color: var(--pinterest-red);
-  color: var(--text-black);
+  color: #000000;
   border-radius: var(--radius-md);
   font-size: var(--font-size-base);
   font-weight: 400;
@@ -442,7 +409,7 @@
 }
 
 .primary-button.focus-ring:focus {
-  outline: 3rpx solid var(--border-focus);
+  outline: 3rpx solid var(--focus-ring);
   outline-offset: 2rpx;
 }
 
@@ -454,7 +421,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--surface-warm-light);
+  background-color: var(--accent-warm-light);
   border-radius: 50%;
   border: none;
   font-size: 36rpx;
@@ -467,28 +434,28 @@
 }
 
 .round-button.focus-ring:focus {
-  outline: 3rpx solid var(--border-focus);
+  outline: 3rpx solid var(--focus-ring);
   outline-offset: 2rpx;
 }
 
 /* ==================== 分割线 ==================== */
 .divider {
   height: 1rpx;
-  background-color: var(--surface-sand);
+  background-color: var(--border);
   margin: var(--space-md) 0;
 }
 
 .divider-dashed {
   border-style: dashed;
   border-width: 1rpx 0 0 0;
-  border-color: var(--surface-sand);
+  border-color: var(--border);
 }
 
 /* ==================== 响应式图片 ==================== */
 .responsive-image {
   width: 100%;
   border-radius: var(--radius-md);
-  background-color: var(--surface-fog);
+  background-color: var(--surface-accent);
 }
 
 /* ==================== 居中内容 ==================== */
@@ -507,6 +474,8 @@
   align-items: center;
   margin-bottom: var(--space-md);
   gap: var(--space-sm);
+
+  margin-top: 20rpx;
 }
 
 .section-title {
@@ -521,10 +490,10 @@
 }
 
 .title-text {
-  font-size: var(--font-size-lg);
+  font-size: 32rpx;
   font-weight: 600;
   color: var(--text-primary);
-  letter-spacing: -1rpx;
+  letter-spacing: -1.2rpx;
 }
 
 /* ==================== 操作按钮行 ==================== */
@@ -543,7 +512,7 @@
   border-radius: var(--radius-md);
   border: none;
   font-size: 22rpx;
-  color: var(--text-black);
+  color: #000000;
   font-weight: 400;
   transition: opacity 0.15s ease;
 }
@@ -553,7 +522,7 @@
 }
 
 .more-btn.focus-ring:focus {
-  outline: 3rpx solid var(--border-focus);
+  outline: 3rpx solid var(--focus-ring);
   outline-offset: 2rpx;
 }
 
@@ -573,7 +542,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--surface-warm-light);
+  background-color: var(--accent-warm-light);
   border-radius: 50%;
   border: none;
   font-size: 26rpx;
@@ -586,7 +555,7 @@
 }
 
 .share-btn.focus-ring:focus {
-  outline: 3rpx solid var(--border-focus);
+  outline: 3rpx solid var(--focus-ring);
   outline-offset: 2rpx;
 }
 
@@ -600,7 +569,7 @@
   display: flex;
   align-items: center;
   padding: var(--space-xs) var(--space-sm);
-  background-color: var(--surface-sand);
+  background-color: var(--border);
   border-radius: var(--radius-md);
   border: none;
   font-size: 22rpx;
@@ -614,7 +583,7 @@
 }
 
 .refresh-btn.focus-ring:focus {
-  outline: 3rpx solid var(--border-focus);
+  outline: 3rpx solid var(--focus-ring);
   outline-offset: 2rpx;
 }
 
@@ -639,10 +608,10 @@
 /* ==================== 内容卡片 ==================== */
 /* Pinterest Card - flat design, warm background */
 .content-card {
-  background-color: var(--surface-white);
+  background-color: var(--surface);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
-  border: 1rpx solid var(--surface-sand);
+  border: 1rpx solid var(--border);
   margin-top: var(--space-md);
 }
 
@@ -659,7 +628,7 @@
   display: inline-flex;
   align-items: center;
   padding: var(--space-xs) var(--space-sm);
-  background-color: var(--badge-wash);
+  background-color: var(--accent-warm-light);
   border-radius: var(--radius-full);
   font-size: 22rpx;
   color: var(--text-secondary);
@@ -676,12 +645,12 @@
 }
 
 .tag-item.ai-tag {
-  background-color: var(--surface-sand);
+  background-color: var(--border);
   color: var(--text-secondary);
 }
 
 .tag-item.meta-tag {
-  background-color: var(--badge-wash);
+  background-color: var(--accent-warm-light);
 }
 
 /* ==================== 引用内容 ==================== */
@@ -712,7 +681,7 @@
   display: inline-flex;
   align-items: center;
   padding: 6rpx var(--space-sm);
-  background-color: var(--badge-wash);
+  background-color: var(--accent-warm-light);
   border-radius: var(--radius-full);
   font-size: 22rpx;
   color: var(--text-secondary);
@@ -726,7 +695,7 @@
   justify-content: space-between;
   margin-bottom: var(--space-sm);
   padding-bottom: var(--space-sm);
-  border-bottom: 1rpx solid var(--surface-sand);
+  border-bottom: 1rpx solid var(--border);
 }
 
 .joke-title {
@@ -780,7 +749,7 @@
   gap: var(--space-xs);
   margin-top: var(--space-md);
   padding-top: var(--space-sm);
-  border-top: 1rpx solid var(--surface-sand);
+  border-top: 1rpx solid var(--border);
 }
 
 .author-prefix {
@@ -796,7 +765,7 @@
 
 .author-source {
   font-size: 22rpx;
-  color: var(--text-muted);
+  color: var(--text-placeholder);
   margin-left: var(--space-xs);
 }
 
@@ -807,7 +776,7 @@
   justify-content: space-between;
   margin-bottom: var(--space-sm);
   padding-bottom: var(--space-sm);
-  border-bottom: 1rpx solid var(--surface-sand);
+  border-bottom: 1rpx solid var(--border);
 }
 
 .movie-title {
@@ -822,7 +791,7 @@
   display: inline-flex;
   align-items: center;
   padding: 4rpx var(--space-xs);
-  background-color: var(--badge-wash);
+  background-color: var(--accent-warm-light);
   border-radius: var(--radius-full);
   font-size: 22rpx;
   margin-left: var(--space-sm);
@@ -851,7 +820,7 @@
   font-size: 26rpx;
   font-style: italic;
   padding: var(--space-sm) var(--space-md);
-  background-color: var(--badge-wash);
+  background-color: var(--accent-warm-light);
   border-radius: var(--radius-md);
   margin-bottom: var(--space-sm);
 }
@@ -866,7 +835,7 @@
   display: inline-flex;
   align-items: center;
   padding: 4rpx var(--space-sm);
-  background-color: var(--badge-wash);
+  background-color: var(--accent-warm-light);
   border-radius: var(--radius-full);
   font-size: 22rpx;
   color: var(--text-secondary);
@@ -879,7 +848,7 @@
   justify-content: space-between;
   margin-bottom: var(--space-sm);
   padding-bottom: var(--space-sm);
-  border-bottom: 1rpx solid var(--surface-sand);
+  border-bottom: 1rpx solid var(--border);
 }
 
 .music-title {
@@ -894,7 +863,7 @@
   display: inline-flex;
   align-items: center;
   padding: 4rpx var(--space-xs);
-  background-color: var(--badge-wash);
+  background-color: var(--accent-warm-light);
   border-radius: var(--radius-full);
   font-size: 22rpx;
 }
@@ -918,11 +887,11 @@
 }
 
 .album-label {
-  color: var(--text-muted);
+  color: var(--text-placeholder);
 }
 
 .music-duration {
-  color: var(--text-muted);
+  color: var(--text-placeholder);
 }
 
 .music-content {
@@ -936,7 +905,7 @@
   font-size: 26rpx;
   font-style: italic;
   padding: var(--space-sm) var(--space-md);
-  background-color: var(--badge-wash);
+  background-color: var(--accent-warm-light);
   border-radius: var(--radius-md);
   margin-bottom: var(--space-sm);
 }
@@ -951,7 +920,7 @@
   display: inline-flex;
   align-items: center;
   padding: 4rpx var(--space-sm);
-  background-color: var(--badge-wash);
+  background-color: var(--accent-warm-light);
   border-radius: var(--radius-full);
   font-size: 22rpx;
   color: var(--text-secondary);
@@ -961,7 +930,7 @@
 .tech-header {
   margin-bottom: var(--space-sm);
   padding-bottom: var(--space-sm);
-  border-bottom: 1rpx solid var(--surface-sand);
+  border-bottom: 1rpx solid var(--border);
 }
 
 .tech-title {
@@ -981,7 +950,7 @@
 .tech-impact {
   font-size: 26rpx;
   padding: var(--space-sm) var(--space-md);
-  background-color: var(--badge-wash);
+  background-color: var(--accent-warm-light);
   border-radius: var(--radius-md);
   margin-bottom: var(--space-sm);
 }
@@ -996,7 +965,7 @@
   display: inline-flex;
   align-items: center;
   padding: 4rpx var(--space-sm);
-  background-color: var(--badge-wash);
+  background-color: var(--accent-warm-light);
   border-radius: var(--radius-full);
   font-size: 22rpx;
   color: var(--text-secondary);
@@ -1007,7 +976,7 @@
 .trade-header {
   margin-bottom: var(--space-sm);
   padding-bottom: var(--space-sm);
-  border-bottom: 1rpx solid var(--surface-sand);
+  border-bottom: 1rpx solid var(--border);
 }
 
 .tcm-title,
@@ -1039,7 +1008,7 @@
 .trade-tips {
   font-size: 26rpx;
   padding: var(--space-sm) var(--space-md);
-  background-color: var(--badge-wash);
+  background-color: var(--accent-warm-light);
   border-radius: var(--radius-md);
   margin-bottom: var(--space-sm);
 }
@@ -1056,7 +1025,7 @@
   display: inline-flex;
   align-items: center;
   padding: 4rpx var(--space-sm);
-  background-color: var(--badge-wash);
+  background-color: var(--accent-warm-light);
   border-radius: var(--radius-full);
   font-size: 22rpx;
   color: var(--text-secondary);
@@ -1097,7 +1066,7 @@
 
 .placeholder-text {
   font-size: var(--font-size-base);
-  color: var(--text-muted);
+  color: var(--text-placeholder);
 }
 
 /* ==================== 分类标签 ==================== */
@@ -1105,7 +1074,7 @@
   display: inline-flex;
   align-items: center;
   padding: var(--space-xs) var(--space-sm);
-  background-color: var(--badge-wash);
+  background-color: var(--accent-warm-light);
   border-radius: var(--radius-full);
   font-size: 22rpx;
   color: var(--text-secondary);
@@ -1123,7 +1092,7 @@
   align-items: center;
   gap: var(--space-xs);
   font-size: 22rpx;
-  color: var(--text-muted);
+  color: var(--text-placeholder);
 }
 
 .source-prefix {
@@ -1134,14 +1103,14 @@
 .era-tag {
   font-size: 22rpx;
   color: var(--text-secondary);
-  background: var(--surface-fog);
+  background: var(--surface-accent);
   padding: 6rpx 16rpx;
   border-radius: var(--radius-full);
   font-weight: 500;
 }
 
 .era-tag.modern {
-  background: var(--surface-sand);
+  background: var(--border);
 }
 
 /* ==================== 展开/收起按钮 ==================== */
@@ -1174,7 +1143,7 @@
 .full-content {
   margin-top: var(--space-md);
   padding-top: var(--space-md);
-  border-top: 1rpx solid var(--surface-sand);
+  border-top: 1rpx solid var(--border);
 }
 
 .full-content-item {
@@ -1187,7 +1156,7 @@
 
 .item-label {
   font-size: 22rpx;
-  color: var(--text-muted);
+  color: var(--text-placeholder);
   margin-bottom: var(--space-xs);
   font-weight: 500;
 }
@@ -1196,4 +1165,202 @@
   font-size: var(--font-size-base);
   color: var(--text-primary);
   line-height: 1.6;
+}
+
+/* ==================== 按钮点击状态 ==================== */
+.btn-active {
+  opacity: 0.8;
+  transform: scale(0.98);
+}
+
+.travel-summary,.fortune-summary,.lit-summary{
+  font-size: var(--font-size-base);
+}
+
+.travel-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+}
+.tcm-tips, .travel-tips , .lit-quote{
+  font-size: 26rpx;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--accent-warm-light);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
+}
+
+/* ==================== 旅行日记内容 ==================== */
+.travel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1rpx solid var(--border);
+}
+
+.travel-region {
+  font-size: 26rpx;
+  font-weight: 500;
+  letter-spacing: 0.5rpx;
+}
+
+.travel-title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -1rpx;
+  margin-bottom: var(--space-sm);
+}
+
+.travel-summary {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-sm);
+}
+
+.travel-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+.travel-tag {
+  font-size: 22rpx;
+  padding: 4rpx var(--space-xs);
+  background-color: var(--accent-warm-light);
+  border-radius: var(--radius-full);
+}
+
+/* ==================== 每日一卦内容 ==================== */
+.fortune-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1rpx solid var(--border);
+}
+
+.fortune-category {
+  font-size: 26rpx;
+  font-weight: 500;
+  letter-spacing: 0.5rpx;
+}
+
+.fortune-title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -1rpx;
+  margin-bottom: var(--space-sm);
+}
+
+.fortune-summary {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-sm);
+}
+
+.fortune-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+.fortune-tag {
+  font-size: 22rpx;
+  padding: 4rpx var(--space-xs);
+  background-color: var(--accent-warm-light);
+  border-radius: var(--radius-full);
+}
+
+/* ==================== 文学殿堂内容 ==================== */
+.lit-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1rpx solid var(--border);
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.lit-author {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  letter-spacing: -0.5rpx;
+}
+
+.lit-era {
+  font-size: 22rpx;
+  color: var(--text-secondary);
+  margin-left: var(--space-sm);
+}
+
+.lit-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.5rpx;
+  margin-bottom: var(--space-sm);
+}
+
+.lit-works {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+  line-height: 1.5;
+}
+
+.works-label {
+  color: var(--text-placeholder);
+  margin-right: var(--space-xs);
+}
+
+.work-item {
+  color: var(--text-secondary);
+}
+
+.lit-content {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-sm);
+}
+
+.lit-summary {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-sm);
+}
+
+.lit-quote {
+  font-size: 26rpx;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--accent-warm-light);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
+  font-style: italic;
+}
+
+.lit-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+.lit-tag {
+  font-size: 22rpx;
+  padding: 4rpx var(--space-xs);
+  background-color: var(--accent-warm-light);
+  border-radius: var(--radius-full);
 }

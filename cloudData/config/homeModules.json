@@ -49,7 +49,10 @@
     { "id": "freud", "enabled": true, "order": 44, "showOnHome": true },
     { "id": "fashionBrand", "enabled": true, "order": 45, "showOnHome": true },
     { "id": "robotAi", "enabled": true, "order": 46, "showOnHome": true },
-    { "id": "americanExpert", "enabled": true, "order": 47, "showOnHome": true }
+    { "id": "americanExpert", "enabled": true, "order": 47, "showOnHome": true },
+    { "id": "xinStudy", "enabled": true, "order": 48, "showOnHome": true },
+    { "id": "liStudy", "enabled": true, "order": 49, "showOnHome": true },
+    { "id": "wisdomBag", "enabled": true, "order": 50, "showOnHome": true }
   ],
-  "updated": "2026-04-15"
+  "updated": "2026-04-17"
 }

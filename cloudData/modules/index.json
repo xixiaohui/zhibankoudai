@@ -330,6 +330,27 @@
       "icon": "icon-americanExpert",
       "color": "#3F51B5",
       "count": 10
+    },
+    {
+      "id": "xinStudy",
+      "name": "心学大师",
+      "icon": "icon-xinStudy",
+      "color": "#8B0000",
+      "count": 10
+    },
+    {
+      "id": "liStudy",
+      "name": "理学大师",
+      "icon": "icon-liStudy",
+      "color": "#1E3A5F",
+      "count": 10
+    },
+    {
+      "id": "wisdomBag",
+      "name": "智慧锦囊",
+      "icon": "icon-wisdomBag",
+      "color": "#B8860B",
+      "count": 10
     }
   ]
 }

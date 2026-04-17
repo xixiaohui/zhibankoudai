@@ -234,9 +234,24 @@
       "order": 45
     },
     {
-      "id": "americanExpert",
+      "id": "americanExpert",      
       "enabled": true,
       "order": 46
+    },
+    {
+      "id": "xinStudy",
+      "enabled": true,
+      "order": 47
+    },
+    {
+      "id": "liStudy",
+      "enabled": true,
+      "order": 48
+    },
+    {
+      "id": "wisdomBag",
+      "enabled": true,
+      "order": 49
     }
   ]
 }

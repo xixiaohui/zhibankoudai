@@ -174,6 +174,18 @@ const LOCAL_PROMPTS = {
     americanExpert: {
       generate: "你是一位美国研究专家。请分享美国知识，涵盖硅谷文化、常春藤名校、华尔街金融、好莱坞电影、美国文化等。介绍政治经济、社会现象、文化特色。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
       share: "🗽【美国通】{title}\\n\\n{content}"
+    },
+    xinStudy: {
+      generate: "你是一位阳明心学研究专家。请分享心学智慧，涵盖知行合一、致良知、事上练、心外无物等。介绍心学思想的背景、原理和现实意义。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+      share: "🔥【心学大师】{title}\\n\\n{content}"
+    },
+    liStudy: {
+      generate: "你是一位程朱理学研究专家。请分享理学智慧，涵盖格物致知、理气二元、存天理灭人欲等。介绍理学思想的背景、原理和现代价值。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+      share: "📜【理学大师】{title}\\n\\n{content}"
+    },
+    wisdomBag: {
+      generate: "你是一位跨学科智慧研究专家。请分享多元智慧洞见，涵盖心学、孙子兵法、斯多葛哲学、第一性原理、行为心理学等。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+      share: "💎【智慧锦囊】{title}\\n\\n{content}"
     }
   },
   system: {
@@ -514,6 +526,24 @@ const DEFAULT_STYLES = {
     refreshText: '换一条', loadingText: '美国专家正在为你解读...', placeholderText: '点击「换一条」探索美国文化',
     tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '美国通' },
     colors: generateColors('#3F51B5')
+  },
+  xinStudy: {
+    id: 'xinStudy', name: '心学大师', icon: '🔥', color: '#8B0000', storageKey: 'dailyXinStudy', posterType: 'xinStudy',
+    refreshText: '换一条', loadingText: '心学大师正在为你开示...', placeholderText: '点击「换一条」探索心学智慧',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '心学' },
+    colors: generateColors('#8B0000')
+  },
+  liStudy: {
+    id: 'liStudy', name: '理学大师', icon: '📜', color: '#1E3A5F', storageKey: 'dailyLiStudy', posterType: 'liStudy',
+    refreshText: '换一条', loadingText: '理学大师正在为你讲解...', placeholderText: '点击「换一条」探索理学智慧',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '理学' },
+    colors: generateColors('#1E3A5F')
+  },
+  wisdomBag: {
+    id: 'wisdomBag', name: '智慧锦囊', icon: '💎', color: '#B8860B', storageKey: 'dailyWisdomBag', posterType: 'wisdomBag',
+    refreshText: '换一条', loadingText: '智慧锦囊正在为你指点...', placeholderText: '点击「换一条」获取智慧锦囊',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '智慧' },
+    colors: generateColors('#B8860B')
   }
 }
 
@@ -854,6 +884,9 @@ const ICON_TO_EMOJI = {
   'icon-fashionBrand': '👔',
   'icon-robotAi': '🤖',
   'icon-americanExpert': '🗽',
+  'icon-xinStudy': '🔥',
+  'icon-liStudy': '📜',
+  'icon-wisdomBag': '💎',
 }
 
 /**

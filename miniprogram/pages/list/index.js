@@ -162,21 +162,30 @@ Page({
     const index = modules.findIndex(m => m.id === currentModule.id)
     if (index < 0) return
 
-    // 动态获取屏幕宽度和标签尺寸
-    const sysInfo = wx.getSystemInfoSync()
-    const screenWidth = sysInfo.windowWidth  // px
-    const rpxToPx = screenWidth / 750
-    const tabWidth = 188  // 每个tab宽度约188rpx
-    const tabGap = 16  // 标签之间的gap
-    const navPadding = 24  // nav-inner左边距24rpx
-    const tabWidthPx = tabWidth * rpxToPx
-    const tabGapPx = tabGap * rpxToPx
-    const navPaddingPx = navPadding * rpxToPx
-    
-    // 计算居中位置：左边距 + 前面所有标签宽度 - 屏幕一半 + 标签一半
-    const scrollLeft = Math.max(0, navPaddingPx + index * (tabWidthPx + tabGapPx) - screenWidth / 2 + tabWidthPx / 2)
+    // 使用 SelectorQuery 动态获取 nav-inner 和当前 nav-item 的位置信息
+    const query = wx.createSelectorQuery()
+    query.select('#moduleNav').boundingClientRect()
+    query.select('.nav-inner').boundingClientRect()
+    query.selectAll('.nav-item').boundingClientRect((rects) => {
+      if (!rects || rects.length === 0) return
 
-    this.setData({ scrollLeft })
+      const screenWidth = wx.getSystemInfoSync().windowWidth
+
+      // 获取 nav-inner 的位置（作为相对基准）
+      const navInner = rects[0] || { left: 0 }
+      // 获取当前选中项的位置
+      const currentRect = rects[index]
+      if (!currentRect) return
+
+      // 计算相对位置：当前项相对于 nav-inner 的偏移
+      const relativeLeft = currentRect.left - navInner.left
+
+      // 计算居中位置：相对偏移 - (屏幕宽度/2) + (当前项宽度/2)
+      const scrollLeft = relativeLeft - screenWidth / 2 + currentRect.width / 2
+
+      this.setData({ scrollLeft: Math.max(0, scrollLeft) })
+    })
+    query.exec()
   },
 
   // 加载数据

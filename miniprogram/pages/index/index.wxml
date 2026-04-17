@@ -191,6 +191,15 @@
   <!-- 世界服装品牌大师 - 配置ID: fashionBrand -->
   <daily-card moduleType="fashionBrand" />
 
+  <!-- 心学大师 - 配置ID: xinStudy -->
+  <daily-card moduleType="xinStudy" />
+
+  <!-- 理学大师 - 配置ID: liStudy -->
+  <daily-card moduleType="liStudy" />
+
+  <!-- 智慧锦囊 - 配置ID: wisdomBag -->
+  <daily-card moduleType="wisdomBag" />
+
   <!-- 快速陪伴入口 -->
   <view class="quick-modes-section">
     <view class="section-title">快速陪伴模式</view>

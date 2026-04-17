@@ -175,6 +175,22 @@ const LOCAL_PROMPTS_FALLBACK = {
   americanExpert: {
     generate: "你是一位美国研究专家。请分享美国知识，涵盖硅谷文化、常春藤名校、华尔街金融、好莱坞电影、美国文化等。介绍政治经济、社会现象、文化特色。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
     share: "🗽【美国通】{title}\\n\\n{content}"
+  },
+  xinStudy: {
+    generate: "你是一位阳明心学研究专家。请分享心学智慧，涵盖知行合一、致良知，事上练、心外无物等。介绍心学思想的背景、原理和现实意义。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "🔥【心学大师】{title}\\n\\n{content}"
+  },
+  liStudy: {
+    generate: "你是一位程朱理学研究专家。请分享理学智慧，涵盖格物致知、理气二元、存天理灭人欲等。介绍理学思想的背景、原理和现代价值。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "📜【理学大师】{title}\\n\\n{content}"
+  },
+  wisdomBag: {
+    generate: "你是一位跨学科智慧研究专家。请分享多元智慧洞见，涵盖心学、孙子兵法、斯多葛哲学、第一性原理、行为心理学等。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "💎【智慧锦囊】{title}\\n\\n{content}"
+  },
+  freud: {
+    generate: "你是一位弗洛伊德学术研究专家。请分享精神分析知识，涵盖释梦理论、人格结构、神经症等。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "🧠【弗洛伊德学术】{title}\\n\\n{content}"
   }
 }
 
@@ -1183,6 +1199,54 @@ const DailyContent = {
     if (!promptData) throw new Error('获取美国通提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
     const content = await generateContent('americanExpert', userPrompt, onChunk, 800)
+    onDone && onDone(content)
+    return content
+  },
+
+  /**
+   * 生成心学大师
+   */
+  async generateXinStudy(onChunk, onDone) {
+    const promptData = getPrompt('xinStudy')
+    if (!promptData) throw new Error('获取心学大师提示词失败')
+    const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
+    const content = await generateContent('xinStudy', userPrompt, onChunk, 800)
+    onDone && onDone(content)
+    return content
+  },
+
+  /**
+   * 生成理学大师
+   */
+  async generateLiStudy(onChunk, onDone) {
+    const promptData = getPrompt('liStudy')
+    if (!promptData) throw new Error('获取理学大师提示词失败')
+    const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
+    const content = await generateContent('liStudy', userPrompt, onChunk, 800)
+    onDone && onDone(content)
+    return content
+  },
+
+  /**
+   * 生成智慧锦囊
+   */
+  async generateWisdomBag(onChunk, onDone) {
+    const promptData = getPrompt('wisdomBag')
+    if (!promptData) throw new Error('获取智慧锦囊提示词失败')
+    const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
+    const content = await generateContent('wisdomBag', userPrompt, onChunk, 800)
+    onDone && onDone(content)
+    return content
+  },
+
+  /**
+   * 生成弗洛伊德学术
+   */
+  async generateFreud(onChunk, onDone) {
+    const promptData = getPrompt('freud')
+    if (!promptData) throw new Error('获取弗洛伊德提示词失败')
+    const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
+    const content = await generateContent('freud', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },

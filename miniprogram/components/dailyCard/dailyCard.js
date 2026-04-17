@@ -16,7 +16,7 @@ const MODULE_TYPES = {
   FLORAL: 'floral', HISTORY: 'history', MILITARY: 'military',
   STOCK: 'stock', ECONOMICS: 'economics', BUSINESS: 'business', NEWS: 'news',
   APPLE: 'apple', GROWTH: 'growth', UI_DESIGNER: 'uiDesigner', FUTURES: 'futures',
-  FREUD: 'freud', FASHION_BRAND: 'fashionBrand', ROBOT_AI: 'robotAi', AMERICAN_EXPERT: 'americanExpert'
+  FREUD: 'freud', FASHION_BRAND: 'fashionBrand', ROBOT_AI: 'robotAi', AMERICAN_EXPERT: 'americanExpert', XIN_STUDY: 'xinStudy', LI_STUDY: 'liStudy', WISDOM_BAG: 'wisdomBag'
 }
 
 // 全局请求队列，控制同时发起的 AI 请求数量
@@ -451,6 +451,12 @@ Component({
               return await this._getDailyRobotAi(refresh)
             case MODULE_TYPES.AMERICAN_EXPERT:
               return await this._getDailyAmericanExpert(refresh)
+            case MODULE_TYPES.XIN_STUDY:
+              return await this._getDailyXinStudy(refresh)
+            case MODULE_TYPES.LI_STUDY:
+              return await this._getDailyLiStudy(refresh)
+            case MODULE_TYPES.WISDOM_BAG:
+              return await this._getDailyWisdomBag(refresh)
             default:
               throw new Error('未知的模块类型')
           }
@@ -1131,6 +1137,42 @@ Component({
       return content
     },
 
+    async _getDailyXinStudy(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyXinStudy')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateXinStudy()
+      return content
+    },
+
+    async _getDailyLiStudy(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyLiStudy')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateLiStudy()
+      return content
+    },
+
+    async _getDailyWisdomBag(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyWisdomBag')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateWisdomBag()
+      return content
+    },
+
     // 保存到云数据库
     async _saveToCloud(content) {
       const { moduleType } = this.data
@@ -1185,6 +1227,9 @@ Component({
           [MODULE_TYPES.FASHION_BRAND]: 'dailyFashionBrand',
           [MODULE_TYPES.ROBOT_AI]: 'dailyRobotAi',
           [MODULE_TYPES.AMERICAN_EXPERT]: 'dailyAmericanExpert',
+          [MODULE_TYPES.XIN_STUDY]: 'dailyXinStudy',
+          [MODULE_TYPES.LI_STUDY]: 'dailyLiStudy',
+          [MODULE_TYPES.WISDOM_BAG]: 'dailyWisdomBag',
         }
 
         const collection = collectionMap[moduleType]
@@ -1405,6 +1450,18 @@ Component({
         case 'americanExpert':
           url = `/pages/poster/index`
           params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🗽') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🗽')}`
+          break
+        case 'xinStudy':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🔥') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🔥')}`
+          break
+        case 'liStudy':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '📜') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '📜')}`
+          break
+        case 'wisdomBag':
+          url = `/pages/poster/index`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '💎') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💎')}`
           break
       }
 

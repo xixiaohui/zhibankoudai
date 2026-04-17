@@ -63,6 +63,11 @@ const FILES_TO_UPLOAD = [
   ['cloudData/modules/economics.json', 'cloudData/modules/economics.json'],
   ['cloudData/modules/business.json', 'cloudData/modules/business.json'],
   ['cloudData/modules/news.json', 'cloudData/modules/news.json'],
+  
+  // 新增模块
+  ['cloudData/modules/xinStudy.json', 'cloudData/modules/xinStudy.json'],
+  ['cloudData/modules/liStudy.json', 'cloudData/modules/liStudy.json'],
+  ['cloudData/modules/wisdomBag.json', 'cloudData/modules/wisdomBag.json'],
 ]
 
 async function uploadFile(localPath, cloudPath) {
