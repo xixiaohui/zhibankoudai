@@ -943,21 +943,54 @@ async function preloadHomeModules() {
 }
 
 /**
- * 获取每日固定内容（使用日期种子）
+ * 获取固定内容（根据种子类型选择）
+ * @param {string} moduleId - 模块ID
+ * @param {string} seedType - 种子类型：'minute' | 'daily'
+ * @returns {object|null} 固定内容
  */
-function getDailyItem(moduleId) {
+function getFixedItem(moduleId, seedType = 'minute') {
   const module = moduleCache[moduleId]
   if (!module || !module.fallback || !module.fallback.length) {
     return null
   }
-  
-  // 使用日期作为种子，确保每天固定
-  const today = new Date()
-  const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate()
-  
+
+  console.log(`[CloudData] getFixedItem: ${moduleId} ${seedType}`)
+
+  let seed
+  const now = new Date()
+
+  if (seedType === 'minute') {
+    // 按分钟变化：每分钟种子不同
+    seed = now.getFullYear() * 100000000 +
+           (now.getMonth() + 1) * 1000000 +
+           now.getDate() * 10000 +
+           now.getHours() * 100 +
+           now.getMinutes()
+  } else {
+    // 按日变化：每天固定
+    seed = now.getFullYear() * 10000 +
+           (now.getMonth() + 1) * 100 +
+           now.getDate()
+  }
+
   // 根据种子选择固定的索引
   const index = seed % module.fallback.length
   return { ...module.fallback[index] }
+}
+
+/**
+ * 获取每日固定内容（使用日期种子）
+ * @deprecated 请使用 getFixedItem(moduleId, 'daily')
+ */
+function getDailyItem(moduleId) {
+  return getFixedItem(moduleId, 'daily')
+}
+
+/**
+ * 获取每分钟固定内容（使用分钟种子）
+ */
+function getMinuteItem(moduleId) {
+  return getFixedItem(moduleId, 'minute')
 }
 
 /**
@@ -1038,7 +1071,9 @@ module.exports = {
   getModuleInfo,
   getModuleConfig,
   getAllModuleIds,
+  getFixedItem,
   getDailyItem,
+  getMinuteItem,
   getShareTemplate,
   
   // 配置

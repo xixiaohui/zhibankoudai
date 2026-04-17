@@ -58,14 +58,22 @@ function enqueueRequest(fn) {
 }
 
 /**
- * 获取兜底数据（使用日期作为种子，保证每天固定）
+ * 获取兜底数据（使用分钟作为种子，保证每分钟固定）
  * 数据来源：云端数据（cloudData.js）
+ * 
+ * 种子类型配置：
+ * - 'minute': 每分钟变化
+ * - 'daily': 每天变化
  */
+const FALLBACK_SEED_TYPE = 'minute'  // 可选: 'minute' | 'daily'
+
 function getFallbackContent(moduleType, config) {
   console.log('[DailyCard] getFallbackContent, moduleType:', moduleType)
   
-  // 使用 cloudData.getDailyItem 获取每日固定数据
-  const fallback = cloudData.getDailyItem(moduleType)
+  // 使用 cloudData 获取固定数据（根据种子类型）
+  const fallback = FALLBACK_SEED_TYPE === 'minute'
+    ? cloudData.getMinuteItem(moduleType)
+    : cloudData.getDailyItem(moduleType)
   
   if (!fallback) {
     console.log('[DailyCard] 无可用数据，使用默认')
