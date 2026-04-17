@@ -14,7 +14,7 @@
   background-color: var(--surface);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-lg);
   border: 1rpx solid var(--border);
   box-sizing: border-box;
 }

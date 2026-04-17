@@ -2,7 +2,7 @@
 // 海报分享页面
 // 适配 posterCanvas 组件和 dailyCard 组件的完整功能
 
-const { MODULE_CONFIGS } = require('../../utils/dailyModule.js')
+const moduleConfig = require('../../utils/moduleConfig.js')
 const { getUserId, getNickname } = require('../../utils/userManager.js')
 
 Page({
@@ -303,7 +303,7 @@ Page({
    * 根据模块类型获取模块名称
    */
   getModuleName(type) {
-    const config = MODULE_CONFIGS[type]
+    const config = moduleConfig.getModuleConfigSync(type)
     if (config && config.name) {
       return config.name
     }

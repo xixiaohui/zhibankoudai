@@ -1,5 +1,15 @@
 // pages/detail/index.js - 内容详情页
-const { MODULE_CONFIGS, MODULE_TYPES } = require('../../utils/dailyModule.js')
+const moduleConfig = require('../../utils/moduleConfig.js')
+
+// 模块类型常量
+const MODULE_TYPES = {
+  QUOTE: 'quote',
+  JOKE: 'joke',
+  PSYCHOLOGY: 'psychology',
+  FINANCE: 'finance',
+  LOVE: 'love',
+  // ... 其他类型（按需添加）
+}
 
 Page({
   data: {
@@ -28,7 +38,7 @@ Page({
     }
 
     // 获取模块配置
-    const module = Object.values(MODULE_CONFIGS).find(m => m.id === moduleId)
+    const module = moduleConfig.DEFAULT_MODULE_CONFIG.modules.find(m => m.id === moduleId)
     if (!module) {
       wx.showToast({ title: '模块不存在', icon: 'none' })
       wx.navigateBack()

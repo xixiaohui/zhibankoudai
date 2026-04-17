@@ -1,5 +1,59 @@
 // pages/list/index.js - 内容列表页
-const { MODULE_CONFIGS, MODULE_TYPES } = require('../../utils/dailyModule.js')
+const moduleConfig = require('../../utils/moduleConfig.js')
+
+// 模块类型常量
+const MODULE_TYPES = {
+  QUOTE: 'quote',
+  JOKE: 'joke',
+  PSYCHOLOGY: 'psychology',
+  FINANCE: 'finance',
+  LOVE: 'love',
+  MOVIE: 'movie',
+  MUSIC: 'music',
+  TECH: 'tech',
+  TCM: 'tcm',
+  TRAVEL: 'travel',
+  FORTUNE: 'fortune',
+  LITERATURE: 'literature',
+  FOREIGN_TRADE: 'foreignTrade',
+  ECOMMERCE: 'ecommerce',
+  MATH: 'math',
+  ENGLISH: 'english',
+  PROGRAMMING: 'programming',
+  PHOTOGRAPHY: 'photography',
+  BEAUTY: 'beauty',
+  INVESTMENT: 'investment',
+  FISHING: 'fishing',
+  FITNESS: 'fitness',
+  PET: 'pet',
+  FASHION: 'fashion',
+  OUTFIT: 'outfit',
+  DECORATION: 'decoration',
+  GLASS_FIBER: 'glassFiber',
+  RESIN: 'resin',
+  TAX: 'tax',
+  LAW: 'law',
+  OFFICIAL: 'official',
+  HANDLING: 'handling',
+  FLORAL: 'floral',
+  HISTORY: 'history',
+  MILITARY: 'military',
+  STOCK: 'stock',
+  ECONOMICS: 'economics',
+  BUSINESS: 'business',
+  NEWS: 'news',
+  WISDOM_BAG: 'wisdomBag',
+  ROBOT_AI: 'robotAi',
+  AMERICAN_EXPERT: 'americanExpert',
+  APPLE: 'apple',
+  GROWTH: 'growth',
+  UI_DESIGNER: 'uiDesigner',
+  FUTURES: 'futures',
+  FREUD: 'freud',
+  FASHION_BRAND: 'fashionBrand',
+  XIN_STUDY: 'xinStudy',
+  LI_STUDY: 'liStudy'
+}
 
 Page({
   data: {
@@ -16,17 +70,26 @@ Page({
     // 加载状态
     isLoading: false,
     isLoadingMore: false,
+    // 下拉刷新状态
+    isRefreshing: false,
     // 空状态
     isEmpty: false,
     // 横向滚动位置
     scrollLeft: 0,
+    // 内容区域滚动位置
+    contentScrollTop: 0,
   },
 
   // 页面缓存标识（静态属性）
   _cacheKey: 'list_page_cache',
+  // 是否首次加载
+  _isFirstLoad: true,
+  // 是否从详情页返回
+  _isBackFromDetail: false,
 
   onLoad(options) {
     this._initModules()
+    
     // 如果有传入模块类型，默认选中
     if (options.type) {
       const module = this.data.modules.find(m => m.id === options.type)
@@ -52,28 +115,44 @@ Page({
   },
 
   onShow() {
-    // 检查是否有缓存，如果有则恢复缓存数据
-    if (this.data.currentModule) {
+    // 从详情页返回，恢复滚动位置
+    if (this._isBackFromDetail && this.data.currentModule) {
       const cache = this._getCache()
-      if (cache && cache.moduleId === this.data.currentModule.id && cache.contentList?.length > 0) {
+      if (cache && cache.moduleId === this.data.currentModule.id) {
         // 恢复缓存数据
         this.setData({
-          contentList: cache.contentList,
-          page: cache.page,
-          hasMore: cache.hasMore,
-          isEmpty: cache.isEmpty,
+          contentList: cache.contentList || [],
+          page: cache.page || 1,
+          hasMore: cache.hasMore !== false,
+          isEmpty: cache.isEmpty || false,
           scrollLeft: cache.scrollLeft || 0,
         })
-        // 更新滚动位置（延迟确保DOM渲染）
+        // 延迟恢复滚动位置，确保 DOM 渲染完成
         setTimeout(() => {
-          wx.createSelectorQuery().select('#moduleNav').boundingClientRect((rect) => {
-            if (rect && cache.scrollLeft > 0) {
-              this.setData({ scrollLeft: cache.scrollLeft })
-            }
-          }).exec()
+          if (cache.contentScrollTop > 0) {
+            this.setData({ contentScrollTop: cache.contentScrollTop })
+          }
+          // 恢复导航滚动位置
+          if (cache.scrollLeft > 0) {
+            this.setData({ scrollLeft: cache.scrollLeft })
+          }
         }, 100)
       }
     }
+    this._isBackFromDetail = false
+  },
+
+  onPageScroll(e) {
+    // 页面级别滚动（横向导航区域滚动时触发）
+    this._saveScrollPosition(e.scrollTop)
+  },
+  
+  // 内容区域滚动事件
+  onContentScroll(e) {
+    const scrollTop = e.detail.scrollTop
+    this._saveScrollPosition(scrollTop)
+    // 实时保存到 data（用于缓存）
+    this.setData({ contentScrollTop: scrollTop })
   },
 
   onHide() {
@@ -98,27 +177,50 @@ Page({
 
   // 保存缓存
   _saveCache() {
-    if (!this.data.currentModule || !this.data.contentList.length) return
+    if (!this.data.currentModule) return
     try {
-      wx.setStorageSync(this._cacheKey, {
+      const cacheData = {
         moduleId: this.data.currentModule.id,
+        moduleName: this.data.currentModule.name,
         contentList: this.data.contentList,
         page: this.data.page,
         hasMore: this.data.hasMore,
         isEmpty: this.data.isEmpty,
         scrollLeft: this.data.scrollLeft,
-      })
+        contentScrollTop: this.data.contentScrollTop,
+        updatedAt: Date.now()
+      }
+      wx.setStorageSync(this._cacheKey, cacheData)
     } catch (e) {
       console.error('保存缓存失败', e)
     }
   },
 
+  // 记录滚动位置
+  _saveScrollPosition(scrollTop) {
+    this._currentScrollTop = scrollTop
+  },
+
   onPullDownRefresh() {
-    this._loadData()
-    wx.stopPullDownRefresh()
+    // 下拉刷新：强制从云端获取最新数据
+    this.onRefresh()
+  },
+  
+  // 下拉刷新（scroll-view 触发）
+  onRefresh() {
+    if (this.data.isRefreshing) return
+    this.setData({ isRefreshing: true })
+    this._loadData({ forceRefresh: true }).finally(() => {
+      this.setData({ isRefreshing: false })
+    })
   },
 
   onReachBottom() {
+    this.onLoadMore()
+  },
+  
+  // 加载更多（scroll-view 触发）
+  onLoadMore() {
     if (this.data.hasMore && !this.data.isLoadingMore) {
       this._loadMore()
     }
@@ -126,7 +228,7 @@ Page({
 
   // 初始化模块列表
   _initModules() {
-    const modules = Object.values(MODULE_CONFIGS).map(config => ({
+    const modules = moduleConfig.DEFAULT_MODULE_CONFIG.modules.map(config => ({
       id: config.id,
       name: config.name,
       icon: config.icon,
@@ -141,17 +243,45 @@ Page({
     const index = e.currentTarget.dataset.index
     const module = this.data.modules[index]
     if (module && module.id !== this.data.currentModule?.id) {
+      // 切换模块时保存当前模块缓存
+      this._saveCache()
+      
       this.setData({
         currentModule: module,
         contentList: [],
         page: 1,
         hasMore: true,
         isEmpty: false,
+        contentScrollTop: 0,
       })
       // 滚动到选中模块位置
       this._scrollToCurrentModule()
-      this._loadData()
+      
+      // 尝试加载缓存，缓存命中则不请求云端
+      if (this._loadFromCache()) {
+        console.log('[List] 使用缓存数据')
+      } else {
+        this._loadData()
+      }
     }
+  },
+  
+  // 从缓存加载数据
+  _loadFromCache() {
+    const cache = this._getCache()
+    if (cache && cache.moduleId === this.data.currentModule.id) {
+      // 检查缓存是否过期（24小时）
+      if (Date.now() - cache.updatedAt < 24 * 60 * 60 * 1000) {
+        this.setData({
+          contentList: cache.contentList || [],
+          page: cache.page || 1,
+          hasMore: cache.hasMore !== false,
+          isEmpty: cache.isEmpty || false,
+        })
+        return true
+      }
+    }
+    return false
   },
 
   // 滚动到当前选中模块（居中显示）
@@ -188,10 +318,30 @@ Page({
     query.exec()
   },
 
-  // 加载数据
-  async _loadData() {
+  // 加载数据（优先从缓存，失败后拉取云端）
+  async _loadData(options = {}) {
     const { currentModule, page, pageSize } = this.data
     if (!currentModule || this.data.isLoading) return
+
+    const { forceRefresh = false } = options
+    
+    // 如果不是强制刷新，尝试使用缓存
+    if (!forceRefresh) {
+      const cache = this._getCache()
+      if (cache && cache.moduleId === currentModule.id && cache.contentList?.length > 0) {
+        // 检查缓存是否过期（24小时）
+        if (Date.now() - cache.updatedAt < 24 * 60 * 60 * 1000) {
+          console.log('[List] 使用缓存数据，跳过云端请求')
+          this.setData({
+            contentList: cache.contentList,
+            page: cache.page,
+            hasMore: cache.hasMore,
+            isEmpty: cache.isEmpty,
+          })
+          return
+        }
+      }
+    }
 
     this.setData({ isLoading: true, isEmpty: false })
 
@@ -223,10 +373,35 @@ Page({
         hasMore: page * pageSize < total,
         isEmpty: contentList.length === 0,
       })
+      
+      // 保存到缓存
+      this._saveCache()
+      
+      // 恢复滚动位置
+      setTimeout(() => {
+        const cache = this._getCache()
+        if (cache && cache.contentScrollTop > 0) {
+          this.setData({ contentScrollTop: cache.contentScrollTop })
+        }
+      }, 100)
+      
     } catch (e) {
       console.error('加载数据失败:', e)
-      wx.showToast({ title: '加载失败，请重试', icon: 'none' })
-      this.setData({ isEmpty: true })
+      // 云端加载失败，尝试使用缓存兜底
+      const cache = this._getCache()
+      if (cache && cache.moduleId === currentModule.id && cache.contentList?.length > 0) {
+        console.log('[List] 云端加载失败，使用缓存兜底')
+        this.setData({
+          contentList: cache.contentList,
+          page: cache.page,
+          hasMore: cache.hasMore,
+          isEmpty: cache.isEmpty,
+        })
+        wx.showToast({ title: '使用缓存数据', icon: 'none', duration: 1500 })
+      } else {
+        wx.showToast({ title: '加载失败，请重试', icon: 'none' })
+        this.setData({ isEmpty: true })
+      }
     } finally {
       this.setData({ isLoading: false })
     }
@@ -344,6 +519,9 @@ Page({
     const { currentModule } = this.data
     if (!content || !currentModule) return
 
+    // 标记从详情页返回，恢复滚动位置
+    this._isBackFromDetail = true
+    
     // 跳转到详情页
     wx.navigateTo({
       url: `/pages/detail/index?moduleId=${currentModule.id}&data=${encodeURIComponent(JSON.stringify(content))}`,

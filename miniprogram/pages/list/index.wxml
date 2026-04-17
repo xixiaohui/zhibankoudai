@@ -25,8 +25,21 @@
     </view>
   </scroll-view>
 
-  <!-- 内容区域 -->
-  <view class="content-area">
+  <!-- 内容区域（可滚动，保存位置） -->
+  <scroll-view 
+    class="content-area"
+    scroll-y
+    enable-back-to-top
+    scroll-top="{{contentScrollTop}}"
+    bindscroll="onContentScroll"
+    bindscrolltolower="onLoadMore"
+    refresher-enabled
+    refresher-triggered="{{isRefreshing}}"
+    bindrefresherrefresh="onRefresh"
+    scroll-with-animation
+    lower-threshold="200"
+    upper-threshold="50"
+  >
     <!-- 加载状态 -->
     <view class="loading-state" wx:if="{{isLoading}}">
       <view class="loading-spinner" style="border-top-color: {{currentModule.colors.primary}}"></view>
@@ -156,5 +169,5 @@
         </view>
       </view>
     </view>
-  </view>
+  </scroll-view>
 </view>
