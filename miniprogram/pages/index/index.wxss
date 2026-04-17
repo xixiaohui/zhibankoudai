@@ -1,12 +1,66 @@
-/* pages/index/index.wxss - 智伴口袋首页样式 */
+/* pages/index/index.wxss - Pinterest Design System */
 
+/* ========== Pinterest Design Tokens ========== */
 .page-container {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #F8F6FF 0%, #F0EDFF 100%);
-  padding: 20rpx 30rpx 100rpx;
+  /* Pinterest Brand Colors */
+  --pinterest-red: #e60023;
+  --pinterest-plum: #211922;
+  
+  /* Text Colors */
+  --text-primary: #211922;
+  --text-secondary: #62625b;
+  --text-muted: #91918c;
+  --text-white: #ffffff;
+  --text-black: #000000;
+  
+  /* Surface Colors - Warm Neautrals */
+  --surface-white: #ffffff;
+  --surface-fog: #f6f6f3;
+  --surface-sand: #e5e5e0;
+  --surface-warm-light: #e0e0d9;
+  
+  /* Border Colors */
+  --border-light: #c8c8c1;
+  --border-focus: #435ee5;
+  --border-hover: #bcbcb3;
+  
+  /* Badge Background - Warm Wash */
+  --badge-wash: hsla(60, 20%, 98%, 0.5);
+  
+  /* Semantic Colors */
+  --success: #103c25;
+  --error: #9e0a0a;
+  
+  /* Border Radius - Pinterest Scale */
+  --radius-sm: 12rpx;
+  --radius-md: 16rpx;
+  --radius-lg: 20rpx;
+  --radius-xl: 28rpx;
+  --radius-section: 32rpx;
+  --radius-hero: 40rpx;
+  
+  /* Spacing - 8px Base Unit */
+  --space-xs: 8rpx;
+  --space-sm: 12rpx;
+  --space-md: 16rpx;
+  --space-lg: 24rpx;
+  --space-xl: 32rpx;
+  
+  /* Typography */
+  --font-family: -apple-system, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
 }
 
-/* 问候区域 */
+/* ========== Page Container ========== */
+.page-container {
+  min-height: 100vh;
+  background: var(--surface-white);
+  padding: 20rpx 32rpx 120rpx;
+  font-family: var(--font-family);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ========== Greeting Section ========== */
 .greeting-section {
   padding: 40rpx 0 30rpx;
   text-align: center;
@@ -15,27 +69,29 @@
 .greeting-text {
   font-size: 48rpx;
   font-weight: 600;
-  color: #333333;
+  color: var(--text-primary);
   line-height: 1.4;
   margin-bottom: 10rpx;
+  letter-spacing: -1.2rpx;
 }
 
 .time-text {
   font-size: 28rpx;
-  color: #7C6AFF;
-  opacity: 0.8;
+  color: var(--pinterest-red);
+  opacity: 0.9;
 }
 
-/* 通用区域标题 */
+/* ========== Section Titles ========== */
 .section-title {
   font-size: 32rpx;
   font-weight: 600;
-  color: #333333;
+  color: var(--text-primary);
   margin: 40rpx 0 20rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex: 1;
+  letter-spacing: -1.2rpx;
 }
 
 .section-title-row {
@@ -47,19 +103,20 @@
 
 .consecutive-days {
   font-size: 24rpx;
-  color: #7C6AFF;
+  color: var(--text-secondary);
   font-weight: normal;
 }
 
-/* 分享卡片按钮 */
+/* ========== Share Card Button - Pinterest Primary Red ========== */
+/* Pinterest Primary Red: #e60023, text: #000000, radius: 16px */
 .share-card-btn {
   display: flex;
   align-items: center;
-  padding: 8rpx 20rpx;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 30rpx;
-  box-shadow: 0 4rpx 12rpx rgba(102,126,234,0.3);
-  transition: all 0.2s ease;
+  padding: 12rpx 28rpx;
+  background: var(--pinterest-red);
+  border-radius: var(--radius-md);
+  border: 2rpx solid rgba(255, 255, 255, 0);
+  transition: all 0.15s ease;
 }
 
 .share-card-btn:active {
@@ -67,19 +124,24 @@
   opacity: 0.9;
 }
 
+.share-card-btn.focus-ring:focus {
+  outline: 3rpx solid var(--border-focus);
+  outline-offset: 2rpx;
+}
+
 .share-btn-icon {
   font-size: 24rpx;
-  color: #FFFFFF;
+  color: var(--text-black);
   margin-right: 6rpx;
 }
 
 .share-btn-text {
   font-size: 24rpx;
-  color: #FFFFFF;
-  font-weight: 500;
+  color: var(--text-black);
+  font-weight: 400;
 }
 
-/* 操作按钮行（分享+刷新） */
+/* ========== Action Buttons Row ========== */
 .action-btns-row {
   display: flex;
   align-items: center;
@@ -88,10 +150,10 @@
 
 .share-icon {
   font-size: 26rpx;
-  color: #FFFFFF;
+  color: var(--text-white);
 }
 
-/* 主要动作区域 */
+/* ========== Main Actions Section ========== */
 .main-actions-section {
   margin-top: 20rpx;
 }
@@ -103,12 +165,12 @@
 }
 
 .action-item {
-  background: white;
-  border-radius: 24rpx;
+  background: var(--surface-white);
+  border-radius: var(--radius-lg);
   padding: 30rpx 20rpx;
   text-align: center;
-  box-shadow: 0 4rpx 16rpx rgba(124, 106, 255, 0.08);
-  transition: transform 0.2s;
+  border: 1rpx solid var(--border-light);
+  transition: transform 0.15s ease;
 }
 
 .action-item:active {
@@ -124,33 +186,35 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto 20rpx;
-  color: white;
+  color: var(--text-white);
 }
 
 .action-name {
   font-size: 28rpx;
   font-weight: 600;
-  color: #333333;
+  color: var(--text-primary);
   margin-bottom: 8rpx;
   line-height: 1.3;
+  letter-spacing: -0.5rpx;
 }
 
 .action-desc {
   font-size: 22rpx;
-  color: #999999;
+  color: var(--text-muted);
   line-height: 1.2;
 }
 
-/* 每日卡片 */
+/* ========== Daily Card Section ========== */
+/* Pinterest Card: white bg, 16-20px radius, no shadow */
 .daily-card-section {
   margin-top: 40rpx;
 }
 
 .card-container {
-  background: white;
-  border-radius: 24rpx;
+  background: var(--surface-white);
+  border-radius: var(--radius-lg);
   padding: 30rpx;
-  box-shadow: 0 8rpx 32rpx rgba(124, 106, 255, 0.1);
+  border: 1rpx solid var(--border-light);
 }
 
 .card-header {
@@ -159,17 +223,17 @@
   align-items: center;
   margin-bottom: 24rpx;
   padding-bottom: 20rpx;
-  border-bottom: 1rpx solid #F0F0F0;
+  border-bottom: 1rpx solid var(--surface-sand);
 }
 
 .card-date {
   font-size: 24rpx;
-  color: #999999;
+  color: var(--text-muted);
 }
 
 .card-mood {
   font-size: 24rpx;
-  color: #7C6AFF;
+  color: var(--pinterest-red);
   font-weight: 500;
 }
 
@@ -179,34 +243,35 @@
 
 .encouragement {
   font-size: 28rpx;
-  color: #333333;
+  color: var(--text-primary);
   font-weight: 500;
   margin-bottom: 20rpx;
 }
 
 .review {
   font-size: 26rpx;
-  color: #666666;
+  color: var(--text-secondary);
   margin-bottom: 20rpx;
 }
 
 .suggestion {
   font-size: 26rpx;
-  color: #7C6AFF;
+  color: var(--pinterest-red);
   font-weight: 500;
   margin-bottom: 10rpx;
 }
 
 .pending {
   font-size: 24rpx;
-  color: #FF9A76;
-  background: rgba(255, 154, 118, 0.1);
+  color: var(--pinterest-red);
+  background: var(--badge-wash);
   padding: 12rpx 20rpx;
-  border-radius: 12rpx;
+  border-radius: var(--radius-md);
   margin-top: 15rpx;
 }
 
-/* 快速模式 */
+/* ========== Quick Modes Section ========== */
+/* Circular Action Button: #e0e0d9 background, #211922 icon, 50% radius */
 .quick-modes-section {
   margin-top: 40rpx;
 }
@@ -218,48 +283,48 @@
 }
 
 .mode-item {
-  background: white;
-  border-radius: 20rpx;
+  background: var(--surface-white);
+  border-radius: var(--radius-lg);
   padding: 30rpx 20rpx;
   text-align: center;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
-  transition: all 0.2s;
+  border: 1rpx solid var(--border-light);
+  transition: all 0.15s ease;
 }
 
 .mode-item:active {
-  transform: translateY(-4rpx);
-  box-shadow: 0 8rpx 24rpx rgba(124, 106, 255, 0.15);
+  transform: scale(0.98);
 }
 
 .mode-icon {
   width: 60rpx;
   height: 60rpx;
   border-radius: 50%;
+  background: var(--surface-warm-light);
   font-size: 32rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 15rpx;
-  color: white;
+  color: var(--text-primary);
 }
 
 .mode-name {
   font-size: 26rpx;
-  color: #333333;
+  color: var(--text-primary);
   font-weight: 500;
 }
 
-/* 近期状态 */
+/* ========== Recent Section ========== */
 .recent-section {
   margin-top: 40rpx;
 }
 
 .recent-mood {
-  background: white;
-  border-radius: 20rpx;
+  background: var(--surface-white);
+  border-radius: 16px;
   padding: 24rpx 30rpx;
   margin-bottom: 20rpx;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-light);
 }
 
 .mood-header {
@@ -271,13 +336,13 @@
 
 .mood-label {
   font-size: 26rpx;
-  color: #333333;
+  color: var(--text-primary);
   font-weight: 500;
 }
 
 .mood-time {
   font-size: 22rpx;
-  color: #999999;
+  color: var(--text-muted);
 }
 
 .mood-content {
@@ -292,25 +357,25 @@
 
 .mood-text {
   font-size: 28rpx;
-  color: #333333;
+  color: var(--text-primary);
   font-weight: 500;
 }
 
 .mood-note {
   font-size: 26rpx;
-  color: #666666;
+  color: var(--text-secondary);
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* 待完成目标 */
+/* ========== Pending Goals ========== */
 .pending-goals {
-  background: white;
-  border-radius: 20rpx;
+  background: var(--surface-white);
+  border-radius: 16px;
   padding: 24rpx 30rpx;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-light);
 }
 
 .goals-header {
@@ -319,18 +384,18 @@
   align-items: center;
   margin-bottom: 20rpx;
   padding-bottom: 15rpx;
-  border-bottom: 1rpx solid #F0F0F0;
+  border-bottom: 1rpx solid var(--surface-sand);
 }
 
 .goals-label {
   font-size: 26rpx;
-  color: #333333;
+  color: var(--text-primary);
   font-weight: 500;
 }
 
 .goals-count {
   font-size: 24rpx;
-  color: #7C6AFF;
+  color: var(--pinterest-red);
   font-weight: 500;
 }
 
@@ -338,7 +403,7 @@
   display: flex;
   align-items: center;
   padding: 20rpx 0;
-  border-bottom: 1rpx solid #F8F8F8;
+  border-bottom: 1rpx solid var(--surface-fog);
 }
 
 .goal-item:last-child {
@@ -348,8 +413,8 @@
 .goal-checkbox {
   width: 40rpx;
   height: 40rpx;
-  border: 2rpx solid #DDDDDD;
-  border-radius: 8rpx;
+  border: 2rpx solid var(--border-light);
+  border-radius: 16rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -358,34 +423,41 @@
 
 .checkbox-icon {
   font-size: 24rpx;
-  color: #999999;
+  color: var(--text-muted);
 }
 
 .goal-content {
   flex: 1;
   font-size: 26rpx;
-  color: #333333;
+  color: var(--text-primary);
   line-height: 1.4;
 }
 
 .goal-deadline {
   font-size: 22rpx;
-  color: #FF9A76;
+  color: var(--pinterest-red);
   margin-left: 20rpx;
 }
 
+/* ========== Add Goal Button - Pinterest Secondary Sand ========== */
 .add-goal-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24rpx;
-  color: #7C6AFF;
+  padding: 20rpx;
+  color: var(--text-secondary);
   font-size: 26rpx;
   font-weight: 500;
   margin-top: 15rpx;
-  border-radius: 12rpx;
-  border: 1rpx dashed #7C6AFF;
-  background: rgba(124, 106, 255, 0.05);
+  border-radius: var(--radius-md);
+  background: var(--surface-sand);
+  border: 1rpx solid var(--border-light);
+  transition: all 0.15s ease;
+}
+
+.add-goal-btn.focus-ring:focus {
+  outline: 3rpx solid var(--border-focus);
+  outline-offset: 2rpx;
 }
 
 .plus-icon {
@@ -393,14 +465,15 @@
   margin-right: 10rpx;
 }
 
-/* 昵称设置弹窗 */
+/* ========== Nickname Modal ========== */
+/* Pinterest Modal: warm overlay, generous radius */
 .modal-mask {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(33, 25, 34, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -408,20 +481,20 @@
 }
 
 .nickname-modal {
-  background: white;
-  border-radius: 32rpx;
+  background: var(--surface-white);
+  border-radius: var(--radius-section);
   width: 600rpx;
   max-width: 90vw;
-  padding: 40rpx;
-  box-shadow: 0 16rpx 64rpx rgba(0, 0, 0, 0.15);
+  padding: 48rpx 40rpx;
 }
 
 .modal-header {
   font-size: 36rpx;
   font-weight: 600;
-  color: #333333;
+  color: var(--text-primary);
   text-align: center;
   margin-bottom: 30rpx;
+  letter-spacing: -1.2rpx;
 }
 
 .modal-content {
@@ -430,25 +503,32 @@
 
 .modal-text {
   font-size: 28rpx;
-  color: #666666;
+  color: var(--text-secondary);
   text-align: center;
   margin-bottom: 30rpx;
   line-height: 1.5;
 }
 
+/* Pinterest Input: white bg, #91918c border, 16px radius */
 .nickname-input {
-  border: 2rpx solid #7C6AFF;
-  border-radius: 16rpx;
-  padding: 24rpx;
+  border: 1rpx solid var(--text-muted);
+  border-radius: var(--radius-md);
+  padding: 22rpx 30rpx;
   font-size: 28rpx;
-  color: #333333;
+  color: var(--text-primary);
   text-align: center;
   margin-bottom: 20rpx;
+  background: var(--surface-white);
+}
+
+.nickname-input.focus-ring:focus {
+  outline: 3rpx solid var(--border-focus);
+  outline-offset: 2rpx;
 }
 
 .modal-tip {
   font-size: 24rpx;
-  color: #999999;
+  color: var(--text-muted);
   text-align: center;
 }
 
@@ -457,13 +537,14 @@
   justify-content: center;
 }
 
+/* Pinterest Primary Button: #e60023 bg, #000000 text, 16px radius */
 .btn-save {
-  background: #7C6AFF;
-  color: white;
-  border-radius: 16rpx;
+  background: var(--pinterest-red);
+  color: var(--text-black);
+  border-radius: var(--radius-md);
   padding: 20rpx 60rpx;
   font-size: 28rpx;
-  font-weight: 500;
+  font-weight: 400;
   border: none;
 }
 
@@ -471,7 +552,7 @@
   opacity: 0.9;
 }
 
-/* 今日名言 */
+/* ========== Quote Section ========== */
 .quote-section {
   margin-top: 40rpx;
 }
@@ -479,22 +560,35 @@
 .quote-share-btn {
   width: 56rpx;
   height: 56rpx;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--surface-warm-light);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4rpx 12rpx rgba(102,126,234,0.3);
+}
+
+.quote-share-btn:active {
+  transform: scale(0.95);
 }
 
 .quote-refresh-btn {
   display: flex;
   align-items: center;
   padding: 10rpx 20rpx;
-  background: linear-gradient(135deg, #7C6AFF 0%, #9B8AFF 100%);
-  border-radius: 24rpx;
-  color: white;
+  background: var(--surface-warm-light);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
   font-size: 24rpx;
+  transition: all 0.15s ease;
+}
+
+.quote-refresh-btn:active {
+  opacity: 0.8;
+}
+
+.quote-refresh-btn.focus-ring:focus {
+  outline: 3rpx solid var(--border-focus);
+  outline-offset: 2rpx;
 }
 
 .refresh-icon {
@@ -507,10 +601,10 @@
 }
 
 .quote-card {
-  background: linear-gradient(135deg, #FFFFFF 0%, #F8F6FF 100%);
-  border-radius: 24rpx;
+  background: var(--surface-white);
+  border-radius: var(--radius-lg);
   padding: 36rpx 32rpx;
-  box-shadow: 0 8rpx 32rpx rgba(124, 106, 255, 0.12);
+  border: 1rpx solid var(--border-light);
   position: relative;
   overflow: hidden;
 }
@@ -521,8 +615,7 @@
   top: 10rpx;
   left: 20rpx;
   font-size: 120rpx;
-  color: #7C6AFF;
-  opacity: 0.1;
+  color: var(--surface-sand);
   font-family: serif;
   line-height: 1;
 }
@@ -530,9 +623,9 @@
 .quote-domain-tag {
   display: inline-flex;
   align-items: center;
-  background: rgba(124, 106, 255, 0.1);
+  background: var(--badge-wash);
   padding: 8rpx 20rpx;
-  border-radius: 20rpx;
+  border-radius: 50px;
   margin-bottom: 24rpx;
 }
 
@@ -543,32 +636,33 @@
 
 .quote-domain-name {
   font-size: 22rpx;
-  color: #7C6AFF;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
 .quote-ai-tag {
   font-size: 18rpx;
-  color: #FF9A76;
-  background: rgba(255, 154, 118, 0.15);
+  color: var(--text-muted);
+  background: var(--surface-sand);
   padding: 4rpx 10rpx;
-  border-radius: 10rpx;
+  border-radius: 50px;
   margin-left: 12rpx;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .quote-text {
   font-size: 30rpx;
-  color: #333333;
-  line-height: 1.6;
+  color: var(--text-primary);
+  line-height: 1.7;
   margin-bottom: 24rpx;
   padding-left: 20rpx;
   font-style: italic;
+  font-weight: 400;
 }
 
 .quote-author {
   font-size: 26rpx;
-  color: #666666;
+  color: var(--text-secondary);
   text-align: right;
   margin-bottom: 20rpx;
 }
@@ -579,20 +673,21 @@
   align-items: center;
   gap: 16rpx;
   padding-top: 16rpx;
-  border-top: 1rpx solid rgba(124, 106, 255, 0.1);
+  border-top: 1rpx solid var(--surface-sand);
 }
 
 .quote-era {
   font-size: 22rpx;
-  color: #7C6AFF;
-  background: rgba(124, 106, 255, 0.1);
+  color: var(--text-secondary);
+  background: var(--surface-fog);
   padding: 6rpx 16rpx;
-  border-radius: 12rpx;
+  border-radius: 50px;
+  font-weight: 500;
 }
 
 .quote-era.modern {
-  color: #FF9A76;
-  background: rgba(255, 154, 118, 0.1);
+  color: var(--text-secondary);
+  background: var(--surface-sand);
 }
 
 .quote-region {
@@ -602,7 +697,7 @@
 .quote-loading {
   text-align: center;
   padding: 60rpx 40rpx;
-  color: #999999;
+  color: var(--text-muted);
   font-size: 26rpx;
 }
 
@@ -614,7 +709,7 @@
 
 .loading-dots .dot {
   font-size: 48rpx;
-  color: #7C6AFF;
+  color: var(--text-muted);
   animation: dotPulse 1.4s infinite ease-in-out;
   margin: 0 8rpx;
 }
@@ -629,14 +724,14 @@
 }
 
 .loading-text {
-  color: #7C6AFF;
+  color: var(--text-secondary);
   font-size: 26rpx;
 }
 
 .quote-placeholder {
   text-align: center;
   padding: 60rpx 40rpx;
-  color: #BBBBBB;
+  color: var(--text-muted);
   font-size: 26rpx;
 }
 
@@ -645,7 +740,7 @@
   transform: scale(0.95);
 }
 
-/* 今日段子 */
+/* ========== Joke Section ========== */
 .joke-section {
   margin-top: 40rpx;
 }
@@ -653,22 +748,26 @@
 .joke-share-btn {
   width: 56rpx;
   height: 56rpx;
-  background: linear-gradient(135deg, #FF9A76 0%, #FF6B6B 100%);
+  background: var(--surface-warm-light);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4rpx 12rpx rgba(255, 154, 118, 0.3);
 }
 
 .joke-refresh-btn {
   display: flex;
   align-items: center;
   padding: 10rpx 20rpx;
-  background: linear-gradient(135deg, #FF9A76 0%, #FFB088 100%);
-  border-radius: 24rpx;
-  color: white;
+  background: var(--surface-warm-light);
+  border-radius: 16px;
+  color: var(--text-primary);
   font-size: 24rpx;
+  transition: all 0.15s ease;
+}
+
+.joke-refresh-btn:active {
+  opacity: 0.8;
 }
 
 .joke-refresh-btn .refresh-icon {
@@ -681,10 +780,10 @@
 }
 
 .joke-card {
-  background: white;
-  border-radius: 24rpx;
+  background: var(--surface-white);
+  border-radius: var(--radius-lg);
   padding: 30rpx;
-  box-shadow: 0 8rpx 32rpx rgba(255, 154, 118, 0.1);
+  border: 1rpx solid var(--border-light);
 }
 
 .joke-header {
@@ -693,39 +792,39 @@
   justify-content: space-between;
   margin-bottom: 20rpx;
   padding-bottom: 16rpx;
-  border-bottom: 1rpx solid #F0F0F0;
+  border-bottom: 1rpx solid var(--surface-sand);
 }
 
 .joke-label {
   font-size: 26rpx;
-  color: #FF9A76;
+  color: var(--text-primary);
   font-weight: 600;
 }
 
 .joke-ai-tag {
   font-size: 20rpx;
-  color: #FF9A76;
-  background: rgba(255, 154, 118, 0.1);
+  color: var(--text-muted);
+  background: var(--surface-sand);
   padding: 6rpx 14rpx;
-  border-radius: 10rpx;
-  font-weight: 600;
+  border-radius: 50px;
+  font-weight: 500;
 }
 
 .joke-content {
   font-size: 28rpx;
-  color: #444444;
+  color: var(--text-primary);
   line-height: 1.7;
 }
 
 .joke-footer {
   margin-top: 20rpx;
   padding-top: 16rpx;
-  border-top: 1rpx solid #F0F0F0;
+  border-top: 1rpx solid var(--surface-sand);
 }
 
 .joke-source {
   font-size: 24rpx;
-  color: #999999;
+  color: var(--text-muted);
 }
 
 .joke-loading {
@@ -736,11 +835,11 @@
 .joke-placeholder {
   text-align: center;
   padding: 60rpx 40rpx;
-  color: #BBBBBB;
+  color: var(--text-muted);
   font-size: 26rpx;
 }
 
-/* 每日心理学 */
+/* ========== Psychology Section ========== */
 .psychology-section {
   margin-top: 40rpx;
 }
@@ -748,22 +847,31 @@
 .psychology-share-btn {
   width: 56rpx;
   height: 56rpx;
-  background: linear-gradient(135deg, #6BCB77 0%, #4CAF50 100%);
+  background: var(--surface-warm-light);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4rpx 12rpx rgba(76, 175, 80, 0.3);
 }
 
 .psychology-refresh-btn {
   display: flex;
   align-items: center;
   padding: 10rpx 20rpx;
-  background: linear-gradient(135deg, #6BCB77 0%, #4CAF50 100%);
-  border-radius: 24rpx;
-  color: white;
+  background: var(--surface-warm-light);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
   font-size: 24rpx;
+  transition: all 0.15s ease;
+}
+
+.psychology-refresh-btn:active {
+  opacity: 0.8;
+}
+
+.psychology-refresh-btn.focus-ring:focus {
+  outline: 3rpx solid var(--border-focus);
+  outline-offset: 2rpx;
 }
 
 .psychology-refresh-btn .refresh-icon {
@@ -776,11 +884,10 @@
 }
 
 .psychology-card {
-  background: linear-gradient(135deg, #FFFFFF 0%, #E8F5E9 100%);
-  border-radius: 24rpx;
+  background: var(--surface-white);
+  border-radius: var(--radius-lg);
   padding: 30rpx;
-  box-shadow: 0 8rpx 32rpx rgba(76, 175, 80, 0.15);
-  border: 1rpx solid rgba(76, 175, 80, 0.2);
+  border: 1rpx solid var(--border-light);
 }
 
 .psychology-header {
@@ -789,15 +896,15 @@
   justify-content: space-between;
   margin-bottom: 20rpx;
   padding-bottom: 16rpx;
-  border-bottom: 1rpx solid rgba(76, 175, 80, 0.15);
+  border-bottom: 1rpx solid var(--surface-sand);
 }
 
 .psychology-field-tag {
   display: inline-flex;
   align-items: center;
-  background: rgba(76, 175, 80, 0.1);
+  background: var(--badge-wash);
   padding: 8rpx 20rpx;
-  border-radius: 20rpx;
+  border-radius: 50px;
 }
 
 .psychology-field-icon {
@@ -807,30 +914,31 @@
 
 .psychology-field-name {
   font-size: 24rpx;
-  color: #4CAF50;
-  font-weight: 600;
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
 .psychology-ai-tag {
   font-size: 20rpx;
-  color: #FF9A76;
-  background: rgba(255, 154, 118, 0.15);
+  color: var(--text-muted);
+  background: var(--surface-sand);
   padding: 6rpx 14rpx;
-  border-radius: 10rpx;
-  font-weight: 600;
+  border-radius: 50px;
+  font-weight: 500;
 }
 
 .psychology-title {
   font-size: 32rpx;
-  color: #2E7D32;
+  color: var(--text-primary);
   font-weight: 600;
   margin-bottom: 20rpx;
   line-height: 1.4;
+  letter-spacing: -1.2rpx;
 }
 
 .psychology-content {
   font-size: 28rpx;
-  color: #444444;
+  color: var(--text-primary);
   line-height: 1.8;
 }
 
@@ -842,11 +950,11 @@
 .psychology-placeholder {
   text-align: center;
   padding: 60rpx 40rpx;
-  color: #BBBBBB;
+  color: var(--text-muted);
   font-size: 26rpx;
 }
 
-/* 每日金融（新增） */
+/* ========== Finance Section ========== */
 .finance-section {
   margin-top: 40rpx;
 }
@@ -854,22 +962,31 @@
 .finance-share-btn {
   width: 56rpx;
   height: 56rpx;
-  background: linear-gradient(135deg, #2196F3 0%, #64B5F6 100%);
+  background: var(--surface-warm-light);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4rpx 12rpx rgba(33, 150, 243, 0.3);
 }
 
 .finance-refresh-btn {
   display: flex;
   align-items: center;
   padding: 10rpx 20rpx;
-  background: linear-gradient(135deg, #2196F3 0%, #64B5F6 100%);
-  border-radius: 24rpx;
-  color: white;
+  background: var(--surface-warm-light);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
   font-size: 24rpx;
+  transition: all 0.15s ease;
+}
+
+.finance-refresh-btn:active {
+  opacity: 0.8;
+}
+
+.finance-refresh-btn.focus-ring:focus {
+  outline: 3rpx solid var(--border-focus);
+  outline-offset: 2rpx;
 }
 
 .finance-refresh-btn .refresh-icon {
@@ -882,11 +999,10 @@
 }
 
 .finance-card {
-  background: linear-gradient(135deg, #FFFFFF 0%, #E3F2FD 100%);
-  border-radius: 24rpx;
+  background: var(--surface-white);
+  border-radius: var(--radius-lg);
   padding: 30rpx;
-  box-shadow: 0 8rpx 32rpx rgba(33, 150, 243, 0.15);
-  border: 1rpx solid rgba(33, 150, 243, 0.2);
+  border: 1rpx solid var(--border-light);
 }
 
 .finance-header {
@@ -895,15 +1011,15 @@
   justify-content: space-between;
   margin-bottom: 20rpx;
   padding-bottom: 16rpx;
-  border-bottom: 1rpx solid rgba(33, 150, 243, 0.15);
+  border-bottom: 1rpx solid var(--surface-sand);
 }
 
 .finance-category-tag {
   display: inline-flex;
   align-items: center;
-  background: rgba(33, 150, 243, 0.1);
+  background: var(--badge-wash);
   padding: 8rpx 20rpx;
-  border-radius: 20rpx;
+  border-radius: 50px;
 }
 
 .finance-category-icon {
@@ -913,30 +1029,31 @@
 
 .finance-category-name {
   font-size: 24rpx;
-  color: #1976D2;
-  font-weight: 600;
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
 .finance-ai-tag {
   font-size: 20rpx;
-  color: #FF9A76;
-  background: rgba(255, 154, 118, 0.15);
+  color: var(--text-muted);
+  background: var(--surface-sand);
   padding: 6rpx 14rpx;
-  border-radius: 10rpx;
-  font-weight: 600;
+  border-radius: 50px;
+  font-weight: 500;
 }
 
 .finance-title {
   font-size: 32rpx;
-  color: #1565C0;
+  color: var(--text-primary);
   font-weight: 600;
   margin-bottom: 20rpx;
   line-height: 1.4;
+  letter-spacing: -1.2rpx;
 }
 
 .finance-content {
   font-size: 28rpx;
-  color: #444444;
+  color: var(--text-primary);
   line-height: 1.8;
 }
 
@@ -948,11 +1065,11 @@
 .finance-placeholder {
   text-align: center;
   padding: 60rpx 40rpx;
-  color: #BBBBBB;
+  color: var(--text-muted);
   font-size: 26rpx;
 }
 
-/* 每日情话（新增） */
+/* ========== Love Section ========== */
 .love-section {
   margin-top: 40rpx;
 }
@@ -960,22 +1077,31 @@
 .love-share-btn {
   width: 56rpx;
   height: 56rpx;
-  background: linear-gradient(135deg, #FF6B9D 0%, #FF8FB3 100%);
+  background: var(--surface-warm-light);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4rpx 12rpx rgba(255, 107, 157, 0.3);
 }
 
 .love-refresh-btn {
   display: flex;
   align-items: center;
   padding: 10rpx 20rpx;
-  background: linear-gradient(135deg, #FF6B9D 0%, #FF8FB3 100%);
-  border-radius: 24rpx;
-  color: white;
+  background: var(--surface-warm-light);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
   font-size: 24rpx;
+  transition: all 0.15s ease;
+}
+
+.love-refresh-btn:active {
+  opacity: 0.8;
+}
+
+.love-refresh-btn.focus-ring:focus {
+  outline: 3rpx solid var(--border-focus);
+  outline-offset: 2rpx;
 }
 
 .love-refresh-btn .refresh-icon {
@@ -988,11 +1114,10 @@
 }
 
 .love-card {
-  background: linear-gradient(135deg, #FFFFFF 0%, #FFF0F5 100%);
-  border-radius: 24rpx;
+  background: var(--surface-white);
+  border-radius: var(--radius-lg);
   padding: 30rpx;
-  box-shadow: 0 8rpx 32rpx rgba(255, 107, 157, 0.15);
-  border: 1rpx solid rgba(255, 107, 157, 0.2);
+  border: 1rpx solid var(--border-light);
 }
 
 .love-header {
@@ -1001,15 +1126,15 @@
   justify-content: space-between;
   margin-bottom: 20rpx;
   padding-bottom: 16rpx;
-  border-bottom: 1rpx solid rgba(255, 107, 157, 0.15);
+  border-bottom: 1rpx solid var(--surface-sand);
 }
 
 .love-category-tag {
   display: inline-flex;
   align-items: center;
-  background: rgba(255, 107, 157, 0.1);
+  background: var(--badge-wash);
   padding: 8rpx 20rpx;
-  border-radius: 20rpx;
+  border-radius: 50px;
 }
 
 .love-category-icon {
@@ -1019,22 +1144,22 @@
 
 .love-category-name {
   font-size: 24rpx;
-  color: #FF6B9D;
-  font-weight: 600;
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
 .love-ai-tag {
   font-size: 20rpx;
-  color: #FF6B9D;
-  background: rgba(255, 107, 157, 0.15);
+  color: var(--text-muted);
+  background: var(--surface-sand);
   padding: 6rpx 14rpx;
-  border-radius: 10rpx;
-  font-weight: 600;
+  border-radius: 50px;
+  font-weight: 500;
 }
 
 .love-content {
   font-size: 32rpx;
-  color: #333333;
+  color: var(--text-primary);
   line-height: 1.7;
   font-style: italic;
   text-align: center;
@@ -1048,23 +1173,23 @@
   gap: 8rpx;
   margin-top: 24rpx;
   padding-top: 20rpx;
-  border-top: 1rpx solid rgba(255, 107, 157, 0.15);
+  border-top: 1rpx solid var(--surface-sand);
 }
 
 .author-prefix {
   font-size: 26rpx;
-  color: #FF6B9D;
+  color: var(--text-secondary);
 }
 
 .author-name {
   font-size: 26rpx;
-  color: #FF6B9D;
+  color: var(--text-primary);
   font-weight: 600;
 }
 
 .author-source {
   font-size: 22rpx;
-  color: #999999;
+  color: var(--text-muted);
   margin-left: 8rpx;
 }
 
@@ -1076,35 +1201,39 @@
 .love-placeholder {
   text-align: center;
   padding: 60rpx 40rpx;
-  color: #BBBBBB;
+  color: var(--text-muted);
   font-size: 26rpx;
 }
 
-/* 回到顶部按钮 */
+/* ========== Back to Top Button - Circular Action ========== */
+/* Circular Action: #e0e0d9 bg, #211922 icon, 50% radius */
 .back-top-btn {
   position: fixed;
-  right: 30rpx;
+  right: 32rpx;
   bottom: 120rpx;
   width: 96rpx;
   height: 96rpx;
-  background: linear-gradient(135deg, #7C6AFF 0%, #9B8AFF 100%);
+  background: var(--surface-warm-light);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8rpx 24rpx rgba(124, 106, 255, 0.4);
   z-index: 100;
-  transition: all 0.3s ease;
+  transition: all 0.15s ease;
 }
 
-.back-top-btn-active {
-  opacity: 0.8;
+.back-top-btn:active {
   transform: scale(0.95);
+}
+
+.back-top-btn.focus-ring:focus {
+  outline: 3rpx solid var(--border-focus);
+  outline-offset: 2rpx;
 }
 
 .back-top-icon {
   font-size: 40rpx;
-  color: #FFFFFF;
+  color: var(--text-primary);
   font-weight: bold;
   line-height: 1;
 }

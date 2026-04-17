@@ -8,8 +8,7 @@
     <view class="action-btns-row">
       <!-- 了解更多按钮 -->
       <view 
-        class="more-btn"
-        style="background: linear-gradient(135deg, {{config.colors.primary}} 0%, {{config.colors.accent}} 100%);"
+        class="more-btn focus-ring"
         bindtap="onViewMore" 
         hover-class="btn-active"
       >
@@ -18,8 +17,7 @@
       </view>
       <!-- 分享按钮 -->
       <view 
-        class="share-btn" 
-        style="background: linear-gradient(135deg, {{config.colors.primary}} 0%, {{config.colors.accent}} 100%);"
+        class="share-btn focus-ring" 
         bindtap="onShare" 
         hover-class="btn-active"
       >
@@ -27,8 +25,7 @@
       </view>
       <!-- 刷新按钮 -->
       <view 
-        class="refresh-btn {{isLoading ? 'loading' : ''}}" 
-        style="background: linear-gradient(135deg, {{config.colors.primary}} 0%, {{config.colors.accent}} 100%);"
+        class="refresh-btn focus-ring {{isLoading ? 'loading' : ''}}" 
         bindtap="onRefresh" 
         hover-class="btn-active"
       >
@@ -38,11 +35,10 @@
     </view>
   </view>
 
-  <!-- 内容卡片 -->
+  <!-- 内容卡片 - Pinterest Card Style -->
   <view 
     class="content-card" 
     wx:if="{{content && !isLoading}}"
-    style="background: linear-gradient(135deg, {{config.colors.gradientStart}} 0%, {{config.colors.gradientEnd}} 100%); box-shadow: 0 8rpx 32rpx {{config.colors.shadow}}; border: 1rpx solid {{config.colors.bg}};"
   >
     <!-- 标签区域 -->
     <view class="card-tags" wx:if="{{tags.length > 0}}">

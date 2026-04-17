@@ -1,92 +1,102 @@
 /** app.wxss - 全局样式表 **/
-/* 智伴口袋 - 统一设计语言 */
+/* Pinterest Design System - 智伴口袋 */
 
-/* 主题色 */
 page {
-  /* 主色调 */
-  --primary-color: #7C6AFF;
-  --primary-light: #9D8FFF;
-  --primary-dark: #6555E8;
+  /* Pinterest Design System Colors */
+  --primary: #E60023;
+  --surface: #FFFFFF;
+  --surface-secondary: #FAFAFA;
+  --surface-accent: #F5F5F5;
+  --border: #E0E0E0;
+  --text-primary: #211922;
+  --text-secondary: #62625B;
+  --text-placeholder: #9A9A9A;
+  --accent-warm-light: #E0E0D9;
+  --focus-ring: #435EE5;
+  --overlay: rgba(33, 25, 34, 0.6);
   
-  /* 功能色 */
-  --success-color: #34D399;
-  --warning-color: #FFCA28;
-  --danger-color: #FF6B6B;
-  --info-color: #60A5FA;
+  /* Functional Colors */
+  --success: #211922;
+  --warning: #62625B;
+  --danger: #E60023;
+  --info: #435EE5;
   
-  /* 中性色 */
-  --text-primary: #333333;
-  --text-secondary: #666666;
-  --text-placeholder: #999999;
-  --text-disabled: #CCCCCC;
+  /* Pinterest Typography */
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  --font-size-xs: 20rpx;
+  --font-size-sm: 22rpx;
+  --font-size-base: 24rpx;
+  --font-size-lg: 28rpx;
+  --font-size-xl: 32rpx;
+  --font-size-xxl: 40rpx;
+  --font-size-xxxl: 48rpx;
   
-  --bg-primary: #FFFFFF;
-  --bg-secondary: #F7F7F7;
-  --bg-tertiary: #F0F0F0;
-  --bg-gradient-start: #F8F6FF;
-  --bg-gradient-end: #F0EDFF;
+  /* Pinterest Spacing */
+  --space-xs: 8rpx;
+  --space-sm: 12rpx;
+  --space-md: 16rpx;
+  --space-lg: 24rpx;
+  --space-xl: 32rpx;
+  --space-xxl: 48rpx;
   
-  /* 边框 */
-  --border-color: #E5E5E5;
-  --border-light: #F0F0F0;
-  
-  /* 阴影 */
-  --shadow-sm: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
-  --shadow-primary: 0 8rpx 32rpx rgba(124, 106, 255, 0.2);
-  
-  /* 圆角 */
-  --radius-sm: 8rpx;
+  /* Pinterest Border Radius */
+  --radius-sm: 12rpx;
   --radius-md: 16rpx;
   --radius-lg: 24rpx;
-  --radius-xl: 32rpx;
   --radius-full: 999rpx;
-  
-  /* 字体大小 */
-  --font-xs: 22rpx;
-  --font-sm: 24rpx;
-  --font-base: 28rpx;
-  --font-lg: 32rpx;
-  --font-xl: 36rpx;
-  --font-xxl: 48rpx;
 }
 
-/* 全局页面样式 */
-page {
-  background-color: var(--bg-secondary);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-  font-size: var(--font-base);
+/* Global Page Styles */
+.page {
+  background-color: var(--surface-secondary);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
   color: var(--text-primary);
   line-height: 1.5;
 }
 
-/* 通用容器 */
+/* Focus Ring for Accessibility - 使用类名替代通配符 */
+.focus-ring:focus {
+  outline: 2rpx solid var(--focus-ring);
+  outline-offset: 2rpx;
+}
+
+/* Page Container */
 .page-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
-  padding: 20rpx 30rpx 100rpx;
+  background-color: var(--surface-secondary);
+  padding: var(--space-lg) var(--space-lg) 100rpx;
 }
 
-/* 通用卡片 */
+/* Card Component */
 .card {
-  background: var(--bg-primary);
-  border-radius: var(--radius-xl);
-  padding: 30rpx;
-  box-shadow: var(--shadow-md);
+  background-color: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  border: 1rpx solid var(--border);
 }
 
-/* 通用按钮 */
+/* Primary Button */
 .btn {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 24rpx 40rpx;
   border-radius: var(--radius-md);
-  font-size: var(--font-base);
+  font-size: var(--font-size-base);
   font-weight: 500;
-  transition: all 0.2s;
   border: none;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--surface);
+}
+
+.btn-secondary {
+  background-color: var(--accent-warm-light);
+  color: var(--text-primary);
 }
 
 .btn:active {
@@ -94,52 +104,34 @@ page {
   transform: scale(0.98);
 }
 
-.btn-primary {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-  color: white;
-  box-shadow: var(--shadow-primary);
-}
-
-.btn-secondary {
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  border: 1rpx solid var(--border-color);
-}
-
-.btn-danger {
-  background: var(--danger-color);
-  color: white;
-}
-
-/* 输入框 */
+/* Input Field */
 .input {
   width: 100%;
-  padding: 24rpx 30rpx;
-  background: var(--bg-primary);
-  border: 2rpx solid var(--border-color);
+  padding: 24rpx var(--space-lg);
+  background-color: var(--surface);
+  border: 1rpx solid var(--border);
   border-radius: var(--radius-md);
-  font-size: var(--font-base);
+  font-size: var(--font-size-base);
   color: var(--text-primary);
-  transition: border-color 0.2s;
 }
 
 .input:focus {
-  border-color: var(--primary-color);
+  border-color: var(--focus-ring);
 }
 
 .input::placeholder {
   color: var(--text-placeholder);
 }
 
-/* 文本域 */
+/* Textarea */
 .textarea {
   width: 100%;
   min-height: 200rpx;
-  padding: 24rpx 30rpx;
-  background: var(--bg-secondary);
-  border: none;
+  padding: 24rpx var(--space-lg);
+  background-color: var(--surface-accent);
+  border: 1rpx solid var(--border);
   border-radius: var(--radius-md);
-  font-size: var(--font-base);
+  font-size: var(--font-size-base);
   color: var(--text-primary);
   line-height: 1.6;
 }
@@ -148,60 +140,60 @@ page {
   color: var(--text-placeholder);
 }
 
-/* 标题 */
+/* Section Title */
 .section-title {
-  font-size: var(--font-lg);
+  font-size: var(--font-size-lg);
   font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: 20rpx;
+  margin-bottom: var(--space-md);
 }
 
-/* 标签 */
+/* Tag */
 .tag {
   display: inline-flex;
   align-items: center;
-  padding: 8rpx 16rpx;
-  background: rgba(124, 106, 255, 0.1);
-  color: var(--primary-color);
+  padding: var(--space-xs) var(--space-sm);
+  background-color: var(--accent-warm-light);
+  color: var(--text-primary);
   border-radius: var(--radius-full);
-  font-size: var(--font-sm);
+  font-size: var(--font-size-sm);
 }
 
-/* 分隔线 */
+/* Divider */
 .divider {
   height: 1rpx;
-  background: var(--border-light);
-  margin: 20rpx 0;
+  background-color: var(--border);
+  margin: var(--space-md) 0;
 }
 
-/* 空状态 */
+/* Empty State */
 .empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 80rpx 40rpx;
+  padding: var(--space-xxl) var(--space-lg);
   text-align: center;
 }
 
 .empty-icon {
   font-size: 80rpx;
-  margin-bottom: 20rpx;
+  margin-bottom: var(--space-md);
   opacity: 0.5;
 }
 
 .empty-text {
-  font-size: var(--font-lg);
+  font-size: var(--font-size-lg);
   color: var(--text-placeholder);
-  margin-bottom: 10rpx;
+  margin-bottom: var(--space-xs);
 }
 
 .empty-desc {
-  font-size: var(--font-sm);
-  color: var(--text-disabled);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
 }
 
-/* 动画 */
+/* Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -230,19 +222,19 @@ page {
   animation: pulse 1.5s infinite;
 }
 
-/* 列表项 */
+/* List Item */
 .list-item {
   display: flex;
   align-items: center;
-  padding: 24rpx 30rpx;
-  background: var(--bg-primary);
+  padding: 24rpx var(--space-lg);
+  background-color: var(--surface);
   border-radius: var(--radius-md);
-  margin-bottom: 16rpx;
-  transition: all 0.2s;
+  margin-bottom: var(--space-sm);
+  border: 1rpx solid var(--border);
 }
 
 .list-item:active {
-  background: var(--bg-secondary);
+  background-color: var(--surface-accent);
 }
 
 .list-item-content {
@@ -250,17 +242,17 @@ page {
 }
 
 .list-item-title {
-  font-size: var(--font-base);
+  font-size: var(--font-size-base);
   color: var(--text-primary);
   margin-bottom: 4rpx;
 }
 
 .list-item-desc {
-  font-size: var(--font-sm);
+  font-size: var(--font-size-sm);
   color: var(--text-secondary);
 }
 
-/* 徽章 */
+/* Badge */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -268,25 +260,25 @@ page {
   min-width: 36rpx;
   height: 36rpx;
   padding: 0 12rpx;
-  background: var(--danger-color);
-  color: white;
+  background-color: var(--primary);
+  color: var(--surface);
   border-radius: var(--radius-full);
-  font-size: var(--font-xs);
+  font-size: var(--font-size-xs);
   font-weight: 500;
 }
 
-/* 加载动画 */
+/* Loading */
 .loading {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40rpx;
+  padding: var(--space-lg);
 }
 
 .loading-dot {
   width: 16rpx;
   height: 16rpx;
-  background: var(--primary-color);
+  background-color: var(--text-secondary);
   border-radius: 50%;
   margin: 0 8rpx;
   animation: pulse 1s infinite;

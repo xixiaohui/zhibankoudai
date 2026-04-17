@@ -1,55 +1,52 @@
-/* pages/test/index.wxss - 功能测试页面样式 */
+/* pages/test/index.wxss - Pinterest Design System */
 
 .page-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #F5F7FF 0%, #F0F2FF 100%);
-  padding: 30rpx 30rpx 100rpx;
+  background-color: var(--surface-secondary);
+  padding: var(--space-lg) var(--space-lg) 100rpx;
 }
 
-/* 头部 */
 .header {
-  padding: 40rpx 0 30rpx;
+  padding: var(--space-xl) 0 var(--space-lg);
   text-align: center;
 }
 
 .title {
-  font-size: 48rpx;
+  font-size: var(--font-size-xxxl);
   font-weight: 600;
-  color: #333333;
-  margin-bottom: 10rpx;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
 }
 
 .subtitle {
-  font-size: 26rpx;
-  color: #7C6AFF;
-  opacity: 0.8;
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
 }
 
-/* 测试区域 */
 .test-section {
-  margin-bottom: 40rpx;
+  margin-bottom: var(--space-lg);
 }
 
 .section-title {
-  font-size: 32rpx;
+  font-size: var(--font-size-xl);
   font-weight: 600;
-  color: #333333;
-  margin-bottom: 20rpx;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
 }
 
 .test-card {
-  background: white;
-  border-radius: 24rpx;
-  padding: 20rpx;
-  box-shadow: 0 4rpx 16rpx rgba(124, 106, 255, 0.08);
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-sm);
+  border: 1rpx solid var(--border);
 }
 
 .test-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24rpx 16rpx;
-  border-bottom: 1rpx solid #F0F0F0;
+  padding: var(--space-md) var(--space-xs);
+  border-bottom: 1rpx solid var(--border);
 }
 
 .test-item:last-child {
@@ -61,31 +58,31 @@
 }
 
 .test-name {
-  font-size: 28rpx;
-  color: #333333;
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
   font-weight: 500;
   display: block;
-  margin-bottom: 6rpx;
+  margin-bottom: 4rpx;
 }
 
 .test-desc {
-  font-size: 24rpx;
-  color: #999999;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
 }
 
 .test-btn {
-  padding: 16rpx 32rpx;
-  background: linear-gradient(135deg, #7C6AFF, #9D8FFF);
-  color: white;
-  border-radius: 16rpx;
-  font-size: 26rpx;
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--primary);
+  color: var(--surface);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
   border: none;
   min-width: 120rpx;
 }
 
 .test-btn.secondary {
-  background: #F0F0F0;
-  color: #666666;
+  background: var(--accent-warm-light);
+  color: var(--text-primary);
 }
 
 .test-btn::after {
@@ -95,24 +92,23 @@
 .progress-bar {
   width: 100%;
   height: 12rpx;
-  background: #F0F0F0;
+  background: var(--accent-warm-light);
   border-radius: 6rpx;
   overflow: hidden;
-  margin-top: 10rpx;
+  margin-top: var(--space-xs);
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #7C6AFF, #9D8FFF);
+  background: var(--primary);
   border-radius: 6rpx;
   transition: width 0.3s;
 }
 
-/* 导航网格 */
 .nav-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20rpx;
+  gap: var(--space-sm);
 }
 
 .nav-item {
@@ -120,10 +116,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40rpx 20rpx;
-  background: white;
-  border-radius: 24rpx;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+  padding: var(--space-xl) var(--space-sm);
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1rpx solid var(--border);
 }
 
 .nav-item:active {
@@ -133,20 +129,19 @@
 
 .nav-icon {
   font-size: 60rpx;
-  margin-bottom: 16rpx;
+  margin-bottom: var(--space-sm);
 }
 
 .nav-text {
-  font-size: 28rpx;
-  color: #333333;
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
   font-weight: 500;
 }
 
-/* 日志容器 */
 .log-container {
-  background: #1a1a1a;
-  border-radius: 16rpx;
-  padding: 20rpx;
+  background: var(--text-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
   max-height: 400rpx;
   overflow-y: auto;
 }
@@ -154,10 +149,11 @@
 .log-item {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 12rpx;
+  margin-bottom: var(--space-xs);
   font-family: 'Courier New', monospace;
-  font-size: 22rpx;
+  font-size: var(--font-size-xs);
   line-height: 1.4;
+  color: var(--surface);
 }
 
 .log-item.success {
@@ -165,11 +161,11 @@
 }
 
 .log-item.error {
-  color: #FF6B6B;
+  color: var(--primary);
 }
 
 .log-item.info {
-  color: #60A5FA;
+  color: var(--focus-ring);
 }
 
 .log-item.warning {
@@ -177,8 +173,8 @@
 }
 
 .log-time {
-  color: #666666;
-  margin-right: 12rpx;
+  color: var(--text-secondary);
+  margin-right: var(--space-xs);
   flex-shrink: 0;
 }
 
@@ -189,19 +185,19 @@
 
 .log-empty {
   text-align: center;
-  color: #666666;
-  padding: 40rpx;
-  font-size: 26rpx;
+  color: var(--text-secondary);
+  padding: var(--space-lg);
+  font-size: var(--font-size-base);
 }
 
 .clear-log-btn {
-  margin-top: 20rpx;
-  padding: 16rpx;
+  margin-top: var(--space-sm);
+  padding: var(--space-sm);
   background: transparent;
-  color: #999999;
-  border: 1rpx solid #E0E0E0;
-  border-radius: 12rpx;
-  font-size: 26rpx;
+  color: var(--text-secondary);
+  border: 1rpx solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
 }
 
 .clear-log-btn::after {

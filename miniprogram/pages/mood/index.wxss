@@ -1,89 +1,85 @@
-/* pages/mood/index.wxss - 情绪记录页面样式 */
+/* pages/mood/index.wxss - Pinterest Design System */
 
 .page-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #FFF9F5 0%, #FFF5F0 100%);
-  padding: 30rpx 30rpx 100rpx;
+  background-color: var(--surface-secondary);
+  padding: var(--space-lg) var(--space-lg) 100rpx;
 }
 
-/* 头部 */
 .header {
-  padding: 40rpx 0 30rpx;
+  padding: var(--space-xl) 0 var(--space-lg);
   text-align: center;
 }
 
 .title {
-  font-size: 48rpx;
+  font-size: var(--font-size-xxxl);
   font-weight: 600;
-  color: #333333;
-  margin-bottom: 10rpx;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
 }
 
 .subtitle {
-  font-size: 26rpx;
-  color: #7C6AFF;
-  opacity: 0.8;
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
 }
 
-/* 通用区域标题 */
 .section-title {
-  font-size: 32rpx;
+  font-size: var(--font-size-xl);
   font-weight: 600;
-  color: #333333;
-  margin: 40rpx 0 20rpx;
+  color: var(--text-primary);
+  margin: var(--space-lg) 0 var(--space-sm);
 }
 
-/* 情绪选择网格 */
 .moods-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20rpx;
+  gap: var(--space-sm);
 }
 
 .mood-item {
-  background: #F8F8F8;
-  border: 3rpx solid;
-  border-radius: 24rpx;
-  padding: 40rpx 20rpx;
+  background: var(--surface);
+  border: 2rpx solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg) var(--space-sm);
   text-align: center;
   transition: all 0.2s;
 }
 
 .mood-item.selected {
-  color: white;
-  transform: scale(1.05);
-  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.15);
+  color: var(--surface);
+  background-color: var(--primary);
+  border-color: var(--primary);
+  transform: scale(1.02);
 }
 
 .mood-emoji {
   font-size: 60rpx;
-  margin-bottom: 15rpx;
+  margin-bottom: var(--space-sm);
   display: block;
 }
 
 .mood-name {
-  font-size: 28rpx;
+  font-size: var(--font-size-base);
   font-weight: 500;
 }
 
-/* 备注输入区域 */
 .note-section {
-  background: white;
-  border-radius: 32rpx;
-  padding: 40rpx;
-  margin-top: 40rpx;
-  box-shadow: 0 8rpx 32rpx rgba(255, 154, 118, 0.1);
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  margin-top: var(--space-lg);
+  border: 1rpx solid var(--border);
 }
 
 .selected-mood-display {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15rpx;
-  margin-bottom: 30rpx;
-  padding: 20rpx;
-  background: #F8F8F8;
-  border-radius: 20rpx;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  padding: var(--space-sm);
+  background: var(--surface-secondary);
+  border-radius: var(--radius-md);
 }
 
 .selected-emoji {
@@ -91,39 +87,40 @@
 }
 
 .selected-text {
-  font-size: 32rpx;
+  font-size: var(--font-size-xl);
   font-weight: 600;
-  color: #333333;
+  color: var(--text-primary);
 }
 
 .note-input {
   width: 100%;
   min-height: 200rpx;
-  background: #F8F8F8;
-  border-radius: 20rpx;
-  padding: 30rpx;
-  font-size: 28rpx;
-  color: #333333;
+  background: var(--surface-secondary);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
   line-height: 1.5;
-  margin-bottom: 15rpx;
+  margin-bottom: var(--space-sm);
+  border: 1rpx solid var(--border);
 }
 
 .input-tip {
-  font-size: 24rpx;
-  color: #999999;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
   text-align: center;
-  margin-bottom: 30rpx;
+  margin-bottom: var(--space-lg);
 }
 
 .submit-btn {
-  background: linear-gradient(135deg, #7C6AFF, #9D8FFF);
-  color: white;
-  border-radius: 20rpx;
-  padding: 28rpx;
-  font-size: 30rpx;
+  background: var(--primary);
+  color: var(--surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  font-size: var(--font-size-lg);
   font-weight: 500;
   border: none;
-  margin-bottom: 20rpx;
+  margin-bottom: var(--space-sm);
 }
 
 .submit-btn:active {
@@ -134,47 +131,47 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10rpx;
-  color: #7C6AFF;
-  font-size: 26rpx;
-  padding: 20rpx;
-  border-radius: 16rpx;
-  border: 1rpx dashed #7C6AFF;
-  background: rgba(124, 106, 255, 0.05);
+  gap: var(--space-xs);
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  padding: var(--space-sm);
+  border-radius: var(--radius-md);
+  border: 1rpx dashed var(--border);
+  background: var(--accent-warm-light);
 }
 
 .tip-icon {
-  font-size: 28rpx;
+  font-size: var(--font-size-lg);
 }
 
-/* 快捷记录 */
 .quick-section {
-  margin-top: 40rpx;
+  margin-top: var(--space-lg);
 }
 
 .quick-tip {
-  font-size: 26rpx;
-  color: #666666;
-  margin-bottom: 20rpx;
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
   text-align: center;
 }
 
 .quick-moods {
   display: flex;
   flex-wrap: wrap;
-  gap: 15rpx;
+  gap: var(--space-sm);
   justify-content: center;
 }
 
 .quick-mood-item {
-  padding: 20rpx 30rpx;
-  border-radius: 40rpx;
-  color: white;
-  font-size: 26rpx;
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-full);
+  color: var(--surface);
+  font-size: var(--font-size-base);
   display: flex;
   align-items: center;
-  gap: 8rpx;
+  gap: var(--space-xs);
   transition: transform 0.2s;
+  background-color: var(--text-secondary);
 }
 
 .quick-mood-item:active {
@@ -182,64 +179,63 @@
 }
 
 .quick-emoji {
-  font-size: 28rpx;
+  font-size: var(--font-size-base);
 }
 
-/* 统计区域 */
 .stats-section {
-  background: white;
-  border-radius: 32rpx;
-  padding: 40rpx;
-  margin-top: 40rpx;
-  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.05);
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  margin-top: var(--space-lg);
+  border: 1rpx solid var(--border);
 }
 
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30rpx;
+  margin-bottom: var(--space-lg);
 }
 
 .view-trend {
-  font-size: 26rpx;
-  color: #7C6AFF;
+  font-size: var(--font-size-base);
+  color: var(--primary);
   font-weight: 500;
 }
 
 .stats-grid {
   display: flex;
   flex-direction: column;
-  gap: 25rpx;
+  gap: var(--space-md);
 }
 
 .stat-item {
   display: flex;
   align-items: center;
-  gap: 20rpx;
+  gap: var(--space-sm);
 }
 
 .stat-header {
   width: 120rpx;
   display: flex;
   align-items: center;
-  gap: 10rpx;
+  gap: var(--space-xs);
 }
 
 .stat-emoji {
-  font-size: 32rpx;
+  font-size: var(--font-size-xl);
 }
 
 .stat-name {
-  font-size: 26rpx;
-  color: #333333;
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
   font-weight: 500;
 }
 
 .stat-bar-container {
   flex: 1;
   height: 20rpx;
-  background: #F0F0F0;
+  background: var(--accent-warm-light);
   border-radius: 10rpx;
   overflow: hidden;
 }
@@ -248,34 +244,34 @@
   height: 100%;
   border-radius: 10rpx;
   transition: width 0.5s ease;
+  background-color: var(--primary);
 }
 
 .stat-count {
   width: 80rpx;
   text-align: right;
-  font-size: 24rpx;
-  color: #999999;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
-/* 历史记录 */
 .history-section {
-  margin-top: 40rpx;
+  margin-top: var(--space-lg);
 }
 
 .records-list {
-  background: white;
-  border-radius: 32rpx;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.05);
+  border: 1rpx solid var(--border);
 }
 
 .record-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30rpx;
-  border-bottom: 1rpx solid #F0F0F0;
+  padding: var(--space-lg);
+  border-bottom: 1rpx solid var(--border);
 }
 
 .record-item:last-child {
@@ -289,8 +285,8 @@
 .record-mood {
   display: flex;
   align-items: center;
-  gap: 15rpx;
-  margin-bottom: 10rpx;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xs);
 }
 
 .record-emoji {
@@ -298,14 +294,14 @@
 }
 
 .record-mood-text {
-  font-size: 28rpx;
-  color: #333333;
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
   font-weight: 500;
 }
 
 .record-note {
-  font-size: 26rpx;
-  color: #666666;
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
   line-height: 1.4;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -316,21 +312,20 @@
 
 .record-right {
   text-align: right;
-  margin-left: 20rpx;
+  margin-left: var(--space-sm);
 }
 
 .record-time {
-  font-size: 26rpx;
-  color: #999999;
-  margin-bottom: 5rpx;
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  margin-bottom: 4rpx;
 }
 
 .record-date {
-  font-size: 24rpx;
-  color: #CCCCCC;
+  font-size: var(--font-size-sm);
+  color: var(--text-placeholder);
 }
 
-/* 空状态 */
 .empty-section {
   text-align: center;
   padding: 100rpx 0;
@@ -338,17 +333,17 @@
 
 .empty-icon {
   font-size: 80rpx;
-  margin-bottom: 30rpx;
+  margin-bottom: var(--space-lg);
   opacity: 0.5;
 }
 
 .empty-title {
-  font-size: 36rpx;
-  color: #999999;
-  margin-bottom: 15rpx;
+  font-size: var(--font-size-xl);
+  color: var(--text-placeholder);
+  margin-bottom: var(--space-sm);
 }
 
 .empty-desc {
-  font-size: 28rpx;
-  color: #CCCCCC;
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
 }

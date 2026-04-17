@@ -27,7 +27,7 @@
         今日陪伴卡片
         <text class="consecutive-days">已连续陪伴 {{consecutiveDays}} 天</text>
       </view>
-      <view class="share-card-btn" bindtap="onShareCard">
+      <view class="share-card-btn focus-ring" bindtap="onShareCard">
         <text class="share-btn-icon">↗</text>
         <text class="share-btn-text">分享</text>
       </view>
@@ -236,7 +236,7 @@
           <view wx:if="{{item.deadline}}" class="goal-deadline">{{item.deadline}}</view>
         </view>
       </block>
-      <view class="add-goal-btn" bindtap="onAddGoal">
+      <view class="add-goal-btn focus-ring" bindtap="onAddGoal">
         <text class="plus-icon">+</text>
         <text>添加新目标</text>
       </view>
@@ -246,7 +246,7 @@
   <!-- 回到顶部按钮 -->
   <view 
     wx:if="{{showBackTop}}" 
-    class="back-top-btn" 
+    class="back-top-btn focus-ring" 
     bindtap="scrollToTop"
     hover-class="back-top-btn-active"
   >
@@ -260,7 +260,7 @@
       <view class="modal-content">
         <view class="modal-text">我是你的随身AI陪伴助手，怎么称呼你呢？</view>
         <input 
-          class="nickname-input" 
+          class="nickname-input focus-ring" 
           placeholder="请输入昵称（2-10字）" 
           maxlength="10"
           value="{{nicknameInput}}"

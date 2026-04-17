@@ -1,799 +1,1199 @@
-/* components/dailyCard/dailyCard.wxss - 每日内容卡片组件样式 */
+/* components/dailyCard/dailyCard.wxss - Pinterest Design System */
 
-/* 外层容器 */
-.daily-card-wrapper {
-  margin-top: 40rpx;
+/* ==================== Pinterest Design Tokens ==================== */
+.daily-card {
+  /* Pinterest Brand Colors */
+  --pinterest-red: #e60023;
+  --pinterest-plum: #211922;
+  
+  /* Text Colors */
+  --text-primary: #211922;
+  --text-secondary: #62625b;
+  --text-muted: #91918c;
+  --text-white: #ffffff;
+  --text-black: #000000;
+  
+  /* Surface Colors - Warm Neautrals */
+  --surface-white: #ffffff;
+  --surface-fog: #f6f6f3;
+  --surface-sand: #e5e5e0;
+  --surface-warm-light: #e0e0d9;
+  
+  /* Border Colors */
+  --border-light: #c8c8c1;
+  --border-focus: #435ee5;
+  
+  /* Badge Background - Warm Wash */
+  --badge-wash: hsla(60, 20%, 98%, 0.5);
+  
+  /* Border Radius - Pinterest Scale */
+  --radius-sm: 12rpx;
+  --radius-md: 16rpx;
+  --radius-lg: 20rpx;
+  --radius-full: 999rpx;
+  
+  /* Spacing - 8px Base Unit */
+  --space-xs: 8rpx;
+  --space-sm: 12rpx;
+  --space-md: 16rpx;
+  --space-lg: 24rpx;
+  --space-xl: 32rpx;
 }
 
-/* 标题行 */
-.section-title-row {
+/* ==================== 每日卡片容器 - Pinterest Card Style ==================== */
+/* White bg, 20px radius, no shadow - flat design */
+.daily-card {
+  width: 100%;
+  background-color: var(--surface-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-md);
+  border: 1rpx solid var(--border-light);
+  box-sizing: border-box;
+}
+
+.daily-card.last-card {
+  margin-bottom: 0;
+}
+
+/* ==================== 头部区域 ==================== */
+.card-header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20rpx;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1rpx solid var(--surface-sand);
 }
 
-.section-title {
+.date-section {
   display: flex;
-  align-items: center;
-  font-size: 32rpx;
+  flex-direction: column;
+}
+
+.date-day {
+  font-size: 56rpx;
   font-weight: 600;
-  color: #333333;
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: -2rpx;
 }
 
-.title-icon {
-  font-size: 36rpx;
-  margin-right: 12rpx;
+.date-month {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-top: 4rpx;
 }
 
-.title-text {
-  font-size: 32rpx;
+.date-year {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  margin-top: 2rpx;
 }
 
-/* 操作按钮行 */
-.action-btns-row {
-  display: flex;
+/* Pinterest Badge - Warm Wash Background */
+.module-badge {
+  display: inline-flex;
   align-items: center;
-  gap: 12rpx;
-}
-
-/* 更多按钮 */
-.more-btn {
-  display: flex;
-  align-items: center;
-  padding: 8rpx 16rpx;
-  border-radius: 20rpx;
-  transition: all 0.2s ease;
-}
-
-.more-btn:active {
-  opacity: 0.7;
-  transform: scale(0.95);
-}
-
-.more-icon {
-  font-size: 28rpx;
-  color: #FFFFFF;
-  margin-right: 4rpx;
-  font-weight: bold;
-}
-
-.more-text {
-  font-size: 22rpx;
-  color: #FFFFFF;
+  padding: var(--space-xs) var(--space-sm);
+  background-color: var(--badge-wash);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
-/* 分享按钮 */
-.share-btn {
-  width: 56rpx;
-  height: 56rpx;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.15);
+/* ==================== 内容区域 ==================== */
+.card-content {
+  margin-bottom: var(--space-md);
 }
 
-.share-icon {
-  font-size: 26rpx;
-  color: #FFFFFF;
+.content-title {
+  font-size: var(--space-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+  margin-bottom: var(--space-sm);
+  letter-spacing: -1rpx;
 }
 
-/* 刷新按钮 */
-.refresh-btn {
-  display: flex;
-  align-items: center;
-  padding: 10rpx 20rpx;
-  border-radius: 24rpx;
-  color: white;
-  font-size: 24rpx;
+.content-summary {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: 1.6;
 }
 
-.refresh-icon {
-  font-size: 26rpx;
-  margin-right: 6rpx;
+.content-body {
+  margin-top: var(--space-md);
+  padding: var(--space-md);
+  background-color: var(--surface-fog);
+  border-radius: var(--radius-md);
 }
 
-.refresh-text {
-  font-weight: 500;
+.content-text {
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  line-height: 1.8;
 }
 
-/* 按钮点击效果 */
-.btn-active {
-  opacity: 0.7;
-  transform: scale(0.95);
+/* ==================== 引用样式 ==================== */
+/* Pinterest Quote Style - left border accent */
+.quote-section {
+  position: relative;
+  margin-top: var(--space-md);
+  padding: var(--space-md);
+  padding-left: var(--space-xl);
+  background-color: var(--surface-fog);
+  border-radius: var(--radius-md);
 }
 
-/* 内容卡片 */
-.content-card {
-  border-radius: 24rpx;
-  padding: 30rpx;
+.quote-section::before {
+  content: '"';
+  position: absolute;
+  top: 8rpx;
+  left: 16rpx;
+  font-size: 80rpx;
+  color: var(--surface-sand);
+  font-family: serif;
+  line-height: 1;
 }
 
-/* 标签区域 */
-.card-tags {
+.quote-text {
+  font-size: var(--font-size-base);
+  font-style: italic;
+  color: var(--text-primary);
+  line-height: 1.7;
+}
+
+.quote-author {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-top: var(--space-sm);
+  text-align: right;
+}
+
+/* ==================== 图片网格 ==================== */
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xs);
+  margin-top: var(--space-md);
+}
+
+.image-grid.cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.image-grid.cols-1 {
+  grid-template-columns: 1fr;
+}
+
+.grid-image {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  background-color: var(--surface-fog);
+}
+
+.grid-image.single {
+  aspect-ratio: 16/9;
+  border-radius: var(--radius-lg);
+}
+
+/* ==================== 标签 ==================== */
+/* Pinterest Tag - Warm Wash Badge */
+.tag-list {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 12rpx;
-  margin-bottom: 20rpx;
+  gap: var(--space-xs);
+  margin-top: var(--space-md);
 }
 
 .tag-item {
   display: inline-flex;
   align-items: center;
-  padding: 8rpx 20rpx;
-  border-radius: 20rpx;
+  padding: var(--space-xs) var(--space-sm);
+  background-color: var(--badge-wash);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.tag-item.highlight {
+  background-color: var(--pinterest-red);
+  color: var(--text-black);
+}
+
+/* ==================== 操作按钮 ==================== */
+/* Pinterest Secondary Button - Sand Gray */
+.action-buttons {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1rpx solid var(--surface-sand);
+}
+
+.action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--surface-sand);
+  border-radius: var(--radius-md);
+  border: none;
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  font-weight: 400;
+  transition: opacity 0.15s ease;
+}
+
+.action-btn:active {
+  opacity: 0.8;
+}
+
+.action-btn.focus-ring:focus {
+  outline: 3rpx solid var(--border-focus);
+  outline-offset: 2rpx;
+}
+
+/* Pinterest Primary Red Button */
+.action-btn.primary {
+  background-color: var(--pinterest-red);
+  color: var(--text-black);
+}
+
+.action-btn-icon {
+  margin-right: var(--space-xs);
+}
+
+/* ==================== 底部信息 ==================== */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+}
+
+/* Pinterest AI Badge - Sand Background */
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4rpx;
+  padding: 6rpx var(--space-sm);
+  background-color: var(--surface-sand);
+  border-radius: var(--radius-full);
+  font-size: 20rpx;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.footer-time {
   font-size: 22rpx;
+  color: var(--text-muted);
+}
+
+.footer-actions {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+/* Pinterest Circular Action Button - Warm Light */
+.icon-btn {
+  width: 56rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--surface-warm-light);
+  border-radius: 50%;
+  border: none;
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  transition: transform 0.15s ease;
+}
+
+.icon-btn:active {
+  transform: scale(0.95);
+}
+
+.icon-btn.focus-ring:focus {
+  outline: 3rpx solid var(--border-focus);
+  outline-offset: 2rpx;
+}
+
+/* ==================== 展开/收起动画 ==================== */
+@keyframes expand {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 1000rpx;
+    opacity: 1;
+  }
+}
+
+@keyframes collapse {
+  from {
+    max-height: 1000rpx;
+    opacity: 1;
+  }
+  to {
+    max-height: 0;
+    opacity: 0;
+  }
+}
+
+.expanding {
+  animation: expand 0.3s ease forwards;
+}
+
+.collapsing {
+  animation: collapse 0.3s ease forwards;
+}
+
+/* ==================== 加载状态 ==================== */
+/* Pinterest Style Loading */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl) 0;
+}
+
+.loading-spinner {
+  width: 56rpx;
+  height: 56rpx;
+  border: 3rpx solid var(--surface-sand);
+  border-top-color: var(--pinterest-red);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: var(--space-sm);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  font-size: 22rpx;
+  color: var(--text-secondary);
+}
+
+/* ==================== 空状态 ==================== */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl) 0;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: var(--space-md);
+  opacity: 0.4;
+}
+
+.empty-title {
+  font-size: var(--space-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+  letter-spacing: -1rpx;
+}
+
+.empty-desc {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+}
+
+/* ==================== 主按钮 ==================== */
+/* Pinterest Primary Red Button */
+.primary-button {
+  width: 100%;
+  padding: var(--space-md);
+  background-color: var(--pinterest-red);
+  color: var(--text-black);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: 400;
+  text-align: center;
+  border: none;
+  transition: opacity 0.15s ease;
+}
+
+.primary-button:active {
+  opacity: 0.9;
+}
+
+.primary-button.focus-ring:focus {
+  outline: 3rpx solid var(--border-focus);
+  outline-offset: 2rpx;
+}
+
+/* ==================== 圆角按钮 ==================== */
+/* Pinterest Circular Action */
+.round-button {
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--surface-warm-light);
+  border-radius: 50%;
+  border: none;
+  font-size: 36rpx;
+  color: var(--text-primary);
+  transition: transform 0.15s ease;
+}
+
+.round-button:active {
+  transform: scale(0.95);
+}
+
+.round-button.focus-ring:focus {
+  outline: 3rpx solid var(--border-focus);
+  outline-offset: 2rpx;
+}
+
+/* ==================== 分割线 ==================== */
+.divider {
+  height: 1rpx;
+  background-color: var(--surface-sand);
+  margin: var(--space-md) 0;
+}
+
+.divider-dashed {
+  border-style: dashed;
+  border-width: 1rpx 0 0 0;
+  border-color: var(--surface-sand);
+}
+
+/* ==================== 响应式图片 ==================== */
+.responsive-image {
+  width: 100%;
+  border-radius: var(--radius-md);
+  background-color: var(--surface-fog);
+}
+
+/* ==================== 居中内容 ==================== */
+.center-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* ==================== 区块标题行 ==================== */
+.section-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+  gap: var(--space-sm);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}
+
+.title-icon {
+  font-size: 32rpx;
+}
+
+.title-text {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -1rpx;
+}
+
+/* ==================== 操作按钮行 ==================== */
+.action-btns-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* Pinterest Primary Red Button */
+.more-btn {
+  display: flex;
+  align-items: center;
+  padding: var(--space-xs) var(--space-sm);
+  background-color: var(--pinterest-red);
+  border-radius: var(--radius-md);
+  border: none;
+  font-size: 22rpx;
+  color: var(--text-black);
+  font-weight: 400;
+  transition: opacity 0.15s ease;
+}
+
+.more-btn:active {
+  opacity: 0.9;
+}
+
+.more-btn.focus-ring:focus {
+  outline: 3rpx solid var(--border-focus);
+  outline-offset: 2rpx;
+}
+
+.more-icon {
+  font-size: 24rpx;
+  margin-right: 4rpx;
+}
+
+.more-text {
+  font-size: 22rpx;
+}
+
+/* Pinterest Circular Action Button */
+.share-btn {
+  width: 56rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--surface-warm-light);
+  border-radius: 50%;
+  border: none;
+  font-size: 26rpx;
+  color: var(--text-primary);
+  transition: transform 0.15s ease;
+}
+
+.share-btn:active {
+  transform: scale(0.95);
+}
+
+.share-btn.focus-ring:focus {
+  outline: 3rpx solid var(--border-focus);
+  outline-offset: 2rpx;
+}
+
+.share-icon {
+  font-size: 24rpx;
+  color: var(--text-primary);
+}
+
+/* Pinterest Secondary Button - Sand Gray */
+.refresh-btn {
+  display: flex;
+  align-items: center;
+  padding: var(--space-xs) var(--space-sm);
+  background-color: var(--surface-sand);
+  border-radius: var(--radius-md);
+  border: none;
+  font-size: 22rpx;
+  color: var(--text-primary);
+  font-weight: 400;
+  transition: opacity 0.15s ease;
+}
+
+.refresh-btn:active {
+  opacity: 0.8;
+}
+
+.refresh-btn.focus-ring:focus {
+  outline: 3rpx solid var(--border-focus);
+  outline-offset: 2rpx;
+}
+
+.refresh-btn.loading {
+  opacity: 0.7;
+}
+
+.refresh-icon {
+  font-size: 24rpx;
+  margin-right: 4rpx;
+  display: inline-block;
+}
+
+.refresh-icon.spin {
+  animation: spin 1s linear infinite;
+}
+
+.refresh-text {
+  font-size: 22rpx;
+}
+
+/* ==================== 内容卡片 ==================== */
+/* Pinterest Card - flat design, warm background */
+.content-card {
+  background-color: var(--surface-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  border: 1rpx solid var(--surface-sand);
+  margin-top: var(--space-md);
+}
+
+/* ==================== 卡片标签区域 ==================== */
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+/* ==================== 标签样式 ==================== */
+.tag-item {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-xs) var(--space-sm);
+  background-color: var(--badge-wash);
+  border-radius: var(--radius-full);
+  font-size: 22rpx;
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
 .tag-icon {
   font-size: 24rpx;
-  margin-right: 8rpx;
+  margin-right: 4rpx;
 }
 
 .tag-text {
-  font-weight: 500;
-}
-
-.ai-tag {
-  font-size: 18rpx;
-  padding: 4rpx 10rpx;
-  border-radius: 10rpx;
-  font-weight: 600;
-}
-
-.meta-tag {
   font-size: 22rpx;
-  padding: 6rpx 16rpx;
-  border-radius: 12rpx;
 }
 
-/* 名言样式 */
+.tag-item.ai-tag {
+  background-color: var(--surface-sand);
+  color: var(--text-secondary);
+}
+
+.tag-item.meta-tag {
+  background-color: var(--badge-wash);
+}
+
+/* ==================== 引用内容 ==================== */
 .quote-content {
-  font-size: 30rpx;
-  line-height: 1.6;
-  margin-bottom: 24rpx;
-  padding-left: 20rpx;
+  font-size: var(--font-size-lg);
   font-style: italic;
+  color: var(--text-primary);
+  line-height: 1.7;
+  margin-bottom: var(--space-sm);
 }
 
 .quote-author {
-  font-size: 26rpx;
-  text-align: right;
-  margin-bottom: 20rpx;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
 }
 
 .quote-meta {
   display: flex;
-  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+/* ==================== 来源标签 ==================== */
+.source-tag,
+.category-tag {
+  display: inline-flex;
   align-items: center;
-  gap: 16rpx;
-  padding-top: 16rpx;
-}
-
-.era-tag {
+  padding: 6rpx var(--space-sm);
+  background-color: var(--badge-wash);
+  border-radius: var(--radius-full);
   font-size: 22rpx;
-  padding: 6rpx 16rpx;
-  border-radius: 12rpx;
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
-.era-tag.modern {
-  font-size: 22rpx;
-  padding: 6rpx 16rpx;
-  border-radius: 12rpx;
-}
-
-.region-tag {
-  font-size: 28rpx;
-}
-
-/* 段子样式 */
+/* ==================== 笑话内容 ==================== */
 .joke-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20rpx;
-  padding-bottom: 16rpx;
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1rpx solid var(--surface-sand);
 }
 
 .joke-title {
-  font-size: 26rpx;
+  font-size: var(--font-size-xl);
   font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -1rpx;
 }
 
 .joke-content {
-  font-size: 28rpx;
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
   line-height: 1.7;
 }
 
 .joke-footer {
-  margin-top: 20rpx;
-  padding-top: 16rpx;
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
 }
 
-.joke-source {
-  font-size: 24rpx;
-  color: #999999;
-}
-
-/* 知识样式（心理学/金融） */
+/* ==================== 知识内容 ==================== */
 .knowledge-title {
-  font-size: 32rpx;
+  font-size: var(--font-size-xl);
   font-weight: 600;
-  margin-bottom: 20rpx;
+  color: var(--text-primary);
   line-height: 1.4;
+  margin-bottom: var(--space-sm);
+  letter-spacing: -1rpx;
 }
 
 .knowledge-content {
-  font-size: 28rpx;
-  line-height: 1.8;
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: 1.7;
 }
 
-/* 情话样式 */
+/* ==================== 爱情内容 ==================== */
 .love-content {
-  font-size: 32rpx;
-  line-height: 1.7;
+  font-size: 36rpx;
   font-style: italic;
+  color: var(--text-primary);
+  line-height: 1.7;
   text-align: center;
-  padding: 20rpx 10rpx;
+  padding: var(--space-md) 0;
 }
 
 .love-author {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8rpx;
-  margin-top: 24rpx;
-  padding-top: 20rpx;
+  gap: var(--space-xs);
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1rpx solid var(--surface-sand);
 }
 
 .author-prefix {
-  font-size: 26rpx;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
 }
 
 .author-name {
-  font-size: 26rpx;
+  font-size: var(--font-size-sm);
   font-weight: 600;
+  color: var(--text-primary);
 }
 
 .author-source {
   font-size: 22rpx;
-  color: #999999;
-  margin-left: 8rpx;
+  color: var(--text-muted);
+  margin-left: var(--space-xs);
 }
 
-/* 加载状态 */
-.loading-state {
-  text-align: center;
-  padding: 60rpx 40rpx;
-}
-
-.loading-dots {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20rpx;
-}
-
-.loading-dots .dot {
-  font-size: 48rpx;
-  margin: 0 8rpx;
-}
-
-.loading-text {
-  font-size: 26rpx;
-}
-
-/* 占位状态 */
-.placeholder-state {
-  text-align: center;
-  padding: 60rpx 40rpx;
-  background: #FAFAFA;
-  border-radius: 24rpx;
-}
-
-.placeholder-text {
-  color: #BBBBBB;
-  font-size: 26rpx;
-}
-
-/* 动画 */
-@keyframes dotPulse {
-  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
-  40% { opacity: 1; transform: scale(1.2); }
-}
-
-/* 电影模块样式 */
+/* ==================== 电影内容 ==================== */
 .movie-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding-bottom: 20rpx;
-  margin-bottom: 16rpx;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1rpx solid var(--surface-sand);
 }
 
 .movie-title {
-  font-size: 36rpx;
+  font-size: var(--font-size-xl);
   font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -1rpx;
   flex: 1;
 }
 
 .movie-rating {
-  padding: 6rpx 16rpx;
-  border-radius: 20rpx;
-  font-size: 24rpx;
-  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx var(--space-xs);
+  background-color: var(--badge-wash);
+  border-radius: var(--radius-full);
+  font-size: 22rpx;
+  margin-left: var(--space-sm);
 }
 
 .movie-meta {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16rpx;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
 }
 
-.movie-director {
-  font-size: 26rpx;
-}
-
+.movie-director,
 .movie-year {
-  font-size: 24rpx;
+  font-size: 22rpx;
+  color: var(--text-secondary);
 }
 
 .movie-summary {
-  font-size: 28rpx;
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
   line-height: 1.6;
-  margin-bottom: 16rpx;
+  margin-bottom: var(--space-sm);
 }
 
 .movie-quote {
-  padding: 16rpx 20rpx;
-  border-radius: 16rpx;
   font-size: 26rpx;
   font-style: italic;
-  margin-bottom: 16rpx;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--badge-wash);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
 }
 
 .movie-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 12rpx;
+  gap: var(--space-xs);
 }
 
 .movie-tag {
-  padding: 6rpx 16rpx;
-  border-radius: 16rpx;
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx var(--space-sm);
+  background-color: var(--badge-wash);
+  border-radius: var(--radius-full);
   font-size: 22rpx;
+  color: var(--text-secondary);
 }
 
-/* 音乐模块样式 */
+/* ==================== 音乐内容 ==================== */
 .music-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding-bottom: 20rpx;
-  margin-bottom: 16rpx;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1rpx solid var(--surface-sand);
 }
 
 .music-title {
-  font-size: 36rpx;
+  font-size: var(--font-size-xl);
   font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -1rpx;
   flex: 1;
 }
 
 .music-mood {
-  padding: 6rpx 16rpx;
-  border-radius: 20rpx;
-  font-size: 24rpx;
-  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx var(--space-xs);
+  background-color: var(--badge-wash);
+  border-radius: var(--radius-full);
+  font-size: 22rpx;
 }
 
 .music-meta {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12rpx;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xs);
 }
 
-.music-artist {
-  font-size: 26rpx;
-}
-
+.music-artist,
 .music-year {
-  font-size: 24rpx;
+  font-size: 22rpx;
+  color: var(--text-secondary);
 }
 
 .music-album {
-  font-size: 24rpx;
-  margin-bottom: 16rpx;
+  font-size: 22rpx;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
 }
 
 .album-label {
-  color: #999999;
+  color: var(--text-muted);
 }
 
 .music-duration {
-  color: #999999;
+  color: var(--text-muted);
 }
 
-.music-description {
-  font-size: 28rpx;
+.music-content {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
   line-height: 1.6;
-  margin-bottom: 16rpx;
+  margin-bottom: var(--space-sm);
 }
 
 .music-lyric {
-  padding: 16rpx 20rpx;
-  border-radius: 16rpx;
   font-size: 26rpx;
   font-style: italic;
-  margin-bottom: 16rpx;
-  text-align: center;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--badge-wash);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
 }
 
 .music-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 12rpx;
+  gap: var(--space-xs);
 }
 
 .music-tag {
-  padding: 6rpx 16rpx;
-  border-radius: 16rpx;
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx var(--space-sm);
+  background-color: var(--badge-wash);
+  border-radius: var(--radius-full);
   font-size: 22rpx;
+  color: var(--text-secondary);
 }
 
-/* 科技模块样式 */
+/* ==================== 科技内容 ==================== */
 .tech-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 20rpx;
-  margin-bottom: 16rpx;
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1rpx solid var(--surface-sand);
 }
 
 .tech-title {
-  font-size: 32rpx;
+  font-size: var(--font-size-xl);
   font-weight: 600;
-  line-height: 1.4;
-  flex: 1;
+  color: var(--text-primary);
+  letter-spacing: -1rpx;
 }
 
 .tech-summary {
-  font-size: 28rpx;
-  line-height: 1.8;
-  margin-bottom: 16rpx;
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-sm);
 }
 
 .tech-impact {
-  padding: 16rpx 20rpx;
-  border-radius: 16rpx;
   font-size: 26rpx;
-  margin-bottom: 16rpx;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--badge-wash);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
 }
 
 .tech-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 12rpx;
+  gap: var(--space-xs);
 }
 
 .tech-tag {
-  padding: 6rpx 16rpx;
-  border-radius: 16rpx;
-  font-size: 22rpx;
-}
-
-/* 中医模块样式 */
-.tcm-header {
-  display: flex;
-  justify-content: space-between;
+  display: inline-flex;
   align-items: center;
-  padding-bottom: 20rpx;
-  margin-bottom: 16rpx;
-}
-
-.tcm-title {
-  font-size: 32rpx;
-  font-weight: 600;
-  line-height: 1.4;
-  flex: 1;
-}
-
-.tcm-summary {
-  font-size: 28rpx;
-  line-height: 1.8;
-  margin-bottom: 16rpx;
-}
-
-.tcm-tips {
-  padding: 16rpx 20rpx;
-  border-radius: 16rpx;
-  font-size: 26rpx;
-  margin-bottom: 16rpx;
-}
-
-.tcm-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12rpx;
-}
-
-.tcm-tag {
-  padding: 6rpx 16rpx;
-  border-radius: 16rpx;
+  padding: 4rpx var(--space-sm);
+  background-color: var(--badge-wash);
+  border-radius: var(--radius-full);
   font-size: 22rpx;
+  color: var(--text-secondary);
 }
 
-/* 旅游模块样式 */
-.travel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 12rpx;
-  margin-bottom: 12rpx;
-}
-
-.travel-region {
-  font-size: 26rpx;
-  font-weight: 500;
-}
-
-.travel-title {
-  font-size: 34rpx;
-  font-weight: 700;
-  line-height: 1.4;
-  margin-bottom: 16rpx;
-}
-
-.travel-summary {
-  font-size: 28rpx;
-  line-height: 1.8;
-  margin-bottom: 16rpx;
-}
-
-.travel-tips {
-  padding: 16rpx 20rpx;
-  border-radius: 16rpx;
-  font-size: 26rpx;
-  margin-bottom: 16rpx;
-}
-
-.travel-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12rpx;
-}
-
-.travel-tag {
-  padding: 6rpx 16rpx;
-  border-radius: 16rpx;
-  font-size: 22rpx;
-}
-
-/* 占卜模块样式 */
-.fortune-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 12rpx;
-  margin-bottom: 12rpx;
-}
-
-.fortune-category {
-  font-size: 26rpx;
-  font-weight: 500;
-}
-
-.fortune-title {
-  font-size: 34rpx;
-  font-weight: 700;
-  line-height: 1.4;
-  margin-bottom: 16rpx;
-}
-
-.fortune-summary {
-  font-size: 28rpx;
-  line-height: 1.8;
-  margin-bottom: 16rpx;
-}
-
-/* 代码块样式 */
-.code-block-container {
-  margin: 16rpx 0;
-}
-
-.code-section-title {
-  font-size: 26rpx;
-  font-weight: 500;
-  margin-bottom: 12rpx;
-}
-
-.code-block {
-  background: #1e1e1e;
-  border-radius: 12rpx;
-  overflow: hidden;
-  margin-bottom: 16rpx;
-}
-
-.code-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12rpx 20rpx;
-  background: #2d2d2d;
-}
-
-.code-lang {
-  font-size: 22rpx;
-  color: #888;
-  text-transform: uppercase;
-}
-
-.code-copy-btn {
-  padding: 6rpx 16rpx;
-  background: #3d8b40;
-  border-radius: 8rpx;
-  font-size: 20rpx;
-  color: #fff;
-}
-
-.code-copy-btn:active {
-  opacity: 0.8;
-}
-
-.code-content {
-  padding: 20rpx;
-  white-space: pre;
-  overflow-x: auto;
-}
-
-.code-text {
-  font-family: 'SF Mono', Monaco, 'Courier New', monospace;
-  font-size: 24rpx;
-  line-height: 1.6;
-  color: #d4d4d4;
-  white-space: pre-wrap;
-  word-break: break-all;
-}
-
-.fortune-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12rpx;
-}
-
-.fortune-tag {
-  padding: 6rpx 16rpx;
-  border-radius: 16rpx;
-  font-size: 22rpx;
-}
-
-/* 文学模块样式 */
-.lit-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 12rpx;
-  margin-bottom: 12rpx;
-}
-
-.lit-author {
-  font-size: 34rpx;
-  font-weight: 700;
-}
-
-.lit-era {
-  font-size: 24rpx;
-}
-
-.lit-works {
-  font-size: 26rpx;
-  margin-bottom: 16rpx;
-}
-
-.works-label {
-  color: #8B4513;
-  font-weight: 500;
-}
-
-.work-item {
-  color: #A0522D;
-}
-
-.lit-summary {
-  font-size: 28rpx;
-  line-height: 1.8;
-  margin-bottom: 16rpx;
-}
-
-.lit-quote {
-  padding: 16rpx 20rpx;
-  border-radius: 16rpx;
-  font-size: 26rpx;
-  font-style: italic;
-  margin-bottom: 16rpx;
-}
-
-.lit-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12rpx;
-}
-
-.lit-tag {
-  padding: 6rpx 16rpx;
-  border-radius: 16rpx;
-  font-size: 22rpx;
-}
-
-/* 外贸助手样式 */
+/* ==================== 中医/外贸/通用内容样式 ==================== */
+.tcm-header,
 .trade-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 20rpx;
-  margin-bottom: 20rpx;
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1rpx solid var(--surface-sand);
 }
 
+.tcm-title,
 .trade-title {
-  font-size: 32rpx;
+  font-size: var(--font-size-xl);
   font-weight: 600;
-  flex: 1;
+  color: var(--text-primary);
+  letter-spacing: -1rpx;
+  display: block;
+  margin-bottom: var(--space-xs);
 }
 
 .trade-category {
-  font-size: 24rpx;
-  margin-left: 16rpx;
-  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  font-size: 22rpx;
+  color: var(--text-secondary);
 }
 
+.tcm-summary,
 .trade-summary {
-  font-size: 28rpx;
-  line-height: 1.8;
-  margin-bottom: 16rpx;
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-sm);
 }
 
+.tcm-tips,
 .trade-tips {
-  padding: 16rpx 20rpx;
-  border-radius: 16rpx;
   font-size: 26rpx;
-  margin-bottom: 16rpx;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--badge-wash);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
 }
 
+.tcm-tags,
 .trade-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 12rpx;
+  gap: var(--space-xs);
 }
 
+.tcm-tag,
 .trade-tag {
-  padding: 6rpx 16rpx;
-  border-radius: 16rpx;
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx var(--space-sm);
+  background-color: var(--badge-wash);
+  border-radius: var(--radius-full);
   font-size: 22rpx;
+  color: var(--text-secondary);
 }
 
-/* 刷新按钮加载状态 */
-.refresh-btn.loading {
+/* ==================== 加载状态 ==================== */
+/* Pinterest Style Loading */
+.loading-dots {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-sm);
+}
+
+.dot {
+  font-size: 48rpx;
+  margin: 0 8rpx;
+  animation: dotPulse 1.4s infinite ease-in-out;
+}
+
+@keyframes dotPulse {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1.2); }
+}
+
+.dot:nth-child(1) { animation-delay: 0s; }
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* ==================== 占位状态 ==================== */
+.placeholder-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl) var(--space-lg);
+  text-align: center;
+}
+
+.placeholder-text {
+  font-size: var(--font-size-base);
+  color: var(--text-muted);
+}
+
+/* ==================== 分类标签 ==================== */
+.category-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-xs) var(--space-sm);
+  background-color: var(--badge-wash);
+  border-radius: var(--radius-full);
+  font-size: 22rpx;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.category-icon {
+  font-size: 24rpx;
+  margin-right: 6rpx;
+}
+
+/* ==================== 来源信息 ==================== */
+.source-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: 22rpx;
+  color: var(--text-muted);
+}
+
+.source-prefix {
+  color: var(--text-secondary);
+}
+
+/* ==================== 时代标签 ==================== */
+.era-tag {
+  font-size: 22rpx;
+  color: var(--text-secondary);
+  background: var(--surface-fog);
+  padding: 6rpx 16rpx;
+  border-radius: var(--radius-full);
+  font-weight: 500;
+}
+
+.era-tag.modern {
+  background: var(--surface-sand);
+}
+
+/* ==================== 展开/收起按钮 ==================== */
+.expand-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm);
+  color: var(--text-secondary);
+  font-size: 22rpx;
+  background: transparent;
+  border: none;
+  transition: all 0.15s ease;
+}
+
+.expand-btn:active {
   opacity: 0.7;
 }
 
-.refresh-btn.loading:active {
-  transform: none;
+.expand-icon {
+  margin-left: 4rpx;
+  transition: transform 0.2s ease;
 }
 
-/* 旋转动画 */
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.expand-btn.expanded .expand-icon {
+  transform: rotate(180deg);
 }
 
-.spin {
-  animation: spin 1s linear infinite;
-  display: inline-block;
+/* ==================== 完整内容区域 ==================== */
+.full-content {
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1rpx solid var(--surface-sand);
+}
+
+.full-content-item {
+  margin-bottom: var(--space-md);
+}
+
+.full-content-item:last-child {
+  margin-bottom: 0;
+}
+
+.item-label {
+  font-size: 22rpx;
+  color: var(--text-muted);
+  margin-bottom: var(--space-xs);
+  font-weight: 500;
+}
+
+.item-value {
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  line-height: 1.6;
 }

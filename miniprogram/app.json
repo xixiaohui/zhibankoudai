@@ -16,15 +16,15 @@
     "posterCanvas": "components/posterCanvas/posterCanvas"
   },
   "window": {
-    "backgroundColor": "#F8F6FF",
+    "backgroundColor": "#FAFAFA",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#7C6AFF",
+    "navigationBarBackgroundColor": "#FFFFFF",
     "navigationBarTitleText": "智伴口袋",
-    "navigationBarTextStyle": "white"
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "color": "#A0A0B0",
-    "selectedColor": "#7C6AFF",
+    "color": "#62625B",
+    "selectedColor": "#E60023",
     "backgroundColor": "#FFFFFF",
     "borderStyle": "white",
     "list": [

@@ -1,24 +1,24 @@
-/* pages/dailyTest/dailyTest.wxss - 测试页面样式 */
+/* pages/dailyTest/dailyTest.wxss - Pinterest Design System */
 
 .page-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #F8F6FF 0%, #F0EDFF 100%);
-  padding: 20rpx 30rpx 100rpx;
+  background-color: var(--surface-secondary);
+  padding: var(--space-md) var(--space-lg) 100rpx;
 }
 
 .page-header {
   text-align: center;
-  padding: 40rpx 0 20rpx;
+  padding: var(--space-xl) 0 var(--space-md);
 }
 
 .header-title {
-  font-size: 40rpx;
+  font-size: var(--font-size-xxl);
   font-weight: 600;
-  color: #333333;
-  margin-bottom: 10rpx;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
 }
 
 .header-desc {
-  font-size: 26rpx;
-  color: #999999;
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
 }

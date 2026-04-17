@@ -1,60 +1,65 @@
+/* cloudTipModal/index.wxss - Pinterest Design System */
+
 .install_tip_back {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: rgba(0,0,0,0.4);
+  background-color: var(--overlay);
   z-index: 1;
 }
-.install_tip_close{
-  position:absolute;
+
+.install_tip_close {
+  position: absolute;
   right: 10rpx;
   top: 10rpx;
   width: 32px;
   height: 32px;
-  /* background-color: red; */
 }
+
 .install_tip_detail {
   position: fixed;
-  background-color: white;
+  background-color: var(--surface);
   right: 0;
   bottom: 0;
   left: 0;
-  border-radius: 40rpx 40rpx 0 0;
-  padding: 50rpx 50rpx 100rpx 50rpx;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: var(--space-xl) var(--space-xl) 100rpx var(--space-xl);
   z-index: 9;
 }
 
 .install_tip_detail_title {
-  font-weight: 400;
-  font-size: 40rpx;
+  font-weight: 600;
+  font-size: var(--font-size-xxl);
   text-align: center;
+  color: var(--text-primary);
 }
 
 .install_tip_detail_tip {
-  font-size: 25rpx;
-  color: rgba(0,0,0,0.4);
-  margin-top: 20rpx;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-top: var(--space-sm);
   text-align: left;
 }
+
 .install_tip_detail_buttons {
-  padding-top: 50rpx;
+  padding-top: var(--space-xl);
   display: flex;
 }
+
 .install_tip_detail_button {
-  color: #07C160;
+  color: var(--text-primary);
   font-weight: 500;
-  background-color: rgba(0,0,0,0.1);
+  background-color: var(--accent-warm-light);
   width: 40%;
   text-align: center;
-  /* height: 90rpx; */
-  /* line-height: 90rpx; */
-  border-radius: 10rpx;
+  border-radius: var(--radius-md);
   margin: 0 auto;
+  padding: var(--space-sm) 0;
 }
 
 .install_tip_detail_button_primary {
-  background-color: #07C160;
-  color: #fff;
+  background-color: var(--primary);
+  color: var(--surface);
 }

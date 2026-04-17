@@ -1,118 +1,105 @@
-/* pages/detail/index.wxss - 内容详情页样式 */
-/* 配色：黑 | 白 | 模块对应色 */
+/* pages/detail/index.wxss - Pinterest Design System */
 
 page {
-  background: #fff;
+  background: var(--surface);
   min-height: 100vh;
 }
 
 .detail-page {
   min-height: 100vh;
   padding-bottom: 160rpx;
-  background: #fff;
+  background: var(--surface);
 }
 
-/* 模块标识头部 - 模块对应色 */
 .module-header {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 60rpx 40rpx 50rpx;
-  color: #fff;
+  padding: var(--space-xxl) var(--space-lg);
+  color: var(--surface);
+  background-color: var(--text-secondary);
 }
 
 .module-icon {
   font-size: 44rpx;
-  margin-right: 16rpx;
+  margin-right: var(--space-sm);
 }
 
 .module-name {
-  font-size: 32rpx;
+  font-size: var(--font-size-xl);
   font-weight: 600;
   letter-spacing: 2rpx;
 }
 
-/* 内容区域 - 白色 */
 .content-area {
-  margin: 0 30rpx;
-  padding: 50rpx 40rpx 40rpx;
-  background: #fff;
+  margin: 0 var(--space-lg);
+  padding: var(--space-xl) var(--space-lg) var(--space-lg);
+  background: var(--surface);
   position: relative;
 }
 
-/* 标题 - 黑色 */
 .content-title {
-  font-size: 38rpx;
+  font-size: var(--font-size-xl);
   font-weight: 600;
-  color: #000;
+  color: var(--text-primary);
   line-height: 1.5;
-  margin-bottom: 20rpx;
+  margin-bottom: var(--space-md);
 }
 
-/* 副标题 - 灰色 */
 .content-subtitle {
-  font-size: 26rpx;
-  color: #666;
-  margin-bottom: 30rpx;
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
   line-height: 1.5;
 }
 
-/* 分割线 - 模块对应色 */
 .divider {
   width: 60rpx;
   height: 4rpx;
   border-radius: 2rpx;
-  margin: 30rpx 0;
+  margin: var(--space-lg) 0;
+  background-color: var(--primary);
 }
 
-/* 主内容 - 黑色 */
 .content-body {
-  margin-bottom: 30rpx;
+  margin-bottom: var(--space-lg);
 }
 
 .content-text {
-  font-size: 30rpx;
-  color: #000;
+  font-size: var(--font-size-lg);
+  color: var(--text-primary);
   line-height: 1.9;
 }
 
-/* 标签列表 */
 .content-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 16rpx;
-  margin-top: 30rpx;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
 }
 
 .tag-item {
-  padding: 12rpx 24rpx;
-  background: #f5f5f5;
-  border-radius: 30rpx;
-  font-size: 24rpx;
-  color: #333;
+  padding: var(--space-xs) var(--space-md);
+  background: var(--accent-warm-light);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
 }
 
-/* 高亮标签 - 模块对应色 */
-.tag-item.tag-highlight {
-  /* 通过内联样式设置 */
-}
-
-/* 附加信息 - 灰色 */
 .content-extra {
-  margin-top: 30rpx;
-  padding: 24rpx;
-  background: #fafafa;
-  border-radius: 12rpx;
-  font-size: 26rpx;
-  color: #666;
+  margin-top: var(--space-lg);
+  padding: var(--space-md);
+  background: var(--surface-secondary);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
   line-height: 1.6;
 }
 
-/* 引用装饰 */
 .quote-decor {
   position: absolute;
-  top: 35rpx;
-  left: 25rpx;
+  top: var(--space-lg);
+  left: var(--space-md);
   opacity: 0.08;
 }
 
@@ -122,18 +109,17 @@ page {
   line-height: 1;
 }
 
-/* 底部操作栏 */
 .action-bar {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   display: flex;
-  gap: 24rpx;
-  padding: 24rpx 40rpx;
-  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
-  background: #fff;
-  box-shadow: 0 -2rpx 20rpx rgba(0, 0, 0, 0.06);
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  padding-bottom: calc(var(--space-md) + env(safe-area-inset-bottom));
+  background: var(--surface);
+  border-top: 1rpx solid var(--border);
 }
 
 .btn-poster,
@@ -143,106 +129,99 @@ page {
   align-items: center;
   justify-content: center;
   height: 96rpx;
-  border-radius: 48rpx;
-  font-size: 30rpx;
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-lg);
   font-weight: 500;
   margin: 0;
   padding: 0;
   border: none;
   line-height: 1;
-  color: #fff;
+  color: var(--surface);
 }
 
 .btn-poster {
-  /* 通过内联样式设置背景色 */
+  background-color: var(--primary);
 }
 
 .btn-copy {
-  background: #fff;
+  background: var(--accent-warm-light);
+  color: var(--text-primary);
 }
 
 .btn-icon {
-  font-size: 32rpx;
-  margin-right: 12rpx;
+  font-size: var(--font-size-xl);
+  margin-right: var(--space-xs);
 }
 
 .btn-text {
-  font-size: 28rpx;
+  font-size: var(--font-size-base);
 }
 
-/* 按钮点击效果 */
 .btn-poster:active,
 .btn-copy:active {
   opacity: 0.85;
   transform: scale(0.98);
 }
 
-/* ========== 新增：详细内容展示区域样式 ========== */
-
-/* 区块标题 */
 .section-title {
-  margin-top: 40rpx;
-  margin-bottom: 20rpx;
-  font-size: 28rpx;
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-md);
+  font-size: var(--font-size-base);
   font-weight: 600;
 }
 
 .section-title.warning {
-  color: #E64340;
+  color: var(--primary);
 }
 
-/* 区块内容 */
 .section-content {
-  padding: 24rpx;
-  background: #fafafa;
-  border-radius: 12rpx;
-  margin-bottom: 10rpx;
+  padding: var(--space-md);
+  background: var(--surface-secondary);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-xs);
 }
 
 .warning-content {
-  background: #FFF1F0;
-  border: 1rpx solid #FFCDC7;
+  background: #FFF5F5;
+  border: 1rpx solid var(--primary);
 }
 
-/* 引用内容样式 */
 .quote-content {
-  border-left: 4rpx solid var(--primary-color, #7C6AFF);
-  background: linear-gradient(to right, rgba(124, 106, 255, 0.05), transparent);
+  border-left: 4rpx solid var(--primary);
+  background: var(--surface-secondary);
   font-style: italic;
 }
 
-/* 歌词内容样式 */
 .lyric-content {
-  background: linear-gradient(135deg, #f8f4ff 0%, #f0f8ff 100%);
+  background: var(--surface-secondary);
   text-align: center;
 }
 
-/* 核心要点列表 */
 .key-points-list {
-  margin-bottom: 20rpx;
+  margin-bottom: var(--space-md);
 }
 
 .key-point-item {
   display: flex;
   align-items: flex-start;
-  padding: 16rpx 24rpx;
-  margin-bottom: 12rpx;
-  background: #fafafa;
-  border-radius: 12rpx;
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-xs);
+  background: var(--surface-secondary);
+  border-radius: var(--radius-md);
   line-height: 1.6;
 }
 
 .point-num {
   flex-shrink: 0;
   width: 40rpx;
-  font-size: 28rpx;
+  font-size: var(--font-size-lg);
   font-weight: 600;
-  color: var(--primary-color, #7C6AFF);
+  color: var(--primary);
 }
 
 .point-text {
   flex: 1;
-  font-size: 28rpx;
-  color: #333;
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
   line-height: 1.6;
 }
