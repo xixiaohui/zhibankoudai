@@ -86,7 +86,7 @@
   font-size: 32rpx;
   font-weight: 600;
   color: var(--text-primary);
-  margin: 40rpx 0 20rpx;
+  margin: 40rpx 10rpx 20rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -49,7 +49,7 @@
         <view class="action-icon">📤</view>
         <view class="action-text">导出数据</view>
       </view>
-      <view class="action-btn" bindtap="shareApp">
+      <view class="action-btn" bindtap="onShareApp">
         <view class="action-icon">📢</view>
         <view class="action-text">分享应用</view>
       </view>

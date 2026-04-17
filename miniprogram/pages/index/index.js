@@ -50,8 +50,48 @@ Page({
   },
 
   onShow() {
-    // 每次显示时加载数据
+    // 每次显示时加载基础数据
     this.loadData()
+    
+    // 每次显示时刷新模块显示状态（从本地存储读取最新设置）
+    this._refreshModules().then(() => {
+      // 刷新完成后通知卡片组件
+      this._notifyCardsRefresh()
+    })
+  },
+
+  // 刷新模块显示状态和加载数据
+  async _refreshModules() {
+    // 确保云端数据已初始化
+    await cloudData.initAsync()
+    
+    const homeModules = cloudData.getOrderedHomeModules()
+    const finalModules = this.applyLocalSettings(homeModules)
+    const enabledModules = finalModules.filter(m => m.enabled).map(m => m.id)
+    
+    console.log('[Index] _refreshModules 刷新模块:', {
+      total: finalModules.length,
+      enabled: enabledModules.length,
+      enabledIds: enabledModules
+    })
+    
+    this.setData({
+      homeModules: finalModules,
+      enabledModules
+    })
+    
+    // 返回启用的模块数量
+    return { total: finalModules.length, enabled: enabledModules.length }
+  },
+  
+  // 通知所有卡片组件刷新本地设置
+  _notifyCardsRefresh() {
+    const cards = this.selectAllComponents('.daily-card-refresh')
+    cards.forEach(card => {
+      if (card.checkLocalSettings) {
+        card.checkLocalSettings()
+      }
+    })
   },
 
   onReady() {
@@ -75,14 +115,16 @@ Page({
       await cloudData.init()
       // 加载完成后更新UI
       const homeModules = cloudData.getOrderedHomeModules()
-      const enabledModules = homeModules.filter(m => m.enabled).map(m => m.id)
+      // 应用本地用户设置
+      const finalModules = this.applyLocalSettings(homeModules)
+      const enabledModules = finalModules.filter(m => m.enabled).map(m => m.id)
       this.setData({
-        homeModules,
+        homeModules: finalModules,
         enabledModules,
         isLoading: false
       })
       console.log('[Index] 云端数据初始化完成', { 
-        homeModulesCount: homeModules.length,
+        homeModulesCount: finalModules.length,
         enabledCount: enabledModules.length 
       })
     } catch (e) {
@@ -91,14 +133,27 @@ Page({
     }
   },
 
+  // 应用本地用户设置到模块
+  applyLocalSettings(homeModules) {
+    // 从本地存储读取可见性设置
+    const visibility = wx.getStorageSync('moduleVisibility') || {}
+    
+    // 合并用户设置：只有明确设置为 true 才显示
+    return homeModules.map(m => ({
+      ...m,
+      enabled: visibility[m.id] === true
+    }))
+  },
+
   // 等待云端数据加载
   waitForCloudData() {
     if (cloudData.initPromise) {
       cloudData.initPromise.then(() => {
         const homeModules = cloudData.getOrderedHomeModules()
-        const enabledModules = homeModules.filter(m => m.enabled).map(m => m.id)
+        const finalModules = this.applyLocalSettings(homeModules)
+        const enabledModules = finalModules.filter(m => m.enabled).map(m => m.id)
         this.setData({
-          homeModules,
+          homeModules: finalModules,
           enabledModules,
           isLoading: false
         })
@@ -168,13 +223,14 @@ Page({
       .slice(0, 3)
     this.setData({ pendingGoals })
     
-    // 更新云端模块数据（如果已加载）
+    // 更新云端模块数据（如果已加载），并应用本地设置
     if (cloudData.initPromise) {
       cloudData.initPromise.then(() => {
         const homeModules = cloudData.getOrderedHomeModules()
-        const enabledModules = homeModules.filter(m => m.enabled).map(m => m.id)
+        const finalModules = this.applyLocalSettings(homeModules)
+        const enabledModules = finalModules.filter(m => m.enabled).map(m => m.id)
         this.setData({
-          homeModules,
+          homeModules: finalModules,
           enabledModules,
           isLoading: false
         })

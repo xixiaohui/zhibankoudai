@@ -200,6 +200,7 @@ Component({
     tags: [],
     isAILoading: false, // AI生成中（用于显示加载动画）
     hasAIRefreshed: false, // 是否已经过AI刷新过
+    isHidden: false, // 是否被用户隐藏
   },
 
   lifetimes: {
@@ -211,49 +212,96 @@ Component({
 
   pageLifetimes: {
     show() {
-      // 页面显示时检查是否需要加载
-      if (!this.data.content) {
-        this.loadContent()
-      }
+      // 每次显示时重新检查本地设置
+      this.checkLocalSettings()
     },
   },
 
   methods: {
+  // 检查本地设置（用于页面切换时刷新隐藏状态）
+  checkLocalSettings() {
+    const moduleType = this.properties.moduleType
+    const visibility = wx.getStorageSync('moduleVisibility') || {}
+    const isHidden = visibility[moduleType] !== true
+    
+    const wasHidden = this.data.isHidden
+    
+    if (isHidden !== wasHidden) {
+      this.setData({ isHidden })
+      
+      // 如果从隐藏变为显示，需要重新初始化模块并加载数据
+      if (!isHidden && wasHidden) {
+        console.log('[DailyCard] 模块从隐藏变为显示，重新初始化:', moduleType)
+        this._initModuleContent()
+      }
+    }
+  },
+  
+  // 初始化模块内容（从隐藏变为显示时调用）
+  _initModuleContent() {
+    const moduleType = this.properties.moduleType
+    
+    // 确保 cloudData 初始化完成
+    cloudData.initAsync().then(async () => {
+      const config = cloudData.getModuleConfig(moduleType)
+      
+      if (config && config.id) {
+        this.setData({ config })
+        
+        // 确保模块数据加载完成后再加载内容
+        try {
+          await cloudData.getModule(moduleType)
+        } catch (e) {
+          console.warn('[DailyCard] 模块数据加载失败:', moduleType)
+        }
+        
+        // 无论成功失败都尝试加载内容（会使用缓存或默认值）
+        this._loadContent(config)
+      }
+    })
+  },
+
   // 初始化模块配置
   async _initModule() {
     const moduleType = this.properties.moduleType
-    console.log('[DailyCard] _initModule 开始, moduleType:', moduleType)
     
     // 确保 cloudData 初始化完成
     await cloudData.initAsync()
     
+    // 检查本地用户设置
+    const visibility = wx.getStorageSync('moduleVisibility') || {}
+    const isHidden = visibility[moduleType] !== true
+    
+    if (isHidden) {
+      this.setData({ isHidden: true })
+      return
+    }
+    
     // 获取模块配置（同步，快速）
     const config = cloudData.getModuleConfig(moduleType)
-    console.log('[DailyCard] 模块配置:', config ? config.name : '未找到', moduleType)
     
     if (config && config.id) {
       this.setData({ config })
-      // 预加载模块数据用于兜底
-      cloudData.getModule(moduleType).then(() => {
-        this._loadContent(config)
-      }).catch(() => {
-        this._loadContent(config)
-      })
-    } else {
-      console.error('[DailyCard] 未知的模块类型:', moduleType)
+      
+      // 确保模块数据加载完成后再加载内容
+      try {
+        await cloudData.getModule(moduleType)
+      } catch (e) {
+        console.warn('[DailyCard] 模块数据加载失败:', moduleType)
+      }
+      
+      // 无论成功失败都尝试加载内容（会使用缓存或默认值）
+      this._loadContent(config)
     }
   },
 
     // 加载内容（从配置读取后执行）
     _loadContent(config) {
-      console.log('[DailyCard] _loadContent 开始, storageKey:', config.storageKey)
-
       // 1. 先检查缓存（今天的数据直接使用）
       const cached = wx.getStorageSync(config.storageKey)
       if (cached) {
         const today = new Date().toISOString().split('T')[0]
         if (cached.date === today) {
-          console.log('[DailyCard] 使用缓存数据')
           this.setData({ content: cached, hasAIRefreshed: cached.isAIGenerated || false })
           this._buildTags(cached)
           return
@@ -261,9 +309,7 @@ Component({
       }
 
       // 2. 无缓存时，立即显示兜底数据（不调用AI）
-      console.log('[DailyCard] 无缓存，获取兜底数据')
       const fallback = getFallbackContent(this.properties.moduleType, config)
-      console.log('[DailyCard] fallback 结果:', fallback ? '有数据' : '无数据')
       if (fallback) {
         this.setData({ content: fallback })
         this._buildTags(fallback)

@@ -919,7 +919,23 @@ async function getModule(moduleId) {
       return localFallback
     }
 
-    return null
+    // 其他模块：使用通用备用数据
+    const moduleName = DEFAULT_STYLES[moduleId]?.name || moduleId
+    const moduleIcon = DEFAULT_STYLES[moduleId]?.icon || '📌'
+    const localFallback = {
+      version: "1.0.0",
+      updated: new Date().toISOString().split('T')[0],
+      fallback: [
+        { title: `${moduleName}知识一`, category: "基础知识", categoryIcon: moduleIcon, content: `这里将展示精彩的${moduleName}内容，包括实用技巧和深入分析。`, subtitle: "入门指南" },
+        { title: `${moduleName}知识二`, category: "进阶技巧", categoryIcon: moduleIcon, content: `深入了解${moduleName}的核心概念和实用方法，帮助你快速提升。`, subtitle: "技巧分享" },
+        { title: `${moduleName}知识三`, category: "案例分析", categoryIcon: moduleIcon, content: `通过真实案例解析${moduleName}的应用场景和解决方案。`, subtitle: "实战案例" },
+        { title: `${moduleName}知识四`, category: "专家观点", categoryIcon: moduleIcon, content: `专家视角解读${moduleName}的发展趋势和未来方向。`, subtitle: "趋势洞察" },
+        { title: `${moduleName}知识五`, category: "常见问题", categoryIcon: moduleIcon, content: `解答关于${moduleName}的常见疑问，帮助你避坑少走弯路。`, subtitle: "答疑解惑" }
+      ]
+    }
+    moduleCache[moduleId] = localFallback
+    console.log(`[CloudData] 使用通用备用数据: ${moduleId}`)
+    return localFallback
   }
 }
 

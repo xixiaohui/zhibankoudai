@@ -10,7 +10,9 @@
     "pages/memory/index",
     "pages/mine/index",
     "pages/poster/index",
-    "pages/uploadData/uploadData"
+    "pages/uploadData/uploadData",
+    "pages/setTemplate/index",
+    "pages/manage/index"
   ],
   "usingComponents": {
     "posterCanvas": "components/posterCanvas/posterCanvas"

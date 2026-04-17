@@ -1,5 +1,4 @@
 // pages/mine/index.js - 我的页面
-const app = getApp()
 const util = require('../../utils/util.js')
 
 Page({
@@ -11,7 +10,8 @@ Page({
     // 功能列表
     functions: [
       { id: 'profile', name: '个人资料', icon: '👤', color: '#7C6AFF', desc: '查看和编辑个人资料' },
-      { id: 'settings', name: '偏好设置', icon: '⚙️', color: '#6BCB77', desc: '调整陪伴偏好和通知' },
+      { id: 'settings', name: '服务设置', icon: '⚙️', color: '#6BCB77', desc: '调整陪伴偏好和通知' },
+      { id: 'assistant', name: '助手管理', icon: '🤖', color: '#FF6B9D', desc: '设置首页模块显示与隐藏' },
       { id: 'about', name: '关于智伴', icon: '💡', color: '#FFD93D', desc: '了解产品理念和版本信息' },
       { id: 'feedback', name: '意见反馈', icon: '📮', color: '#FF9A76', desc: '告诉我们你的想法和建议' },
       { id: 'share', name: '分享给朋友', icon: '📢', color: '#6BCB77', desc: '邀请朋友一起使用' },
@@ -65,11 +65,22 @@ Page({
     
     switch(functionId) {
       case 'profile':
-        wx.switchTab({ url: '/pages/memory/index' })
+        // 跳转到记忆页面并打开个人资料 tab
+        wx.navigateTo({ 
+          url: '/pages/memory/index?tab=profile',
+          fail: () => {
+            // 如果带参数跳转失败，使用默认跳转
+            wx.switchTab({ url: '/pages/memory/index' })
+          }
+        })
         break
         
       case 'settings':
-        this.showSettings()
+        wx.navigateTo({ url: '/pages/setTemplate/index' })
+        break
+        
+      case 'assistant':
+        wx.navigateTo({ url: '/pages/manage/index' })
         break
         
       case 'about':
@@ -81,7 +92,7 @@ Page({
         break
         
       case 'share':
-        this.shareApp()
+        this.onShareApp()
         break
         
       case 'privacy':
@@ -123,8 +134,6 @@ Page({
   // 选择语气偏好
   selectTonePreference() {
     const tones = ['温暖', '轻松', '专业']
-    const currentTone = this.data.userProfile.preferTone || '温暖'
-    const currentIndex = tones.indexOf(currentTone)
     
     wx.showActionSheet({
       itemList: tones,
@@ -236,16 +245,11 @@ Page({
   },
 
   // 分享应用
-  shareApp() {
+  onShareApp() {
+    // 直接触发分享菜单
     wx.showShareMenu({
       withShareTicket: true,
       menus: ['shareAppMessage', 'shareTimeline']
-    })
-    
-    wx.showToast({ 
-      title: '分享面板已打开', 
-      icon: 'success',
-      duration: 2000 
     })
   },
 

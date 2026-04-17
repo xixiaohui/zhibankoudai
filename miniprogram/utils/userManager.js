@@ -12,6 +12,57 @@ const STORAGE_KEYS = {
   USER_INFO: 'userProfile',   // 用户基本信息（含昵称）
 }
 
+// 云函数配置
+const CLOUD_CONFIG = {
+  cloudEnabled: true,         // 是否启用云端同步
+  maxRetries: 2,              // 最大重试次数
+  retryDelay: 1000,           // 重试延迟(ms)
+  timeout: 10000,             // 超时时间(ms)
+}
+
+// 云函数调用（带重试机制）
+async function callCloudFunction(name, data, retries = 0) {
+  try {
+    const res = await wx.cloud.callFunction({
+      name,
+      data,
+      config: {
+        timeout: CLOUD_CONFIG.timeout
+      }
+    })
+    return res
+  } catch (e) {
+    // 判断是否应该重试
+    const isNetworkError = e.message?.includes('Failed to fetch') ||
+                          e.message?.includes('request:fail') ||
+                          e.message?.includes('timeout') ||
+                          e.errMsg?.includes('Failed to fetch') ||
+                          e.errMsg?.includes('request:fail')
+    
+    if (isNetworkError && retries < CLOUD_CONFIG.maxRetries) {
+      console.log(`[UserManager] 云函数调用失败，${CLOUD_CONFIG.retryDelay * (retries + 1)}ms 后重试 (${retries + 1}/${CLOUD_CONFIG.maxRetries})`)
+      await new Promise(resolve => setTimeout(resolve, CLOUD_CONFIG.retryDelay * (retries + 1)))
+      return callCloudFunction(name, data, retries + 1)
+    }
+    
+    throw e
+  }
+}
+
+/**
+ * 检查网络状态
+ */
+function checkNetwork() {
+  return new Promise((resolve) => {
+    wx.getNetworkType({
+      success: (res) => {
+        resolve(res.networkType !== 'none')
+      },
+      fail: () => resolve(false)
+    })
+  })
+}
+
 /**
  * 获取用户ID（确保唯一标识存在）
  * @returns {Promise<string>} 用户ID
@@ -26,13 +77,16 @@ async function getUserId() {
   
   // 2. 本地没有，从云端获取或创建
   try {
-    const res = await wx.cloud.callFunction({
-      name: 'userManager',
+    // 检查网络状态
+    const hasNetwork = await checkNetwork()
+    if (!hasNetwork || !CLOUD_CONFIG.cloudEnabled) {
+      throw new Error('network unavailable')
+    }
+    
+    const res = await callCloudFunction('userManager', {
+      action: 'getOrCreate',
       data: {
-        action: 'getOrCreate',
-        data: {
-          nickname: getLocalNickname()
-        }
+        nickname: getLocalNickname()
       }
     })
     
@@ -43,7 +97,7 @@ async function getUserId() {
       return userId
     }
   } catch (e) {
-    console.error('[UserManager] 获取用户ID失败:', e)
+    console.warn('[UserManager] 云端获取用户ID失败，将使用临时ID')
   }
   
   // 3. 云函数调用失败，生成临时ID
@@ -76,17 +130,29 @@ function getNickname() {
  * @param {string} nickname - 昵称
  */
 async function syncNickname(nickname) {
+  if (!nickname) return
+  
+  // 检查是否启用云端同步
+  if (!CLOUD_CONFIG.cloudEnabled) {
+    console.log('[UserManager] 云端同步已禁用')
+    return
+  }
+  
   try {
-    await wx.cloud.callFunction({
-      name: 'userManager',
-      data: {
-        action: 'bindNickname',
-        data: { nickname }
-      }
+    const hasNetwork = await checkNetwork()
+    if (!hasNetwork) {
+      console.log('[UserManager] 网络不可用，跳过昵称同步')
+      return
+    }
+    
+    await callCloudFunction('userManager', {
+      action: 'bindNickname',
+      data: { nickname }
     })
     console.log('[UserManager] 昵称同步成功')
   } catch (e) {
-    console.error('[UserManager] 昵称同步失败:', e)
+    // 静默处理网络错误，避免日志刷屏
+    console.log('[UserManager] 昵称同步失败，将在下次网络恢复时重试')
   }
 }
 
@@ -115,13 +181,20 @@ async function initUser() {
   // 确保用户ID存在
   await getUserId()
   
-  // 同步昵称到云端
+  // 同步昵称到云端（静默处理，避免网络问题影响主流程）
   const nickname = getLocalNickname()
   if (nickname) {
-    await syncNickname(nickname)
+    syncNickname(nickname)  // 不等待完成
   }
   
   console.log('[UserManager] 用户初始化完成')
+}
+
+/**
+ * 启用/禁用云端同步
+ */
+function setCloudEnabled(enabled) {
+  CLOUD_CONFIG.cloudEnabled = enabled
 }
 
 module.exports = {
@@ -130,5 +203,6 @@ module.exports = {
   syncNickname,
   getUserInfo,
   initUser,
+  setCloudEnabled,
   STORAGE_KEYS
 }

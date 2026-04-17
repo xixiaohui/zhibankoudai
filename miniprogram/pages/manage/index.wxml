@@ -1,0 +1,35 @@
+<!-- pages/manage/index.wxml - 助手管理页面 -->
+<view class="page-container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="header-title">助手管理</view>
+    <view class="header-desc">自定义首页显示的模块</view>
+  </view>
+
+  <!-- 模块列表 -->
+  <view class="module-list">
+    <block wx:for="{{modules}}" wx:key="id">
+      <view class="module-item">
+        <view class="module-icon" style="background: {{item.colors.bg}}; color: {{item.colors.primary}}">
+          {{item.icon}}
+        </view>
+        <view class="module-info">
+          <view class="module-name">{{item.name}}</view>
+          <view class="module-desc">{{item.slogan}}</view>
+        </view>
+        <switch 
+          checked="{{item.enabled}}" 
+          bindchange="toggleModule" 
+          data-id="{{item.id}}"
+          color="#7C6AFF"
+        />
+      </view>
+    </block>
+  </view>
+
+  <!-- 底部说明 -->
+  <view class="footer-tip">
+    <view class="tip-icon">💡</view>
+    <view class="tip-text">已开启 {{enabledCount}} 个模块</view>
+  </view>
+</view>

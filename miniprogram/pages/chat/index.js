@@ -671,22 +671,6 @@ Page({
     this.addMessage(modeMessage)
   },
 
-  onClearChat() {
-    wx.showModal({
-      title: '清空对话',
-      content: '确定要清空当前对话吗？',
-      confirmColor: '#6366F1',
-      success: (res) => {
-        if (res.confirm) {
-          this.setData({ messages: [] })
-          wx.setStorageSync('chatHistory', [])
-          setTimeout(() => this.sendWelcomeMessage(), 300)
-          wx.showToast({ title: '对话已清空', icon: 'success' })
-        }
-      }
-    })
-  },
-
   scrollToBottom(immediate = false) {
     if (immediate) {
       // 立即滚动：使用 scroll-top 设置一个很大的值

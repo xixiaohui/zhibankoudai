@@ -48,8 +48,16 @@ Page({
     completedGoalsCount: 0,
   },
 
-  onLoad() {
+  onLoad(options) {
     this.loadMemoryData()
+    
+    // 支持通过 URL 参数指定默认 tab
+    if (options && options.tab) {
+      const validTabs = ['profile', 'recent', 'goals', 'milestones']
+      if (validTabs.includes(options.tab)) {
+        this.setData({ activeTab: options.tab })
+      }
+    }
   },
 
   onShow() {

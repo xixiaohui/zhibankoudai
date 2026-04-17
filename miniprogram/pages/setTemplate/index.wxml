@@ -1,0 +1,125 @@
+<!-- pages/setTemplate/index.wxml - 服务设置页面 -->
+<view class="page-container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="header-title">服务设置</view>
+    <view class="header-desc">个性化你的智伴体验</view>
+  </view>
+
+  <!-- 设置分组 -->
+  <view class="settings-group">
+    <view class="group-title">陪伴偏好</view>
+    
+    <view class="setting-item">
+      <view class="setting-left">
+        <view class="setting-icon">🎨</view>
+        <view class="setting-info">
+          <view class="setting-name">语气风格</view>
+          <view class="setting-value">{{settings.tone}}</view>
+        </view>
+      </view>
+      <view class="setting-arrow" bindtap="changeTone">›</view>
+    </view>
+
+    <view class="setting-item">
+      <view class="setting-left">
+        <view class="setting-icon">👋</view>
+        <view class="setting-info">
+          <view class="setting-name">称呼方式</view>
+          <view class="setting-value">{{settings.greeting}}</view>
+        </view>
+      </view>
+      <view class="setting-arrow" bindtap="changeGreeting">›</view>
+    </view>
+
+    <view class="setting-item">
+      <view class="setting-left">
+        <view class="setting-icon">🌙</view>
+        <view class="setting-info">
+          <view class="setting-name">称呼时间</view>
+          <view class="setting-value">{{settings.greetingTime}}</view>
+        </view>
+      </view>
+      <view class="setting-arrow" bindtap="changeGreetingTime">›</view>
+    </view>
+  </view>
+
+  <!-- 通知设置 -->
+  <view class="settings-group">
+    <view class="group-title">提醒通知</view>
+    
+    <view class="setting-item">
+      <view class="setting-left">
+        <view class="setting-icon">⏰</view>
+        <view class="setting-info">
+          <view class="setting-name">每日陪伴提醒</view>
+          <view class="setting-desc">每天固定时间提醒你使用</view>
+        </view>
+      </view>
+      <switch checked="{{settings.dailyReminder}}" bindchange="toggleDailyReminder" color="#7C6AFF" />
+    </view>
+
+    <view class="setting-item">
+      <view class="setting-left">
+        <view class="setting-icon">💆</view>
+        <view class="setting-info">
+          <view class="setting-name">情绪记录提醒</view>
+          <view class="setting-desc">提醒记录每日心情</view>
+        </view>
+      </view>
+      <switch checked="{{settings.moodReminder}}" bindchange="toggleMoodReminder" color="#7C6AFF" />
+    </view>
+
+    <view class="setting-item" wx:if="{{settings.dailyReminder}}">
+      <view class="setting-left">
+        <view class="setting-icon">🕐</view>
+        <view class="setting-info">
+          <view class="setting-name">提醒时间</view>
+          <view class="setting-value">{{settings.reminderTime}}</view>
+        </view>
+      </view>
+      <view class="setting-arrow" bindtap="changeReminderTime">›</view>
+    </view>
+  </view>
+
+  <!-- 数据管理 -->
+  <view class="settings-group">
+    <view class="group-title">数据管理</view>
+    
+    <view class="setting-item">
+      <view class="setting-left">
+        <view class="setting-icon">📤</view>
+        <view class="setting-info">
+          <view class="setting-name">数据备份</view>
+          <view class="setting-desc">将数据备份到云端</view>
+        </view>
+      </view>
+      <view class="setting-arrow" bindtap="backupData">›</view>
+    </view>
+
+    <view class="setting-item">
+      <view class="setting-left">
+        <view class="setting-icon">📥</view>
+        <view class="setting-info">
+          <view class="setting-name">数据恢复</view>
+          <view class="setting-desc">从云端恢复数据</view>
+        </view>
+      </view>
+      <view class="setting-arrow" bindtap="restoreData">›</view>
+    </view>
+
+    <view class="setting-item danger">
+      <view class="setting-left">
+        <view class="setting-icon">🗑️</view>
+        <view class="setting-info">
+          <view class="setting-name">清除所有数据</view>
+          <view class="setting-desc">不可恢复，请谨慎操作</view>
+        </view>
+      </view>
+      <view class="setting-arrow" bindtap="clearData">›</view>
+    </view>
+  </view>
+
+  <!-- 底部占位 -->
+  <view class="bottom-space"></view>
+</view>

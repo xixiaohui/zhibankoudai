@@ -1,5 +1,5 @@
 <!-- components/dailyCard/dailyCard.wxml - 每日内容卡片组件 -->
-<view class="daily-card-wrapper">
+<view class="daily-card-wrapper" wx:if="{{!isHidden}}">
   <view class="section-title-row">
     <view class="section-title">
       <text class="title-icon">{{config.icon}}</text>
