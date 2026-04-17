@@ -446,6 +446,9 @@ case '模块ID':
 | uiDesigner | `dailyUiDesigner` |
 | futures | `dailyFutures` |
 | freud | `dailyFreud` |
+| fashionBrand | `dailyFashionBrand` |
+| robotAi | `dailyRobotAi` |
+| americanExpert | `dailyAmericanExpert` |
 
 #### 创建方式
 
