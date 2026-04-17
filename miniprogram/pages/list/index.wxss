@@ -62,7 +62,9 @@
 
 .content-area {
   flex: 1;
+  width: 100%;
   padding: var(--space-md);
+  box-sizing: border-box;
 }
 
 .loading-state {
@@ -128,7 +130,6 @@
   transition: transform 0.2s ease;
   background-color: var(--surface);
   border: 1rpx solid var(--border);
-  margin-right: var(--space-lg);
 }
 
 .content-card:active {
