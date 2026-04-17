@@ -786,11 +786,11 @@ Component({
 
       ctx.fillStyle = theme.textSoft
       ctx.font = '20px sans-serif'
-      ctx.fillText(subFooterText || '查看完整内容', 84, baseY + 36)
+      ctx.fillText(subFooterText || '#智伴口袋 #扫码读全文', 84, baseY + 36)
 
-      ctx.fillStyle = theme.accent
-      ctx.font = '18px sans-serif'
-      ctx.fillText('SCAN TO READ', 84, baseY + 74)
+      // ctx.fillStyle = theme.accent
+      // ctx.font = '18px sans-serif'
+      // ctx.fillText('SCAN TO READ', 84, baseY + 74)
 
       // 绘制用户名字和时间戳
       if (userName || timestamp) {
@@ -802,7 +802,7 @@ Component({
         }
         if (timestamp) {
           const startX = userName ? 84 + ctx.measureText(userName).width + 10 : 84
-          ctx.fillText(timestamp, startX, userInfoY)
+          ctx.fillText("~" + timestamp, startX, userInfoY)
         }
       }
 
@@ -815,13 +815,13 @@ Component({
         ctx.shadowOffsetX = shadowOffsetX
         ctx.shadowOffsetY = shadowOffsetY
       }
-      this.roundRectPath(ctx, qrX - 8, qrY - 8, qrSize + 16, qrSize + 16, Math.max(radius - 6, 8))
+      this.roundRectPath(ctx, qrX + 4, qrY - 18, qrSize + 16, qrSize + 16, Math.max(radius - 6, 8))
       ctx.fillStyle = theme.qrBg || '#FFFFFF'
       ctx.fill()
       ctx.restore()
 
       ctx.save()
-      this.roundRectPath(ctx, qrX - 8, qrY - 8, qrSize + 16, qrSize + 16, Math.max(radius - 6, 8))
+      this.roundRectPath(ctx, qrX + 4, qrY - 18, qrSize + 16, qrSize + 16, Math.max(radius - 6, 8))
       ctx.strokeStyle = theme.textLight || theme.subtitleColor || '#D4CFC5'
       ctx.lineWidth = 1
       ctx.stroke()
@@ -830,7 +830,7 @@ Component({
       // const img = await loadImage(this.canvas, "/images/qrcode.jpg");
       // ctx.drawImage(img, qrX, qrY, qrSize, qrSize);
       
-      await this.drawQrImage(ctx, qrCodeUrl, qrX, qrY, qrSize, theme)
+      await this.drawQrImage(ctx, qrCodeUrl, qrX + 14, qrY-10, qrSize, theme)
     },
 
     // =========================
