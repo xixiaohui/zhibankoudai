@@ -227,13 +227,16 @@ Component({
     
     const wasHidden = this.data.isHidden
     
-    if (isHidden !== wasHidden) {
+    // 无论状态是否变化，都更新状态（确保从管理页返回时状态正确）
+    if (isHidden !== wasHidden || this.data.config === null) {
       this.setData({ isHidden })
       
-      // 如果从隐藏变为显示，需要重新初始化模块并加载数据
-      if (!isHidden && wasHidden) {
-        console.log('[DailyCard] 模块从隐藏变为显示，重新初始化:', moduleType)
-        this._initModuleContent()
+      // 如果模块现在要显示且之前没有配置，需要初始化内容
+      if (!isHidden) {
+        console.log('[DailyCard] 模块将显示，检查是否需要初始化:', moduleType)
+        if (!this.data.config) {
+          this._initModuleContent()
+        }
       }
     }
   },
@@ -241,12 +244,14 @@ Component({
   // 初始化模块内容（从隐藏变为显示时调用）
   _initModuleContent() {
     const moduleType = this.properties.moduleType
+    console.log('[DailyCard] _initModuleContent 开始初始化:', moduleType)
     
     // 确保 cloudData 初始化完成
     cloudData.initAsync().then(async () => {
       const config = cloudData.getModuleConfig(moduleType)
       
       if (config && config.id) {
+        console.log('[DailyCard] _initModuleContent 获取到配置:', config.name)
         this.setData({ config })
         
         // 确保模块数据加载完成后再加载内容
@@ -258,6 +263,8 @@ Component({
         
         // 无论成功失败都尝试加载内容（会使用缓存或默认值）
         this._loadContent(config)
+      } else {
+        console.log('[DailyCard] _initModuleContent 未找到配置:', moduleType)
       }
     })
   },

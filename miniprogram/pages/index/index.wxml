@@ -22,15 +22,24 @@
 
   <!-- 每日陪伴卡片 -->
   <view wx:if="{{dailyCard}}" class="daily-card-section">
+    <!-- 模块管理指引 - 仅在没有开启任何模块时显示 -->
+    <view class="module-guide" bindtap="goToManage" wx:if="{{enabledModules.length === 0}}">
+      <view class="guide-icon">⚙️</view>
+      <view class="guide-content">
+        <view class="guide-title">还没有开启任何助手</view>
+        <view class="guide-desc">点击去开启你感兴趣的助手</view>
+      </view>
+      <view class="guide-arrow">›</view>
+    </view>
     <view class="section-title-row">
       <view class="section-title">
         今日陪伴卡片
         <text class="consecutive-days">已连续陪伴 {{consecutiveDays}} 天</text>
       </view>
-      <view class="share-card-btn focus-ring" bindtap="onShareCard">
+      <!-- <view class="share-card-btn focus-ring" bindtap="onShareCard">
         <text class="share-btn-icon">↗</text>
         <text class="share-btn-text">分享</text>
-      </view>
+      </view> -->
     </view>
     <view class="card-container" bindtap="onViewCard">
       <view class="card-header">

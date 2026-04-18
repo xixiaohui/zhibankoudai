@@ -210,6 +210,49 @@
   margin-top: 40rpx;
 }
 
+/* ========== Module Guide ========== */
+.module-guide {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+  border-radius: var(--radius-lg);
+  padding: 24rpx 28rpx;
+  margin-bottom: 24rpx;
+  border: 1rpx solid #e0e4ff;
+}
+
+.module-guide:active {
+  opacity: 0.8;
+  transform: scale(0.98);
+}
+
+.guide-icon {
+  font-size: 40rpx;
+  margin-right: 20rpx;
+}
+
+.guide-content {
+  flex: 1;
+}
+
+.guide-title {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 4rpx;
+}
+
+.guide-desc {
+  font-size: 24rpx;
+  color: #888;
+}
+
+.guide-arrow {
+  font-size: 40rpx;
+  color: #ccc;
+  font-weight: 300;
+}
+
 .card-container {
   background: var(--surface-white);
   border-radius: var(--radius-lg);

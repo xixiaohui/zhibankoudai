@@ -37,6 +37,7 @@ Page({
     nicknameInput: '',
     showBackTop: false,
     scrollTop: 0,
+    refreshKey: 0,
     
     // 加载状态
     isLoading: true,
@@ -86,11 +87,18 @@ Page({
   
   // 通知所有卡片组件刷新本地设置
   _notifyCardsRefresh() {
-    const cards = this.selectAllComponents('.daily-card-refresh')
-    cards.forEach(card => {
-      if (card.checkLocalSettings) {
-        card.checkLocalSettings()
-      }
+    // 使用 setData 触发更新，确保页面状态变化
+    this.setData({ refreshKey: Date.now() }, () => {
+      // 延迟执行，等待组件状态更新
+      setTimeout(() => {
+        const cards = this.selectAllComponents('.daily-card-refresh')
+        console.log('[Index] 找到卡片组件数量:', cards.length)
+        cards.forEach(card => {
+          if (card && card.checkLocalSettings) {
+            card.checkLocalSettings()
+          }
+        })
+      }, 100)
     })
   },
 
@@ -361,6 +369,11 @@ Page({
   // 分享卡片
   onShareCard() {
     wx.navigateTo({ url: '/pages/poster/index?type=home' })
+  },
+
+  // 跳转到模块管理页面
+  goToManage() {
+    wx.navigateTo({ url: '/pages/manage/index' })
   },
 
   // 空操作
