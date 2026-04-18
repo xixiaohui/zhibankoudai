@@ -1396,3 +1396,83 @@
   background-color: var(--accent-warm-light);
   border-radius: var(--radius-full);
 }
+
+/* ==================== 新增模块样式 ==================== */
+
+/* 知识模块 - 心理学/金融 */
+.knowledge-header {
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1rpx solid var(--border);
+}
+
+.knowledge-title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -1rpx;
+}
+
+.knowledge-content {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-sm);
+}
+
+.knowledge-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+.knowledge-tag {
+  font-size: 22rpx;
+  padding: 4rpx var(--space-sm);
+  background-color: var(--accent-warm-light);
+  border-radius: var(--radius-full);
+}
+
+.subtitle-tag {
+  font-size: 24rpx;
+  padding: var(--space-xs) var(--space-sm);
+}
+
+/* 幸运信息 - 运势模块 */
+.fortune-lucky {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+.lucky-item {
+  font-size: 22rpx;
+  padding: 4rpx var(--space-sm);
+  background-color: var(--accent-warm-light);
+  border-radius: var(--radius-full);
+}
+
+/* 文学副标题 */
+.lit-subtitle {
+  font-size: 26rpx;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--accent-warm-light);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
+}
+
+/* 科技模块增强 */
+.tech-category {
+  font-size: 22rpx;
+  color: var(--text-secondary);
+  margin-left: var(--space-sm);
+}
+
+/* 中医模块增强 */
+.tcm-category {
+  font-size: 22rpx;
+  color: var(--text-secondary);
+  margin-left: var(--space-sm);
+}

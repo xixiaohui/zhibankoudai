@@ -90,8 +90,14 @@
     </block>
 
     <block wx:elif="{{moduleType === 'psychology' || moduleType === 'finance'}}">
-      <view class="knowledge-title" style="color: {{config.colors.text}};">{{content.title}}</view>
+      <view class="knowledge-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="knowledge-title" style="color: {{config.colors.text}};">{{content.title}}</text>
+      </view>
       <view class="knowledge-content" style="color: {{config.colors.textSecondary}};">{{content.content}}</view>
+      <view class="knowledge-tags" wx:if="{{content.category || content.subtitle}}">
+        <text class="knowledge-tag" wx:if="{{content.category}}" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{content.category}}</text>
+        <text class="knowledge-tag subtitle-tag" wx:if="{{content.subtitle}}" style="background: {{config.colors.bg}}; color: {{config.colors.primary}};">💡 {{content.subtitle}}</text>
+      </view>
     </block>
 
     <block wx:elif="{{moduleType === 'love'}}">
@@ -164,10 +170,12 @@
     <block wx:elif="{{moduleType === 'tech'}}">
       <view class="tech-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
         <text class="tech-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="tech-category" wx:if="{{content.category}}" style="color: {{config.colors.accent}};">{{content.category}}</text>
       </view>
-      <view class="tech-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
-      <view class="tech-impact" wx:if="{{content.impact}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
-        <text>💡 {{content.impact}}</text>
+      <view class="tech-summary" style="color: {{config.colors.textSecondary}};">{{content.summary || content.content}}</view>
+      <view class="tech-tags" wx:if="{{content.subtitle || content.impact}}">
+        <text class="tech-tag" wx:if="{{content.subtitle}}" style="background: {{config.colors.bg}}; color: {{config.colors.primary}};">💡 {{content.subtitle}}</text>
+        <text class="tech-tag" wx:if="{{content.impact}}" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">⚡ {{content.impact}}</text>
       </view>
       <view class="tech-tags" wx:if="{{content.tags && content.tags.length > 0}}">
         <block wx:for="{{content.tags}}" wx:key="index">
@@ -179,10 +187,12 @@
     <block wx:elif="{{moduleType === 'tcm'}}">
       <view class="tcm-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
         <text class="tcm-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="tcm-category" wx:if="{{content.category}}" style="color: {{config.colors.accent}};">{{content.category}}</text>
       </view>
-      <view class="tcm-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
-      <view class="tcm-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
-        <text>📝 {{content.tips}}</text>
+      <view class="tcm-summary" style="color: {{config.colors.textSecondary}};">{{content.summary || content.content}}</view>
+      <view class="tcm-tags" wx:if="{{content.subtitle || content.tips}}">
+        <text class="tcm-tag" wx:if="{{content.subtitle}}" style="background: {{config.colors.bg}}; color: {{config.colors.primary}};">💡 {{content.subtitle}}</text>
+        <text class="tcm-tag" wx:if="{{content.tips}}" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">📝 {{content.tips}}</text>
       </view>
       <view class="tcm-tags" wx:if="{{content.tags && content.tags.length > 0}}">
         <block wx:for="{{content.tags}}" wx:key="index">
@@ -193,12 +203,13 @@
 
     <block wx:elif="{{moduleType === 'travel'}}">
       <view class="travel-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
-        <text class="travel-region" style="color: {{config.colors.accent}};">{{content.regionIcon || '🌍'}} {{content.region}}</text>
+        <text class="travel-region" style="color: {{config.colors.accent}};">{{content.regionIcon || '🌍'}} {{content.location || content.region}}</text>
       </view>
       <view class="travel-title" style="color: {{config.colors.primary}};">{{content.title}}</view>
-      <view class="travel-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
-      <view class="travel-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
-        <text>✈️ {{content.tips}}</text>
+      <view class="travel-summary" style="color: {{config.colors.textSecondary}};">{{content.summary || content.content}}</view>
+      <view class="travel-tags" wx:if="{{content.subtitle || content.tips}}">
+        <text class="travel-tag" wx:if="{{content.subtitle}}" style="background: {{config.colors.bg}}; color: {{config.colors.primary}};">💡 {{content.subtitle}}</text>
+        <text class="travel-tag" wx:if="{{content.tips}}" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">✈️ {{content.tips}}</text>
       </view>
       <view class="travel-tags" wx:if="{{content.tags && content.tags.length > 0}}">
         <block wx:for="{{content.tags}}" wx:key="index">
@@ -213,6 +224,11 @@
       </view>
       <view class="fortune-title" style="color: {{config.colors.primary}};">{{content.title}}</view>
       <view class="fortune-summary" style="color: {{config.colors.textSecondary}};">{{content.content}}</view>
+      <view class="fortune-lucky" wx:if="{{content.luckyDirection || content.luckyNumber || content.luckyColor}}">
+        <text class="lucky-item" wx:if="{{content.luckyDirection}}" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">🧭 {{content.luckyDirection}}</text>
+        <text class="lucky-item" wx:if="{{content.luckyNumber}}" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">🔢 {{content.luckyNumber}}</text>
+        <text class="lucky-item" wx:if="{{content.luckyColor}}" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">🎨 {{content.luckyColor}}</text>
+      </view>
       <view class="fortune-tags" wx:if="{{content.tags && content.tags.length > 0}}">
         <block wx:for="{{content.tags}}" wx:key="index">
           <text class="fortune-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
@@ -238,6 +254,9 @@
       <view class="lit-summary" wx:if="{{content.summary && content.summary !== content.content}}" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
       <view class="lit-quote" wx:if="{{content.quote}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
         <text>"{{content.quote}}"</text>
+      </view>
+      <view class="lit-subtitle" wx:if="{{content.subtitle}}" style="color: {{config.colors.primary}}; background: {{config.colors.bg}};">
+        <text>💡 {{content.subtitle}}</text>
       </view>
       <view class="lit-tags" wx:if="{{content.tags && content.tags.length > 0}}">
         <block wx:for="{{content.tags}}" wx:key="index">
@@ -299,9 +318,10 @@
         <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
         <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '📚'}} {{content.category}}</text>
       </view>
-      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
-      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
-        <text>💡 {{content.tips}}</text>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary || content.content}}</view>
+      <view class="trade-tags" wx:if="{{content.subtitle || content.tips}}">
+        <text class="trade-tag" wx:if="{{content.subtitle}}" style="background: {{config.colors.bg}}; color: {{config.colors.primary}};">💡 {{content.subtitle}}</text>
+        <text class="trade-tag" wx:if="{{content.tips}}" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">📝 {{content.tips}}</text>
       </view>
       <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
         <block wx:for="{{content.tags}}" wx:key="index">
@@ -387,9 +407,10 @@
         <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
         <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '💪'}} {{content.category}}</text>
       </view>
-      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
-      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
-        <text>💪 {{content.tips}}</text>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary || content.content}}</view>
+      <view class="trade-tags" wx:if="{{content.subtitle || content.tips}}">
+        <text class="trade-tag" wx:if="{{content.subtitle}}" style="background: {{config.colors.bg}}; color: {{config.colors.primary}};">💡 {{content.subtitle}}</text>
+        <text class="trade-tag" wx:if="{{content.tips}}" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">💪 {{content.tips}}</text>
       </view>
       <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
         <block wx:for="{{content.tags}}" wx:key="index">
@@ -663,9 +684,9 @@
         <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
         <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '📰'}} {{content.category}}</text>
       </view>
-      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary}}</view>
-      <view class="trade-tips" wx:if="{{content.tips}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
-        <text>📰 {{content.tips}}</text>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.summary || content.content}}</view>
+      <view class="trade-tags" wx:if="{{content.subtitle}}">
+        <text class="trade-tag" wx:if="{{content.subtitle}}" style="background: {{config.colors.bg}}; color: {{config.colors.primary}};">💡 {{content.subtitle}}</text>
       </view>
       <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
         <block wx:for="{{content.tags}}" wx:key="index">

@@ -305,14 +305,14 @@ function normalizeContent(moduleId, aiResult) {
       return {
         title: json.title || json.name || json.field || '心理效应',
         content: json.content || json.summary || json.explanation || json['原理'] || aiResult,
-        // 兼容兜底数据的 field 字段
+        summary: json.summary || json.explanation || '',
+        subtitle: json.subtitle || json.application || '',
         field: json.field || json.category || '心理学',
         category: json.category || json.field || '心理学',
         categoryIcon: '🧠',
-        summary: json.summary || json.explanation || '',
         explanation: json.explanation || '',
         example: json.example || json['例子'] || '',
-        application: json.application || json['应用'] || '',
+        application: json.application || '',
         date: today,
         isAIGenerated: true
       }
@@ -321,9 +321,10 @@ function normalizeContent(moduleId, aiResult) {
       return {
         title: json.title || json.theme || '金融知识',
         content: json.content || json.summary || aiResult,
+        summary: json.summary || json.content || '',
+        subtitle: json.subtitle || json.advice || '',
         category: json.category || '金融',
         categoryIcon: '💰',
-        summary: json.summary || json.content || '',
         advice: json.advice || json.tip || '',
         date: today,
         isAIGenerated: true
@@ -386,9 +387,11 @@ function normalizeContent(moduleId, aiResult) {
         title: json.title || '科技前沿',
         content: json.content || json.summary || aiResult,
         summary: json.summary || json.content || '',
+        subtitle: json.subtitle || json.significance || '',
+        impact: json.impact || json.significance || '',
         category: json.category || '科技',
         categoryIcon: '🚀',
-        significance: json.significance || json['意义'] || '',
+        significance: json.significance || '',
         date: today,
         isAIGenerated: true
       }
@@ -398,9 +401,11 @@ function normalizeContent(moduleId, aiResult) {
         title: json.title || '中医养生',
         content: json.content || json.summary || aiResult,
         summary: json.summary || json.content || '',
+        subtitle: json.subtitle || json.method || '',
         category: json.category || '养生',
         categoryIcon: '🌿',
         method: json.method || json.steps || '',
+        tips: json.tips || json.caution || '',
         caution: json.caution || json.note || '',
         date: today,
         isAIGenerated: true
@@ -411,9 +416,11 @@ function normalizeContent(moduleId, aiResult) {
         title: json.title || '目的地',
         content: json.content || json.summary || aiResult,
         summary: json.summary || json.content || '',
+        subtitle: json.subtitle || json.tips || '',
         category: json.category || '旅行',
         categoryIcon: '✈️',
-        location: json.location || '',
+        location: json.location || json.region || '',
+        region: json.region || '',
         tips: json.tips || '',
         date: today,
         isAIGenerated: true
@@ -424,11 +431,13 @@ function normalizeContent(moduleId, aiResult) {
         title: json.title || json.word || '英语知识点',
         content: json.content || json.summary || json.example || aiResult,
         summary: json.summary || json.content || '',
+        subtitle: json.subtitle || json.usage || '',
         category: json.category || '英语',
         categoryIcon: '🔤',
         meaning: json.meaning || '',
         usage: json.usage || '',
         example: json.example || '',
+        tips: json.tips || '',
         date: today,
         isAIGenerated: true
       }
@@ -438,9 +447,11 @@ function normalizeContent(moduleId, aiResult) {
         title: json.title || json.name || '健身动作',
         content: json.content || json.summary || aiResult,
         summary: json.summary || json.content || '',
+        subtitle: json.subtitle || json.steps || '',
         category: json.category || '健身',
         categoryIcon: '💪',
         steps: json.steps || '',
+        tips: json.tips || json.caution || '',
         caution: json.caution || '',
         date: today,
         isAIGenerated: true
@@ -465,6 +476,7 @@ function normalizeContent(moduleId, aiResult) {
         title: json.title || '今日要闻',
         content: json.content || aiResult,
         summary: json.summary || json.content || '',
+        subtitle: json.subtitle || '',
         category: json.category || '资讯',
         categoryIcon: '📰',
         keywords: json.keywords || '',
@@ -476,7 +488,8 @@ function normalizeContent(moduleId, aiResult) {
       return {
         title: json.title || '文学赏析',
         content: json.content || json.text || aiResult,
-        summary: json.summary || json.content || '', // 模板读取字段
+        summary: json.summary || json.content || '',
+        subtitle: json.subtitle || '',
         author: json.author || '',
         era: json.era || '',
         region: json.region || '',

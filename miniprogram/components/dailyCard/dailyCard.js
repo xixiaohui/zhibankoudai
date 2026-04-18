@@ -1364,16 +1364,16 @@ Component({
           break
         case 'psychology':
           url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent(content.field)}&icon=${encodeURIComponent(content.fieldIcon || '🧠')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent(content.field + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '🧠')}`
           break
         case 'finance':
           url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent(content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💰')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent(content.category + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '💰')}`
           break
         case 'love':
-          // 心动絮语: title=情话内容, author=作者, subtitle=出处
+          // 甜蜜时刻: title=作者, content=情话内容, subtitle=出处+国内外
           url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent(content.author)}&icon=${encodeURIComponent(content.categoryIcon || '💕')}`
+          params += `&title=${encodeURIComponent(content.author)}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent((content.source ? '📖 ' + content.source : '') + (content.region ? ' 🌏 ' + content.region : '') + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '💕')}`
           break
         case 'movie':
           url = `/pages/poster/index`
@@ -1385,24 +1385,29 @@ Component({
           break
         case 'tech':
           url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent(content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🔬')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.category || '科技') + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '🚀')}`
           break
         case 'tcm':
           url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent(content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🌿')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.category || '养生') + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '🌿')}`
           break
         case 'travel':
           url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent(content.region)}&icon=${encodeURIComponent(content.regionIcon || '🌍')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.location || content.region || '旅行') + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '✈️')}`
           break
         case 'fortune':
-          // 卦象玄机: title=卦名, content=描述, subtitle=属性
+          // 每日运势: title=运势标题, content=描述, subtitle=幸运信息
           url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent(content.subtitle || content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🔮')}`
+          const luckyInfo = [
+            content.luckyDirection ? '🧭 ' + content.luckyDirection : '',
+            content.luckyNumber ? '🔢 ' + content.luckyNumber : '',
+            content.luckyColor ? '🎨 ' + content.luckyColor : ''
+          ].filter(Boolean).join(' · ')
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent((content.category || '运势') + (content.subtitle ? ' · ' + content.subtitle : '') + (luckyInfo ? ' · ' + luckyInfo : ''))}&icon=${encodeURIComponent(content.categoryIcon || '🔮')}`
           break
         case 'literature':
           url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.author)}&content=${encodeURIComponent(content.summary +"【"+ content.quote +"】")}&subtitle=${encodeURIComponent(content.works ? content.works.join('、') : '')}&icon=${encodeURIComponent('📚')}`
+          params += `&title=${encodeURIComponent(content.author)}&content=${encodeURIComponent((content.summary || content.content) + (content.quote ? '【' + content.quote + '】' : ''))}&subtitle=${encodeURIComponent((content.era ? content.era + ' · ' : '') + (content.region || '') + (content.works && content.works.length ? ' · 代表作：' + content.works.join('、') : '') + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '📚')}`
           break
         case 'foreignTrade':
           url = `/pages/poster/index`
@@ -1418,7 +1423,7 @@ Component({
           break
         case 'english':
           url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '📚') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '📚')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.category || '英语') + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '🔤')}`
           break
         case 'programming':
           url = `/pages/poster/index`
@@ -1442,7 +1447,7 @@ Component({
           break
         case 'fitness':
           url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💪') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💪')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.category || '健身') + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '💪')}`
           break
         case 'pet':
           url = `/pages/poster/index`
@@ -1510,7 +1515,7 @@ Component({
           break
         case 'news':
           url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '📰') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '📰')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.category || '资讯') + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '📰')}`
           break
         case 'apple':
           url = `/pages/poster/index`
