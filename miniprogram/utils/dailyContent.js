@@ -13,6 +13,21 @@
 
 const AI_CONFIG = require('./aiConfig.js')
 const cloudData = require('./cloudData.js')
+const { getModuleById } = require('./moduleConfig.js')
+
+// 云数据库实例（延迟加载，避免循环依赖）
+let _cloudDb = null
+function getCloudDb() {
+  if (!_cloudDb) {
+    try {
+      const { cloudDb } = require('./cloudDb.js')
+      _cloudDb = cloudDb
+    } catch (e) {
+      console.warn('[DailyContent] 云数据库模块加载失败:', e)
+    }
+  }
+  return _cloudDb
+}
 
 // ─── AI 调用核心 ─────────────────────────────────────────────────
 
@@ -109,8 +124,8 @@ const LOCAL_PROMPTS_FALLBACK = {
     share: "💳【金融】{title}\\n\\n{content}"
   },
   love: {
-    generate: "你是一位情感作家。请写温暖人心的情感语录，表达对爱情/亲情/友情的感悟，真诚动人。内容长度200-500字。输出JSON：{\"author\":\"署名\",\"content\":\"正文200-500字\",\"category\":\"情感类型\",\"subtitle\":\"一句话15字内\"}",
-    share: "💕 {content}"
+    generate: "你是一位爱情文学研究专家。请收集整理一条国内外著名、经典的肉麻情话或甜蜜告白。要求：必须引用真实人物的原话，禁止创作。内容长度200字以内。输出JSON：{\"author\":\"人物名\",\"content\":\"情话原文\",\"source\":\"出处\",\"region\":\"国内/国外\",\"subtitle\":\"一句话总结\"}",
+    share: "💕 {content}\n\n—— {author}"
   },
   movie: {
     generate: "你是一位资深影评人。请推荐电影，介绍基本信息，分析亮点，说明推荐理由和适合人群。内容长度200-500字。输出JSON：{\"title\":\"电影名\",\"content\":\"推荐理由200-500字\",\"category\":\"类型\",\"director\":\"导演\",\"subtitle\":\"一句话15字内\"}",
@@ -567,6 +582,46 @@ function getSceneIcon(scene) {
 // ─── 统一生成函数 ──────────────────────────────────────────────────
 
 /**
+ * 获取模块已生成过的标题列表（用于避免重复）
+ * @param {string} moduleId - 模块ID
+ * @returns {Promise<string[]>} 历史标题列表
+ */
+async function getHistoryTitles(moduleId) {
+  try {
+    const moduleConfig = await getModuleById(moduleId)
+    if (!moduleConfig || !moduleConfig.collection) return []
+    
+    const cloudDb = getCloudDb()
+    if (!cloudDb) return []
+    
+    // 获取最近30天内的标题列表
+    const contents = await cloudDb.getDailyContents(moduleConfig.collection, { limit: 30 })
+    const titles = contents
+      .map(c => c.title)
+      .filter(t => t)
+    
+    return titles
+  } catch (e) {
+    console.warn('[DailyContent] 获取历史标题失败:', e)
+    return []
+  }
+}
+
+/**
+ * 构建避免重复的提示词后缀
+ * @param {string[]} historyTitles - 历史标题列表
+ * @returns {string} 提示词后缀
+ */
+function buildNoRepeatSuffix(historyTitles) {
+  if (!historyTitles || historyTitles.length === 0) {
+    return '\n\n【重要】请选择一个新的、有深度的内容主题。'
+  }
+  
+  const titles = historyTitles.slice(0, 10).join('、')
+  return `\n\n【重要】请选择一个新的、有深度的内容主题。避免以下已介绍过的内容：${titles}。请选择完全不同方向的选题。`
+}
+
+/**
  * 统一的内容生成器
  * @param {string} moduleId - 模块ID
  * @param {string} userPrompt - 用户提示词
@@ -574,7 +629,12 @@ function getSceneIcon(scene) {
  * @param {number} maxTokens - 最大token数
  */
 async function generateContent(moduleId, userPrompt, onChunk, maxTokens = 500) {
-  const messages = [buildUserMessage(userPrompt)]
+  // 获取历史标题，避免重复
+  const historyTitles = await getHistoryTitles(moduleId)
+  const noRepeatSuffix = buildNoRepeatSuffix(historyTitles)
+  
+  const fullPrompt = userPrompt + noRepeatSuffix
+  const messages = [buildUserMessage(fullPrompt)]
   
   let fullText = ''
   
@@ -584,14 +644,46 @@ async function generateContent(moduleId, userPrompt, onChunk, maxTokens = 500) {
   }
   
   const result = await callAIStream(messages, handleChunk, { maxTokens })
-  
+
   // 统一格式
   const content = normalizeContent(moduleId, result)
   if (!content) {
     throw new Error(`${moduleId} 格式解析失败`)
   }
   
+  // 注意：不再自动保存，由调用方（如 dailyCard.js）负责保存到云端
+  // 避免重复保存和数据冲突
+  
   return content
+}
+
+/**
+ * 保存内容到云端（使用 moduleConfig 中的 collection 字段作为集合名）
+ * @param {string} moduleId - 模块ID
+ * @param {object} content - 内容数据
+ */
+async function saveToCloud(moduleId, content) {
+  try {
+    const cloudDb = getCloudDb()
+    if (!cloudDb) {
+      console.log('[DailyContent] 云数据库未初始化，跳过保存')
+      return
+    }
+    
+    // 从 moduleConfig 获取云端集合名称
+    const moduleInfo = await getModuleById(moduleId)
+    if (!moduleInfo || !moduleInfo.collection) {
+      console.error(`[DailyContent] 未找到模块 ${moduleId} 的集合配置`)
+      return
+    }
+    
+    const collection = moduleInfo.collection
+    await cloudDb.saveDailyContent(collection, content, moduleId)
+    console.log(`[DailyContent] ${moduleId} 内容已保存到云端集合 ${collection}`)
+  } catch (e) {
+    console.error(`[DailyContent] ${moduleId} 云端保存失败:`, e)
+    // 不抛出错误，不影响正常返回
+  }
 }
 
 // ─── 名言生成 ─────────────────────────────────────────────────────
@@ -607,7 +699,12 @@ const DailyContent = {
     }
     
     const today = formatDate()
-    const userPrompt = promptData.generate.replace('{今日日期}', today)
+    let userPrompt = promptData.generate.replace('{今日日期}', today)
+    
+    // 添加去重提示
+    const historyTitles = await getHistoryTitles('quote')
+    userPrompt += buildNoRepeatSuffix(historyTitles)
+    
     const messages = [buildUserMessage(userPrompt)]
     
     let fullText = ''
@@ -625,6 +722,8 @@ const DailyContent = {
       throw new Error('名言格式解析失败')
     }
     
+    // 注意：不再自动保存，由调用方（如 dailyCard.js）负责保存到云端
+    
     onDone && onDone(content)
     return content
   },
@@ -639,7 +738,12 @@ const DailyContent = {
     }
     
     const today = formatDate()
-    const userPrompt = promptData.generate.replace('{今日日期}', today)
+    let userPrompt = promptData.generate.replace('{今日日期}', today)
+    
+    // 添加去重提示
+    const historyTitles = await getHistoryTitles('joke')
+    userPrompt += buildNoRepeatSuffix(historyTitles)
+    
     const messages = [buildUserMessage(userPrompt)]
     
     let fullText = ''
@@ -656,6 +760,8 @@ const DailyContent = {
     if (!content) {
       throw new Error('段子格式解析失败')
     }
+    
+    // 注意：不再自动保存，由调用方（如 dailyCard.js）负责保存到云端
     
     onDone && onDone(content)
     return content

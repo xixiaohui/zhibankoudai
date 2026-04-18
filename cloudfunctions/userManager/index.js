@@ -37,6 +37,9 @@ exports.main = async (event, context) => {
       case 'bindNickname':
         return await bindNickname(openid, data)
       
+      case 'deleteUser':
+        return await deleteUser(openid)
+      
       default:
         return { success: false, error: '未知操作' }
     }
@@ -201,4 +204,36 @@ function generateUserId() {
   const timestamp = Date.now().toString().slice(-8)
   const random = Math.random().toString(36).slice(2, 6).toUpperCase()
   return `U${timestamp}${random}`
+}
+
+/**
+ * 删除用户（清除登录状态时调用）
+ */
+async function deleteUser(openid) {
+  if (!openid) {
+    return { success: false, error: 'openid 不能为空' }
+  }
+  
+  try {
+    // 查询用户
+    const { data: users } = await db.collection('users')
+      .where({ openid })
+      .limit(1)
+      .get()
+    
+    if (!users || users.length === 0) {
+      console.log('【UserManager】删除用户：用户不存在')
+      return { success: true, message: '用户不存在' }
+    }
+    
+    // 删除用户记录
+    await db.collection('users').doc(users[0]._id).remove()
+    
+    console.log('【UserManager】删除用户成功:', users[0]._id)
+    return { success: true }
+    
+  } catch (error) {
+    console.error('【UserManager】删除用户失败:', error)
+    return { success: false, error: error.message }
+  }
 }

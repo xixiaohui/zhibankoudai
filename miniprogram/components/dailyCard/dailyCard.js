@@ -2,6 +2,7 @@
 const cloudData = require('../../utils/cloudData.js')
 const { DailyContent } = require('../../utils/dailyContent.js')
 const { getUserId, getNickname } = require('../../utils/userManager.js')
+const { getModuleById } = require('../../utils/moduleConfig.js')
 
 // 兼容旧常量
 const MODULE_TYPES = {
@@ -308,7 +309,56 @@ Component({
         }
       }
 
-      // 2. 无缓存时，立即显示兜底数据（不调用AI）
+      // 2. 无缓存时，优先从云端数据库读取今日 AI 生成的内容
+      this._loadFromCloud(config)
+    },
+
+    // 从云端数据库加载今日 AI 生成的内容
+    async _loadFromCloud(config) {
+      const moduleType = this.properties.moduleType
+      
+      try {
+        // 获取模块配置以获取 collection 名称
+        const { getModuleById } = require('../../utils/moduleConfig.js')
+        const moduleConfig = await getModuleById(moduleType)
+        if (!moduleConfig || !moduleConfig.collection) {
+          console.log(`[DailyCard] ${moduleType} 未找到集合配置，使用兜底数据`)
+          this._showFallback(config)
+          return
+        }
+
+        const { cloudDb } = require('../../utils/cloudDb.js')
+        const today = new Date().toISOString().split('T')[0]
+        
+        // 从云端获取今日 AI 生成的内容
+        const contents = await cloudDb.getDailyContents(moduleConfig.collection, { date: today, limit: 1 })
+        
+        if (contents && contents.length > 0) {
+          const cloudContent = contents[0]
+          // 清理不需要的字段
+          delete cloudContent._id
+          delete cloudContent._openid
+          delete cloudContent.createdAt
+          delete cloudContent.updateTime
+          
+          console.log(`[DailyCard] ${moduleType} 从云端加载 AI 内容`)
+          
+          // 缓存到本地
+          wx.setStorageSync(config.storageKey, cloudContent)
+          this.setData({ content: cloudContent, hasAIRefreshed: true })
+          this._buildTags(cloudContent)
+          return
+        }
+      } catch (e) {
+        console.warn(`[DailyCard] ${moduleType} 云端加载失败:`, e)
+      }
+
+      // 3. 云端无数据，显示兜底数据
+      this._showFallback(config)
+    },
+
+    // 显示兜底数据
+    _showFallback(config) {
       const fallback = getFallbackContent(this.properties.moduleType, config)
       if (fallback) {
         this.setData({ content: fallback })
@@ -1233,78 +1283,58 @@ Component({
       const { moduleType } = this.data
 
       try {
-        const db = wx.cloud.database()
-        const collectionMap = {
-          [MODULE_TYPES.QUOTE]: 'dailyQuotes',
-          [MODULE_TYPES.JOKE]: 'dailyJokes',
-          [MODULE_TYPES.PSYCHOLOGY]: 'dailyPsychology',
-          [MODULE_TYPES.FINANCE]: 'dailyFinance',
-          [MODULE_TYPES.LOVE]: 'dailyLoves',
-          [MODULE_TYPES.MOVIE]: 'dailyMovies',
-          [MODULE_TYPES.MUSIC]: 'dailyMusics',
-          [MODULE_TYPES.TECH]: 'dailyTechs',
-          [MODULE_TYPES.TCM]: 'dailyTcms',
-          [MODULE_TYPES.TRAVEL]: 'dailyTravels',
-          [MODULE_TYPES.FORTUNE]: 'dailyFortunes',
-          [MODULE_TYPES.LITERATURE]: 'dailyLiteratures',
-          [MODULE_TYPES.FOREIGN_TRADE]: 'dailyForeignTrades',
-          [MODULE_TYPES.ECOMMERCE]: 'dailyECommerces',
-          [MODULE_TYPES.MATH]: 'dailyMaths',
-          [MODULE_TYPES.ENGLISH]: 'dailyEnglishes',
-          [MODULE_TYPES.PROGRAMMING]: 'dailyProgrammings',
-          [MODULE_TYPES.PHOTOGRAPHY]: 'dailyPhotographies',
-          [MODULE_TYPES.BEAUTY]: 'dailyBeauties',
-          [MODULE_TYPES.INVESTMENT]: 'dailyInvestments',
-          [MODULE_TYPES.FISHING]: 'dailyFishings',
-          [MODULE_TYPES.FITNESS]: 'dailyFitnesses',
-          [MODULE_TYPES.PET]: 'dailyPets',
-          [MODULE_TYPES.FASHION]: 'dailyFashions',
-          [MODULE_TYPES.OUTFIT]: 'dailyOutfits',
-          [MODULE_TYPES.DECORATION]: 'dailyDecorations',
-          [MODULE_TYPES.GLASS_FIBER]: 'dailyGlassFibers',
-          [MODULE_TYPES.RESIN]: 'dailyResins',
-          [MODULE_TYPES.TAX]: 'dailyTaxs',
-          [MODULE_TYPES.LAW]: 'dailyLaws',
-          [MODULE_TYPES.OFFICIAL]: 'dailyOfficials',
-          [MODULE_TYPES.HANDLING]: 'dailyHandlings',
-          [MODULE_TYPES.FLORAL]: 'dailyFlorals',
-          [MODULE_TYPES.HISTORY]: 'dailyHistorys',
-          [MODULE_TYPES.MILITARY]: 'dailyMilitarys',
-          [MODULE_TYPES.STOCK]: 'dailyStocks',
-          [MODULE_TYPES.ECONOMICS]: 'dailyEconomics',
-          [MODULE_TYPES.BUSINESS]: 'dailyBusinesss',
-          [MODULE_TYPES.NEWS]: 'dailyNewss',
-          [MODULE_TYPES.APPLE]: 'dailyApples',
-          [MODULE_TYPES.GROWTH]: 'dailyGrowths',
-          [MODULE_TYPES.UI_DESIGNER]: 'dailyUiDesigners',
-          [MODULE_TYPES.FUTURES]: 'dailyFutures',
-          [MODULE_TYPES.FREUD]: 'dailyFreud',
-          [MODULE_TYPES.FASHION_BRAND]: 'dailyFashionBrand',
-          [MODULE_TYPES.ROBOT_AI]: 'dailyRobotAi',
-          [MODULE_TYPES.AMERICAN_EXPERT]: 'dailyAmericanExpert',
-          [MODULE_TYPES.XIN_STUDY]: 'dailyXinStudy',
-          [MODULE_TYPES.LI_STUDY]: 'dailyLiStudy',
-          [MODULE_TYPES.WISDOM_BAG]: 'dailyWisdomBag',
+        // 从 moduleConfig 获取 collection 名称
+        const moduleConfig = await getModuleById(moduleType)
+        if (!moduleConfig || !moduleConfig.collection) {
+          console.warn(`[DailyCard] ${moduleType} 未找到 collection 配置`)
+          return
         }
 
-        const collection = collectionMap[moduleType]
-        if (!collection) return
+        const collection = moduleConfig.collection
+        const db = wx.cloud.database()
+        const today = new Date().toISOString().split('T')[0]
 
         // 获取用户信息
         const userId = await getUserId()
         const nickname = getNickname()
-        
-        await db.collection(collection).add({
-          data: {
-            ...content,
-            createdAt: db.serverDate(),
-            // 用户标识，方便统计查询
-            userId: userId,
-            userName: nickname,
-            userNickname: nickname,
-          }
-        })
-        console.log(`[DailyCard] 内容已保存到云数据库 (${collection})`)
+
+        // 检查今日是否已存在该模块的内容
+        const exist = await db.collection(collection)
+          .where({
+            date: today,
+            isAIGenerated: true
+          })
+          .get()
+
+        if (exist.data.length > 0) {
+          // 更新已有记录
+          await db.collection(collection).doc(exist.data[0]._id).update({
+            data: {
+              ...content,
+              updateTime: db.serverDate(),
+              userId: userId,
+              userName: nickname,
+              userNickname: nickname,
+            }
+          })
+          console.log(`[DailyCard] ${moduleType} 今日内容已更新到云数据库 (${collection})`)
+        } else {
+          // 添加新记录
+          await db.collection(collection).add({
+            data: {
+              ...content,
+              moduleId: moduleType,
+              date: today,
+              createdAt: db.serverDate(),
+              isAIGenerated: true,
+              // 用户标识，方便统计查询
+              userId: userId,
+              userName: nickname,
+              userNickname: nickname,
+            }
+          })
+          console.log(`[DailyCard] 内容已保存到云数据库 (${collection})`)
+        }
       } catch (e) {
         console.error(`[DailyCard] 保存到云数据库失败:`, e.message)
       }

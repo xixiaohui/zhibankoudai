@@ -353,8 +353,9 @@ Page({
       const countResult = await collection.count()
       const total = countResult.total
       
-      // 查询数据
+      // 查询数据（按日期倒序，最新的在前面）
       const result = await collection
+        .orderBy('date', 'desc')
         .orderBy('createdAt', 'desc')
         .skip((page - 1) * pageSize)
         .limit(pageSize)
@@ -419,6 +420,7 @@ Page({
       const nextPage = page + 1
       
       const result = await db.collection(currentModule.collection)
+        .orderBy('date', 'desc')
         .orderBy('createdAt', 'desc')
         .skip((nextPage - 1) * pageSize)
         .limit(pageSize)

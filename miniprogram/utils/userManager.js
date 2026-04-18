@@ -5,6 +5,7 @@
  * 1. 获取或创建用户唯一标识 (userId)
  * 2. 同步用户昵称到云端
  * 3. 统一管理用户信息
+ * 4. 清除登录状态
  */
 
 const STORAGE_KEYS = {
@@ -20,6 +21,17 @@ const CLOUD_CONFIG = {
   timeout: 10000,             // 超时时间(ms)
 }
 
+// 判断是否为网络错误
+function isNetworkError(e) {
+  const msg = e.message || ''
+  const errMsg = e.errMsg || ''
+  return msg.includes('Failed to fetch') ||
+         msg.includes('request:fail') ||
+         msg.includes('timeout') ||
+         errMsg.includes('Failed to fetch') ||
+         errMsg.includes('request:fail')
+}
+
 // 云函数调用（带重试机制）
 async function callCloudFunction(name, data, retries = 0) {
   try {
@@ -33,13 +45,7 @@ async function callCloudFunction(name, data, retries = 0) {
     return res
   } catch (e) {
     // 判断是否应该重试
-    const isNetworkError = e.message?.includes('Failed to fetch') ||
-                          e.message?.includes('request:fail') ||
-                          e.message?.includes('timeout') ||
-                          e.errMsg?.includes('Failed to fetch') ||
-                          e.errMsg?.includes('request:fail')
-    
-    if (isNetworkError && retries < CLOUD_CONFIG.maxRetries) {
+    if (isNetworkError(e) && retries < CLOUD_CONFIG.maxRetries) {
       console.log(`[UserManager] 云函数调用失败，${CLOUD_CONFIG.retryDelay * (retries + 1)}ms 后重试 (${retries + 1}/${CLOUD_CONFIG.maxRetries})`)
       await new Promise(resolve => setTimeout(resolve, CLOUD_CONFIG.retryDelay * (retries + 1)))
       return callCloudFunction(name, data, retries + 1)
@@ -197,6 +203,63 @@ function setCloudEnabled(enabled) {
   CLOUD_CONFIG.cloudEnabled = enabled
 }
 
+/**
+ * 清除登录状态（清除本地用户数据）
+ * @param {boolean} showToast - 是否显示提示
+ * @returns {Promise<{success: boolean, error?: string}>}
+ */
+async function clearLogin(showToast = true) {
+  console.log('[UserManager] 开始清除登录状态')
+  
+  try {
+    // 1. 清除本地用户ID
+    wx.removeStorageSync(STORAGE_KEYS.USER_ID)
+    
+    // 2. 清除用户信息（保留其他应用数据）
+    // 注意：不清除 userProfile，因为它可能包含用户的其他设置
+    // 如果需要完全清除，可以用 wx.clearStorageSync() 但这会清除所有数据
+    
+    // 3. 尝试从云端删除用户数据（可选，静默处理失败）
+    try {
+      const hasNetwork = await checkNetwork()
+      if (hasNetwork && CLOUD_CONFIG.cloudEnabled) {
+        // 调用云函数删除用户数据
+        await callCloudFunction('userManager', {
+          action: 'deleteUser'
+        })
+        console.log('[UserManager] 云端用户数据已删除')
+      }
+    } catch (e) {
+      // 云端删除失败不影响本地清除
+      console.warn('[UserManager] 云端用户数据删除失败（不影响本地清除）:', e.message)
+    }
+    
+    if (showToast) {
+      wx.showToast({
+        title: '登录状态已清除',
+        icon: 'success',
+        duration: 2000
+      })
+    }
+    
+    console.log('[UserManager] 登录状态清除完成')
+    return { success: true }
+    
+  } catch (e) {
+    console.error('[UserManager] 清除登录状态失败:', e)
+    
+    if (showToast) {
+      wx.showToast({
+        title: '清除失败，请重试',
+        icon: 'none',
+        duration: 2000
+      })
+    }
+    
+    return { success: false, error: e.message }
+  }
+}
+
 module.exports = {
   getUserId,
   getNickname,
@@ -204,5 +267,6 @@ module.exports = {
   getUserInfo,
   initUser,
   setCloudEnabled,
+  clearLogin,
   STORAGE_KEYS
 }
