@@ -95,11 +95,21 @@
     </block>
 
     <block wx:elif="{{moduleType === 'love'}}">
+      <!-- 情话内容 -->
       <view class="love-content" style="color: {{config.colors.text}};">"{{content.content}}"</view>
-      <view class="love-author" wx:if="{{content.subtitle}}" style="color: {{config.colors.textSecondary}}; border-top: 1rpx solid {{config.colors.bg}};">
+      <!-- 作者信息 -->
+      <view class="love-author" style="color: {{config.colors.textSecondary}}; border-top: 1rpx solid {{config.colors.bg}};">
         <text class="author-prefix">——</text>
-        <text class="author-name" style="color: {{config.colors.accent}};">{{content.subtitle}}</text>
-        <text class="author-source" wx:if="{{content.title}}">「{{content.title}}」</text>
+        <text class="author-name" style="color: {{config.colors.accent}};">{{content.author}}</text>
+      </view>
+      <!-- 出处 + 国内外标签 -->
+      <view class="love-meta" wx:if="{{content.source || content.region}}">
+        <text class="love-source" wx:if="{{content.source}}" style="color: {{config.colors.textSecondary}};">📖 {{content.source}}</text>
+        <text class="love-region" wx:if="{{content.region}}" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">🌏 {{content.region}}</text>
+      </view>
+      <!-- 一句话总结 -->
+      <view class="love-subtitle" wx:if="{{content.subtitle}}" style="color: {{config.colors.primary}}; background: {{config.colors.bg}};">
+        <text>{{content.subtitle}}</text>
       </view>
     </block>
 

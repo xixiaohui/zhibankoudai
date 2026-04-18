@@ -331,13 +331,16 @@ function normalizeContent(moduleId, aiResult) {
       
     case 'love':
       return {
-        title: json.author || json.title || '',
+        // 核心字段 - 甜蜜时刻展示用
+        author: json.author || '',
         content: json.content || json.text || aiResult,
-        text: json.content || json.text || aiResult, // 模板读取字段
-        // 兼容兜底数据的 author 和 source
-        author: json.author || json.title || '',
         source: json.source || '',
-        category: json.category || '情话',
+        region: json.region || '国内',
+        subtitle: json.subtitle || '',
+        // 兼容其他字段
+        title: json.author || '',
+        text: json.content || json.text || aiResult,
+        category: json.region || '情话',
         categoryIcon: '💕',
         date: today,
         isAIGenerated: true

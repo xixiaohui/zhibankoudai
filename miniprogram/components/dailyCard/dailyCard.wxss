@@ -769,6 +769,38 @@
   margin-left: var(--space-xs);
 }
 
+/* 甜蜜时刻 - 元信息和总结 */
+.love-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+}
+
+.love-source {
+  font-size: 22rpx;
+  color: var(--text-secondary);
+}
+
+.love-region {
+  font-size: 20rpx;
+  padding: 4rpx var(--space-xs);
+  border-radius: var(--radius-full);
+}
+
+.love-subtitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--space-sm);
+  padding: var(--space-sm);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
 /* ==================== 电影内容 ==================== */
 .movie-header {
   display: flex;
