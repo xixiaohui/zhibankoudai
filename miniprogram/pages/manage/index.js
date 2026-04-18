@@ -91,5 +91,39 @@ Page({
         }
       }
     })
+  },
+
+  // 开启全部模块
+  enableAll() {
+    const visibility = {}
+    this.data.modules.forEach(m => {
+      visibility[m.id] = true
+    })
+    wx.setStorageSync(STORAGE_KEY, visibility)
+
+    const modules = this.data.modules.map(m => ({
+      ...m,
+      enabled: true
+    }))
+
+    this.setData({ modules, enabledCount: modules.length })
+    wx.showToast({ title: '已全部开启', icon: 'success' })
+  },
+
+  // 关闭全部模块
+  disableAll() {
+    const visibility = {}
+    this.data.modules.forEach(m => {
+      visibility[m.id] = false
+    })
+    wx.setStorageSync(STORAGE_KEY, visibility)
+
+    const modules = this.data.modules.map(m => ({
+      ...m,
+      enabled: false
+    }))
+
+    this.setData({ modules, enabledCount: 0 })
+    wx.showToast({ title: '已全部关闭', icon: 'success' })
   }
 })

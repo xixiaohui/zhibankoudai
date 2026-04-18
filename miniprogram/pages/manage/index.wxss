@@ -22,6 +22,39 @@
   color: #999;
 }
 
+/* 全选操作栏 */
+.action-bar {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  padding: 24rpx 0;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.action-enable {
+  background: #E8F5E9;
+  color: #4CAF50;
+}
+
+.action-disable {
+  background: #FFEBEE;
+  color: #F44336;
+}
+
+.action-icon {
+  font-size: 24rpx;
+}
+
 /* 模块列表 */
 .module-list {
   background: #fff;
