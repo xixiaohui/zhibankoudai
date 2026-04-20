@@ -1,0 +1,94 @@
+{
+  "id": "seoExpert",
+  "name": "SEO专家",
+  "icon": "icon-seo",
+  "color": "#FF5722",
+  "fields": [
+    {
+      "id": "technicalSeo",
+      "name": "技术SEO",
+      "icon": "🔧",
+      "topics": [
+        "网站速度优化",
+        "结构化数据",
+        "爬虫友好",
+        "移动端适配"
+      ]
+    },
+    {
+      "id": "contentStrategy",
+      "name": "内容策略",
+      "icon": "📝",
+      "topics": [
+        "关键词研究",
+        "内容规划",
+        "长尾词布局",
+        "内容质量"
+      ]
+    },
+    {
+      "id": "linkBuilding",
+      "name": "链接建设",
+      "icon": "🔗",
+      "topics": [
+        "外链策略",
+        "内链优化",
+        "友链交换",
+        "链接诱饵"
+      ]
+    },
+    {
+      "id": "analytics",
+      "name": "数据分析",
+      "icon": "📊",
+      "topics": [
+        "搜索意图分析",
+        "竞争分析",
+        "效果监测",
+        "持续优化"
+      ]
+    }
+  ],
+  "fallback": [
+    {
+      "category": "技术SEO",
+      "categoryIcon": "🔧",
+      "title": "Core Web Vitals与搜索排名",
+      "content": "Google已将Core Web Vitals纳入排名因素。LCP（最大内容绘制）应控制在2.5秒内，优化图片和使用CDN是关键；FID（首次输入延迟）需低于100毫秒，减少JavaScript阻塞；CLS（累积布局偏移）应小于0.1，优化图片尺寸和广告位。定期使用PageSpeed Insights检测，持续监控用户体验指标。",
+      "subtitle": "页面体验优化"
+    },
+    {
+      "category": "内容策略",
+      "categoryIcon": "📝",
+      "title": "长尾关键词的正确打开方式",
+      "content": "长尾关键词竞争小、转化高，是中小网站的流量蓝海。挖掘方法：分析搜索建议和related searches；使用AnswerThePublic找问答型长尾；研究竞品未覆盖的细分场景。内容布局：标题含长尾词、正文自然出现3-5次、URL和图片Alt文本都要覆盖。长尾内容积累形成词库，长期带来稳定流量。",
+      "subtitle": "关键词策略"
+    },
+    {
+      "category": "链接建设",
+      "categoryIcon": "🔗",
+      "title": "高质量外链的获取策略",
+      "content": "外链质量比数量更重要。推荐策略：1. 创作高质量原创内容，自然吸引外链；2. 客座博客，在相关行业网站投稿；3. broken link building，帮别人修复死链同时获得推荐；4. 资源页面链接，在目录网站提交；5. 社交媒体虽然nofollow，但能增加曝光和间接权重。避免购买链接和链接农场，小心Google惩罚。",
+      "subtitle": "外链建设技巧"
+    },
+    {
+      "category": "数据分析",
+      "categoryIcon": "📊",
+      "title": "搜索意图分析与内容匹配",
+      "content": "搜索意图分四类：信息型（了解知识）、导航型（找网站）、交易型（购买意图）、商业调查型（比较决策）。针对不同意图创作不同内容：信息型提供全面知识；交易型优化产品页面和CTA；商业调查型做对比评测。SEMrush和Ahrefs可分析竞品排名意图，据此调整内容策略，满足用户真实需求。",
+      "subtitle": "意图分析方法"
+    }
+  ],
+  "prompts": {
+    "generate": "分享SEO优化知识，涵盖技术SEO、内容策略、链接建设、数据分析",
+    "share": "🔍【SEO专家】{content}"
+  },
+  "share": {
+    "title": "SEO专家",
+    "template": "{content}"
+  },
+  "meta": {
+    "generated": "2026-04-20T00:00:00.000Z",
+    "source": "seoExpert"
+  }
+}

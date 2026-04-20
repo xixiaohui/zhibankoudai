@@ -206,6 +206,42 @@ const LOCAL_PROMPTS_FALLBACK = {
   freud: {
     generate: "你是一位弗洛伊德学术研究专家。请分享精神分析知识，涵盖释梦理论、人格结构、神经症等。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
     share: "🧠【弗洛伊德学术】{title}\\n\\n{content}"
+  },
+  anthropologist: {
+    generate: "你是一位人类学家。请分享人类学知识，涵盖文化体系、亲属关系、仪式、信仰体系等。介绍文化多样性、人类行为模式、社会结构。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "🏛️【人类学家】{title}\n\n{content}"
+  },
+  geographer: {
+    generate: "你是一位地理学家。请分享地理学知识，涵盖自然地理、人文地理、气候特征、制图学等。介绍地球奥秘、人地关系、空间分布规律。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "🌍【地理学家】{title}\n\n{content}"
+  },
+  historian: {
+    generate: "你是一位历史学家。请分享历史学知识，涵盖历史分析、历史分期、物质文化等。介绍历史事件、时代背景、文化遗产。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"时代/领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "📜【历史学家】{title}\n\n{content}"
+  },
+  narratologist: {
+    generate: "你是一位叙事学家。请分享叙事学知识，涵盖叙事理论、故事结构、人物弧线等。介绍经典叙事手法、故事构建技巧、角色塑造方法。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "📖【叙事学家】{title}\n\n{content}"
+  },
+  psychologist: {
+    generate: "你是一位心理学家。请分享心理学知识，涵盖人格理论、动机研究、认知模式等。介绍经典心理学理论、认知规律、行为动机。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "🧠【心理学家】{title}\n\n{content}"
+  },
+  softwareArchitect: {
+    generate: "你是一位资深软件架构师。请分享软件架构知识，涵盖系统设计、DDD、架构模式、权衡分析等。介绍架构设计原则、模式应用、技术选型。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "🏗️【软件架构师】{title}\n\n{content}"
+  },
+  solidityEngineer: {
+    generate: "你是一位Solidity智能合约工程师。请分享区块链开发知识，涵盖EVM、Gas优化、DeFi、安全实践等。介绍智能合约设计、合约安全、链上交互。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "⛓️【Solidity工程师】{title}\n\n{content}"
+  },
+  xiaohongshuExpert: {
+    generate: "你是一位小红书运营专家。请分享小红书运营知识，涵盖生活方式内容、趋势策略、创作技巧、涨粉运营等。介绍爆款打造、账号定位、内容策略。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "📕【小红书专家】{title}\n\n{content}"
+  },
+  seoExpert: {
+    generate: "你是一位SEO优化专家。请分享SEO知识，涵盖技术SEO、内容策略、链接建设、数据分析等。介绍搜索引擎原理、关键词策略、排名优化。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+    share: "🔍【SEO专家】{title}\n\n{content}"
   }
 }
 
@@ -1369,6 +1405,114 @@ const DailyContent = {
     if (!promptData) throw new Error('获取弗洛伊德提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
     const content = await generateContent('freud', userPrompt, onChunk, 800)
+    onDone && onDone(content)
+    return content
+  },
+
+  /**
+   * 生成人类学家
+   */
+  async generateAnthropologist(onChunk, onDone) {
+    const promptData = getPrompt('anthropologist')
+    if (!promptData) throw new Error('获取人类学家提示词失败')
+    const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
+    const content = await generateContent('anthropologist', userPrompt, onChunk, 800)
+    onDone && onDone(content)
+    return content
+  },
+
+  /**
+   * 生成地理学家
+   */
+  async generateGeographer(onChunk, onDone) {
+    const promptData = getPrompt('geographer')
+    if (!promptData) throw new Error('获取地理学家提示词失败')
+    const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
+    const content = await generateContent('geographer', userPrompt, onChunk, 800)
+    onDone && onDone(content)
+    return content
+  },
+
+  /**
+   * 生成历史学家
+   */
+  async generateHistorian(onChunk, onDone) {
+    const promptData = getPrompt('historian')
+    if (!promptData) throw new Error('获取历史学家提示词失败')
+    const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
+    const content = await generateContent('historian', userPrompt, onChunk, 800)
+    onDone && onDone(content)
+    return content
+  },
+
+  /**
+   * 生成叙事学家
+   */
+  async generateNarratologist(onChunk, onDone) {
+    const promptData = getPrompt('narratologist')
+    if (!promptData) throw new Error('获取叙事学家提示词失败')
+    const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
+    const content = await generateContent('narratologist', userPrompt, onChunk, 800)
+    onDone && onDone(content)
+    return content
+  },
+
+  /**
+   * 生成心理学家
+   */
+  async generatePsychologist(onChunk, onDone) {
+    const promptData = getPrompt('psychologist')
+    if (!promptData) throw new Error('获取心理学家提示词失败')
+    const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
+    const content = await generateContent('psychologist', userPrompt, onChunk, 800)
+    onDone && onDone(content)
+    return content
+  },
+
+  /**
+   * 生成软件架构师助手
+   */
+  async generateSoftwareArchitect(onChunk, onDone) {
+    const promptData = getPrompt('softwareArchitect')
+    if (!promptData) throw new Error('获取软件架构师提示词失败')
+    const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
+    const content = await generateContent('softwareArchitect', userPrompt, onChunk, 800)
+    onDone && onDone(content)
+    return content
+  },
+
+  /**
+   * 生成Solidity智能合约工程师
+   */
+  async generateSolidityEngineer(onChunk, onDone) {
+    const promptData = getPrompt('solidityEngineer')
+    if (!promptData) throw new Error('获取Solidity工程师提示词失败')
+    const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
+    const content = await generateContent('solidityEngineer', userPrompt, onChunk, 800)
+    onDone && onDone(content)
+    return content
+  },
+
+  /**
+   * 生成小红书专家
+   */
+  async generateXiaohongshuExpert(onChunk, onDone) {
+    const promptData = getPrompt('xiaohongshuExpert')
+    if (!promptData) throw new Error('获取小红书专家提示词失败')
+    const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
+    const content = await generateContent('xiaohongshuExpert', userPrompt, onChunk, 800)
+    onDone && onDone(content)
+    return content
+  },
+
+  /**
+   * 生成SEO专家
+   */
+  async generateSeoExpert(onChunk, onDone) {
+    const promptData = getPrompt('seoExpert')
+    if (!promptData) throw new Error('获取SEO专家提示词失败')
+    const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
+    const content = await generateContent('seoExpert', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },

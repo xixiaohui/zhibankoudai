@@ -18,7 +18,9 @@ const MODULE_TYPES = {
   FLORAL: 'floral', HISTORY: 'history', MILITARY: 'military',
   STOCK: 'stock', ECONOMICS: 'economics', BUSINESS: 'business', NEWS: 'news',
   APPLE: 'apple', GROWTH: 'growth', UI_DESIGNER: 'uiDesigner', FUTURES: 'futures',
-  FREUD: 'freud', FASHION_BRAND: 'fashionBrand', ROBOT_AI: 'robotAi', AMERICAN_EXPERT: 'americanExpert', XIN_STUDY: 'xinStudy', LI_STUDY: 'liStudy', WISDOM_BAG: 'wisdomBag'
+  FREUD: 'freud', FASHION_BRAND: 'fashionBrand', ROBOT_AI: 'robotAi', AMERICAN_EXPERT: 'americanExpert', XIN_STUDY: 'xinStudy', LI_STUDY: 'liStudy', WISDOM_BAG: 'wisdomBag',
+  ANTHROPOLOGIST: 'anthropologist', GEOGRAPHER: 'geographer', NARRATOLOGIST: 'narratologist', HISTORIAN: 'historian', PSYCHOLOGIST: 'psychologist',
+  SOFTWARE_ARCHITECT: 'softwareArchitect', SOLIDITY_ENGINEER: 'solidityEngineer', XIAOHONGSHU_EXPERT: 'xiaohongshuExpert', SEO_EXPERT: 'seoExpert'
 }
 
 // 全局请求队列，控制同时发起的 AI 请求数量
@@ -569,6 +571,24 @@ Component({
               return await this._getDailyLiStudy(refresh)
             case MODULE_TYPES.WISDOM_BAG:
               return await this._getDailyWisdomBag(refresh)
+            case MODULE_TYPES.ANTHROPOLOGIST:
+              return await this._getDailyAnthropologist(refresh)
+            case MODULE_TYPES.GEOGRAPHER:
+              return await this._getDailyGeographer(refresh)
+            case MODULE_TYPES.HISTORIAN:
+              return await this._getDailyHistorian(refresh)
+            case MODULE_TYPES.NARRATOLOGIST:
+              return await this._getDailyNarratologist(refresh)
+            case MODULE_TYPES.PSYCHOLOGIST:
+              return await this._getDailyPsychologist(refresh)
+            case MODULE_TYPES.SOFTWARE_ARCHITECT:
+              return await this._getDailySoftwareArchitect(refresh)
+            case MODULE_TYPES.SOLIDITY_ENGINEER:
+              return await this._getDailySolidityEngineer(refresh)
+            case MODULE_TYPES.XIAOHONGSHU_EXPERT:
+              return await this._getDailyXiaohongshuExpert(refresh)
+            case MODULE_TYPES.SEO_EXPERT:
+              return await this._getDailySeoExpert(refresh)
             default:
               throw new Error('未知的模块类型')
           }
@@ -1285,7 +1305,124 @@ Component({
       return content
     },
 
-    // 保存到云数据库
+    // 获取人类学家
+    async _getDailyAnthropologist(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyAnthropologist')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateAnthropologist()
+      return content
+    },
+
+    // 获取地理学家
+    async _getDailyGeographer(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyGeographer')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateGeographer()
+      return content
+    },
+
+    // 获取历史学家
+    async _getDailyHistorian(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyHistorian')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateHistorian()
+      return content
+    },
+
+    // 获取叙事学家
+    async _getDailyNarratologist(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyNarratologist')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateNarratologist()
+      return content
+    },
+
+    // 获取心理学家
+    async _getDailyPsychologist(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyPsychologist')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generatePsychologist()
+      return content
+    },
+
+    // 获取软件架构师助手
+    async _getDailySoftwareArchitect(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailySoftwareArchitect')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateSoftwareArchitect()
+      return content
+    },
+
+    // 获取Solidity智能合约工程师
+    async _getDailySolidityEngineer(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailySolidityEngineer')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateSolidityEngineer()
+      return content
+    },
+
+    // 获取小红书专家
+    async _getDailyXiaohongshuExpert(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyXiaohongshuExpert')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateXiaohongshuExpert()
+      return content
+    },
+
+    // 获取SEO专家
+    async _getDailySeoExpert(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailySeoExpert')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateSeoExpert()
+      return content
+    },
+
+    // 保存到云数据库（每次换一条都新增记录，不覆盖）
     async _saveToCloud(content) {
       const { moduleType } = this.data
 
@@ -1305,43 +1442,21 @@ Component({
         const userId = await getUserId()
         const nickname = getNickname()
 
-        // 检查今日是否已存在该模块的内容
-        const exist = await db.collection(collection)
-          .where({
+        // 直接添加新记录（不检查是否已存在，每次换一条都新增）
+        await db.collection(collection).add({
+          data: {
+            ...content,
+            moduleId: moduleType,
             date: today,
-            isAIGenerated: true
-          })
-          .get()
-
-        if (exist.data.length > 0) {
-          // 更新已有记录
-          await db.collection(collection).doc(exist.data[0]._id).update({
-            data: {
-              ...content,
-              updateTime: db.serverDate(),
-              userId: userId,
-              userName: nickname,
-              userNickname: nickname,
-            }
-          })
-          console.log(`[DailyCard] ${moduleType} 今日内容已更新到云数据库 (${collection})`)
-        } else {
-          // 添加新记录
-          await db.collection(collection).add({
-            data: {
-              ...content,
-              moduleId: moduleType,
-              date: today,
-              createdAt: db.serverDate(),
-              isAIGenerated: true,
-              // 用户标识，方便统计查询
-              userId: userId,
-              userName: nickname,
-              userNickname: nickname,
-            }
-          })
-          console.log(`[DailyCard] 内容已保存到云数据库 (${collection})`)
-        }
+            createdAt: db.serverDate(),
+            isAIGenerated: true,
+            // 用户标识，方便统计查询
+            userId: userId,
+            userName: nickname,
+            userNickname: nickname,
+          }
+        })
+        console.log(`[DailyCard] ${moduleType} 新内容已保存到云数据库 (${collection})`)
       } catch (e) {
         console.error(`[DailyCard] 保存到云数据库失败:`, e.message)
       }
@@ -1357,54 +1472,55 @@ Component({
       }
 
       // 构建分享参数
-      let url, params = `type=${config.posterType}`
+      let url = `/pages/poster/index`
+      let params = `type=${config.posterType}`
+
+      // 获取配色方案 - 统一使用浅白色背景
+      const colors = config.colors || {}
+      const bgColor = encodeURIComponent('#FAFAFA')
+      const titleColor = encodeURIComponent('#333333')
+      const contentColor = encodeURIComponent('#555555')
+      const subtitleColor = encodeURIComponent(colors.textSecondary || colors.accent || '#B79C61')
+
+      // 添加通用参数：分类、配色方案
+      params += `&category=${encodeURIComponent(config.id)}`
+      params += `&bgColor=${bgColor}&titleColor=${titleColor}&contentColor=${contentColor}&subtitleColor=${subtitleColor}`
 
       switch (config.posterType) {
         case 'quote':
           // 时光絮语: title=名言内容, author=作者, subtitle=出处
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.subtitle)}&content=${encodeURIComponent(content.content + ' - ' + content.title)}&icon=${encodeURIComponent(content.categoryIcon || '📜')}`
+          params += `&title=${encodeURIComponent(content.subtitle)}&content=${encodeURIComponent(content.content + ' - ' + content.title)}&icon=${encodeURIComponent(content.categoryIcon || '📜')}&author=${encodeURIComponent(content.title)}`
           break
         case 'joke':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent('场景：' + content.scene)}&icon=${encodeURIComponent(content.sceneIcon || '💬')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent('场景：' + (content.scene || ''))}&icon=${encodeURIComponent(content.sceneIcon || '💬')}`
           break
         case 'psychology':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent(content.field + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '🧠')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent((content.field || '') + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '🧠')}`
           break
         case 'finance':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent(content.category + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '💰')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent((content.category || '') + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '💰')}`
           break
         case 'love':
           // 甜蜜时刻: title=作者, content=情话内容, subtitle=出处+国内外
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.author)}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent((content.source ? '📖 ' + content.source : '') + (content.region ? ' 🌏 ' + content.region : '') + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '💕')}`
+          params += `&title=${encodeURIComponent(content.author || '')}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent((content.source ? '📖 ' + content.source : '') + (content.region ? ' 🌏 ' + content.region : '') + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '💕')}`
           break
         case 'movie':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent(content.director + ' | ' + content.year + ' | 评分 ' + content.rating)}&icon=${encodeURIComponent(content.genreIcon || '🎬')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.director || '') + ' | ' + (content.year || '') + ' | 评分 ' + (content.rating || ''))}&icon=${encodeURIComponent(content.genreIcon || '🎬')}`
           break
         case 'music':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.description)}&subtitle=${encodeURIComponent(content.artist + ' | ' + content.year)}&icon=${encodeURIComponent(content.genreIcon || '🎵')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.description)}&subtitle=${encodeURIComponent((content.artist || '') + ' | ' + (content.year || ''))}&icon=${encodeURIComponent(content.genreIcon || '🎵')}`
           break
         case 'tech':
-          url = `/pages/poster/index`
           params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.category || '科技') + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '🚀')}`
           break
         case 'tcm':
-          url = `/pages/poster/index`
           params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.category || '养生') + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '🌿')}`
           break
         case 'travel':
-          url = `/pages/poster/index`
           params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.location || content.region || '旅行') + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '✈️')}`
           break
         case 'fortune':
           // 每日运势: title=运势标题, content=描述, subtitle=幸运信息
-          url = `/pages/poster/index`
           const luckyInfo = [
             content.luckyDirection ? '🧭 ' + content.luckyDirection : '',
             content.luckyNumber ? '🔢 ' + content.luckyNumber : '',
@@ -1413,161 +1529,152 @@ Component({
           params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent((content.category || '运势') + (content.subtitle ? ' · ' + content.subtitle : '') + (luckyInfo ? ' · ' + luckyInfo : ''))}&icon=${encodeURIComponent(content.categoryIcon || '🔮')}`
           break
         case 'literature':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.author)}&content=${encodeURIComponent((content.summary || content.content) + (content.quote ? '【' + content.quote + '】' : ''))}&subtitle=${encodeURIComponent((content.era ? content.era + ' · ' : '') + (content.region || '') + (content.works && content.works.length ? ' · 代表作：' + content.works.join('、') : '') + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '📚')}`
+          params += `&title=${encodeURIComponent(content.author || '')}&content=${encodeURIComponent((content.summary || content.content) + (content.quote ? '【' + content.quote + '】' : ''))}&subtitle=${encodeURIComponent((content.era ? content.era + ' · ' : '') + (content.region || '') + (content.works && content.works.length ? ' · 代表作：' + content.works.join('、') : '') + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '📚')}`
           break
         case 'foreignTrade':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💼') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💼')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💼') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '💼')}`
           break
         case 'ecommerce':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🛒') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🛒')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🛒') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🛒')}`
           break
         case 'math':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '📐') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '📐')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '📐') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '📐')}`
           break
         case 'english':
-          url = `/pages/poster/index`
           params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.category || '英语') + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '🔤')}`
           break
         case 'programming':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💻') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💻')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💻') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '💻')}`
           break
         case 'photography':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '📷') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '📷')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '📷') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '📷')}`
           break
         case 'beauty':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💄') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💄')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💄') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '💄')}`
           break
         case 'investment':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💰') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💰')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💰') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '💰')}`
           break
         case 'fishing':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🎣') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🎣')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🎣') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🎣')}`
           break
         case 'fitness':
-          url = `/pages/poster/index`
           params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.category || '健身') + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '💪')}`
           break
         case 'pet':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🐾') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🐾')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🐾') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🐾')}`
           break
         case 'fashion':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '✨') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '✨')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '✨') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '✨')}`
           break
         case 'outfit':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '👕') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '👕')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '👕') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '👕')}`
           break
         case 'decoration':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🏠') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🏠')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🏠') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🏠')}`
           break
         case 'glassFiber':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🧵') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🧵')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🧵') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🧵')}`
           break
         case 'resin':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🧪') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🧪')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🧪') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🧪')}`
           break
         case 'tax':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '📋') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '📋')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '📋') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '📋')}`
           break
         case 'law':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '⚖️') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '⚖️')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '⚖️') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '⚖️')}`
           break
         case 'official':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🎩') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🎩')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🎩') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🎩')}`
           break
         case 'handling':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💎') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💎')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💎') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '💎')}`
           break
         case 'floral':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💐') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💐')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💐') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '💐')}`
           break
         case 'history':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '📚') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '📚')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '📚') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '📚')}`
           break
         case 'military':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🎖️') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🎖️')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '🎖️') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🎖️')}`
           break
         case 'stock':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '📈') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '📈')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '📈') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '📈')}`
           break
         case 'economics':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💰') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💰')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💰') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '💰')}`
           break
         case 'business':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💼') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💼')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary)}&subtitle=${encodeURIComponent((content.categoryIcon || '💼') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '💼')}`
           break
         case 'news':
-          url = `/pages/poster/index`
           params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.category || '资讯') + (content.subtitle ? ' · ' + content.subtitle : ''))}&icon=${encodeURIComponent(content.categoryIcon || '📰')}`
           break
         case 'apple':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🍎') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🍎')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🍎') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🍎')}`
           break
         case 'growth':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🚀') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🚀')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🚀') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🚀')}`
           break
         case 'uiDesigner':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🎨') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🎨')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🎨') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🎨')}`
           break
         case 'futures':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '📊') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '📊')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '📊') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '📊')}`
           break
         case 'freud':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🧠') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🧠')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🧠') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🧠')}`
           break
         case 'fashionBrand':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '👔') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '👔')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '👔') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '👔')}`
           break
         case 'robotAi':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🤖') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🤖')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🤖') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🤖')}`
           break
         case 'americanExpert':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🗽') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🗽')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🗽') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🗽')}`
           break
         case 'xinStudy':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🔥') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '🔥')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🔥') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🔥')}`
           break
         case 'liStudy':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '📜') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '📜')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '📜') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '📜')}`
           break
         case 'wisdomBag':
-          url = `/pages/poster/index`
-          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '💎') + ' ' + content.category)}&icon=${encodeURIComponent(content.categoryIcon || '💎')}`
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '💎') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '💎')}`
           break
+        case 'anthropologist':
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🏛️') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🏛️')}`
+          break
+        case 'geographer':
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🌍') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🌍')}`
+          break
+        case 'historian':
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '📜') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '📜')}`
+          break
+        case 'narratologist':
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '📖') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '📖')}`
+          break
+        case 'psychologist':
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🧠') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🧠')}`
+          break
+        case 'softwareArchitect':
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🏗️') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🏗️')}`
+          break
+        case 'solidityEngineer':
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '⛓️') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '⛓️')}`
+          break
+        case 'xiaohongshuExpert':
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '📕') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '📕')}`
+          break
+        case 'seoExpert':
+          params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🔍') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🔍')}`
+          break
+        default:
+          // 默认处理：使用content的通用字段
+          params += `&title=${encodeURIComponent(content.title || '')}&content=${encodeURIComponent(content.summary || content.content || '')}&subtitle=${encodeURIComponent((content.categoryIcon || config.icon || '📌') + ' ' + (content.category || config.name || ''))}&icon=${encodeURIComponent(content.categoryIcon || config.icon || '📌')}`
       }
 
       wx.navigateTo({ url: `${url}?${params}` })

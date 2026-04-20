@@ -209,6 +209,35 @@
   <!-- 智慧锦囊 - 配置ID: wisdomBag -->
   <daily-card class="daily-card-refresh" moduleType="wisdomBag" />
 
+  <!-- ========== 新增学术专家模块 ========== -->
+  <!-- 人类学家 - 配置ID: anthropologist -->
+  <daily-card class="daily-card-refresh" moduleType="anthropologist" />
+
+  <!-- 地理学家 - 配置ID: geographer -->
+  <daily-card class="daily-card-refresh" moduleType="geographer" />
+
+  <!-- 历史学家 - 配置ID: historian -->
+  <daily-card class="daily-card-refresh" moduleType="historian" />
+
+  <!-- 叙事学家 - 配置ID: narratologist -->
+  <daily-card class="daily-card-refresh" moduleType="narratologist" />
+
+  <!-- 心理学家 - 配置ID: psychologist -->
+  <daily-card class="daily-card-refresh" moduleType="psychologist" />
+
+  <!-- ========== 新增专业模块 ========== -->
+  <!-- 软件架构师助手 - 配置ID: softwareArchitect -->
+  <daily-card class="daily-card-refresh" moduleType="softwareArchitect" />
+
+  <!-- Solidity智能合约工程师 - 配置ID: solidityEngineer -->
+  <daily-card class="daily-card-refresh" moduleType="solidityEngineer" />
+
+  <!-- 小红书专家 - 配置ID: xiaohongshuExpert -->
+  <daily-card class="daily-card-refresh" moduleType="xiaohongshuExpert" />
+
+  <!-- SEO专家 - 配置ID: seoExpert -->
+  <daily-card class="daily-card-refresh" moduleType="seoExpert" />
+
   <!-- 快速陪伴入口 -->
   <view class="quick-modes-section">
     <view class="section-title">快速陪伴模式</view>

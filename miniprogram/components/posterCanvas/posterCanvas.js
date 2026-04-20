@@ -786,7 +786,7 @@ Component({
 
       ctx.fillStyle = theme.textSoft
       ctx.font = '20px sans-serif'
-      ctx.fillText(subFooterText || '#智伴口袋 #扫码读全文', 84, baseY + 36)
+      ctx.fillText(subFooterText || '#智伴口袋', 84, baseY + 36)
 
       // ctx.fillStyle = theme.accent
       // ctx.font = '18px sans-serif'
@@ -802,7 +802,7 @@ Component({
         }
         if (timestamp) {
           const startX = userName ? 84 + ctx.measureText(userName).width + 10 : 84
-          ctx.fillText("~" + timestamp, startX, userInfoY)
+          ctx.fillText(timestamp, startX, userInfoY)
         }
       }
 
@@ -1322,37 +1322,37 @@ Component({
         quote: { mode: 'light', preset: 'paper' },
         joke: { mode: 'light', preset: 'paper' },
         psychology: { mode: 'light', preset: 'sky' },
-        finance: { mode: 'dark', preset: 'oceanNight' },
+        finance: { mode: 'light', preset: 'sky' },
         love: { mode: 'light', preset: 'rose' },
-        movie: { mode: 'dark', preset: 'graphite' },
-        music: { mode: 'dark', preset: 'plumNight' },
-        tech: { mode: 'dark', preset: 'cyberDark' },
+        movie: { mode: 'light', preset: 'paper' },
+        music: { mode: 'light', preset: 'rose' },
+        tech: { mode: 'light', preset: 'sky' },
         tcm: { mode: 'light', preset: 'sage' },
         travel: { mode: 'light', preset: 'sage' },
-        fortune: { mode: 'dark', preset: 'obsidian' },
+        fortune: { mode: 'light', preset: 'classic' },
         literature: { mode: 'light', preset: 'classic' },
         foreignTrade: { mode: 'light', preset: 'business' },
         ecommerce: { mode: 'light', preset: 'rose' },
         math: { mode: 'light', preset: 'sky' },
         english: { mode: 'light', preset: 'sky' },
-        programming: { mode: 'dark', preset: 'cyberDark' },
-        photography: { mode: 'dark', preset: 'graphite' },
+        programming: { mode: 'light', preset: 'sky' },
+        photography: { mode: 'light', preset: 'paper' },
         beauty: { mode: 'light', preset: 'rose' },
-        investment: { mode: 'dark', preset: 'oceanNight' },
-        fitness: { mode: 'dark', preset: 'graphite' },
+        investment: { mode: 'light', preset: 'sage' },
+        fitness: { mode: 'light', preset: 'rose' },
         pet: { mode: 'light', preset: 'paper' },
         fashion: { mode: 'light', preset: 'business' },
         outfit: { mode: 'light', preset: 'business' },
         decoration: { mode: 'light', preset: 'classic' },
         glassFiber: { mode: 'light', preset: 'business' },
-        resin: { mode: 'dark', preset: 'plumNight' },
+        resin: { mode: 'light', preset: 'rose' },
         tax: { mode: 'light', preset: 'sky' },
-        law: { mode: 'dark', preset: 'graphite' },
+        law: { mode: 'light', preset: 'sky' },
         official: { mode: 'light', preset: 'business' },
         handling: { mode: 'light', preset: 'sky' },
         floral: { mode: 'light', preset: 'rose' },
         history: { mode: 'light', preset: 'classic' },
-        military: { mode: 'dark', preset: 'obsidian' },
+        military: { mode: 'light', preset: 'sky' },
         home: { mode: 'light', preset: 'paper' },
         business: { mode: 'light', preset: 'business' },
         bussiness: { mode: 'light', preset: 'business' }

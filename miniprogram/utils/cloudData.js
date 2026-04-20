@@ -64,7 +64,7 @@ let versionCheckPending = false  // 防止并发检查
 // 本地首页模块配置
 const LOCAL_HOME_MODULES = {
   version: "1.0.0",
-  updated: "2026-04-15",
+  updated: "2026-04-20",
   modules: [
     { id: "quote", enabled: true, order: 1 },
     { id: "joke", enabled: true, order: 2 },
@@ -84,6 +84,15 @@ const LOCAL_HOME_MODULES = {
     { id: "history", enabled: false, order: 16 },
     { id: "news", enabled: true, order: 17 },
     { id: "apple", enabled: true, order: 18 },
+    { id: "anthropologist", enabled: true, order: 51 },
+    { id: "geographer", enabled: true, order: 52 },
+    { id: "historian", enabled: true, order: 53 },
+    { id: "narratologist", enabled: true, order: 54 },
+    { id: "psychologist", enabled: true, order: 55 },
+    { id: "softwareArchitect", enabled: true, order: 56 },
+    { id: "solidityEngineer", enabled: true, order: 57 },
+    { id: "xiaohongshuExpert", enabled: true, order: 58 },
+    { id: "seoExpert", enabled: true, order: 59 },
   ]
 }
 
@@ -196,6 +205,42 @@ const LOCAL_PROMPTS = {
     wisdomBag: {
       generate: "你是一位跨学科智慧研究专家。请分享多元智慧洞见，涵盖心学、孙子兵法、斯多葛哲学、第一性原理、行为心理学等。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
       share: "💎【智慧锦囊】{title}\\n\\n{content}"
+    },
+    anthropologist: {
+      generate: "你是一位人类学家。请分享人类学知识，涵盖文化人类学、考古学、语言人类学、社会人类学等。介绍人类起源、文化多样性、社会结构。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+      share: "🏛️【人类学家】{title}\n\n{content}"
+    },
+    geographer: {
+      generate: "你是一位地理学家。请分享地理学知识，涵盖自然地理、人文地理、经济地理、城市地理等。介绍地形地貌、气候特征、人文景观。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+      share: "🌍【地理学家】{title}\n\n{content}"
+    },
+    historian: {
+      generate: "你是一位历史学家。请分享历史知识，涵盖中国古代史、世界古代史、近代史、现代史等。介绍历史事件、人物传记、文明发展。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+      share: "📜【历史学家】{title}\n\n{content}"
+    },
+    narratologist: {
+      generate: "你是一位叙事学家。请分享叙事学知识，涵盖故事结构、叙事视角、情节设计、人物塑造等。介绍叙事理论、经典案例、创作技巧。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+      share: "📖【叙事学家】{title}\n\n{content}"
+    },
+    psychologist: {
+      generate: "你是一位心理学家。请分享心理学知识，涵盖人格理论、动机研究、认知模式等。介绍经典心理学理论、认知规律、行为动机。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+      share: "🧠【心理学家】{title}\n\n{content}"
+    },
+    softwareArchitect: {
+      generate: "你是一位资深软件架构师。请分享软件架构知识，涵盖系统设计、DDD、架构模式、权衡分析等。介绍架构设计原则、模式应用、技术选型。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+      share: "🏗️【软件架构师】{title}\n\n{content}"
+    },
+    solidityEngineer: {
+      generate: "你是一位Solidity智能合约工程师。请分享区块链开发知识，涵盖EVM、Gas优化、DeFi、安全实践等。介绍智能合约设计、合约安全、链上交互。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+      share: "⛓️【Solidity工程师】{title}\n\n{content}"
+    },
+    xiaohongshuExpert: {
+      generate: "你是一位小红书运营专家。请分享小红书运营知识，涵盖生活方式内容、趋势策略、创作技巧、涨粉运营等。介绍爆款打造、账号定位、内容策略。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+      share: "📕【小红书专家】{title}\n\n{content}"
+    },
+    seoExpert: {
+      generate: "你是一位SEO优化专家。请分享SEO知识，涵盖技术SEO、内容策略、链接建设、数据分析等。介绍搜索引擎原理、关键词策略、排名优化。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
+      share: "🔍【SEO专家】{title}\n\n{content}"
     }
   },
   system: {
@@ -554,6 +599,60 @@ const DEFAULT_STYLES = {
     refreshText: '换一条', loadingText: '智慧锦囊正在为你指点...', placeholderText: '点击「换一条」获取智慧锦囊',
     tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '智慧' },
     colors: generateColors('#B8860B')
+  },
+  anthropologist: {
+    id: 'anthropologist', name: '人类学家', icon: '🏛️', color: '#5D4037', storageKey: 'dailyAnthropologist', posterType: 'anthropologist',
+    refreshText: '换一条', loadingText: '人类学家正在为你解读...', placeholderText: '点击「换一条」探索人类文化',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '人类学' },
+    colors: generateColors('#5D4037')
+  },
+  geographer: {
+    id: 'geographer', name: '地理学家', icon: '🌍', color: '#1B5E20', storageKey: 'dailyGeographer', posterType: 'geographer',
+    refreshText: '换一条', loadingText: '地理学家正在为你解读...', placeholderText: '点击「换一条」探索地理奥秘',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '地理学' },
+    colors: generateColors('#1B5E20')
+  },
+  historian: {
+    id: 'historian', name: '历史学家', icon: '📜', color: '#4527A0', storageKey: 'dailyHistorian', posterType: 'historian',
+    refreshText: '换一条', loadingText: '历史学家正在为你解读...', placeholderText: '点击「换一条」探索历史长河',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '历史学' },
+    colors: generateColors('#4527A0')
+  },
+  narratologist: {
+    id: 'narratologist', name: '叙事学家', icon: '📖', color: '#880E4F', storageKey: 'dailyNarratologist', posterType: 'narratologist',
+    refreshText: '换一条', loadingText: '叙事学家正在为你解读...', placeholderText: '点击「换一条」探索故事魅力',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '叙事学' },
+    colors: generateColors('#880E4F')
+  },
+  psychologist: {
+    id: 'psychologist', name: '心理学家', icon: '🧠', color: '#303F9F', storageKey: 'dailyPsychologist', posterType: 'psychologist',
+    refreshText: '换一条', loadingText: '心理学家正在为你解读...', placeholderText: '点击「换一条」探索心灵世界',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '心理学' },
+    colors: generateColors('#303F9F')
+  },
+  softwareArchitect: {
+    id: 'softwareArchitect', name: '软件架构师助手', icon: '🏗️', color: '#1565C0', storageKey: 'dailySoftwareArchitect', posterType: 'softwareArchitect',
+    refreshText: '换一条', loadingText: '架构师正在为你解读...', placeholderText: '点击「换一条」获取架构知识',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '架构' },
+    colors: generateColors('#1565C0')
+  },
+  solidityEngineer: {
+    id: 'solidityEngineer', name: 'Solidity智能合约工程师', icon: '⛓️', color: '#2E7D32', storageKey: 'dailySolidityEngineer', posterType: 'solidityEngineer',
+    refreshText: '换一条', loadingText: '工程师正在为你解读...', placeholderText: '点击「换一条」获取合约知识',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '合约' },
+    colors: generateColors('#2E7D32')
+  },
+  xiaohongshuExpert: {
+    id: 'xiaohongshuExpert', name: '小红书专家', icon: '📕', color: '#E91E63', storageKey: 'dailyXiaohongshu', posterType: 'xiaohongshuExpert',
+    refreshText: '换一条', loadingText: '专家正在为你解读...', placeholderText: '点击「换一条」获取运营技巧',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: '运营' },
+    colors: generateColors('#E91E63')
+  },
+  seoExpert: {
+    id: 'seoExpert', name: 'SEO专家', icon: '🔍', color: '#FF5722', storageKey: 'dailySeoExpert', posterType: 'seoExpert',
+    refreshText: '换一条', loadingText: '专家正在为你解读...', placeholderText: '点击「换一条」获取SEO技巧',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: 'SEO' },
+    colors: generateColors('#FF5722')
   }
 }
 
@@ -919,6 +1018,74 @@ async function getModule(moduleId) {
       return localFallback
     }
 
+    // softwareArchitect 模块本地备用数据
+    if (moduleId === 'softwareArchitect') {
+      const localFallback = {
+        version: "1.0.0",
+        updated: "2026-04-20",
+        fallback: [
+          { title: "微服务 vs 单体架构的权衡", category: "系统设计", categoryIcon: "🏗️", content: "选择微服务还是单体架构，需要考虑团队规模、业务复杂度和技术成熟度。小团队、简单业务适合单体，可快速迭代；大团队、复杂业务适合微服务，可独立部署扩展。但微服务带来分布式系统的复杂性：服务治理、链路追踪、数据一致性都是挑战。建议从单体开始，逐步拆分，避免过度设计。", subtitle: "架构选型指南" },
+          { title: "聚合根的设计原则", category: "领域驱动设计", categoryIcon: "🎯", content: "聚合根是DDD的核心概念，它保证聚合内数据一致性。设计聚合根应遵循：聚合内对象紧耦合，聚合间通过ID引用；聚合应该小而完整，一个聚合只包含一个实体；聚合根负责保护业务不变式，外部只能通过聚合根修改内部状态。好的聚合设计能让业务逻辑清晰，减少并发冲突。", subtitle: "DDD核心概念" },
+          { title: "CQRS模式的实践应用", category: "架构模式", categoryIcon: "📐", content: "CQRS（命令查询职责分离）将读写操作分离，可针对读优化或写优化分别设计。写侧处理复杂业务逻辑，维护领域模型；读侧可直接映射到视图数据结构，支持高性能查询。事件溯源是CQRS的好搭档，用事件记录 7态变化历史。但CQRS也带来最终一致性和事件处理的复杂度，适合写多读多且读写差异大的场景。", subtitle: "读写分离设计" },
+          { title: "一致性级别选择的艺术", category: "权衡分析", categoryIcon: "⚖️", content: "CAP定理告诉我们分布式系统无法同时满足一致性、可用性和分区容错。但现实是网络分区很少发生，所以大多数场景可以选择高可用。强一致性带来性能损耗和可用性降低，弱一致性提供更好性能和可用性。BASE理论（基本可用、软状态、最终一致）指导我们在一致性级别上做出业务可接受的权衡。", subtitle: "分布式系统基础" }
+        ]
+      }
+      moduleCache[moduleId] = localFallback
+      console.log(`[CloudData] 使用本地备用数据: ${moduleId}`)
+      return localFallback
+    }
+
+    // solidityEngineer 模块本地备用数据
+    if (moduleId === 'solidityEngineer') {
+      const localFallback = {
+        version: "1.0.0",
+        updated: "2026-04-20",
+        fallback: [
+          { title: "Solidity中的权限控制设计", category: "EVM合约开发", categoryIcon: "⛓️", content: "智能合约的权限控制至关重要。使用onlyOwner修饰符限制管理员操作，采用多签钱包实现更高级别安全。推荐使用OpenZeppelin的AccessControl库实现基于角色的权限，支持灵活的角色分配和权限撤销。权限检查应该在所有状态修改函数的最前面执行，防止权限升级攻击。", subtitle: "合约安全基础" },
+          { title: "存储变量的Gas优化技巧", category: "Gas优化", categoryIcon: "⛽", content: "Storage是最昂贵的操作。优化技巧：使用assembly直接操作memory可节省Gas；将相关数据打包到单个slot（如bool+uint128组合）；删除不再使用的数据释放Gas；避免在循环中读取storage，使用memory缓存。memory和calldata的选择也很重要，calldata参数更便宜。理解EVM Gas消耗模型是优化的基础。", subtitle: "Gas优化技巧" },
+          { title: "AMM自动做市商核心原理", category: "DeFi开发", categoryIcon: "💰", content: "Uniswap采用恒定乘积公式 x*y=k 实现自动做市商。交易者可以随时按公式价格买卖，流动性提供者存入资产对赚取手续费。流动性与交易量越大，价格滑点越小。流动性挖矿激励用户提供流动性，但无常损失（Impermanent Loss）需要警惕。理解AMM数学原理，才能设计出合理的DEX机制。", subtitle: "DeFi核心机制" },
+          { title: "防止重入攻击的七种方法", category: "安全最佳实践", categoryIcon: "🛡️", content: "重入攻击是智能合约最常见的安全漏洞。防护方法：1. Checks-Effects-Interactions模式，先检查再修改状态最后交互；2. 使用ReentrancyGuard互斥锁；3. 转账前更新状态；4. 限制转账金额或频率；5. 使用pullPayment替代pushPayment；6. 遵循CEI模式；7. 合约间调用使用低级别call而非直接转账。安全审计必须覆盖所有外部调用点。", subtitle: "合约安全防护" }
+        ]
+      }
+      moduleCache[moduleId] = localFallback
+      console.log(`[CloudData] 使用本地备用数据: ${moduleId}`)
+      return localFallback
+    }
+
+    // xiaohongshuExpert 模块本地备用数据
+    if (moduleId === 'xiaohongshuExpert') {
+      const localFallback = {
+        version: "1.0.0",
+        updated: "2026-04-20",
+        fallback: [
+          { title: "如何写出让人想收藏的种草笔记", category: "生活方式内容", categoryIcon: "✨", content: "小红书种草笔记的核心是真实感和实用性。开头用痛点引发共鸣，中间详细展示使用体验和效果，最后给出具体建议。善用emoji和表情符号增加亲和力，图片要高质量且真实。关键词布局要自然，让笔记更容易被搜索到。收藏率比点赞更重要，说明用户真的觉得有用。", subtitle: "种草笔记技巧" },
+          { title: "小红书热点选题的三大黄金法则", category: "趋势驱动策略", categoryIcon: "🔥", content: "第一，追热点要快，在热度上升期发布；第二，热点要与账号定位契合，不是所有热点都要追；第三，独特定角度比重复内容更容易出圈。关注小红书官方话题和热门挑战，及时参与。建立选题库，平时积累素材，热点来临时快速产出。", subtitle: "热点选题方法" },
+          { title: "小红书爆款标题公式拆解", category: "内容创作技巧", categoryIcon: "✍️", content: "爆款标题公式：数字+情绪词+关键词。比如「3步｜真心建议所有女生学会这个，显白又高级」。数字增加可信度，情绪词引发共鸣，关键词利于搜索。前三秒决定用户是否点开，正文第一句要承接标题的期待。学会设置悬念，让用户忍不住想看下去。", subtitle: "标题写作技巧" },
+          { title: "小红书账号定位的黄金三角", category: "涨粉运营", categoryIcon: "📈", content: "账号定位三角：我是谁（人设）、我能提供什么（价值）、我有什么不同（差异化）。垂直细分领域更容易获得精准粉丝。头像、昵称、简介要统一风格，形成记忆点。保持更新频率，建立粉丝期待。评论区互动是涨粉的重要场景，真诚回复能增加粉丝粘性。", subtitle: "账号定位指南" }
+        ]
+      }
+      moduleCache[moduleId] = localFallback
+      console.log(`[CloudData] 使用本地备用数据: ${moduleId}`)
+      return localFallback
+    }
+
+    // seoExpert 模块本地备用数据
+    if (moduleId === 'seoExpert') {
+      const localFallback = {
+        version: "1.0.0",
+        updated: "2026-04-20",
+        fallback: [
+          { title: "Core Web Vitals与搜索排名", category: "技术SEO", categoryIcon: "🔧", content: "Google已将Core Web Vitals纳入排名因素。LCP（最大内容绘制）应控制在2.5秒内，优化图片和使用CDN是关键；FID（首次输入延迟）需低于100毫秒，减少JavaScript阻塞；CLS（累积布局偏移）应小于0.1，优化图片尺寸和广告位。定期使用PageSpeed Insights检测，持续监控用户体验指标。", subtitle: "页面体验优化" },
+          { title: "长尾关键词的正确打开方式", category: "内容策略", categoryIcon: "📝", content: "长尾关键词竞争小、转化高，是中小网站的流量蓝海。挖掘方法：分析搜索建议和related searches；使用AnswerThePublic找问答型长尾；研究竞品未覆盖的细分场景。内容布局：标题含长尾词、正文自然出现3-5次、URL和图片Alt文本都要覆盖。长尾内容积累形成词库，长期带来稳定流量。", subtitle: "关键词策略" },
+          { title: "高质量外链的获取策略", category: "链接建设", categoryIcon: "🔗", content: "外链质量比数量更重要。推荐策略：1. 创作高质量原创内容，自然吸引外链；2. 客座博客，在相关行业网站投稿；3. broken link building，帮别人修复死链同时获得推荐；4. 资源页面链接，在目录网站提交；5. 社交媒体虽然nofollow，但能增加曝光和间接权重。避免购买链接和链接农场，小心Google惩罚。", subtitle: "外链建设技巧" },
+          { title: "搜索意图分析与内容匹配", category: "数据分析", categoryIcon: "📊", content: "搜索意图分四类：信息型（了解知识）、导航型（找网站）、交易型（购买意图）、商业调查型（比较决策）。针对不同意图创作不同内容：信息型提供全面知识；交易型优化产品页面和CTA；商业调查型做对比评测。SEMrush和Ahrefs可分析竞品排名意图，据此调整内容策略，满足用户真实需求。", subtitle: "意图分析方法" }
+        ]
+      }
+      moduleCache[moduleId] = localFallback
+      console.log(`[CloudData] 使用本地备用数据: ${moduleId}`)
+      return localFallback
+    }
+
     // 其他模块：使用通用备用数据
     const moduleName = DEFAULT_STYLES[moduleId]?.name || moduleId
     const moduleIcon = DEFAULT_STYLES[moduleId]?.icon || '📌'
@@ -993,6 +1160,15 @@ const ICON_TO_EMOJI = {
   'icon-xinStudy': '🔥',
   'icon-liStudy': '📜',
   'icon-wisdomBag': '💎',
+  'icon-anthropologist': '🏛️',
+  'icon-geographer': '🌍',
+  'icon-historian': '📜',
+  'icon-narratologist': '📖',
+  'icon-psychologist': '🧠',
+  'icon-softwareArchitect': '🏗️',
+  'icon-solidityEngineer': '⛓️',
+  'icon-xiaohongshu': '📕',
+  'icon-seo': '🔍',
 }
 
 /**

@@ -139,6 +139,28 @@
               <view class="card-summary" style="color: {{currentModule.colors.textSecondary}};">{{item.summary}}</view>
             </block>
 
+            <!-- AI专家模块类型（参照财富视窗展示格式：标题+分类+内容） -->
+            <block wx:elif="{{['anthropologist', 'geographer', 'historian', 'narratologist', 'psychologist', 'softwareArchitect', 'solidityEngineer', 'xiaohongshuExpert', 'seoExpert', 'wisdomBag'].includes(currentModule.id)}}">
+              <!-- 领域标签（分类） -->
+              <view class="card-tags-row" wx:if="{{item.category}}">
+                <text class="field-tag" style="background: {{currentModule.colors.bg}}; color: {{currentModule.colors.accent}};">{{item.categoryIcon || ''}} {{item.category}}</text>
+              </view>
+              <!-- 标题 -->
+              <view class="card-title" style="color: {{currentModule.colors.primary}};">{{item.title}}</view>
+              <!-- 完整内容 -->
+              <view class="card-content-full" style="color: {{currentModule.colors.textSecondary}};">{{item.content}}</view>
+              <!-- 附加信息：来源/作者 -->
+              <view class="card-meta" wx:if="{{item.source || item.author}}">
+                <text style="color: {{currentModule.colors.textSecondary}};">📚 {{item.source || item.author}}</text>
+              </view>
+              <!-- 标签列表 -->
+              <view class="card-tags-list" wx:if="{{item.tags && item.tags.length > 0}}">
+                <block wx:for="{{item.tags}}" wx:for-item="tag" wx:key="index">
+                  <text class="tag-chip" style="background: {{currentModule.colors.bg}}; color: {{currentModule.colors.accent}};">{{tag}}</text>
+                </block>
+              </view>
+            </block>
+
             <!-- 通用类型 -->
             <block wx:else>
               <view class="card-title" style="color: {{currentModule.colors.primary}};">{{item.title}}</view>

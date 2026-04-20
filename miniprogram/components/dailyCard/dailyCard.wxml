@@ -865,20 +865,205 @@
       </view>
     </block>
 
-    <!-- 智慧锦囊 -->
+    <!-- 智慧锦囊 - 展示所有字段 -->
     <block wx:elif="{{moduleType === 'wisdomBag'}}">
-      <view class="lit-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
-        <text class="lit-title" style="color: {{config.colors.primary}}; font-weight: bold;">{{content.title}}</text>
-        <text class="lit-era" style="color: {{config.colors.accent}};">{{content.categoryIcon || '💎'}} {{content.category}}</text>
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '💎'}} {{content.field || content.category}}</text>
       </view>
-      <view class="lit-content" style="color: {{config.colors.textSecondary}};">{{content.content}}</view>
-      <view class="lit-summary" wx:if="{{content.subtitle}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.content}}</view>
+      <view class="trade-tips" wx:if="{{content.subtitle}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
         <text>💡 {{content.subtitle}}</text>
       </view>
-      <view class="lit-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
         <block wx:for="{{content.tags}}" wx:key="index">
-          <text class="lit-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
         </block>
+      </view>
+      <view class="trade-tags" wx:if="{{content.source || content.author}}">
+        <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.primary}};">📚 {{content.source || content.author}}</text>
+      </view>
+    </block>
+
+    <!-- 人类学家 - 展示所有字段 -->
+    <block wx:elif="{{moduleType === 'anthropologist'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '🏛️'}} {{content.field || content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.content}}</view>
+      <view class="trade-tips" wx:if="{{content.subtitle}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>💡 {{content.subtitle}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+      <view class="trade-tags" wx:if="{{content.source || content.author}}">
+        <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.primary}};">📚 {{content.source || content.author}}</text>
+      </view>
+    </block>
+
+    <!-- 地理学家 - 展示所有字段 -->
+    <block wx:elif="{{moduleType === 'geographer'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '🌍'}} {{content.field || content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.content}}</view>
+      <view class="trade-tips" wx:if="{{content.subtitle}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>💡 {{content.subtitle}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+      <view class="trade-tags" wx:if="{{content.source || content.author}}">
+        <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.primary}};">📚 {{content.source || content.author}}</text>
+      </view>
+    </block>
+
+    <!-- 历史学家 - 展示所有字段 -->
+    <block wx:elif="{{moduleType === 'historian'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '📜'}} {{content.field || content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.content}}</view>
+      <view class="trade-tips" wx:if="{{content.subtitle}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>💡 {{content.subtitle}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+      <view class="trade-tags" wx:if="{{content.source || content.author}}">
+        <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.primary}};">📚 {{content.source || content.author}}</text>
+      </view>
+    </block>
+
+    <!-- 叙事学家 - 展示所有字段 -->
+    <block wx:elif="{{moduleType === 'narratologist'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '📖'}} {{content.field || content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.content}}</view>
+      <view class="trade-tips" wx:if="{{content.subtitle}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>💡 {{content.subtitle}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+      <view class="trade-tags" wx:if="{{content.source || content.author}}">
+        <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.primary}};">📚 {{content.source || content.author}}</text>
+      </view>
+    </block>
+
+    <!-- 心理学家 - 展示所有字段 -->
+    <block wx:elif="{{moduleType === 'psychologist'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '🧠'}} {{content.field || content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.content}}</view>
+      <view class="trade-tips" wx:if="{{content.subtitle}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>💡 {{content.subtitle}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+      <view class="trade-tags" wx:if="{{content.source || content.author}}">
+        <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.primary}};">📚 {{content.source || content.author}}</text>
+      </view>
+    </block>
+
+    <!-- ========== 新增专业模块模板 ========== -->
+
+    <!-- 软件架构师助手 - 展示所有字段 -->
+    <block wx:elif="{{moduleType === 'softwareArchitect'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '🏗️'}} {{content.field || content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.content}}</view>
+      <view class="trade-tips" wx:if="{{content.subtitle}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>💡 {{content.subtitle}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+      <view class="trade-tags" wx:if="{{content.source || content.author}}">
+        <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.primary}};">📚 {{content.source || content.author}}</text>
+      </view>
+    </block>
+
+    <!-- Solidity智能合约工程师 - 展示所有字段 -->
+    <block wx:elif="{{moduleType === 'solidityEngineer'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '⛓️'}} {{content.field || content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.content}}</view>
+      <view class="trade-tips" wx:if="{{content.subtitle}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>💡 {{content.subtitle}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+      <view class="trade-tags" wx:if="{{content.source || content.author}}">
+        <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.primary}};">📚 {{content.source || content.author}}</text>
+      </view>
+    </block>
+
+    <!-- 小红书专家 - 展示所有字段 -->
+    <block wx:elif="{{moduleType === 'xiaohongshuExpert'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '📕'}} {{content.field || content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.content}}</view>
+      <view class="trade-tips" wx:if="{{content.subtitle}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>💡 {{content.subtitle}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+      <view class="trade-tags" wx:if="{{content.source || content.author}}">
+        <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.primary}};">📚 {{content.source || content.author}}</text>
+      </view>
+    </block>
+
+    <!-- SEO专家 - 展示所有字段 -->
+    <block wx:elif="{{moduleType === 'seoExpert'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '🔍'}} {{content.field || content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.content}}</view>
+      <view class="trade-tips" wx:if="{{content.subtitle}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>💡 {{content.subtitle}}</text>
+      </view>
+      <view class="trade-tags" wx:if="{{content.tags && content.tags.length > 0}}">
+        <block wx:for="{{content.tags}}" wx:key="index">
+          <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.accent}};">{{item}}</text>
+        </block>
+      </view>
+      <view class="trade-tags" wx:if="{{content.source || content.author}}">
+        <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.primary}};">📚 {{content.source || content.author}}</text>
       </view>
     </block>
   </view>

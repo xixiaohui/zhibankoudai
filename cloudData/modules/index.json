@@ -351,6 +351,69 @@
       "icon": "icon-wisdomBag",
       "color": "#B8860B",
       "count": 10
+    },
+    {
+      "id": "anthropologist",
+      "name": "人类学家",
+      "icon": "icon-anthropologist",
+      "color": "#5D4037",
+      "count": 4
+    },
+    {
+      "id": "geographer",
+      "name": "地理学家",
+      "icon": "icon-geographer",
+      "color": "#1B5E20",
+      "count": 4
+    },
+    {
+      "id": "historian",
+      "name": "历史学家",
+      "icon": "icon-historian",
+      "color": "#4527A0",
+      "count": 4
+    },
+    {
+      "id": "narratologist",
+      "name": "叙事学家",
+      "icon": "icon-narratologist",
+      "color": "#880E4F",
+      "count": 4
+    },
+    {
+      "id": "psychologist",
+      "name": "心理学家",
+      "icon": "icon-psychologist",
+      "color": "#303F9F",
+      "count": 4
+    },
+    {
+      "id": "softwareArchitect",
+      "name": "软件架构师助手",
+      "icon": "icon-softwareArchitect",
+      "color": "#1565C0",
+      "count": 4
+    },
+    {
+      "id": "solidityEngineer",
+      "name": "Solidity智能合约工程师",
+      "icon": "icon-solidityEngineer",
+      "color": "#2E7D32",
+      "count": 4
+    },
+    {
+      "id": "xiaohongshuExpert",
+      "name": "小红书专家",
+      "icon": "icon-xiaohongshu",
+      "color": "#E91E63",
+      "count": 4
+    },
+    {
+      "id": "seoExpert",
+      "name": "SEO专家",
+      "icon": "icon-seo",
+      "color": "#FF5722",
+      "count": 4
     }
   ]
 }

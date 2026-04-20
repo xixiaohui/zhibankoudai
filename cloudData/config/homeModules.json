@@ -52,7 +52,16 @@
     { "id": "americanExpert", "enabled": true, "order": 47, "showOnHome": true },
     { "id": "xinStudy", "enabled": true, "order": 48, "showOnHome": true },
     { "id": "liStudy", "enabled": true, "order": 49, "showOnHome": true },
-    { "id": "wisdomBag", "enabled": true, "order": 50, "showOnHome": true }
+    { "id": "wisdomBag", "enabled": true, "order": 50, "showOnHome": true },
+    { "id": "anthropologist", "enabled": true, "order": 51, "showOnHome": true },
+    { "id": "geographer", "enabled": true, "order": 52, "showOnHome": true },
+    { "id": "historian", "enabled": true, "order": 53, "showOnHome": true },
+    { "id": "narratologist", "enabled": true, "order": 54, "showOnHome": true },
+    { "id": "psychologist", "enabled": true, "order": 55, "showOnHome": true },
+    { "id": "softwareArchitect", "enabled": true, "order": 56, "showOnHome": true },
+    { "id": "solidityEngineer", "enabled": true, "order": 57, "showOnHome": true },
+    { "id": "xiaohongshuExpert", "enabled": true, "order": 58, "showOnHome": true },
+    { "id": "seoExpert", "enabled": true, "order": 59, "showOnHome": true }
   ],
   "updated": "2026-04-17"
 }

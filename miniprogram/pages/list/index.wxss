@@ -151,10 +151,12 @@
 
 .tag-item {
   font-size: var(--font-size-xs);
-  padding: 4rpx var(--space-xs);
+  padding: 8rpx 16rpx;
   border-radius: var(--radius-full);
   background-color: var(--accent-warm-light);
   color: var(--text-primary);
+  text-align: center;
+  line-height: 1.2;
 }
 
 .tag-ai {
@@ -325,6 +327,70 @@
 @keyframes dotPulse {
   0%, 80%, 100% { opacity: 0.4; }
   40% { opacity: 1; }
+}
+
+/* AI专家模块样式 */
+.card-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-sm);
+}
+
+.field-tag {
+  font-size: var(--font-size-xs);
+  padding: 8rpx 16rpx;
+  border-radius: var(--radius-full);
+  background-color: var(--accent-warm-light);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.card-subtitle {
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-sm);
+  color: var(--text-secondary);
+}
+
+.card-content {
+  font-size: var(--font-size-base);
+  line-height: 1.8;
+  margin-bottom: var(--space-sm);
+  color: var(--text-primary);
+  word-break: break-all;
+}
+
+.card-meta {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+/* AI专家模块完整内容样式 */
+.card-content-full {
+  font-size: var(--font-size-base);
+  line-height: 1.9;
+  margin: var(--space-sm) 0;
+  color: var(--text-primary);
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+/* AI专家模块标签列表 */
+.card-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+.tag-chip {
+  font-size: var(--font-size-xs);
+  padding: 8rpx 16rpx;
+  border-radius: var(--radius-full);
+  background-color: var(--bg-light);
+  text-align: center;
+  line-height: 1.2;
 }
 
 .no-more {

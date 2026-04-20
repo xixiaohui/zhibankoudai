@@ -126,6 +126,16 @@ const MODULE_TO_COLLECTION = {
   fashionBrand: 'dailyFashionBrands',
   xinStudy: 'dailyXinStudys',
   liStudy: 'dailyLiStudys',
+  // 新增模块
+  anthropologist: 'dailyAnthropologists',    // 人类学家
+  geographer: 'dailyGeographers',             // 地理学家
+  historian: 'dailyHistorians',              // 历史学家
+  narratologist: 'dailyNarratologists',       // 叙事学家
+  psychologist: 'dailyPsychologists',        // 心理学家
+  softwareArchitect: 'dailySoftwareArchitects', // 软件架构师
+  solidityEngineer: 'dailySolidityEngineers',  // Solidity工程师
+  xiaohongshuExpert: 'dailyXiaohongshuExperts', // 小红书专家
+  seoExpert: 'dailySeoExperts',               // SEO专家
 }
 
 // 云数据库实例

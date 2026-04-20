@@ -1,0 +1,94 @@
+{
+  "id": "solidityEngineer",
+  "name": "Solidity智能合约工程师",
+  "icon": "icon-solidityEngineer",
+  "color": "#2E7D32",
+  "fields": [
+    {
+      "id": "evm",
+      "name": "EVM合约开发",
+      "icon": "⛓️",
+      "topics": [
+        "Solidity语法精讲",
+        "智能合约安全",
+        "合约升级模式",
+        "事件与日志"
+      ]
+    },
+    {
+      "id": "gasOptimization",
+      "name": "Gas优化",
+      "icon": "⛽",
+      "topics": [
+        "存储优化技巧",
+        "计算Gas节省",
+        "批量操作设计",
+        "EVM opcodes"
+      ]
+    },
+    {
+      "id": "defi",
+      "name": "DeFi开发",
+      "icon": "💰",
+      "topics": [
+        "DEX原理",
+        "借贷协议设计",
+        "流动性机制",
+        "预言机集成"
+      ]
+    },
+    {
+      "id": "security",
+      "name": "安全最佳实践",
+      "icon": "🛡️",
+      "topics": [
+        "重入攻击防护",
+        "整数溢出",
+        "权限控制",
+        "审计要点"
+      ]
+    }
+  ],
+  "fallback": [
+    {
+      "category": "EVM合约开发",
+      "categoryIcon": "⛓️",
+      "title": "Solidity中的权限控制设计",
+      "content": "智能合约的权限控制至关重要。使用onlyOwner修饰符限制管理员操作，采用多签钱包实现更高级别安全。推荐使用OpenZeppelin的AccessControl库实现基于角色的权限，支持灵活的角色分配和权限撤销。权限检查应该在所有状态修改函数的最前面执行，防止权限升级攻击。",
+      "subtitle": "合约安全基础"
+    },
+    {
+      "category": "Gas优化",
+      "categoryIcon": "⛽",
+      "title": "存储变量的Gas优化技巧",
+      "content": "Storage是最昂贵的操作。优化技巧：使用assembly直接操作memory可节省Gas；将相关数据打包到单个slot（如bool+uint128组合）；删除不再使用的数据释放Gas；避免在循环中读取storage，使用memory缓存。memory和calldata的选择也很重要，calldata参数更便宜。理解EVM Gas消耗模型是优化的基础。",
+      "subtitle": "Gas优化技巧"
+    },
+    {
+      "category": "DeFi开发",
+      "categoryIcon": "💰",
+      "title": "AMM自动做市商核心原理",
+      "content": "Uniswap采用恒定乘积公式 x*y=k 实现自动做市商。交易者可以随时按公式价格买卖，流动性提供者存入资产对赚取手续费。流动性与交易量越大，价格滑点越小。流动性挖矿激励用户提供流动性，但无常损失（Impermanent Loss）需要警惕。理解AMM数学原理，才能设计出合理的DEX机制。",
+      "subtitle": "DeFi核心机制"
+    },
+    {
+      "category": "安全最佳实践",
+      "categoryIcon": "🛡️",
+      "title": "防止重入攻击的七种方法",
+      "content": "重入攻击是智能合约最常见的安全漏洞。防护方法：1. Checks-Effects-Interactions模式，先检查再修改状态最后交互；2. 使用ReentrancyGuard互斥锁；3. 转账前更新状态；4. 限制转账金额或频率；5. 使用pullPayment替代pushPayment；6. 遵循CEI模式；7. 合约间调用使用低级别call而非直接转账。安全审计必须覆盖所有外部调用点。",
+      "subtitle": "合约安全防护"
+    }
+  ],
+  "prompts": {
+    "generate": "分享Solidity智能合约开发知识，涵盖EVM、Gas优化、DeFi、安全实践",
+    "share": "⛓️【Solidity工程师】{content}"
+  },
+  "share": {
+    "title": "Solidity智能合约工程师",
+    "template": "{content}"
+  },
+  "meta": {
+    "generated": "2026-04-20T00:00:00.000Z",
+    "source": "solidityEngineer"
+  }
+}

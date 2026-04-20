@@ -64,10 +64,34 @@ const FILES_TO_UPLOAD = [
   ['cloudData/modules/business.json', 'cloudData/modules/business.json'],
   ['cloudData/modules/news.json', 'cloudData/modules/news.json'],
   
-  // 新增模块
+  // 新增专业模块（第二批）
   ['cloudData/modules/xinStudy.json', 'cloudData/modules/xinStudy.json'],
   ['cloudData/modules/liStudy.json', 'cloudData/modules/liStudy.json'],
   ['cloudData/modules/wisdomBag.json', 'cloudData/modules/wisdomBag.json'],
+  ['cloudData/modules/apple.json', 'cloudData/modules/apple.json'],
+  ['cloudData/modules/business.json', 'cloudData/modules/business.json'],
+  ['cloudData/modules/fashionBrand.json', 'cloudData/modules/fashionBrand.json'],
+  ['cloudData/modules/freud.json', 'cloudData/modules/freud.json'],
+  ['cloudData/modules/futures.json', 'cloudData/modules/futures.json'],
+  ['cloudData/modules/growth.json', 'cloudData/modules/growth.json'],
+  ['cloudData/modules/liStudy.json', 'cloudData/modules/liStudy.json'],
+  ['cloudData/modules/news.json', 'cloudData/modules/news.json'],
+  ['cloudData/modules/robotAi.json', 'cloudData/modules/robotAi.json'],
+  ['cloudData/modules/uiDesigner.json', 'cloudData/modules/uiDesigner.json'],
+  ['cloudData/modules/americanExpert.json', 'cloudData/modules/americanExpert.json'],
+
+  // 新增学术专家模块（第三批）
+  ['cloudData/modules/anthropologist.json', 'cloudData/modules/anthropologist.json'],
+  ['cloudData/modules/geographer.json', 'cloudData/modules/geographer.json'],
+  ['cloudData/modules/historian.json', 'cloudData/modules/historian.json'],
+  ['cloudData/modules/narratologist.json', 'cloudData/modules/narratologist.json'],
+  ['cloudData/modules/psychologist.json', 'cloudData/modules/psychologist.json'],
+
+  // 新增AI/区块链/运营专家模块（第四批）
+  ['cloudData/modules/softwareArchitect.json', 'cloudData/modules/softwareArchitect.json'],
+  ['cloudData/modules/solidityEngineer.json', 'cloudData/modules/solidityEngineer.json'],
+  ['cloudData/modules/xiaohongshuExpert.json', 'cloudData/modules/xiaohongshuExpert.json'],
+  ['cloudData/modules/seoExpert.json', 'cloudData/modules/seoExpert.json'],
 ]
 
 async function uploadFile(localPath, cloudPath) {

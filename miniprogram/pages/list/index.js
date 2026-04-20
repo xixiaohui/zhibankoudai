@@ -52,7 +52,16 @@ const MODULE_TYPES = {
   FREUD: 'freud',
   FASHION_BRAND: 'fashionBrand',
   XIN_STUDY: 'xinStudy',
-  LI_STUDY: 'liStudy'
+  LI_STUDY: 'liStudy',
+  ANTHROPOLOGIST: 'anthropologist',
+  GEOGRAPHER: 'geographer',
+  HISTORIAN: 'historian',
+  NARRATOLOGIST: 'narratologist',
+  PSYCHOLOGIST: 'psychologist',
+  SOFTWARE_ARCHITECT: 'softwareArchitect',
+  SOLIDITY_ENGINEER: 'solidityEngineer',
+  XIAOHONGSHU_EXPERT: 'xiaohongshuExpert',
+  SEO_EXPERT: 'seoExpert'
 }
 
 Page({
@@ -538,23 +547,49 @@ Page({
 
     let shareTitle = ''
     let shareContent = ''
+    let shareAuthor = ''
 
     switch (currentModule.id) {
       case MODULE_TYPES.QUOTE:
         shareTitle = content.text || ''
-        shareContent = `—— ${content.author || ''}`
+        shareContent = content.content || ''
+        shareAuthor = content.author || ''
         break
       case MODULE_TYPES.LOVE:
         shareTitle = content.content || ''
-        shareContent = content.author ? `—— ${content.author}` : ''
+        shareContent = content.summary || ''
+        shareAuthor = content.author || ''
         break
       default:
         shareTitle = content.title || ''
         shareContent = content.summary || content.content || ''
+        shareAuthor = content.source || content.author || ''
     }
 
+    // 获取配色方案（与海报页面保持一致）
+    const colors = currentModule.colors || {}
+    const bgColor = encodeURIComponent(colors.gradientEnd || '#F6F2EA')
+    const titleColor = encodeURIComponent(colors.primary || '#2B2B2B')
+    const contentColor = encodeURIComponent(colors.text || '#5C5245')
+    const subtitleColor = encodeURIComponent(colors.textSecondary || '#B79C61')
+
+    // 跳转参数：包含完整配色和内容字段
+    const params = [
+      `type=${currentModule.posterType || currentModule.id}`,
+      `title=${encodeURIComponent(shareTitle)}`,
+      `content=${encodeURIComponent(shareContent)}`,
+      `subtitle=${encodeURIComponent(currentModule.icon + ' ' + currentModule.name)}`,
+      `icon=${encodeURIComponent(currentModule.icon || '')}`,
+      `author=${encodeURIComponent(shareAuthor)}`,
+      `bgColor=${bgColor}`,
+      `titleColor=${titleColor}`,
+      `contentColor=${contentColor}`,
+      `subtitleColor=${subtitleColor}`,
+      `category=${encodeURIComponent(currentModule.id)}`
+    ].join('&')
+
     wx.navigateTo({
-      url: `/pages/poster/index?type=${currentModule.posterType}&title=${encodeURIComponent(shareTitle)}&content=${encodeURIComponent(shareContent)}&subtitle=${encodeURIComponent(currentModule.icon + ' ' + currentModule.name)}`,
+      url: `/pages/poster/index?${params}`,
     })
   },
 })

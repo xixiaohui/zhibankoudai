@@ -1362,6 +1362,250 @@ const DEFAULT_MODULE_CONFIG = {
       placeholderText: '点击「换一条」学习理学智慧',
       posterType: 'liStudy',
       slogan: '格物致知，正心诚意'
+    },
+    // ========== 新增学术专家模块 ==========
+    {
+      id: 'anthropologist',
+      name: '人类学家',
+      icon: '🏛️',
+      storageKey: 'dailyAnthropologist',
+      collection: 'dailyAnthropologists',
+      cacheEnabled: true,
+      enabled: true,
+      order: 51,
+      colors: {
+        primary: '#8D6E63',
+        gradientStart: '#FFFFFF',
+        gradientEnd: '#EFEBE9',
+        accent: '#6D4C41',
+        text: '#5D4037',
+        textSecondary: '#8D6E63',
+        bg: 'rgba(141, 110, 99, 0.1)',
+        shadow: 'rgba(141, 110, 99, 0.15)'
+      },
+      tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: 'AI学者' },
+      aiTags: ['人类学', '文化'],
+      refreshText: '换一条',
+      loadingText: '人类学探索中...',
+      placeholderText: '点击「换一条」探索人类文明',
+      posterType: 'anthropologist',
+      slogan: '理解人类，认识自己'
+    },
+    {
+      id: 'geographer',
+      name: '地理学家',
+      icon: '🌍',
+      storageKey: 'dailyGeographer',
+      collection: 'dailyGeographers',
+      cacheEnabled: true,
+      enabled: true,
+      order: 52,
+      colors: {
+        primary: '#26A69A',
+        gradientStart: '#FFFFFF',
+        gradientEnd: '#E0F2F1',
+        accent: '#00897B',
+        text: '#00695C',
+        textSecondary: '#26A69A',
+        bg: 'rgba(38, 166, 154, 0.1)',
+        shadow: 'rgba(38, 166, 154, 0.15)'
+      },
+      tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: 'AI学者' },
+      aiTags: ['地理', '地貌'],
+      refreshText: '换一条',
+      loadingText: '地理知识解读中...',
+      placeholderText: '点击「换一条」探索地球奥秘',
+      posterType: 'geographer',
+      slogan: '读懂地球，看清世界'
+    },
+    {
+      id: 'historian',
+      name: '历史学家',
+      icon: '📜',
+      storageKey: 'dailyHistorian',
+      collection: 'dailyHistorians',
+      cacheEnabled: true,
+      enabled: true,
+      order: 53,
+      colors: {
+        primary: '#7E57C2',
+        gradientStart: '#FFFFFF',
+        gradientEnd: '#EDE7F6',
+        accent: '#5E35B1',
+        text: '#4527A0',
+        textSecondary: '#7E57C2',
+        bg: 'rgba(126, 87, 194, 0.1)',
+        shadow: 'rgba(126, 87, 194, 0.15)'
+      },
+      tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: 'AI学者' },
+      aiTags: ['历史', '史实'],
+      refreshText: '换一条',
+      loadingText: '历史长河探索中...',
+      placeholderText: '点击「换一条」触摸历史脉搏',
+      posterType: 'historian',
+      slogan: '以史为鉴，照见未来'
+    },
+    {
+      id: 'narratologist',
+      name: '叙事学家',
+      icon: '📖',
+      storageKey: 'dailyNarratologist',
+      collection: 'dailyNarratologists',
+      cacheEnabled: true,
+      enabled: true,
+      order: 54,
+      colors: {
+        primary: '#EC407A',
+        gradientStart: '#FFFFFF',
+        gradientEnd: '#FCE4EC',
+        accent: '#D81B60',
+        text: '#C2185B',
+        textSecondary: '#EC407A',
+        bg: 'rgba(236, 64, 122, 0.1)',
+        shadow: 'rgba(236, 64, 122, 0.15)'
+      },
+      tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: 'AI学者' },
+      aiTags: ['叙事', '故事'],
+      refreshText: '换一条',
+      loadingText: '叙事艺术解读中...',
+      placeholderText: '点击「换一条」领悟故事魅力',
+      posterType: 'narratologist',
+      slogan: '故事之道，叙事之艺'
+    },
+    {
+      id: 'psychologist',
+      name: '心理学家',
+      icon: '🧠',
+      storageKey: 'dailyPsychologist',
+      collection: 'dailyPsychologists',
+      cacheEnabled: true,
+      enabled: true,
+      order: 55,
+      colors: {
+        primary: '#5C6BC0',
+        gradientStart: '#FFFFFF',
+        gradientEnd: '#E8EAF6',
+        accent: '#3949AB',
+        text: '#303F9F',
+        textSecondary: '#5C6BC0',
+        bg: 'rgba(92, 107, 192, 0.1)',
+        shadow: 'rgba(92, 107, 192, 0.15)'
+      },
+      tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: 'AI学者' },
+      aiTags: ['心理学', '认知'],
+      refreshText: '换一条',
+      loadingText: '心理奥秘探索中...',
+      placeholderText: '点击「换一条」解读人心',
+      posterType: 'psychologist',
+      slogan: '洞察心灵，认知自我'
+    },
+    {
+      id: 'softwareArchitect',
+      name: '软件架构师助手',
+      icon: '🏗️',
+      storageKey: 'dailySoftwareArchitect',
+      collection: 'dailySoftwareArchitects',
+      cacheEnabled: true,
+      enabled: true,
+      order: 56,
+      colors: {
+        primary: '#1565C0',
+        gradientStart: '#FFFFFF',
+        gradientEnd: '#E3F2FD',
+        accent: '#0D47A1',
+        text: '#1565C0',
+        textSecondary: '#1976D2',
+        bg: 'rgba(21, 101, 192, 0.1)',
+        shadow: 'rgba(21, 101, 192, 0.15)'
+      },
+      tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: 'AI专家' },
+      aiTags: ['架构', '设计'],
+      refreshText: '换一条',
+      loadingText: '架构知识解读中...',
+      placeholderText: '点击「换一条」获取架构知识',
+      posterType: 'softwareArchitect',
+      slogan: '系统设计，架构之道'
+    },
+    {
+      id: 'solidityEngineer',
+      name: 'Solidity智能合约工程师',
+      icon: '⛓️',
+      storageKey: 'dailySolidityEngineer',
+      collection: 'dailySolidityEngineers',
+      cacheEnabled: true,
+      enabled: true,
+      order: 57,
+      colors: {
+        primary: '#2E7D32',
+        gradientStart: '#FFFFFF',
+        gradientEnd: '#E8F5E9',
+        accent: '#1B5E20',
+        text: '#2E7D32',
+        textSecondary: '#388E3C',
+        bg: 'rgba(46, 125, 50, 0.1)',
+        shadow: 'rgba(46, 125, 50, 0.15)'
+      },
+      tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: 'AI专家' },
+      aiTags: ['区块链', '合约'],
+      refreshText: '换一条',
+      loadingText: '合约知识解读中...',
+      placeholderText: '点击「换一条」获取合约知识',
+      posterType: 'solidityEngineer',
+      slogan: '智能合约，链上之道'
+    },
+    {
+      id: 'xiaohongshuExpert',
+      name: '小红书专家',
+      icon: '📕',
+      storageKey: 'dailyXiaohongshu',
+      collection: 'dailyXiaohongshuExperts',
+      cacheEnabled: true,
+      enabled: true,
+      order: 58,
+      colors: {
+        primary: '#E91E63',
+        gradientStart: '#FFFFFF',
+        gradientEnd: '#FCE4EC',
+        accent: '#C2185B',
+        text: '#E91E63',
+        textSecondary: '#EC407A',
+        bg: 'rgba(233, 30, 99, 0.1)',
+        shadow: 'rgba(233, 30, 99, 0.15)'
+      },
+      tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: 'AI专家' },
+      aiTags: ['运营', '种草'],
+      refreshText: '换一条',
+      loadingText: '运营技巧解读中...',
+      placeholderText: '点击「换一条」获取运营技巧',
+      posterType: 'xiaohongshuExpert',
+      slogan: '流量密码，内容为王'
+    },
+    {
+      id: 'seoExpert',
+      name: 'SEO专家',
+      icon: '🔍',
+      storageKey: 'dailySeoExpert',
+      collection: 'dailySeoExperts',
+      cacheEnabled: true,
+      enabled: true,
+      order: 59,
+      colors: {
+        primary: '#FF5722',
+        gradientStart: '#FFFFFF',
+        gradientEnd: '#FBE9E7',
+        accent: '#E64A19',
+        text: '#FF5722',
+        textSecondary: '#FF7043',
+        bg: 'rgba(255, 87, 34, 0.1)',
+        shadow: 'rgba(255, 87, 34, 0.15)'
+      },
+      tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: 'AI专家' },
+      aiTags: ['搜索', '排名'],
+      refreshText: '换一条',
+      loadingText: 'SEO技巧解读中...',
+      placeholderText: '点击「换一条」获取SEO技巧',
+      posterType: 'seoExpert',
+      slogan: '搜索优化，排名提升'
     }
   ]
 }
@@ -1460,7 +1704,12 @@ async function loadFromCloud() {
         })
       },
       fail: (err) => {
-        console.error('[ModuleConfig] 云存储下载失败:', err)
+        // 云存储不存在时静默降级到本地配置
+        if (err.errMsg && err.errMsg.includes('empty download url')) {
+          console.log('[ModuleConfig] 云存储配置不存在，使用本地默认配置')
+        } else {
+          console.warn('[ModuleConfig] 云存储下载失败，降级到本地配置:', err)
+        }
         resolve(null)
       }
     })
