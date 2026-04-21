@@ -165,7 +165,7 @@ Page({
     console.log('【海报页面】原始参数:', options)
     
     // 解析 URL 参数
-    const {
+    let {
       type = 'home',           // 类型：quote/joke/psychology/finance/love/movie/...
       title = '每日分享',
       content = '',
@@ -173,6 +173,7 @@ Page({
       icon = '',                // 图标 emoji
       author = '',              // 作者
       category = '',
+      moduleName = '',          // 模块名称（优先使用传入值）
       
       // 样式参数
       bgColor,
@@ -187,6 +188,21 @@ Page({
       // 其他
       appId = 'wx0ae2b5c7f8de7fef',
     } = options || {}
+    
+    // 支持 JSON 格式的 data 参数
+    if (options.data) {
+      try {
+        const dataObj = JSON.parse(decodeURIComponent(options.data))
+        title = dataObj.title || title
+        content = dataObj.content || content
+        subtitle = dataObj.subtitle || subtitle
+        icon = dataObj.icon || icon
+        moduleName = dataObj.moduleName || moduleName
+        if (dataObj.author) author = dataObj.author
+      } catch (e) {
+        console.error('【海报页面】解析 data 参数失败:', e)
+      }
+    }
 
     // 构建分享路径
     const sharePath = category
@@ -196,7 +212,7 @@ Page({
     // 根据类型获取默认配色、slogan 和模块名称
     const colorScheme = this.getColorSchemeByType(type)
     const slogan = this.getModuleSlogan(type)
-    const moduleName = this.getModuleName(type)
+    const defaultModuleName = this.getModuleName(type)
     
     // 获取用户信息（异步）
     const userInfo = await this.getUserInfo()
@@ -214,7 +230,7 @@ Page({
       // slogan 替换 footerText，模块名称显示在slogan下方
       footerText: slogan,
       subFooterText: '',
-      moduleName: moduleName,
+      moduleName: moduleName || defaultModuleName,
       
       // 用户信息
       userId: userInfo.userId,

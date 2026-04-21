@@ -17,6 +17,7 @@ const { DailyContent } = require('./dailyContent.js')
 const COLLECTIONS = {
   // 系统集合
   CHAT_MESSAGES: 'chatMessages',       // 聊天消息
+  CAREERS: 'careers',                  // AI 职业内容
   USER_PROFILE: 'userProfile',          // 用户画像
   USER_MEMORY: 'userMemory',           // 用户记忆
   SETTINGS: 'userSettings',            // 用户设置

@@ -12,7 +12,10 @@
     "pages/poster/index",
     "pages/uploadData/uploadData",
     "pages/setTemplate/index",
-    "pages/manage/index"
+    "pages/manage/index",
+    "pages/careerCardList/index",
+    "pages/careerGuide/index",
+    "pages/careerGuideDetail/index"
   ],
   "usingComponents": {
     "posterCanvas": "components/posterCanvas/posterCanvas"
@@ -45,6 +48,12 @@
       {
         "pagePath": "pages/memory/index",
         "text": "记忆",
+        "iconPath": "images/tab/memory.png",
+        "selectedIconPath": "images/tab/memory_active.png"
+      },
+      {
+        "pagePath": "pages/careerGuide/index",
+        "text": "AI助理",
         "iconPath": "images/tab/memory.png",
         "selectedIconPath": "images/tab/memory_active.png"
       },

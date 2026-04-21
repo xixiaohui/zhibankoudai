@@ -1,0 +1,377 @@
+/* miniprogram/pages/careerGuideDetail/index.wxss */
+
+.container {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: 120rpx;
+}
+
+/* 头部区域 */
+.header {
+  padding: 60rpx 30rpx 80rpx;
+  color: #fff;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.agent-emoji {
+  font-size: 100rpx;
+  margin-bottom: 20rpx;
+  background: rgba(255, 255, 255, 0.2);
+  width: 160rpx;
+  height: 160rpx;
+  line-height: 160rpx;
+  text-align: center;
+  border-radius: 40rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.2);
+}
+
+.agent-name {
+  font-size: 44rpx;
+  font-weight: 700;
+  margin-bottom: 20rpx;
+  text-align: center;
+  color: #059669;
+}
+
+.agent-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16rpx;
+}
+
+.tag {
+  font-size: 24rpx;
+  padding: 8rpx 20rpx;
+  border-radius: 30rpx;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.vibe-tag {
+  font-style: italic;
+  opacity: 0.9;
+}
+
+/* 内容区块 */
+.section {
+  margin: 20rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.section-content {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* 核心使命列表 */
+.mission-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.mission-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 16rpx 20rpx;
+  background: linear-gradient(135deg, #f8f9ff 0%, #fff 100%);
+  border-radius: 16rpx;
+  border-left: 4rpx solid #6366F1;
+}
+
+.mission-text {
+  font-size: 28rpx;
+  color: #444;
+  line-height: 1.5;
+}
+
+/* 关键规则列表 */
+.rules-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.rule-item {
+  padding: 16rpx 20rpx;
+  background: linear-gradient(135deg, #fff5f5 0%, #fff 100%);
+  border-radius: 16rpx;
+  border-left: 4rpx solid #EF4444;
+}
+
+.rule-text {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* 工作流程列表 */
+.workflow-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.workflow-item {
+  font-size: 26rpx;
+  color: #555;
+  padding: 16rpx;
+  background: #fafafa;
+  border-radius: 12rpx;
+  line-height: 1.5;
+}
+
+/* 技术产出列表 */
+.deliverable-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.deliverable-item {
+  font-size: 26rpx;
+  color: #555;
+  padding: 16rpx;
+  background: linear-gradient(135deg, #f0f9ff 0%, #fff 100%);
+  border-radius: 12rpx;
+  border-left: 3rpx solid #0EA5E9;
+  line-height: 1.5;
+}
+
+/* 背景经历列表 */
+.background-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.background-item {
+  font-size: 26rpx;
+  color: #555;
+  padding: 16rpx;
+  background: linear-gradient(135deg, #f5f3ff 0%, #fff 100%);
+  border-radius: 12rpx;
+  border-left: 3rpx solid #8B5CF6;
+  line-height: 1.5;
+}
+
+/* 沟通风格列表 */
+.style-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.style-item {
+  font-size: 26rpx;
+  color: #555;
+  padding: 16rpx;
+  background: linear-gradient(135deg, #fff9f0 0%, #fff 100%);
+  border-radius: 12rpx;
+  border-left: 3rpx solid #F59E0B;
+  line-height: 1.5;
+}
+
+/* 个性特征列表 */
+.personality-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.personality-item {
+  font-size: 26rpx;
+  color: #555;
+  padding: 16rpx;
+  background: linear-gradient(135deg, #fdf2f8 0%, #fff 100%);
+  border-radius: 12rpx;
+  border-left: 3rpx solid #EC4899;
+  line-height: 1.5;
+}
+
+/* 专业领域列表 */
+.expertise-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.expertise-item {
+  font-size: 26rpx;
+  color: #555;
+  padding: 16rpx;
+  background: linear-gradient(135deg, #ecfdf5 0%, #fff 100%);
+  border-radius: 12rpx;
+  border-left: 3rpx solid #10B981;
+  line-height: 1.5;
+}
+
+/* 成功指标列表 */
+.metrics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.metrics-item {
+  font-size: 26rpx;
+  color: #555;
+  padding: 16rpx;
+  background: linear-gradient(135deg, #f0fff4 0%, #fff 100%);
+  border-radius: 12rpx;
+  border-left: 3rpx solid #22C55E;
+  line-height: 1.5;
+}
+
+/* 高级能力列表 */
+.advanced-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.advanced-item {
+  font-size: 26rpx;
+  color: #555;
+  padding: 16rpx;
+  background: linear-gradient(135deg, #fef3c7 0%, #fff 100%);
+  border-radius: 12rpx;
+  border-left: 3rpx solid #F59E0B;
+  line-height: 1.5;
+}
+
+/* 研究产出列表 */
+.research-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.research-item {
+  font-size: 26rpx;
+  color: #555;
+  padding: 16rpx;
+  background: linear-gradient(135deg, #e0f2fe 0%, #fff 100%);
+  border-radius: 12rpx;
+  border-left: 3rpx solid #0EA5E9;
+  line-height: 1.5;
+}
+
+/* 学习与记忆列表 */
+.learning-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.learning-item {
+  font-size: 26rpx;
+  color: #555;
+  padding: 16rpx;
+  background: linear-gradient(135deg, #fae8ff 0%, #fff 100%);
+  border-radius: 12rpx;
+  border-left: 3rpx solid #A855F7;
+  line-height: 1.5;
+}
+
+/* 附加说明列表 */
+.notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.notes-item {
+  font-size: 26rpx;
+  color: #555;
+  padding: 16rpx;
+  background: #fafafa;
+  border-radius: 12rpx;
+  line-height: 1.5;
+}
+
+/* 工具网格 */
+.tools-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.tool-tag {
+  font-size: 24rpx;
+  color: #fff;
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+  padding: 10rpx 20rpx;
+  border-radius: 30rpx;
+}
+
+/* 操作栏 */
+.action-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20rpx 30rpx;
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  background: #fff;
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: 20rpx;
+}
+
+.share-btn,
+.ai-generate-btn {
+  flex: 1;
+  height: 90rpx;
+  line-height: 90rpx;
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: 600;
+  border-radius: 45rpx;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ai-generate-btn {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+}
+
+.share-btn {
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+}
+
+.share-btn:active,
+.ai-generate-btn:active {
+  opacity: 0.9;
+  transform: scale(0.98);
+}
+
+/* 加载状态 */
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  font-size: 28rpx;
+  color: #999;
+}

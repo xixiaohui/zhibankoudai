@@ -1,0 +1,90 @@
+<!-- miniprogram/pages/careerCardList/index.wxml - AI 职业内容生成页面 -->
+<view class="container">
+  <!-- 头部信息 -->
+  <view class="header" wx:if="{{agent}}">
+    <view class="agent-info">
+      <text class="agent-emoji">{{agent.emoji || '🤖'}}</text>
+      <view class="agent-detail">
+        <text class="agent-name">{{agent.name || agent.nameEn}}</text>
+        <text class="agent-category">{{agent.categoryIcon}} {{agent.categoryName || agent.categoryNameEn}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 生成区域 -->
+  <view class="generate-section">
+    <view class="section-title">💬 输入提示词生成内容</view>
+    
+    <!-- 快速模板 -->
+    <view class="templates">
+      <view 
+        wx:for="{{promptTemplates}}" 
+        wx:key="id"
+        class="template-item {{selectedTemplate.id === item.id ? 'active' : ''}}"
+        bindtap="onSelectTemplate"
+        data-template="{{item}}">
+        <text>{{item.name}}</text>
+      </view>
+    </view>
+    
+    <!-- 自定义输入 -->
+    <textarea 
+      class="prompt-input {{isGenerating ? 'disabled' : ''}}"
+      placeholder="输入你想生成的内容描述..."
+      value="{{customPrompt}}"
+      bindinput="onPromptInput"
+      disabled="{{isGenerating}}"
+      maxlength="500"
+      auto-height />
+    
+    <!-- 生成按钮 -->
+    <button 
+      class="generate-btn {{isGenerating ? 'loading' : ''}}" 
+      bindtap="onGenerateOne"
+      disabled="{{isGenerating}}">
+      <text wx:if="{{!isGenerating}}">✨ 生成一条内容</text>
+      <text wx:else>{{generatingProgress || '生成中...'}}</text>
+    </button>
+  </view>
+
+  <!-- 内容列表 -->
+  <view class="content-section">
+    <view class="section-header">
+      <text class="section-title">📚 我的生成记录</text>
+      <view class="header-actions">
+        <text class="refresh-btn" bindtap="onRefresh">🔄 刷新</text>
+        <text class="count">{{contents.length}} 条</text>
+      </view>
+    </view>
+
+    <!-- 加载状态 -->
+    <view wx:if="{{isLoading}}" class="loading-state">
+      <text>加载中...</text>
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:elif="{{contents.length === 0}}" class="empty-state">
+      <text class="empty-icon">📭</text>
+      <text class="empty-text">暂无生成记录</text>
+      <text class="empty-hint">输入提示词，让 AI 为你生成内容</text>
+    </view>
+
+    <!-- 内容卡片 -->
+    <view 
+      wx:for="{{contents}}" 
+      wx:key="_id" 
+      class="content-card"
+      bindtap="onContentTap"
+      data-content="{{item}}">
+      <view class="card-header">
+        <text class="card-title">{{item.title}}</text>
+        <text class="poster-btn" catchtap="onGoPoster" data-content="{{item}}">📤 海报</text>
+      </view>
+      <text class="card-content" user-select="true" selectable="true">{{item.content}}</text>
+      <view class="card-footer">
+        <text class="card-tag">AI 生成</text>
+        <text class="card-date">{{item.createdAtDisplay}}</text>
+      </view>
+    </view>
+  </view>
+</view>

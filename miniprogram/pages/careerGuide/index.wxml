@@ -1,0 +1,75 @@
+<!-- miniprogram/pages/careerGuide/index.wxml -->
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input 
+      class="search-input" 
+      placeholder="搜索 Agent 名称或技能..." 
+      value="{{searchKeyword}}"
+      bindinput="onSearchInput"
+      bindconfirm="onSearchInput"
+    />
+    <view class="search-icon">🔍</view>
+    <view wx:if="{{searchKeyword}}" class="search-clear" bindtap="onSearchClear">✕</view>
+  </view>
+
+  <!-- 统计信息 -->
+  <view class="stats-bar">
+    <text class="stats-text">共 {{allAgents.length}} 个 AI Agent</text>
+    <text wx:if="{{searchKeyword}}" class="stats-filter">| 筛选中...</text>
+  </view>
+
+  <!-- 分类列表 -->
+  <view class="category-list">
+    <block wx:for="{{filteredCategories}}" wx:key="index">
+      <view class="category-item">
+        <!-- 分类头部 -->
+        <view 
+          class="category-header"
+          bindtap="toggleCategory"
+          data-id="{{item.id}}"
+        >
+          <view class="category-info">
+            <text class="category-icon">{{item.icon}}</text>
+            <text class="category-name">{{item.name}}</text>
+            <text class="category-count">{{item.careers.length}} 个</text>
+          </view>
+          <text class="category-arrow {{expandedCategories[item.id] ? 'up' : ''}}">▼</text>
+        </view>
+
+        <!-- Agent 列表 - 根据展开状态显示/隐藏 -->
+        <view wx:if="{{expandedCategories[item.id]}}" class="agent-grid">
+          <block wx:for="{{item.careers}}" wx:for-item="agent" wx:key="index">
+            <view 
+              class="agent-card"
+              style="--agent-color: {{agent.color || '#6366F1'}}"
+              bindtap="onAgentTap"
+              data-agent="{{agent}}"
+            >
+              <view class="agent-emoji">{{agent.emoji || '🤖'}}</view>
+              <view class="agent-info">
+                <text class="agent-name">{{agent.name}}</text>
+                <text class="agent-desc">{{agent.description || ''}}</text>
+                <view class="agent-skills">
+                  <text 
+                    wx:for="{{agent.skills}}" 
+                    wx:for-item="skill" 
+                    wx:key="index"
+                    class="skill-tag"
+                  >{{skill}}</text>
+                </view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{filteredCategories.length === 0}}" class="empty-state">
+    <text class="empty-icon">🔍</text>
+    <text class="empty-text">未找到匹配的 Agent</text>
+    <text class="empty-hint">尝试其他关键词</text>
+  </view>
+</view>

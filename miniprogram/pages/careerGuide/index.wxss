@@ -1,0 +1,239 @@
+/* miniprogram/pages/careerGuide/index.wxss */
+
+.container {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: 40rpx;
+}
+
+/* 搜索栏 */
+.search-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 20rpx 30rpx;
+  margin: 20rpx;
+  border-radius: 50rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.search-input {
+  flex: 1;
+  height: 70rpx;
+  padding: 0 60rpx 0 20rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.search-icon {
+  position: absolute;
+  right: 50rpx;
+  font-size: 32rpx;
+  color: #999;
+}
+
+.search-clear {
+  position: absolute;
+  right: 50rpx;
+  width: 36rpx;
+  height: 36rpx;
+  line-height: 36rpx;
+  text-align: center;
+  background: #ccc;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 24rpx;
+}
+
+/* 统计栏 */
+.stats-bar {
+  padding: 0 30rpx 20rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.stats-text {
+  color: #666;
+}
+
+.stats-filter {
+  color: #6366F1;
+  margin-left: 10rpx;
+}
+
+/* 分类列表 */
+.category-list {
+  padding: 0 20rpx;
+}
+
+.category-item {
+  margin-bottom: 20rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+  background: #fff;
+}
+
+.category-header:active {
+  background: #f5f5f5;
+}
+
+.category-info {
+  display: flex;
+  align-items: center;
+}
+
+.category-icon {
+  font-size: 40rpx;
+  margin-right: 16rpx;
+}
+
+.category-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.category-count {
+  font-size: 24rpx;
+  color: #999;
+  margin-left: 16rpx;
+  padding: 4rpx 16rpx;
+  background: #f5f5f5;
+  border-radius: 20rpx;
+}
+
+.category-arrow {
+  font-size: 20rpx;
+  color: #ccc;
+  transition: transform 0.3s;
+}
+
+.category-arrow.up {
+  transform: rotate(180deg);
+}
+
+/* Agent 卡片网格 - wx:if 控制显示/隐藏 */
+.agent-grid {
+  padding: 0 20rpx 20rpx;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.agent-card {
+  display: flex;
+  padding: 24rpx;
+  margin-bottom: 16rpx;
+  background: linear-gradient(135deg, #f8f9ff 0%, #fff 100%);
+  border-radius: 20rpx;
+  border-left: 6rpx solid var(--agent-color, #6366F1);
+  transition: all 0.3s;
+}
+
+.agent-card:active {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+.agent-emoji {
+  width: 80rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  font-size: 48rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+}
+
+.agent-info {
+  flex: 1;
+  margin-left: 20rpx;
+  overflow: hidden;
+}
+
+.agent-name {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.agent-desc {
+  display: block;
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin-bottom: 12rpx;
+}
+
+.agent-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+}
+
+.skill-tag {
+  font-size: 20rpx;
+  color: var(--agent-color, #6366F1);
+  background: rgba(99, 102, 241, 0.1);
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+  max-width: 150rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120rpx 0;
+}
+
+.empty-icon {
+  font-size: 100rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 16rpx;
+}
+
+.empty-hint {
+  font-size: 26rpx;
+  color: #999;
+}
