@@ -592,4 +592,25 @@ Page({
       url: `/pages/poster/index?${params}`,
     })
   },
+
+  // 分享到朋友圈
+  onShareTimeline() {
+    const { currentModule } = this.data
+    return {
+      title: `${currentModule?.icon || '📖'} ${currentModule?.name || '精选内容'} - 智伴口袋`,
+      imageUrl: '/images/share-cover.png',
+      query: `from=list&module=${currentModule?.id}`
+    }
+  },
+
+  // 分享给朋友
+  onShareAppMessage() {
+    const { currentModule } = this.data
+    return {
+      title: `${currentModule?.icon || '📖'} ${currentModule?.name || '精选内容'} - 智伴口袋`,
+      path: `/pages/list/index?moduleId=${currentModule?.id}`,
+      imageUrl: '/images/share-cover.png',
+      desc: `${currentModule?.description || '每天一点，美好生活'}`
+    }
+  },
 })

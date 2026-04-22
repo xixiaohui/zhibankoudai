@@ -253,6 +253,25 @@ Page({
     })
   },
 
+  // 分享到朋友圈
+  onShareTimeline() {
+    return {
+      title: '智伴口袋 - 你的智能陪伴助手',
+      imageUrl: '/images/share-cover.png',
+      query: 'from=mine'
+    }
+  },
+
+  // 页面分享配置
+  onShareAppMessage(res) {
+    return {
+      title: '智伴AI - 智能陪伴助手',
+      path: '/pages/index/index',
+      imageUrl: '/images/share-cover.png',
+      desc: '随时随地，陪伴左右。记录心情、规划目标、与AI对话，让智伴成为你的贴心伙伴~'
+    }
+  },
+
   // 显示隐私协议
   showPrivacy() {
     const privacyContent = `隐私保护协议

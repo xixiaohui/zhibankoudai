@@ -48,6 +48,29 @@
   box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
 }
 
+/* 聊天助手按钮 */
+.chat-assistant-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx;
+  margin-bottom: 24rpx;
+  background: linear-gradient(135deg, #6366F1 0%, #818CF8 100%);
+  border-radius: 12rpx;
+  box-shadow: 0 4rpx 12rpx rgba(99, 102, 241, 0.3);
+}
+
+.chat-icon {
+  font-size: 32rpx;
+  margin-right: 12rpx;
+}
+
+.chat-text {
+  font-size: 28rpx;
+  color: #fff;
+  font-weight: 500;
+}
+
 .section-title {
   font-size: 30rpx;
   font-weight: 600;

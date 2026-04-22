@@ -15,7 +15,8 @@
     "pages/manage/index",
     "pages/careerCardList/index",
     "pages/careerGuide/index",
-    "pages/careerGuideDetail/index"
+    "pages/careerGuideDetail/index",
+    "pages/careerChat/index"
   ],
   "usingComponents": {
     "posterCanvas": "components/posterCanvas/posterCanvas"

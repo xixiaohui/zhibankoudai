@@ -15,6 +15,12 @@
   <view class="generate-section">
     <view class="section-title">💬 输入提示词生成内容</view>
     
+    <!-- 助手聊天按钮 -->
+    <view class="chat-assistant-btn" bindtap="onGoChatAssistant">
+      <text class="chat-icon">💬</text>
+      <text class="chat-text">与助手聊聊天</text>
+    </view>
+    
     <!-- 快速模板 -->
     <view class="templates">
       <view 

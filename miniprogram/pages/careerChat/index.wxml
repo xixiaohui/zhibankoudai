@@ -1,0 +1,176 @@
+<!-- pages/careerChat/index.wxml - 职业助手聊天页面 -->
+<view class="chat-page">
+
+  <!-- 对话区域 -->
+  <scroll-view 
+    class="messages-wrapper" 
+    scroll-y
+    scroll-top="{{scrollTop}}"
+    scroll-into-view="{{scrollIntoView}}"
+    scroll-with-animation
+    enhanced
+    bounces="{{false}}"
+  >
+    <view class="messages-container">
+      <!-- 日期分隔线 -->
+      <view class="date-divider" wx:if="{{showDateDivider}}">
+        <text>{{currentDate}}</text>
+      </view>
+
+      <!-- 欢迎提示 -->
+      <view class="welcome-tip" wx:if="{{messages.length === 0 && !isLoading}}">
+        <text class="welcome-icon">💼</text>
+        <text class="welcome-text">职业发展助手</text>
+        <text class="welcome-desc" wx:if="{{careerName}}">关于「{{careerName}}」的问答</text>
+        <text class="welcome-desc" wx:else>随时为你解答职业困惑</text>
+      </view>
+
+      <!-- 消息列表 -->
+      <block wx:for="{{messages}}" wx:key="uniqueId">
+        
+        <!-- AI消息（头像在左边） -->
+        <view wx:if="{{item.type === 'ai'}}" class="message-row ai-row" id="msg-{{item.uniqueId}}">
+          <view class="avatar avatar-left">
+            <text class="avatar-icon">💼</text>
+          </view>
+          <view class="message-content">
+            <view class="bubble ai-bubble {{item.isStreaming ? 'streaming' : ''}}">
+              <text class="bubble-text">{{item.content}}</text>
+              <text class="typing-dot" wx:if="{{item.isStreaming}}">...</text>
+            </view>
+            <text class="time-label">{{formatTimeDisplay(item.time)}}</text>
+          </view>
+        </view>
+        
+        <!-- 用户消息（头像在右边） -->
+        <view wx:if="{{item.type === 'user'}}" class="message-row user-row" id="msg-{{item.uniqueId}}">
+          <view class="message-content">
+            <view class="bubble user-bubble">
+              <text class="bubble-text">{{item.content}}</text>
+            </view>
+            <text class="time-label">{{formatTimeDisplay(item.time)}}</text>
+          </view>
+          <view class="avatar avatar-right">
+            <text class="avatar-icon">😀</text>
+          </view>
+        </view>
+        
+      </block>
+
+      <!-- 滚动到底部标记 -->
+      <view id="msg-bottom"></view>
+    </view>
+  </scroll-view>
+
+  <!-- 底部输入区域 -->
+  <view class="input-container">
+    <!-- 快捷问题 -->
+    <scroll-view class="quick-questions" scroll-x enable-flex wx:if="{{!messages.length || messages.length < 3}}">
+      <view 
+        class="quick-btn {{careerName ? '' : 'disabled'}}" 
+        wx:if="{{careerName}}"
+        bindtap="onQuickQuestion"
+        data-question="这个职业的日常工作内容是什么？">
+        <text>日常工作</text>
+      </view>
+      <view 
+        class="quick-btn {{careerName ? '' : 'disabled'}}" 
+        wx:if="{{careerName}}"
+        bindtap="onQuickQuestion"
+        data-question="从事这个职业需要哪些核心技能？">
+        <text>核心技能</text>
+      </view>
+      <view 
+        class="quick-btn {{careerName ? '' : 'disabled'}}" 
+        wx:if="{{careerName}}"
+        bindtap="onQuickQuestion"
+        data-question="{{careerName}}的发展前景和薪资待遇如何？">
+        <text>发展前景</text>
+      </view>
+      <view 
+        class="quick-btn {{careerName ? '' : 'disabled'}}"
+        wx:if="{{careerName}}"
+        bindtap="onQuickQuestion"
+        data-question="如何进入{{careerName}}这个行业？">
+        <text>入门建议</text>
+      </view>
+      <view 
+        class="quick-btn"
+        wx:if="{{!careerName}}"
+        bindtap="onQuickQuestion"
+        data-question="我想了解程序员这个职业">
+        <text>程序员</text>
+      </view>
+      <view 
+        class="quick-btn"
+        wx:if="{{!careerName}}"
+        bindtap="onQuickQuestion"
+        data-question="如何选择适合自己的职业？">
+        <text>职业选择</text>
+      </view>
+    </scroll-view>
+
+    <!-- 输入框 -->
+    <view class="input-row">
+      <view class="input-wrapper">
+        <textarea
+          class="text-input"
+          placeholder="{{careerName ? '向智职业提问关于「'+careerName+'」的问题...' : '向我提问任何职业相关问题...'}}"
+          placeholder-class="placeholder"
+          value="{{inputValue}}"
+          bindinput="onInput"
+          bindconfirm="onSend"
+          bindfocus="onTextareaFocus"
+          bindblur="onTextareaBlur"
+          maxlength="500"
+          cursor-spacing="30"
+          show-confirm-bar="{{false}}"
+          adjust-position="{{true}}"
+        />
+      </view>
+      <view 
+        class="send-btn {{inputValue.length > 0 ? 'active' : ''}}" 
+        bindtap="onSend"
+        hover-class="send-btn-hover"
+      >
+        <text class="send-text">发送</text>
+      </view>
+      <!-- 更多菜单 -->
+      <view class="menu-btn" bindtap="toggleMenu">
+        <text class="menu-icon">⋯</text>
+      </view>
+    </view>
+    
+    <!-- 安全区域 -->
+    <view class="safe-area"></view>
+  </view>
+
+  <!-- 下拉菜单遮罩层 -->
+  <view class="menu-overlay {{showMenu ? 'show' : ''}}" bindtap="toggleMenu"></view>
+
+  <!-- 下拉菜单 -->
+  <view class="dropdown-menu {{showMenu ? 'show' : ''}}">
+    <view class="menu-header">
+      <text class="menu-title">更多工具</text>
+    </view>
+    <view class="menu-list">
+      <view class="menu-item" bindtap="onClearChat">
+        <text class="menu-item-icon">🗑</text>
+        <text class="menu-item-text">清空对话</text>
+      </view>
+      <view class="menu-item" bindtap="onViewMemory">
+        <text class="menu-item-icon">🧠</text>
+        <text class="menu-item-text">查看记忆</text>
+      </view>
+      <view class="menu-item" bindtap="onShareApp">
+        <text class="menu-item-icon">↗</text>
+        <text class="menu-item-text">分享给好友</text>
+      </view>
+    </view>
+    <view class="menu-footer">
+      <text class="career-hint" wx:if="{{careerName}}">💼 当前职业：{{careerName}}</text>
+      <text class="career-hint" wx:else>💼 职业助手</text>
+    </view>
+  </view>
+
+</view>

@@ -435,6 +435,16 @@ ${userPrompt}
     })
   },
 
+  // 跳转到职业助手聊天页
+  onGoChatAssistant() {
+    const { agent } = this.data
+    const careerName = agent?.name || agent?.nameEn || ''
+    
+    wx.navigateTo({
+      url: `/pages/careerChat/index?careerName=${encodeURIComponent(careerName)}`
+    })
+  },
+
   // 刷新内容
   onRefresh() {
     this.loadContents()
@@ -445,7 +455,19 @@ ${userPrompt}
     const { agent } = this.data
     return {
       title: `${agent?.emoji || '🤖'} ${agent?.name || '职业指南'} - AI 生成内容`,
-      path: `/pages/careerCardList/index?id=${this.data.agentId}`
+      path: `/pages/careerCardList/index?id=${this.data.agentId}`,
+      imageUrl: '/images/share-cover.png',
+      desc: '用AI快速生成职业发展相关的内容~'
+    }
+  },
+
+  // 分享到朋友圈
+  onShareTimeline() {
+    const { agent } = this.data
+    return {
+      title: `${agent?.emoji || '🤖'} ${agent?.name || '职业指南'} - AI 生成内容`,
+      imageUrl: '/images/share-cover.png',
+      query: `from=careerCard&id=${this.data.agentId}`
     }
   },
 })

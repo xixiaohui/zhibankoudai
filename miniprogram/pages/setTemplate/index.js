@@ -206,5 +206,24 @@ Page({
       wx.setStorageSync('appSettings', settings)
       this.setData({ [`settings.${key}`]: value })
     }
-  }
+  },
+
+  // 分享到朋友圈
+  onShareTimeline() {
+    return {
+      title: '智伴口袋 - 我的服务设置',
+      imageUrl: '/images/share-cover.png',
+      query: 'from=setTemplate'
+    }
+  },
+
+  // 分享给朋友
+  onShareAppMessage() {
+    return {
+      title: '智伴AI - 自定义我的服务偏好',
+      path: '/pages/setTemplate/index',
+      imageUrl: '/images/share-cover.png',
+      desc: '设置AI陪伴的语气、称呼和提醒，打造专属体验~'
+    }
+  },
 })

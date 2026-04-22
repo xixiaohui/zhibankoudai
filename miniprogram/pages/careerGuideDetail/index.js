@@ -378,4 +378,25 @@ Page({
       url: `/pages/careerCardList/index?id=${agent.id}`
     })
   },
+
+  // 分享到朋友圈
+  onShareTimeline() {
+    const { agent } = this.data
+    return {
+      title: `${agent?.emoji || '🤖'} ${agent?.name || '职业'} - 职业发展指南`,
+      imageUrl: '/images/share-cover.png',
+      query: `from=careerDetail&id=${agent?.id}`
+    }
+  },
+
+  // 分享给朋友
+  onShareAppMessage() {
+    const { agent } = this.data
+    return {
+      title: `${agent?.emoji || '🤖'} ${agent?.name || '职业'} - 职业发展指南`,
+      path: `/pages/careerGuideDetail/index?id=${this.data.agentId}`,
+      imageUrl: '/images/share-cover.png',
+      desc: `${agent?.description || '了解这个职业的发展前景和要求'}`
+    }
+  },
 })

@@ -735,6 +735,27 @@ Page({
     wx.navigateTo({ url: '/pages/poster/index?type=chat' })
   },
 
+  // 分享到朋友圈
+  onShareTimeline() {
+    const { mode, modeName, modeIcon } = this.data
+    return {
+      title: `${modeIcon} ${modeName}模式 - 智伴AI`,
+      imageUrl: '/images/share-cover.png',
+      query: 'from=chat'
+    }
+  },
+
+  // 页面分享配置
+  onShareAppMessage() {
+    const { mode, modeName, modeIcon } = this.data
+    return {
+      title: `${modeIcon} ${modeName}模式 - 智伴AI`,
+      path: `/pages/chat/index?mode=${mode}`,
+      imageUrl: '/images/share-cover.png',
+      desc: '随时随地，陪伴左右。记录心情、规划目标、与AI对话~'
+    }
+  },
+
   formatTimeDisplay(timeStr) {
     if (!timeStr) return ''
     const date = new Date(timeStr.replace(/-/g, '/'))

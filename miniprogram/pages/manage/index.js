@@ -125,5 +125,24 @@ Page({
 
     this.setData({ modules, enabledCount: 0 })
     wx.showToast({ title: '已全部关闭', icon: 'success' })
-  }
+  },
+
+  // 分享到朋友圈
+  onShareTimeline() {
+    return {
+      title: '智伴口袋 - 自定义我的AI助手',
+      imageUrl: '/images/share-cover.png',
+      query: 'from=manage'
+    }
+  },
+
+  // 分享给朋友
+  onShareAppMessage() {
+    return {
+      title: '智伴AI - 自定义我的AI助手',
+      path: '/pages/manage/index',
+      imageUrl: '/images/share-cover.png',
+      desc: '管理我的AI助手模块，打造专属的智能陪伴体验~'
+    }
+  },
 })

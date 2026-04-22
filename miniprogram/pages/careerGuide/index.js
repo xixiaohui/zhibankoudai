@@ -119,4 +119,23 @@ Page({
 
     this.setData({ filteredCategories: filtered })
   },
+
+  // 分享到朋友圈
+  onShareTimeline() {
+    return {
+      title: 'AI职业指南 - 探索你的职业之路',
+      imageUrl: '/images/share-cover.png',
+      query: 'from=careerGuide'
+    }
+  },
+
+  // 分享给朋友
+  onShareAppMessage() {
+    return {
+      title: 'AI职业指南 - 探索你的职业之路',
+      path: '/pages/careerGuide/index',
+      imageUrl: '/images/share-cover.png',
+      desc: '了解各行业发展趋势，探索适合自己的职业方向~'
+    }
+  },
 })

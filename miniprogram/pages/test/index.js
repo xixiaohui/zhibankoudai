@@ -241,6 +241,25 @@ Page({
   },
 
   goToHome() {
-    wx.switchTab({ url: '/pages/index/index' })
+    wx.switchTab({ url: '/pages/index/index' }) 
+  },
+
+  // 分享到朋友圈
+  onShareTimeline() {
+    return {
+      title: '智伴口袋',
+      imageUrl: '/images/share-cover.png',
+      query: 'from=test'
+    }
+  },
+
+  // 分享给朋友
+  onShareAppMessage() {
+    return {
+      title: '智伴AI - 智能陪伴助手',
+      path: '/pages/index/index',
+      imageUrl: '/images/share-cover.png',
+      desc: '随时随地，陪伴左右~'
+    }
   },
 })
