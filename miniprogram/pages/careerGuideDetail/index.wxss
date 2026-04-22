@@ -4,6 +4,10 @@
   min-height: 100vh;
   background: #f5f5f5;
   padding-bottom: 120rpx;
+  overflow-x: hidden;
+  max-width: 750rpx;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 /* 头部区域 */
@@ -79,6 +83,7 @@
   font-size: 28rpx;
   color: #666;
   line-height: 1.6;
+  word-break: break-all;
 }
 
 /* 核心使命列表 */
@@ -101,6 +106,7 @@
   font-size: 28rpx;
   color: #444;
   line-height: 1.5;
+  word-break: break-all;
 }
 
 /* 关键规则列表 */
@@ -121,6 +127,7 @@
   font-size: 26rpx;
   color: #666;
   line-height: 1.5;
+  word-break: break-all;
 }
 
 /* 工作流程列表 */
@@ -137,6 +144,7 @@
   background: #fafafa;
   border-radius: 12rpx;
   line-height: 1.5;
+  word-break: break-all;
 }
 
 /* 技术产出列表 */
@@ -154,6 +162,7 @@
   border-radius: 12rpx;
   border-left: 3rpx solid #0EA5E9;
   line-height: 1.5;
+  word-break: break-all;
 }
 
 /* 背景经历列表 */
@@ -171,6 +180,7 @@
   border-radius: 12rpx;
   border-left: 3rpx solid #8B5CF6;
   line-height: 1.5;
+  word-break: break-all;
 }
 
 /* 沟通风格列表 */
@@ -188,6 +198,7 @@
   border-radius: 12rpx;
   border-left: 3rpx solid #F59E0B;
   line-height: 1.5;
+  word-break: break-all;
 }
 
 /* 个性特征列表 */
@@ -205,6 +216,7 @@
   border-radius: 12rpx;
   border-left: 3rpx solid #EC4899;
   line-height: 1.5;
+  word-break: break-all;
 }
 
 /* 专业领域列表 */
@@ -222,6 +234,7 @@
   border-radius: 12rpx;
   border-left: 3rpx solid #10B981;
   line-height: 1.5;
+  word-break: break-all;
 }
 
 /* 成功指标列表 */
@@ -239,6 +252,7 @@
   border-radius: 12rpx;
   border-left: 3rpx solid #22C55E;
   line-height: 1.5;
+  word-break: break-all;
 }
 
 /* 高级能力列表 */
@@ -256,6 +270,7 @@
   border-radius: 12rpx;
   border-left: 3rpx solid #F59E0B;
   line-height: 1.5;
+  word-break: break-all;
 }
 
 /* 研究产出列表 */
@@ -273,6 +288,7 @@
   border-radius: 12rpx;
   border-left: 3rpx solid #0EA5E9;
   line-height: 1.5;
+  word-break: break-all;
 }
 
 /* 学习与记忆列表 */
@@ -290,6 +306,7 @@
   border-radius: 12rpx;
   border-left: 3rpx solid #A855F7;
   line-height: 1.5;
+  word-break: break-all;
 }
 
 /* 附加说明列表 */
@@ -306,6 +323,7 @@
   background: #fafafa;
   border-radius: 12rpx;
   line-height: 1.5;
+  word-break: break-all;
 }
 
 /* 工具网格 */

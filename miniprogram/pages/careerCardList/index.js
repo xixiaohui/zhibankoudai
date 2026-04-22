@@ -39,12 +39,16 @@ Page({
     promptTemplates: [
       { id: 'summary', name: '📝 职业简介', template: '请为{careerName}写一段200字的专业简介' },
       { id: 'skill', name: '💡 核心技能', template: '请列举{careerName}最重要的5项核心技能' },
+      { id: 'philosophy', name: '🎯 核心理念', template: '阐述{careerName}的职业核心理念和价值观' },
+      { id: 'outlook', name: '💼 行业前景', template: '分析{careerName}所在行业的发展趋势和未来前景' },
+      { id: 'guide', name: '📚 入门指南', template: '为零基础想从事{careerName}的人提供学习路径和入门建议' },
+      { id: 'salary', name: '💰 薪资待遇', template: '介绍{careerName}各发展阶段的大致薪资范围' },
       { id: 'advice', name: '🌟 发展建议', template: '给想从事{careerName}的人3条发展建议' },
       { id: 'question', name: '❓ 常见问题', template: '关于{careerName}，人们常问的5个问题及其解答' },
       { id: 'custom', name: '✨ 自定义', template: '' },
     ],
-    selectedTemplate: { id: 'summary', name: '📝 职业简介', template: '请为{careerName}写一段200字的专业简介' },
-    customPrompt: '请为该职业写一段200字的专业简介',
+    selectedTemplate: null,
+    customPrompt: '',
   },
 
   onLoad(options) {
@@ -63,11 +67,11 @@ Page({
     this.loadContents()
     
     // 设置默认选中的模板
-    const defaultTemplate = this.data.promptTemplates[0]
-    this.setData({
-      selectedTemplate: defaultTemplate,
-      customPrompt: defaultTemplate.template.replace('{careerName}', '该职业')
-    })
+    // const defaultTemplate = this.data.promptTemplates[0]
+    // this.setData({
+    //   selectedTemplate: defaultTemplate,
+    //   customPrompt: defaultTemplate.template.replace('{careerName}', '该职业')
+    // })
   },
 
   // 从云存储加载 Agent 数据
