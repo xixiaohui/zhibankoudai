@@ -377,7 +377,7 @@ Page({
     return {
       title: '智伴口袋 - 你的随身AI陪伴助手',
       path: '/pages/index/index',
-      imageUrl: '/images/avatar.png'
+      imageUrl: '/images/share-cover.png'
     }
   },
 
@@ -386,7 +386,7 @@ Page({
     return {
       title: '智伴口袋 | 温暖陪伴，触手可及',
       query: '',
-      imageUrl: '/images/avatar.png'
+      imageUrl: '/images/share-cover.png'
     }
   },
 })
