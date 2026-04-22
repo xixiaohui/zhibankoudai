@@ -1606,6 +1606,33 @@ const DEFAULT_MODULE_CONFIG = {
       placeholderText: '点击「换一条」获取SEO技巧',
       posterType: 'seoExpert',
       slogan: '搜索优化，排名提升'
+    },
+    {
+      id: 'idiom',
+      name: '歇后语俗语',
+      icon: '📝',
+      storageKey: 'dailyIdiom',
+      collection: 'dailyIdioms',
+      cacheEnabled: true,
+      enabled: true,
+      order: 60,
+      colors: {
+        primary: '#795548',
+        gradientStart: '#FFFFFF',
+        gradientEnd: '#EFEBE9',
+        accent: '#5D4037',
+        text: '#4E342E',
+        textSecondary: '#795548',
+        bg: 'rgba(121, 85, 72, 0.1)',
+        shadow: 'rgba(121, 85, 72, 0.15)'
+      },
+      tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: 'AI' },
+      aiTags: ['歇后语', '俗语'],
+      refreshText: '换一条',
+      loadingText: '俗语智慧解读中...',
+      placeholderText: '点击「换一条」获取歇后语俗语',
+      posterType: 'idiom',
+      slogan: '民间智慧，口口相传'
     }
   ]
 }

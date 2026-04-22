@@ -242,6 +242,10 @@ const LOCAL_PROMPTS_FALLBACK = {
   seoExpert: {
     generate: "你是一位SEO优化专家。请分享SEO知识，涵盖技术SEO、内容策略、链接建设、数据分析等。介绍搜索引擎原理、关键词策略、排名优化。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
     share: "🔍【SEO专家】{title}\n\n{content}"
+  },
+  idiom: {
+    generate: "你是一位中国传统文化研究专家。请分享歇后语或民间俗语，要求涵盖民间智慧、生活哲理、历史典故等。介绍歇后语或俗语的来源、含义、适用场景和使用方法。内容长度200-500字。输出JSON：{\"title\":\"歇后语或俗语\",\"content\":\"详细介绍200-500字\",\"category\":\"类型\",\"subtitle\":\"一句话15字内\"}",
+    share: "📝【歇后语俗语】{title}\n\n{content}"
   }
 }
 
@@ -590,6 +594,19 @@ function normalizeContent(moduleId, aiResult) {
         summary: json.summary || json.content || '',
         category: json.category || 'iOS开发',
         categoryIcon: '🍎',
+        date: today,
+        isAIGenerated: true
+      }
+
+    case 'idiom':
+      return {
+        title: json.title || '歇后语',
+        content: json.content || json.text || aiResult,
+        summary: json.summary || json.content || json.text || '',
+        subtitle: json.subtitle || '',
+        category: json.category || '民间智慧',
+        categoryIcon: '📝',
+        tips: json.tips || '',
         date: today,
         isAIGenerated: true
       }
@@ -1513,6 +1530,18 @@ const DailyContent = {
     if (!promptData) throw new Error('获取SEO专家提示词失败')
     const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
     const content = await generateContent('seoExpert', userPrompt, onChunk, 800)
+    onDone && onDone(content)
+    return content
+  },
+
+  /**
+   * 生成歇后语俗语
+   */
+  async generateIdiom(onChunk, onDone) {
+    const promptData = getPrompt('idiom')
+    if (!promptData) throw new Error('获取歇后语俗语提示词失败')
+    const userPrompt = promptData.generate.replace('{今日日期}', formatDate())
+    const content = await generateContent('idiom', userPrompt, onChunk, 800)
     onDone && onDone(content)
     return content
   },

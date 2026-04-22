@@ -23,9 +23,104 @@
       "id": "wisdom",
       "name": "人生哲理",
       "icon": "✨"
+    },
+    {
+      "id": "encourage",
+      "name": "正向鼓励",
+      "icon": "🌟"
     }
   ],
   "fallback": [
+    {
+      "content": "相信自己，你比想象中更强大。",
+      "title": "正向鼓励",
+      "subtitle": "每天给自己一个微笑",
+      "category": "正向鼓励",
+      "categoryIcon": "🌟",
+      "era": "modern",
+      "region": "china"
+    },
+    {
+      "content": "每一步都在靠近更好的自己。",
+      "title": "正向鼓励",
+      "subtitle": "坚持就是胜利",
+      "category": "正向鼓励",
+      "categoryIcon": "🌟",
+      "era": "modern",
+      "region": "china"
+    },
+    {
+      "content": "今天也要元气满满地加油呀！",
+      "title": "正向鼓励",
+      "subtitle": "保持积极心态",
+      "category": "正向鼓励",
+      "categoryIcon": "🌟",
+      "era": "modern",
+      "region": "china"
+    },
+    {
+      "content": "努力不一定会成功，但放弃一定失败。",
+      "title": "正向鼓励",
+      "subtitle": "永不言弃",
+      "category": "正向鼓励",
+      "categoryIcon": "🌟",
+      "era": "modern",
+      "region": "china"
+    },
+    {
+      "content": "你值得世间所有美好。",
+      "title": "正向鼓励",
+      "subtitle": "善待自己",
+      "category": "正向鼓励",
+      "categoryIcon": "🌟",
+      "era": "modern",
+      "region": "china"
+    },
+    {
+      "content": "阳光总在风雨后，彩虹就在前方。",
+      "title": "正向鼓励",
+      "subtitle": "心怀希望",
+      "category": "正向鼓励",
+      "categoryIcon": "🌟",
+      "era": "modern",
+      "region": "china"
+    },
+    {
+      "content": "勇敢迈出第一步，成功就在转角处。",
+      "title": "正向鼓励",
+      "subtitle": "敢于行动",
+      "category": "正向鼓励",
+      "categoryIcon": "🌟",
+      "era": "modern",
+      "region": "china"
+    },
+    {
+      "content": "你是独一无二的，无可替代。",
+      "title": "正向鼓励",
+      "subtitle": "珍惜自我",
+      "category": "正向鼓励",
+      "categoryIcon": "🌟",
+      "era": "modern",
+      "region": "china"
+    },
+    {
+      "content": "别着急，最好的总会在最恰当的时候来临。",
+      "title": "正向鼓励",
+      "subtitle": "耐心等待",
+      "category": "正向鼓励",
+      "categoryIcon": "🌟",
+      "era": "modern",
+      "region": "china"
+    },
+    {
+      "content": "生活不会辜负每一个认真努力的人。",
+      "title": "正向鼓励",
+      "subtitle": "认真生活",
+      "category": "正向鼓励",
+      "categoryIcon": "🌟",
+      "era": "modern",
+      "region": "china"
+    },
     {
       "content": "春江潮水连海平，海上明月共潮生。",
       "title": "张若虚",

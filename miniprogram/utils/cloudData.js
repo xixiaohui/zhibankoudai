@@ -64,7 +64,7 @@ let versionCheckPending = false  // 防止并发检查
 // 本地首页模块配置
 const LOCAL_HOME_MODULES = {
   version: "1.0.0",
-  updated: "2026-04-20",
+  updated: "2026-04-22",
   modules: [
     { id: "quote", enabled: true, order: 1 },
     { id: "joke", enabled: true, order: 2 },
@@ -78,12 +78,44 @@ const LOCAL_HOME_MODULES = {
     { id: "travel", enabled: true, order: 10 },
     { id: "fortune", enabled: false, order: 11 },
     { id: "literature", enabled: false, order: 12 },
-    { id: "english", enabled: true, order: 13 },
-    { id: "fitness", enabled: true, order: 14 },
-    { id: "food", enabled: true, order: 15 },
-    { id: "history", enabled: false, order: 16 },
-    { id: "news", enabled: true, order: 17 },
-    { id: "apple", enabled: true, order: 18 },
+    { id: "foreignTrade", enabled: true, order: 13 },
+    { id: "ecommerce", enabled: true, order: 14 },
+    { id: "math", enabled: true, order: 15 },
+    { id: "english", enabled: true, order: 16 },
+    { id: "programming", enabled: true, order: 17 },
+    { id: "photography", enabled: true, order: 18 },
+    { id: "beauty", enabled: true, order: 19 },
+    { id: "investment", enabled: true, order: 20 },
+    { id: "fishing", enabled: true, order: 21 },
+    { id: "fitness", enabled: true, order: 22 },
+    { id: "pet", enabled: true, order: 23 },
+    { id: "fashion", enabled: true, order: 24 },
+    { id: "outfit", enabled: true, order: 25 },
+    { id: "decoration", enabled: true, order: 26 },
+    { id: "glassFiber", enabled: true, order: 27 },
+    { id: "resin", enabled: true, order: 28 },
+    { id: "tax", enabled: true, order: 29 },
+    { id: "law", enabled: true, order: 30 },
+    { id: "official", enabled: true, order: 31 },
+    { id: "handling", enabled: true, order: 32 },
+    { id: "floral", enabled: true, order: 33 },
+    { id: "history", enabled: false, order: 34 },
+    { id: "military", enabled: true, order: 35 },
+    { id: "stock", enabled: true, order: 36 },
+    { id: "economics", enabled: true, order: 37 },
+    { id: "business", enabled: true, order: 38 },
+    { id: "news", enabled: true, order: 39 },
+    { id: "apple", enabled: true, order: 40 },
+    { id: "growth", enabled: true, order: 41 },
+    { id: "uiDesigner", enabled: true, order: 42 },
+    { id: "futures", enabled: true, order: 43 },
+    { id: "freud", enabled: true, order: 44 },
+    { id: "fashionBrand", enabled: true, order: 45 },
+    { id: "robotAi", enabled: true, order: 46 },
+    { id: "americanExpert", enabled: true, order: 47 },
+    { id: "xinStudy", enabled: true, order: 48 },
+    { id: "liStudy", enabled: true, order: 49 },
+    { id: "wisdomBag", enabled: true, order: 50 },
     { id: "anthropologist", enabled: true, order: 51 },
     { id: "geographer", enabled: true, order: 52 },
     { id: "historian", enabled: true, order: 53 },
@@ -93,6 +125,7 @@ const LOCAL_HOME_MODULES = {
     { id: "solidityEngineer", enabled: true, order: 57 },
     { id: "xiaohongshuExpert", enabled: true, order: 58 },
     { id: "seoExpert", enabled: true, order: 59 },
+    { id: "idiom", enabled: true, order: 60 },
   ]
 }
 
@@ -241,6 +274,10 @@ const LOCAL_PROMPTS = {
     seoExpert: {
       generate: "你是一位SEO优化专家。请分享SEO知识，涵盖技术SEO、内容策略、链接建设、数据分析等。介绍搜索引擎原理、关键词策略、排名优化。内容长度200-500字。输出JSON：{\"title\":\"主题名称\",\"content\":\"详细介绍200-500字\",\"category\":\"领域\",\"subtitle\":\"一句话15字内\"}",
       share: "🔍【SEO专家】{title}\n\n{content}"
+    },
+    idiom: {
+      generate: "你是一位民间文化研究专家。请分享有趣的歇后语或民间俗语，包含其含义、应用场景和文化背景。内容长度200-500字。输出JSON：{\"title\":\"主题\",\"content\":\"歇后语或俗语正文\",\"category\":\"分类\",\"categoryIcon\":\"图标\",\"subtitle\":\"一句话说明15字内\"}",
+      share: "📝【歇后语俗语】{content}"
     }
   },
   system: {
@@ -653,6 +690,12 @@ const DEFAULT_STYLES = {
     refreshText: '换一条', loadingText: '专家正在为你解读...', placeholderText: '点击「换一条」获取SEO技巧',
     tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: 'SEO' },
     colors: generateColors('#FF5722')
+  },
+  idiom: {
+    id: 'idiom', name: '歇后语俗语', icon: '📝', color: '#795548', storageKey: 'dailyIdiom', posterType: 'idiom',
+    refreshText: '换一条', loadingText: '俗语智慧解读中...', placeholderText: '点击「换一条」获取歇后语俗语',
+    tags: { category: { field: 'category', icon: 'categoryIcon' }, ai: 'AI' },
+    colors: generateColors('#795548')
   }
 }
 
@@ -1206,6 +1249,8 @@ function getModuleConfig(moduleId) {
   }
   merged.enabled = homeConfig.enabled !== false
   merged.order = homeConfig.order !== undefined ? homeConfig.order : 999
+
+  console.log(`[CloudData] getModuleConfig: ${moduleId}`, merged) 
   
   return merged
 }

@@ -1,0 +1,111 @@
+{
+  "id": "idiom",
+  "name": "歇后语俗语",
+  "icon": "📚",
+  "color": "#795548",
+  "fields": [
+    {
+      "id": "riddle",
+      "name": "经典歇后语",
+      "icon": "🔍",
+      "topics": [
+        "谐音类歇后语",
+        "故事类歇后语",
+        "生活类歇后语",
+        "动物类歇后语"
+      ]
+    },
+    {
+      "id": "proverb",
+      "name": "民间俗语",
+      "icon": "📜",
+      "topics": [
+        "人生哲理俗语",
+        "处世之道俗语",
+        "农业生活俗语",
+        "传统智慧俗语"
+      ]
+    },
+    {
+      "id": "saying",
+      "name": "俗语典故",
+      "icon": "📚",
+      "topics": [
+        "历史典故俗语",
+        "民间传说俗语",
+        "名言警句俗语",
+        "方言特色俗语"
+      ]
+    }
+  ],
+  "fallback": [
+    {
+      "category": "经典歇后语",
+      "categoryIcon": "🔍",
+      "title": "谐音类歇后语",
+      "content": "外甥打灯笼——照旧（舅）",
+      "subtitle": "经典谐音歇后语"
+    },
+    {
+      "category": "经典歇后语",
+      "categoryIcon": "🔍",
+      "title": "谐音类歇后语",
+      "content": "孔夫子搬家——净是输（书）",
+      "subtitle": "经典谐音歇后语"
+    },
+    {
+      "category": "经典歇后语",
+      "categoryIcon": "🔍",
+      "title": "故事类歇后语",
+      "content": "八仙过海——各显神通",
+      "subtitle": "神话故事歇后语"
+    },
+    {
+      "category": "民间俗语",
+      "categoryIcon": "📜",
+      "title": "人生哲理",
+      "content": "吃一堑，长一智",
+      "subtitle": "从失败中学习"
+    },
+    {
+      "category": "民间俗语",
+      "categoryIcon": "📜",
+      "title": "处世之道",
+      "content": "金玉其外，败絮其中",
+      "subtitle": "外表与内在"
+    },
+    {
+      "category": "民间俗语",
+      "categoryIcon": "📜",
+      "title": "农业生活",
+      "content": "一年之计在于春，一日之计在于晨",
+      "subtitle": "珍惜时间"
+    },
+    {
+      "category": "民间俗语",
+      "categoryIcon": "📜",
+      "title": "传统智慧",
+      "content": "不听老人言，吃亏在眼前",
+      "subtitle": "前人经验"
+    },
+    {
+      "category": "俗语典故",
+      "categoryIcon": "📚",
+      "title": "历史典故",
+      "content": "纸上得来终觉浅，绝知此事要躬行",
+      "subtitle": "陆游诗句"
+    }
+  ],
+  "prompts": {
+    "generate": "分享一个有趣的歇后语或民间俗语，包含其含义和应用场景",
+    "share": "📝【歇后语俗语】{content}"
+  },
+  "share": {
+    "title": "歇后语俗语",
+    "template": "{content}"
+  },
+  "meta": {
+    "generated": "2026-04-22T00:00:00.000Z",
+    "source": "idiom"
+  }
+}

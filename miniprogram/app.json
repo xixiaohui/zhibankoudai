@@ -54,7 +54,7 @@
       },
       {
         "pagePath": "pages/careerGuide/index",
-        "text": "AI助理",
+        "text": "职助",
         "iconPath": "images/tab/memory.png",
         "selectedIconPath": "images/tab/memory_active.png"
       },

@@ -20,7 +20,8 @@ const MODULE_TYPES = {
   APPLE: 'apple', GROWTH: 'growth', UI_DESIGNER: 'uiDesigner', FUTURES: 'futures',
   FREUD: 'freud', FASHION_BRAND: 'fashionBrand', ROBOT_AI: 'robotAi', AMERICAN_EXPERT: 'americanExpert', XIN_STUDY: 'xinStudy', LI_STUDY: 'liStudy', WISDOM_BAG: 'wisdomBag',
   ANTHROPOLOGIST: 'anthropologist', GEOGRAPHER: 'geographer', NARRATOLOGIST: 'narratologist', HISTORIAN: 'historian', PSYCHOLOGIST: 'psychologist',
-  SOFTWARE_ARCHITECT: 'softwareArchitect', SOLIDITY_ENGINEER: 'solidityEngineer', XIAOHONGSHU_EXPERT: 'xiaohongshuExpert', SEO_EXPERT: 'seoExpert'
+  SOFTWARE_ARCHITECT: 'softwareArchitect', SOLIDITY_ENGINEER: 'solidityEngineer', XIAOHONGSHU_EXPERT: 'xiaohongshuExpert', SEO_EXPERT: 'seoExpert',
+  IDIOM: 'idiom'
 }
 
 // 全局请求队列，控制同时发起的 AI 请求数量
@@ -589,6 +590,8 @@ Component({
               return await this._getDailyXiaohongshuExpert(refresh)
             case MODULE_TYPES.SEO_EXPERT:
               return await this._getDailySeoExpert(refresh)
+            case MODULE_TYPES.IDIOM:
+              return await this._getDailyIdiom(refresh)
             default:
               throw new Error('未知的模块类型')
           }
@@ -1422,6 +1425,19 @@ Component({
       return content
     },
 
+    // 获取歇后语俗语
+    async _getDailyIdiom(refresh) {
+      if (!refresh) {
+        const cached = wx.getStorageSync('dailyIdiom')
+        if (cached) {
+          const today = new Date().toISOString().split('T')[0]
+          if (cached.date === today) return cached
+        }
+      }
+      const content = await DailyContent.generateIdiom()
+      return content
+    },
+
     // 保存到云数据库（每次换一条都新增记录，不覆盖）
     async _saveToCloud(content) {
       const { moduleType } = this.data
@@ -1671,6 +1687,10 @@ Component({
           break
         case 'seoExpert':
           params += `&title=${encodeURIComponent(content.title)}&content=${encodeURIComponent(content.summary || content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '🔍') + ' ' + (content.category || ''))}&icon=${encodeURIComponent(content.categoryIcon || '🔍')}`
+          break
+        case 'idiom':
+          // 歇后语俗语: title=分类, content=内容(歇后语/俗语), subtitle=说明
+          params += `&title=${encodeURIComponent(content.category || '歇后语俗语')}&content=${encodeURIComponent(content.content)}&subtitle=${encodeURIComponent((content.categoryIcon || '📝') + ' ' + (content.subtitle || content.title || ''))}&icon=${encodeURIComponent(content.categoryIcon || '📝')}`
           break
         default:
           // 默认处理：使用content的通用字段

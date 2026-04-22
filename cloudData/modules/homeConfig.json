@@ -252,6 +252,56 @@
       "id": "wisdomBag",
       "enabled": true,
       "order": 49
+    },
+    {
+      "id": "anthropologist",
+      "enabled": true,
+      "order": 50
+    },
+    {
+      "id": "geographer",
+      "enabled": true,
+      "order": 51
+    },
+    {
+      "id": "historian",
+      "enabled": true,
+      "order": 52
+    },
+    {
+      "id": "narratologist",
+      "enabled": true,
+      "order": 53
+    },
+    {
+      "id": "psychologist",
+      "enabled": true,
+      "order": 54
+    },
+    {
+      "id": "softwareArchitect",
+      "enabled": true,
+      "order": 55
+    },
+    {
+      "id": "solidityEngineer",
+      "enabled": true,
+      "order": 56
+    },
+    {
+      "id": "xiaohongshuExpert",
+      "enabled": true,
+      "order": 57
+    },
+    {
+      "id": "seoExpert",
+      "enabled": true,
+      "order": 58
+    },
+    {
+      "id": "idiom",
+      "enabled": true,
+      "order": 59
     }
   ]
 }

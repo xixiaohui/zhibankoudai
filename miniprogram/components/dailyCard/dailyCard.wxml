@@ -1066,6 +1066,18 @@
         <text class="trade-tag" style="background: {{config.colors.bg}}; color: {{config.colors.primary}};">📚 {{content.source || content.author}}</text>
       </view>
     </block>
+
+    <!-- 歇后语俗语 -->
+    <block wx:elif="{{moduleType === 'idiom'}}">
+      <view class="trade-header" style="border-bottom: 1rpx solid {{config.colors.bg}};">
+        <text class="trade-title" style="color: {{config.colors.primary}};">{{content.title}}</text>
+        <text class="trade-category" style="color: {{config.colors.accent}};">{{content.categoryIcon || '📝'}} {{content.category}}</text>
+      </view>
+      <view class="trade-summary" style="color: {{config.colors.textSecondary}};">{{content.content}}</view>
+      <view class="trade-tips" wx:if="{{content.subtitle}}" style="color: {{config.colors.accent}}; background: {{config.colors.bg}};">
+        <text>{{content.categoryIcon || '📝'}} {{content.subtitle}}</text>
+      </view>
+    </block>
   </view>
 
   <!-- 加载状态 -->
@@ -1083,5 +1095,6 @@
     <text class="placeholder-text">{{config.placeholderText}}</text>
   </view>
 </view>
+
 
 

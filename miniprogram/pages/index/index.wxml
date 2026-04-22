@@ -238,6 +238,9 @@
   <!-- SEO专家 - 配置ID: seoExpert -->
   <daily-card class="daily-card-refresh" moduleType="seoExpert" />
 
+  <!-- 歇后语俗语 - 配置ID: idiom -->
+  <daily-card class="daily-card-refresh" moduleType="idiom" />
+
   <!-- 快速陪伴入口 -->
   <view class="quick-modes-section">
     <view class="section-title">快速陪伴模式</view>
